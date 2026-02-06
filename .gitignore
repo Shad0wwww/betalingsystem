@@ -9,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 
-.
+.env
 !.yarn/versions
 /app
 # testing
