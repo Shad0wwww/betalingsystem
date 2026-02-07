@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 50% 100%;
+    --foreground: 222.2 84% 4.9%;
+ 
+    --muted: 0 0% 17%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --ring: 215 20.2% 65.1%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+ 
+    --ring: 217.2 32.6% 17.5%;
+  }
+}
+
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+  }
+}
+
+/* remove arrows on input number */
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-color: #33e451;
+
+  --headline-color: #E7E7E7;
+  --sub-headline: #B6B6B6;
+
+  --box-color-lighter: #191919;
+  --box-color: #131313;
+  --border-color: #252424;
+  --box-shadow: 0px 4px 10px 8px rgba(0, 0, 0, 0.25);
+  
+  --text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.25);
+
+  --background: linear-gradient(90deg, rgba(17, 17, 17, 1) 0%, rgba(16, 16, 16, 1) 100%); 
+
+}
+
+html, body {
+  font-family: var(--font-family);
+  background: var(--background);
+  scroll-behavior: smooth;
+  margin: 0;
+  height: 100%;
+}
+
+.headline-color {
+  color: var(--headline-color);
+}
+
+.profile-button {
+  background-color: var(--box-color);
+  color: var(--sub-headline);
+
+  border: 1px;
+  border: 1px solid #252424;
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.sub-headline {
+  color: var(--sub-headline);
+}
+
+.text-shadow {
+  text-shadow: var(--text-shadow);
+}
+
+.background {
+  background: var(--background);
+}
+
+.primary-color-background {
+  background-color: var(--primary-color);
+}
+
+
+.box-shadow {
+  box-shadow: var(--box-shadow);
+}
+
+.border-box {
+  border: 1px solid var(--border-color);
+}
+
+.box-shadow-second {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.box-shadow-third {
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.25);
+}
+
+.boxInput {
+  border: 1px solid #252424;
+  background-color: transparent;
+  height: 2rem;
+  padding: 0.6rem 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: white;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+@layer components {
+  .box-shadow-purple {
+    box-shadow: 0px 4px 10px 8px #A594FD;
+  }
+}
+
+@layer components {
+  .box-shadow-purple2 {
+    box-shadow: #5E5DF0 0 10px 20px -10px;
+  }
+  
+  .box-shadow-purple3 {
+    box-shadow: var(--primary-color) 0 0px 15px -10px;
+  }
+
+  .box-color-lighter {
+    background-color: var(--box-color-lighter);
+  }
+
+  .primary-color-text {
+    color: var(--primary-color);
+  }
+}
+
+.nav-button {
+  background-color: var(--box-color-darker);
+  color: var(--primary-color);
+
+  border: 1px;
+  border: 1px solid #252424;
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+.profile-button {
+  background-color: var(--box-color-darker);
+  color: var(--sub-headline);
+
+  border: 1px;
+  border: 1px solid #252424;
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.custom-box {
+  border: 1px solid #252424;
+  background-color: var(--box-shadow);
+}
+
+.custom-box2 {
+  border: 1px solid #252424;
+  background-color: var(--box-color);
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.25);
+}
+
+.custom-border {
+  border: 1px solid #252424;
+}
+
+.custom-circle {
+  background: linear-gradient(134.19deg, #252525 15.17%, rgba(37, 37, 37, 0) 85.85%);
+  border: 1px solid #1B1B1B;
+}
+
+.outline-box {
+  border-color: #252424;
+}
+
+.box-color {
+  background-color: var(--box-color);
+}
+
+.color-text-box {
+  color: var(--primary-color);
+}
+
+.hover-nav {
+  text-decoration: underline;
+  border-bottom: solid 1px var(--primary-color);
+}
+
+@media (max-width: 639px) {
+  .hide-max {
+    display: none;
+  }
+} 
+
+@media (min-width: 640px) {
+  .hide-min {
+    display: none;
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  }
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+} 
+
+
+.pulse-animation {
+  top: 12px;
+  left: 11px;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  /* background-color: #FFF; */
+  box-shadow: 0 0 88px #08d81a;;
+  animation: pulse 3s ease-in-out infinite;
+  position: absolute;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+  border: 3px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1a1a1a;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
