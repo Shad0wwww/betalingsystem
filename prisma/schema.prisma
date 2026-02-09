@@ -17,14 +17,58 @@ model User {
 
   //Relationer
   verificationTokens VerificationToken[]
+  invoices           Invoice[]
+  meterReadings      MeterReading[]
 }
+
 model VerificationToken {
-  identifier String @unique
+  identifier String   @unique
   token      String   @unique
   expires    DateTime
 
-  userId Int 
+  userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([identifier, token])
+}
+
+model Invoice {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amount   Int
+  currency String @default("dkk")
+  status   InvoiceStatus @default(PENDING)
+
+  type UtilityType
+
+  stripePaymentIntentId String? @unique
+  stripeInvoiceId String? @unique
+
+  dueDate DateTime
+  paidAt DateTime?
+  createdAt DateTime @default(now())
+}
+
+model MeterReading {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type UtilityType
+  value Float
+  date DateTime @default(now())
+}
+
+enum InvoiceStatus {
+  PENDING 
+  PAID 
+  FAILED 
+  OVERDUE 
+}
+
+enum UtilityType {
+  WATER
+  ELECTRICITY
 }
