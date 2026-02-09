@@ -21,7 +21,18 @@ services:
       - 5432:5432
 
   adminer:
+    container_name: WebSQL
     image: adminer
     restart: always
     ports:
       - 8080:8080
+  
+  mailgun:
+    image: stevenolen/mailgun-smtp-server
+    restart: always
+    container_name: Mail
+    ports:
+      - 25:25
+    environment:
+      MG_KEY: 
+      MG_DOMAIN:
