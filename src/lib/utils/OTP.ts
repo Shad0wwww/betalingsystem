@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 export async function generateCode(
 ) {
-    return (Math.random() + 1).toString(36).slice(-5).toString().toUpperCase();
+    return (Math.random() + 1).toString(36).slice(-6).toString().toUpperCase();
 }
 
 export async function hashOTPCode(

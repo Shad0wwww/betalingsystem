@@ -18,13 +18,12 @@ model User {
   //Relationer
   verificationTokens VerificationToken[]
 }
-
 model VerificationToken {
-  identifier String
+  identifier String @unique
   token      String   @unique
   expires    DateTime
 
-  userId Int
+  userId Int 
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([identifier, token])

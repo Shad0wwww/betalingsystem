@@ -2,12 +2,12 @@ import nodemailer from 'nodemailer';
 
 
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST!!,
+    host: process.env.MAILGUN_HOST!!,
     port: 587,
     secure: false,
     auth: {
-        user: process.env.SMTP_USER!!,
-        pass: process.env.SMTP_PASSWORD!!,
+        user: process.env.MAILGUN_LOGIN!!,
+        pass: process.env.MAILGUN_PASSWORD!!,
     },
 })
 
@@ -15,12 +15,12 @@ const transporter = nodemailer.createTransport({
 export async function sendEmail(
     to: string,
     subject: string,
-    text: string
+    html: string,
 ){
     await transporter.sendMail({
-        from: `"Betalingsystem" <${process.env.SMTP_USER!!}>`,
+        from: `"Betalingsystem" <${process.env.MAILGUN_LOGIN!!}>`,
         to: to,
         subject: subject,
-        text: text,
+        html: html,
     });
 }

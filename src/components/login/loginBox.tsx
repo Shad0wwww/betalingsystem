@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useActionState } from 'react';
 import LoginAction from '@/components/auth/LoginAction'; 
@@ -8,8 +8,13 @@ import VerifyOtpAction from '@/components/auth/VerifyOtpAction';
 import { redirect } from 'next/navigation';
 
 const LoginBox: React.FC = () => {
+    const [isMounted, setIsMounted] = useState(false);
     const [email, setEmail] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     // Trin 1: Tjek email og send OTP
     const [error1, formAction1, isPending1] = useActionState(
@@ -37,6 +42,10 @@ const LoginBox: React.FC = () => {
         null
     );
 
+    if (!isMounted) {
+        return null;
+    }
+
     if (isOtpSent) {
         return (
             <div>
@@ -62,6 +71,9 @@ const LoginBox: React.FC = () => {
                                 required
                                 autoComplete="one-time-code"
                                 autoFocus
+                                suppressHydrationWarning
+                                data-1p-ignore="true"
+                                data-lpignore="true"
                             />
                         </div>
 
@@ -115,6 +127,9 @@ const LoginBox: React.FC = () => {
                             required
                             autoComplete="off"
                             autoFocus
+                            suppressHydrationWarning
+                            data-1p-ignore="true"
+                            data-lpignore="true"
                         />
                     </div>
 

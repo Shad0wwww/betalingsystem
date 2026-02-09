@@ -21,6 +21,16 @@ export default async function LoginAction(
         return { error: "Email does not exist" };
     }
 
+    await fetch(`${process.env.URL_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },        
+        body: JSON.stringify({
+            email,
+        }),
+    })
+
 
     return { success: true };
 }

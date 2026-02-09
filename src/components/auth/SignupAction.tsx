@@ -40,8 +40,7 @@ export default async function SignupAction(
     }
 
     const user = await res.json();
-    console.log(user);
-    // Redirect to login page after successful signup
+
     redirect('/login');
 
 }
