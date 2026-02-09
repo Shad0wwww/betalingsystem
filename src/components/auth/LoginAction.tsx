@@ -11,7 +11,7 @@ export default async function LoginAction(
 
     const email = data.get('email') as string;
 
-    if (!validateEmail(email)) {
+    if (!(await validateEmail(email))) {
         return { error: "Invalid email" };
     }
 

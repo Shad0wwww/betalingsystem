@@ -1,89 +1,109 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react'; // 1. Tilføj useEffect/useState
 import Link from 'next/link';
 import { useActionState } from 'react';
 import SignupAction from '@/components/auth/SignupAction';
 
+const FormContainer = ({ children }: { children: React.ReactNode }) => (
+    <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
+        {children}
+    </div>
+);
+
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+    <div className="mb-4">
+        <label className="block text-white font-normal text-[15px] leading-none mb-2">
+            {label}
+        </label>
+        {children}
+    </div>
+);
+
+const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+    <input
+        {...props}
+        suppressHydrationWarning
+        className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
+    />
+);
+
 const SignUpBox: React.FC = () => {
-    const [error, formAction] = useActionState(SignupAction, undefined);
+    const [isMounted, setIsMounted] = useState(false); 
+    const [state, formAction, isPending] = useActionState(SignupAction, undefined);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const errorMessage = typeof state === 'string' ? state : state?.error;
+
+    if (!isMounted) return null;
 
     return (
-        <div>
-            <div className="border rounded-lg custom-box2 py-10 px-12">
-                <div className="flex justify-center">
-                    <h1 className="text-[#ffff] font-bold text-[25px] leading-none mb-2">
-                        Create an account
-                    </h1>
+        <div className="w-full max-w-md mx-auto">
+            <FormContainer>
+                <div className="text-center mb-8">
+                    <h1 className="text-white font-bold text-2xl mb-2">Create an account</h1>
+                    <p className="text-gray-400 text-[15px]">
+                        Enter your details below to create your account
+                    </p>
                 </div>
 
-                <form action={formAction} autoComplete="off" suppressHydrationWarning>
-                    <div className="flex justify-center">
-                        <p className="text-gray-400 pb-2 text-[15px]">
-                            Enter your details below to create your account
-                        </p>
-                    </div>
-
-                    <div className="mb-4 pt-2">
-                        <p className="text-[#ffff] font-normal text-[15px] leading-none mb-2">Full Name</p>
-                        <input
+                <form action={formAction} autoComplete="off">
+                    <Field label="Full Name">
+                        <Input
                             id="fullName"
+                            name="fullName"
                             type="text"
                             placeholder="John Doe"
-                            className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
-                            name="fullName"
                             required
-                            suppressHydrationWarning
                         />
-                    </div>
+                    </Field>
 
-                    <div className="mb-4">
-                        <p className="text-[#ffff] font-normal text-[15px] leading-none mb-2">Email</p>
-                        <input
+                    <Field label="Email">
+                        <Input
                             id="email"
+                            name="email"
                             type="email"
                             placeholder="example@gmail.com"
-                            className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
-                            name="email"
                             required
-                            suppressHydrationWarning
                         />
-                    </div>
+                    </Field>
 
-                    <div className="mb-4">
-                        <p className="text-[#ffff] font-normal text-[15px] leading-none mb-2">Phone Number</p>
-                        <input
+                    <Field label="Phone Number">
+                        <Input
                             id="phone"
+                            name="phone"
                             type="tel"
                             placeholder="+45 12345678"
-                            className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
-                            name="phone"
-                            suppressHydrationWarning
                         />
-                    </div>
+                    </Field>
 
-                    {error && typeof error === 'string' ? <p className="text-red-500 text-sm mb-4">{error}</p> : null}
+                    {errorMessage && (
+                        <p className="text-red-500 text-sm mb-4 text-center">
+                            {errorMessage}
+                        </p>
+                    )}
 
-                    <div className="flex justify-center">
-                        <button
-                            type="submit"
-                            className="w-full text-sm text-center py-2 font-medium bg-white text-black ease-in-out duration-150 rounded-md mt-3"
-                            suppressHydrationWarning
-                        >
-                            Create Account
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        disabled={isPending}
+                        className="w-full py-3 font-medium bg-white text-black rounded-md mt-2 hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    >
+                        {isPending ? 'Creating account...' : 'Create Account'}
+                    </button>
 
-                    <div className="flex">
-                        <p className="text-gray-400 py-2 text-[15px]">
+                    <div className="mt-6 text-center">
+                        <p className="text-gray-400 text-sm">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-white underline">
+                            <Link href="/login" className="text-white underline hover:text-gray-300">
                                 Login
                             </Link>
                         </p>
                     </div>
                 </form>
-            </div>
+            </FormContainer>
         </div>
     );
 };
