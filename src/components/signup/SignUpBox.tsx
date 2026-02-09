@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useActionState } from 'react';
-import SignupAction from '@/lib/auth/SignupAction';
+import SignupAction from '@/components/auth/SignupAction';
 
 const SignUpBox: React.FC = () => {
     const [error, formAction] = useActionState(SignupAction, undefined);
@@ -17,7 +17,7 @@ const SignUpBox: React.FC = () => {
                     </h1>
                 </div>
 
-                <form action={formAction} autoComplete="off">
+                <form action={formAction} autoComplete="off" suppressHydrationWarning>
                     <div className="flex justify-center">
                         <p className="text-gray-400 pb-2 text-[15px]">
                             Enter your details below to create your account
@@ -31,8 +31,9 @@ const SignUpBox: React.FC = () => {
                             type="text"
                             placeholder="John Doe"
                             className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
-                            name="fullName" // add name for form data
+                            name="fullName"
                             required
+                            suppressHydrationWarning
                         />
                     </div>
 
@@ -45,6 +46,7 @@ const SignUpBox: React.FC = () => {
                             className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
                             name="email"
                             required
+                            suppressHydrationWarning
                         />
                     </div>
 
@@ -56,6 +58,7 @@ const SignUpBox: React.FC = () => {
                             placeholder="+45 12345678"
                             className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white"
                             name="phone"
+                            suppressHydrationWarning
                         />
                     </div>
 
@@ -65,15 +68,16 @@ const SignUpBox: React.FC = () => {
                         <button
                             type="submit"
                             className="w-full text-sm text-center py-2 font-medium bg-white text-black ease-in-out duration-150 rounded-md mt-3"
+                            suppressHydrationWarning
                         >
-                            Lav konto
+                            Create Account
                         </button>
                     </div>
 
                     <div className="flex">
                         <p className="text-gray-400 py-2 text-[15px]">
                             Already have an account?{' '}
-                            <Link href="/auth/login" className="text-white underline">
+                            <Link href="/login" className="text-white underline">
                                 Login
                             </Link>
                         </p>

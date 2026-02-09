@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import DoesEmailExist from "@/lib/users/DoesEmailExist";
+import { validateEmail, validatePhone } from "@/lib/utils/Email";
 
 export async function POST(
     req: Request
@@ -9,6 +10,24 @@ export async function POST(
         email, 
         phone 
     } = await req.json();
+
+    if (!name || !email) {
+        return Response.json({ 
+            error: "Name and email are required" 
+        }, { status: 400 });
+    }
+
+    if (!(await validateEmail(email))) {
+        return Response.json(
+            {
+             error: "Invalid email" 
+            }, { status: 400 }
+        );
+    }
+
+    if (phone && !(await validatePhone(phone))) {
+        return Response.json({ error: "Invalid phone number" }, { status: 400 });
+    }
 
     const doesEmailExist = await DoesEmailExist(email);
 
