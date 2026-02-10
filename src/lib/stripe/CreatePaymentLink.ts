@@ -1,26 +1,28 @@
-import Stripe from "stripe";
-import { stripe } from "./Stripe";
 
+import { stripeInstance } from "./Stripe";
+
+interface CreatePaymentLinkParams {
+    amount: number;
+    description: string;
+    metadata?: Record<string, number | string>;
+}
 
 export async function createPaymentLink(
-    amount: number, 
-    description: string
+    createPaymentLinkParams: CreatePaymentLinkParams
 ) {
-    return await stripe.paymentLinks.create({
+    return await stripeInstance.paymentLinks.create({
         line_items: [
             {
-                price_data: {   
+                price_data: {
                     currency: "dkk",
                     product_data: {
-                        name: description,
+                        name: createPaymentLinkParams.description,
                     },
-                    unit_amount: amount,
+                    unit_amount: createPaymentLinkParams.amount,
                 },
                 quantity: 1,
             },
         ],
-
-    })
+        metadata: createPaymentLinkParams.metadata,
+    });
 }
-    
-

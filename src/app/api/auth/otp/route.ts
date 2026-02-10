@@ -1,5 +1,7 @@
+import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { verifyOTPCode } from "@/lib/utils/OTP";
+import { cookies } from "next/headers";
 
 export async function POST(
     request: Request
@@ -54,15 +56,34 @@ export async function POST(
         );
     }
 
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        },
+        select: {
+            id: true
+        }
+    });
+    
+    const token = generateJsonWebtoken(
+        user?.id as unknown as string, 
+        email
+    )
+
     await prisma.verificationToken.deleteMany({
         where: {
             identifier: email
         }
     });
 
+    const cookieStore = await cookies();
+    cookieStore.set({
+        name: "auth_token",
+        value: await token,
+    })
+
+
     return Response.json({ success: true });
-
-
 }
 
 function isExpired(
