@@ -1,10 +1,10 @@
 import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { verifyOTPCode } from "@/lib/utils/OTP";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
-    request: Request
+    request: NextRequest
 ) {
 
     const {
@@ -64,9 +64,9 @@ export async function POST(
             id: true
         }
     });
-    
-    const token = generateJsonWebtoken(
-        user?.id as unknown as string, 
+
+    const token = await generateJsonWebtoken(
+        user?.id.toString()!!,
         email
     )
 
@@ -76,14 +76,20 @@ export async function POST(
         }
     });
 
-    const cookieStore = await cookies();
-    cookieStore.set({
-        name: "auth_token",
-        value: await token,
-    })
+    console.log("Generated JWT token:", token);
 
 
-    return Response.json({ success: true });
+
+    const response = NextResponse.json(
+        { message: "OTP verified successfully",
+            token: token
+         }
+        , { status: 200 },
+        
+    );
+
+    
+    return response;
 }
 
 function isExpired(

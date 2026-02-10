@@ -1,6 +1,7 @@
 "use server";
 
 import { validateEmail } from "@/lib/utils/Email";
+import { cookies } from "next/headers";
 
 export default async function VerifyOtpAction(
     currentState: any,
@@ -16,8 +17,9 @@ export default async function VerifyOtpAction(
     const res = await fetch(`${process.env.URL_BASE}/api/auth/otp`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
             email,
             code
@@ -25,9 +27,26 @@ export default async function VerifyOtpAction(
     });
 
     if (!res.ok) {
-        const errorData = await res.json();
-        return { error: errorData.error || "An error occurred" };
+
+        const errorText = await res.text();
+
+        const errorData = errorText ? JSON.parse(errorText) : null;
+
+        return { error: errorData?.error || "An error occurred" };
+
     }
-    
+
+    const token = await res.json();
+
+    const cookieStore = await cookies();
+    cookieStore.set("auth_token", token.token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 1, // Expire immediately
+    });
+
+    const setCookieHeader = res.headers.get("Set-Cookie");
+
+
+
     return { success: true };
 }
