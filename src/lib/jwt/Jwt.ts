@@ -20,4 +20,14 @@ export async function verifyJsonWebtoken(
         process.env.JWT_SECRET as string
     )
 }
-    
+
+export async function checkAuthentication(
+    token: string
+) {
+    try {
+        const decoded = await verifyJsonWebtoken(token);
+        return decoded;
+    } catch (error) {
+        return new Error("Invalid or expired token");
+    }   
+}

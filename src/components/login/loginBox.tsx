@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import LoginAction from "@/components/auth/LoginAction";
 import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const FormContainer = ({ children }: { children: React.ReactNode }) => (
     <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
@@ -34,6 +35,8 @@ const LoginBox: React.FC = () => {
     const [email, setEmail] = useState("");
     const [isOtpSent, setIsOtpSent] = useState(false);
     const router = useRouter();
+
+    const env = process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY;
 
     useEffect(() => setIsMounted(true), []);
 
@@ -66,7 +69,7 @@ const LoginBox: React.FC = () => {
         <div className="w-full max-w-md mx-auto">
             <FormContainer>
                 {isOtpSent ? (
-                    /* OTP TRIN */
+
                     <div className="fade-in">
                         <h1 className="text-white font-bold text-2xl text-center mb-4">
                             Indtast engangskode
@@ -88,6 +91,7 @@ const LoginBox: React.FC = () => {
                                     autoFocus
                                     required
                                 />
+
                             </div>
 
                             <ErrorMessage error={error2} />
@@ -127,6 +131,12 @@ const LoginBox: React.FC = () => {
                                     placeholder="navn@domæne.dk"
                                     autoFocus
                                     required
+                                />
+                            </div>
+                            <div className="mb-4 flex justify-center">
+                                <Turnstile
+                                    siteKey={env ?? ''}
+                                    options={{ theme: 'dark' }}
                                 />
                             </div>
 

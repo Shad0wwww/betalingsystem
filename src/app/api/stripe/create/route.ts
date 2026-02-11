@@ -1,18 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { InvoiceService } from "@/lib/services/invoiceService";
+import { InvoiceService } from "@/lib/stripe/invoiceService";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
-
-enum UtilityType {
-    WATER,  
-    ELECTRICITY
-}
+import { $Enums } from "@prisma/client";
 
 type CreatePaymentLinkBody = {
     amount: number;
     description: string;
-    type: UtilityType;
+    type: $Enums.UtilityType;
 };
 
 export async function POST(
@@ -59,7 +55,7 @@ export async function POST(
 
 
 
-        return NextResponse.json({ url: paymentLink.url });
+        return NextResponse.json({ url: paymentLink });
 
 
 

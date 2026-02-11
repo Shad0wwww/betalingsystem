@@ -1,4 +1,4 @@
-// app/api/webhooks/stripe/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { stripeInstance } from "@/lib/stripe/Stripe";
 import { InvoiceService } from "@/lib/stripe/invoiceService";

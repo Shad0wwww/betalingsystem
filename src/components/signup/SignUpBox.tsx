@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'; // 1. Tilføj useEffect/useS
 import Link from 'next/link';
 import { useActionState } from 'react';
 import SignupAction from '@/components/auth/SignupAction';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 const FormContainer = ({ children }: { children: React.ReactNode }) => (
     <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
@@ -31,6 +32,8 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
 const SignUpBox: React.FC = () => {
     const [isMounted, setIsMounted] = useState(false); 
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
+
+    const env = process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY;
 
     useEffect(() => {
         setIsMounted(true);
@@ -79,6 +82,13 @@ const SignUpBox: React.FC = () => {
                             placeholder="+45 12345678"
                         />
                     </Field>
+
+                    <div className="mb-4 flex justify-center">
+                        <Turnstile
+                            siteKey={env ?? ''}
+                            options={{ theme: 'dark' }}
+                        />
+                    </div>
 
                     {errorMessage && (
                         <p className="text-red-500 text-sm mb-4 text-center">
