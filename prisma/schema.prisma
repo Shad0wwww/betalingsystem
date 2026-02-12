@@ -7,11 +7,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  phone     String   @unique
-  createdAt DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  phone        String   @unique
+  phoneCountry String   @default("DK")
+  createdAt    DateTime @default(now())
 
   stripeCustomerId String? @unique
 
@@ -38,17 +39,17 @@ model Invoice {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   amount   Int
-  currency String @default("dkk")
+  currency String        @default("dkk")
   status   InvoiceStatus @default(PENDING)
 
   type UtilityType
 
   stripePaymentIntentId String? @unique
-  stripeInvoiceId String? @unique
+  stripeInvoiceId       String? @unique
 
-  dueDate DateTime
-  paidAt DateTime?
-  createdAt DateTime @default(now())
+  dueDate   DateTime
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
 }
 
 model MeterReading {
@@ -56,16 +57,16 @@ model MeterReading {
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  type UtilityType
+  type  UtilityType
   value Float
-  date DateTime @default(now())
+  date  DateTime    @default(now())
 }
 
 enum InvoiceStatus {
-  PENDING 
-  PAID 
-  FAILED 
-  OVERDUE 
+  PENDING
+  PAID
+  FAILED
+  OVERDUE
 }
 
 enum UtilityType {

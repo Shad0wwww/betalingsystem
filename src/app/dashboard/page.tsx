@@ -3,7 +3,7 @@
 import { UtilityType } from "@prisma/client";
 
 async function getStripePaymentLink(
-	amount = 5000, 
+	amount = 5000,
 	description = "Test Payment"
 ) {
 	return fetch("/api/stripe/create", {
@@ -12,7 +12,7 @@ async function getStripePaymentLink(
 		body: JSON.stringify({
 			amount,
 			description,
-			type: UtilityType.WATER, 
+			type: UtilityType.WATER,
 		}),
 	}).then((res) => res.json())
 		.then((data) => data.url)

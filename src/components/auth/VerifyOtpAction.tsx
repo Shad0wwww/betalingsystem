@@ -41,12 +41,8 @@ export default async function VerifyOtpAction(
     const cookieStore = await cookies();
     cookieStore.set("auth_token", token.token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 24 * 1, // Expire immediately
+        maxAge: 60 * 60 * 24 * 1, 
     });
-
-    const setCookieHeader = res.headers.get("Set-Cookie");
-
-
 
     return { success: true };
 }

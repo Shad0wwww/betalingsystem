@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useActionState } from 'react';
 import SignupAction from '@/components/auth/SignupAction';
 import { Turnstile } from '@marsidev/react-turnstile';
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+
 
 const FormContainer = ({ children }: { children: React.ReactNode }) => (
     <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
@@ -30,8 +33,9 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
 );
 
 const SignUpBox: React.FC = () => {
-    const [isMounted, setIsMounted] = useState(false); 
+    const [isMounted, setIsMounted] = useState(false);
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
+    const [validatePhone, setPhone] = useState<string | null>(null);
 
     const env = process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY;
 
@@ -75,20 +79,23 @@ const SignUpBox: React.FC = () => {
                     </Field>
 
                     <Field label="Phone Number">
-                        <Input
+                        <PhoneInput
                             id="phone"
                             name="phone"
-                            type="tel"
-                            placeholder="+45 12345678"
+                            defaultCountry="DK"
+                            placeholder="12345678"
+                            value={validatePhone ?? ''}
+                            onChange={(value) => setPhone(value || null)}
+                            className="flex w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus-within:ring-1 focus-within:ring-gray-500 transition-all"
                         />
                     </Field>
 
-                    <div className="mb-4 flex justify-center">
+                    {/* <div className="mb-4 flex justify-center">
                         <Turnstile
                             siteKey={env ?? ''}
                             options={{ theme: 'dark' }}
                         />
-                    </div>
+                    </div> */}
 
                     {errorMessage && (
                         <p className="text-red-500 text-sm mb-4 text-center">
