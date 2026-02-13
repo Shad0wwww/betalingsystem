@@ -41,7 +41,7 @@ export async function POST(
     // SEND EMAIL WITH CODE TO USER
     await sendEmail(
         email,
-        "Her er dur engangskode",
+        "Her er din engangskode",
         generateHtmlOTP(code)
     );
 

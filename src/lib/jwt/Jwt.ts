@@ -25,9 +25,8 @@ export async function checkAuthentication(
     token: string
 ) {
     try {
-        const decoded = await verifyJsonWebtoken(token);
-        return decoded;
+        return await verifyJsonWebtoken(token);
     } catch (error) {
-        return new Error("Invalid or expired token");
+        return null; 
     }   
 }
