@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Kammerslusen Ribe",
+	title: "Ribe Sejlklub",
 	description: "Betalingssystem for Kammerslusen Ribe",
 };
 
