@@ -64,6 +64,7 @@ const SignUpBox: React.FC = () => {
                             name="fullName"
                             type="text"
                             placeholder="John Doe"
+                            min={2}
                             required
                         />
                     </Field>
@@ -114,7 +115,7 @@ const SignUpBox: React.FC = () => {
                     <div className="mt-6 text-center">
                         <p className="text-gray-400 text-sm">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-white underline hover:text-gray-300">
+                            <Link href="/login" className="text-white underline hover:text-gray-300" >
                                 Login
                             </Link>
                         </p>

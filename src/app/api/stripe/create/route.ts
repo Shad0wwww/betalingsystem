@@ -1,3 +1,4 @@
+import 'server-only';
 import { NextRequest, NextResponse } from "next/server";
 import { InvoiceService } from "@/lib/stripe/invoiceService";
 import prisma from "@/lib/prisma";

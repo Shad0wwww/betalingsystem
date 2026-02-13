@@ -1,3 +1,4 @@
+import 'server-only';
 import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { verifyOTPCode } from "@/lib/utils/OTP";
@@ -81,14 +82,15 @@ export async function POST(
 
 
     const response = NextResponse.json(
-        { message: "OTP verified successfully",
+        {
+            message: "OTP verified successfully",
             token: token
-         }
+        }
         , { status: 200 },
-        
+
     );
 
-    
+
     return response;
 }
 

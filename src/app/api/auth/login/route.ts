@@ -1,3 +1,4 @@
+import 'server-only';
 import { sendEmail } from "@/lib/emailer/Mail";
 import { generateHtmlOTP } from "@/lib/emailer/MailCreator";
 import prisma from "@/lib/prisma";
