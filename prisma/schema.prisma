@@ -12,6 +12,7 @@ model User {
   email        String   @unique
   phone        String   @unique
   phoneCountry String   @default("DK")
+  Role         Role   @default(USER)
   createdAt    DateTime @default(now())
 
   stripeCustomerId String? @unique
@@ -72,4 +73,9 @@ enum InvoiceStatus {
 enum UtilityType {
   WATER
   ELECTRICITY
+}
+
+enum Role {
+  USER
+  ADMIN
 }

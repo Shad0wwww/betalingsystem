@@ -1,3 +1,5 @@
+
+import ChooseNavbar from "@/components/navbar/NavbarChoser";
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -28,6 +30,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				<ChooseNavbar />
 				{children}
 			</body>
 		</html>
