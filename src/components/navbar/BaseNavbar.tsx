@@ -15,15 +15,14 @@ const Navbar: React.FC<NavbarProps> = (
         <nav className="bg-[#0d0d0d] border-b border-[#383636] w-full">
             <div className="mx-auto container lg:max-w-7xl px-[5%] py-7 flex flex-row justify-between items-center headline-color">
 
-        
+
                 <div className="flex items-center gap-3">
                     <Image
-                        src="https://github.com/Shad0wwww/betalingsystem/blob/main/public/Logo.png?raw=true"
-                        alt="Logo"  
-                        width={30}
-                        height={30}
+                        src="https://cdn.discordapp.com/attachments/1087323413384794172/1472583490238156841/image.png?ex=699319bf&is=6991c83f&hm=beb8d78d82e971ab1860162441fc6891ed73bcde29c0c7f1fa97f70f24862f9d&"
+                        alt="Logo"
+                        width={100}
+                        height={100}
                     />
-                    
                 </div>
 
                 {/* Dynamisk Knap */}
