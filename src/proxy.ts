@@ -1,32 +1,29 @@
-import 'server-only';
 import { NextRequest, NextResponse } from "next/server";
 import { checkAuthentication } from "./lib/jwt/Jwt";
 
-export default async function proxy(
-    request: NextRequest
-) {
-    const token = request.cookies.get("auth_token")?.value as string | undefined;
+export default async function middleware(request: NextRequest) {
+    const token = request.cookies.get("auth_token")?.value;
+    const { pathname } = request.nextUrl;
 
-    const redirectURL = request.nextUrl.clone();
-    redirectURL.pathname = "/login";
-    
-    if (!token) {
-        return NextResponse.redirect(redirectURL);
+    const isAuthenticated = token ? await checkAuthentication(token) : false;
+
+    if (isAuthenticated && (pathname.startsWith('/login') || pathname.startsWith('/signup'))) {
+        return NextResponse.redirect(new URL('/dashboard', request.url));
     }
 
-    if (!(await checkAuthentication(token))) {
-        console.error("Authentication failed for token:", token);
-        return NextResponse.redirect(redirectURL);
-    }
-
-
     
+    if (!isAuthenticated && pathname.startsWith('/dashboard')) {
+        return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     return NextResponse.next();
 }
 
+// Opdater matcher til at inkludere login og signup siderne
 export const config = {
-    matcher: [{
-        source: "/dashboard/:path*",
-    }],
+    matcher: [
+        '/dashboard/:path*',
+        '/login',
+        '/signup'
+    ],
 };
