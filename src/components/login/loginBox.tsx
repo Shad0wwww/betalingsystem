@@ -8,18 +8,24 @@ import LoginAction from "@/components/auth/LoginAction";
 import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
 import { Turnstile } from "@marsidev/react-turnstile";
 
-const FormContainer = ({ children }: { children: React.ReactNode }) => (
+const FormContainer = (
+    { children }: { children: React.ReactNode }
+) => (
     <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
         {children}
     </div>
 );
 
-const ErrorMessage = ({ error }: { error: string | null }) =>
+const ErrorMessage = (
+    { error }: { error: string | null }
+) =>
     error ? (
         <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
     ) : null;
 
-const Label = ({ children }: { children: React.ReactNode }) => (
+const Label = (
+    { children }: { children: React.ReactNode }
+) => (
     <p className="text-white font-normal text-[15px] mb-2">{children}</p>
 );
 

@@ -19,7 +19,7 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
 }
 
-// Opdater matcher til at inkludere login og signup siderne
+
 export const config = {
     matcher: [
         '/dashboard/:path*',

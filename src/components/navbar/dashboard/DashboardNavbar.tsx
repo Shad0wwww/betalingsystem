@@ -8,7 +8,7 @@ export default function DashboardNavbar() {
     const pathname = usePathname();
 
     return (
-        <div className="mx-auto container lg:max-w-7xl max-w-screen-xl px-4 md:px-20 pt-16 pb-10 overflow-x-auto no-scrollbar">
+        <div className="mx-auto container lg:max-w-7xl max-w-screen-xl px-4 md:px-20 pb-10 overflow-x-auto no-scrollbar">
 
             <div className="flex flex-row pt-5 sub-headline gap-3">
                 <Link
@@ -16,7 +16,7 @@ export default function DashboardNavbar() {
                     className={`px-5 py-2 ${pathname === "/dashboard" ? style.active : "hover:border-b-2 hover:border-white/20"}`}
                 >
                     <div className="pb-2">
-                        <p>Profile</p>
+                        <p>Oversigt</p>
                     </div>
                 </Link>
 
@@ -30,11 +30,11 @@ export default function DashboardNavbar() {
                 </Link>
 
                 <Link
-                    href="/dashboard/oversigt"
-                    className={`px-5 py-2 ${pathname === "/dashboard/oversigt" ? style.active : "hover:border-b-2 hover:border-white/20"}`}
+                    href="/dashboard/settings"
+                    className={`px-5 py-2 ${pathname === "/dashboard/settings" ? style.active : "hover:border-b-2 hover:border-white/20"}`}
                 >
                     <div className="pb-2">
-                        <p>Oversigt</p>
+                        <p>Settings</p>
                     </div>
                 </Link>
             </div>
