@@ -3,33 +3,25 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface NavbarProps {
-    buttonText: string;
-    buttonHref: string;
-}
-
-const Navbar: React.FC<NavbarProps> = (
-    { buttonText, buttonHref }
-) => {
+const DashboardNavbar: React.FC = () => {
     return (
         <nav className="bg-[#0d0d0d] border-b border-[#383636] w-full">
             <div className="mx-auto container lg:max-w-7xl px-[5%] py-7 flex flex-row justify-between items-center headline-color">
 
-        
+                {/* Logo / Titel */}
                 <div className="flex items-center gap-3">
                     <Image
                         src="https://github.com/Shad0wwww/betalingsystem/blob/main/public/Logo.png?raw=true"
-                        alt="Logo"  
+                        alt="Logo"
                         width={30}
                         height={30}
                     />
-                    
                 </div>
 
                 {/* Dynamisk Knap */}
                 <div className="flex items-center gap-3">
                     <Link
-                        href={buttonHref}
+                        href="/login"
                         className="
                             inline-flex items-center justify-center
                             bg-[#1a1a1a] text-white 
@@ -42,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = (
                             shadow-lg
                         "
                     >
-                        {buttonText}
+                        Log ud
                     </Link>
                 </div>
             </div>
@@ -50,4 +42,4 @@ const Navbar: React.FC<NavbarProps> = (
     );
 };
 
-export default Navbar;
+export default DashboardNavbar;

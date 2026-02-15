@@ -3,6 +3,7 @@
 
 import { usePathname } from 'next/navigation';
 import Navbar from './BaseNavbar';
+import DashboardNavbar from './DashboardNavbar';
 
 
 export default function ChooseNavbar() {
@@ -18,6 +19,10 @@ export default function ChooseNavbar() {
 
     if (path === "/signup") {
         return <Navbar buttonText="Login" buttonHref="/login" />;
+    }
+
+    if (path.startsWith("/dashboard")) {
+        return <DashboardNavbar />;
     }
 
     return <Navbar buttonText="Home" buttonHref="/" />;

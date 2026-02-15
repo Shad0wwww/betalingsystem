@@ -14,8 +14,6 @@ export default async function proxy(
         return NextResponse.redirect(redirectURL);
     }
 
-    console.log("Token from cookie:", token);
-
     if (!(await checkAuthentication(token))) {
         console.error("Authentication failed for token:", token);
         return NextResponse.redirect(redirectURL);

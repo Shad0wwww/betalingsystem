@@ -1,81 +1,80 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
-
 datasource db {
-  provider = "postgresql"
+    provider = "postgresql"
+	
 }
-
 model User {
-  id           Int      @id @default(autoincrement())
-  name         String
-  email        String   @unique
-  phone        String   @unique
-  phoneCountry String   @default("DK")
-  Role         Role   @default(USER)
-  createdAt    DateTime @default(now())
+    id           Int      @id @default(autoincrement())
+    name         String
+    email        String   @unique
+    phone        String   @unique
+    phoneCountry String   @default("DK")
+    Role         Role     @default(value: USER)
+    createdAt    DateTime @default(now())
 
-  stripeCustomerId String? @unique
+    stripeCustomerId String? @unique
 
-  //Relationer
-  verificationTokens VerificationToken[]
-  invoices           Invoice[]
-  meterReadings      MeterReading[]
+    //Relationer
+    verificationTokens VerificationToken[]
+    invoices           Invoice[]
+    meterReadings      MeterReading[]
 }
 
 model VerificationToken {
-  identifier String   @unique
-  token      String   @unique
-  expires    DateTime
+    identifier String   @unique
+    token      String   @unique
+    expires    DateTime
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([identifier, token])
+    @@unique([identifier, token])
 }
 
 model Invoice {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id     Int  @id @default(autoincrement())
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  amount   Int
-  currency String        @default("dkk")
-  status   InvoiceStatus @default(PENDING)
+    amount   Int
+    currency String        @default("dkk")
+    status   InvoiceStatus @default(PENDING)
 
-  type UtilityType
+    type UtilityType
 
-  stripePaymentIntentId String? @unique
-  stripeInvoiceId       String? @unique
+    stripePaymentIntentId String? @unique
+    stripeInvoiceId       String? @unique
 
-  dueDate   DateTime
-  paidAt    DateTime?
-  createdAt DateTime  @default(now())
+    dueDate   DateTime
+    paidAt    DateTime?
+    createdAt DateTime  @default(now())
 }
 
 model MeterReading {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id     Int  @id @default(autoincrement())
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  type  UtilityType
-  value Float
-  date  DateTime    @default(now())
+    type  UtilityType
+    value Float
+    date  DateTime    @default(now())
 }
 
 enum InvoiceStatus {
-  PENDING
-  PAID
-  FAILED
-  OVERDUE
+    PENDING
+    PAID
+    FAILED
+    OVERDUE
 }
 
 enum UtilityType {
-  WATER
-  ELECTRICITY
+    WATER
+    ELECTRICITY
 }
 
 enum Role {
-  USER
-  ADMIN
+    USER
+    ADMIN
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import GridContainer from "@/components/utils/GridContainer";
 import { UtilityType } from "@prisma/client";
 
 async function getStripePaymentLink(
@@ -21,17 +22,13 @@ async function getStripePaymentLink(
 export default function Page() {
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-			<h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">
-				Welcome to Next.js 13!
-			</h1>
-
+		<GridContainer>
 			<button
-				className="mt-6 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-				onClick={() => getStripePaymentLink().then((url) => window.open(url, "_blank"))}
+				className="px-4 py-2 bg-blue-500 text-white rounded"
+				onClick={() => getStripePaymentLink().then((url) => window.location.href = url)}
 			>
-				test Payment request
+				Pay with Stripe
 			</button>
-		</div>
+		</GridContainer>
 	);
 }

@@ -26,7 +26,7 @@ const Label = ({ children }: { children: React.ReactNode }) => (
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
-        className={`w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 ${props.className}`}
+        className={`w-full border rounded-md p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 ${props.className}`}
     />
 );
 
@@ -133,12 +133,12 @@ const LoginBox: React.FC = () => {
                                     required
                                 />
                             </div>
-                            <div className="mb-4 flex justify-center">
+                            {/* <div className="mb-4 flex justify-center">
                                 <Turnstile
                                     siteKey={env ?? ''}
                                     options={{ theme: 'dark' }}
                                 />
-                            </div>
+                            </div> */}
 
                             <ErrorMessage error={error1} />
 

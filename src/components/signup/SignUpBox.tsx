@@ -28,7 +28,7 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
         suppressHydrationWarning
-        className="w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
+        className="w-full border rounded-md p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
     />
 );
 
