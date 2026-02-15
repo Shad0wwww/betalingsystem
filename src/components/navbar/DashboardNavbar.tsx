@@ -2,8 +2,19 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 const DashboardNavbar: React.FC = () => {
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/user/logud");
+            redirect("/");
+
+        } catch (error) {
+            console.error("Logud fejlede:", error);
+        }
+    };
+    
     return (
         <nav className="bg-[#0d0d0d] border-b border-[#383636] w-full">
             <div className="mx-auto container lg:max-w-7xl px-[5%] py-7 flex flex-row justify-between items-center headline-color">
@@ -23,8 +34,8 @@ const DashboardNavbar: React.FC = () => {
 
                 {/* Dynamisk Knap */}
                 <div className="flex items-center gap-3">
-                    <Link
-                        href="/login"
+                    <button
+                        onClick={handleLogout}
                         className="
                             inline-flex items-center justify-center
                             bg-[#1a1a1a] text-white 
@@ -38,7 +49,7 @@ const DashboardNavbar: React.FC = () => {
                         "
                     >
                         Log ud
-                    </Link>
+                    </button>
                 </div>
             </div>
         </nav>

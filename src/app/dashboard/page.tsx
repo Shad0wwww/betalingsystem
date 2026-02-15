@@ -1,4 +1,4 @@
-import GridContainer from "@/components/utils/GridContainer";
+import GridContainer from "@/components/dashboard/GridContainer";
 
 
 
