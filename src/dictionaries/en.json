@@ -1,5 +1,25 @@
 {
-    "products": {
-        "cart": "Add to Cart"
+    "landingpage": {
+        "undertitel": "Kammarslusen Ribe is a payment system for vessels in Ribe. The system makes it easy for ships to pay for lock passage, while allowing the lock operators to efficiently track payments and status.",
+        "learnmore": "Learn more",
+        "signup": "Sign up"
+    },
+    "dashboard": {
+        "oversigt": {
+            "title": "Overview"
+        },
+        "historik": {
+            "title": "History"
+        },
+        "settings": {
+            "fullname": "Change your full name",
+            "fullnameDescription": "Update your full name as it appears on your profile and in your transactions.",
+            "saveChanges": "Save changes",
+            "email": "Change your email address",
+            "emailDescription": "Update your email address used for logging into your account and receiving important notifications.",
+            "deleteAccount": "Delete account",
+            "deleteAccountDescription": "Are you sure you want to delete your account? This action cannot be undone.",
+            "deleteAccountButton": "Delete account"
+        }
     }
 }

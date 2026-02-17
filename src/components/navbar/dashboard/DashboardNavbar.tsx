@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import style from "../navbar.module.css";
 
+//TODO: Fix så language også virker her
+
 export default function DashboardNavbar() {
     const pathname = usePathname();
     const params = useParams();
