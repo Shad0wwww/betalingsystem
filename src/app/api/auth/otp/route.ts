@@ -10,8 +10,11 @@ export async function POST(
 
     const {
         code,
-        email
+        email: rawEmail
     } = await request.json();
+
+
+    const email = rawEmail.toLowerCase();
 
 
     if (!code || code.length !== 6) {
@@ -67,7 +70,7 @@ export async function POST(
     });
 
     const token = await generateJsonWebtoken(
-        user?.id.toString()!!,
+        user!.id.toString(),
         email
     )
 
@@ -76,9 +79,6 @@ export async function POST(
             identifier: email
         }
     });
-
-    console.log("Generated JWT token:", token);
-
 
 
     const response = NextResponse.json(

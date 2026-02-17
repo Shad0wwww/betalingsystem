@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = (
                 <div className="flex items-center gap-3">
                     <Link href="/">
                         <Image
-                            src="https://cdn.discordapp.com/attachments/1087323413384794172/1472583490238156841/image.png?ex=699319bf&is=6991c83f&hm=beb8d78d82e971ab1860162441fc6891ed73bcde29c0c7f1fa97f70f24862f9d&"
+                            src="https://cdn.discordapp.com/attachments/1087323413384794172/1472583490238156841/image.png?ex=699513ff&is=6993c27f&hm=4d98a37daa44505b4780f24f7f426bde47747b13731135a81fdc51551f51ef43"
                             alt="Logo"
                             width={100}
                             height={100}    
