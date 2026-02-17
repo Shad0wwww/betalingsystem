@@ -21,5 +21,38 @@
             "deleteAccountDescription": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes.",
             "deleteAccountButton": "Slet konto"
         }
+    },
+    "termsofservice": {
+        "title": "Servicevilkår",
+        "undertitle": "Introduktion",
+        "introduction": "Velkommen til Ribe Sejlklubs betalingssystem. Ved at bruge vores tjenester accepterer du at overholde disse servicevilkår. Læs venligst disse vilkår omhyggeligt, da de indeholder vigtige oplysninger om dine rettigheder og forpligtelser.",
+        "publisher": {
+            "title": "Udgiver"
+        },
+        "section1": {
+            "title": "§1 Levering",
+            "content": "Når du foretager et køb gennem vores betalingssystem, vil vi bestræbe os på at levere den købte service så hurtigt som muligt. I de fleste tilfælde vil leveringen ske inden for få minutter efter købet. I sjældne tilfælde kan der dog forekomme forsinkelser."
+        },
+        "section2": {
+            "title": "§2 Refusioner",
+            "content": "Alle salg er endelige, og vi tilbyder ingen refusioner. Hvis du har problemer med din service, bedes du kontakte vores supportteam, så vi kan hjælpe dig."
+        },
+        "section3": {
+            "title": "§3 Ansvarsfraskrivelse",
+            "content": "Ribe Sejlklub og dets betalingssystem leveres 'som det er' uden nogen form for garanti, hverken udtrykkelig eller underforstået. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
+        },
+        "section4": {
+            "title": "§4 GDPR og databeskyttelse",
+            "content": "Ribe Sejlklub forpligter sig til at beskytte dine personlige oplysninger og overholde gældende databeskyttelseslovgivning, herunder GDPR. Vi indsamler kun de nødvendige oplysninger for at levere vores tjenester og vil aldrig dele dine oplysninger med tredjepart uden dit samtykke."
+        },
+        
+        "section5": {
+            "title": "§5 Ændringer af vilkår",
+            "content": "Ribe Sejlklub forbeholder sig retten til at ændre disse servicevilkår til enhver tid. Eventuelle ændringer vil blive offentliggjort på vores hjemmeside, og det er dit ansvar at holde dig opdateret om eventuelle ændringer."
+        },
+        "section6": {
+            "title": "§6 Kontaktinformation",
+            "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
+        }
     }
 }

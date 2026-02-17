@@ -3,7 +3,7 @@ import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { checkAuthentication } from "./lib/jwt/Jwt";
 
-const locales = ["en-US", "da-DK"];
+const locales = ["en-US", "da-DK", "de-DE"];
 const defaultLocale = "da-DK";
 
 function getLocale(request: NextRequest) {

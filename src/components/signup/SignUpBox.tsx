@@ -91,6 +91,24 @@ const SignUpBox: React.FC = () => {
                         />
                     </Field>
 
+                    <Field label="Term of Service">
+                        <div className="flex items-center gap-2">
+                            <input
+                                id="tos"
+                                name="tos"
+                                type="checkbox"
+                                required
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 focus:ring-offset-0 transition-all"
+                            />
+                            <label htmlFor="tos" className="text-gray-400 text-sm">
+                                I agree to the{' '}
+                                <Link href="/terms-of-service" className="text-white underline hover:text-gray-300">
+                                    Terms of Service
+                                </Link>
+                            </label>
+                        </div>
+                    </Field>
+
                     {/* <div className="mb-4 flex justify-center">
                         <Turnstile
                             siteKey={env ?? ''}

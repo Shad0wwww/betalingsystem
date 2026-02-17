@@ -17,7 +17,7 @@ const DashboardNavbar: React.FC = () => {
     
     return (
         <nav className="bg-[#0d0d0d] border-b border-[#383636] w-full">
-            <div className="mx-auto container lg:max-w-7xl px-[5%] py-7 flex flex-row justify-between items-center headline-color">
+            <div className="mx-auto container lg:max-w-7xl px-[5%] py-4 flex flex-row justify-between items-center headline-color">
 
                 {/* Logo / Titel */}
                 <div className="flex items-center gap-3">

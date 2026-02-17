@@ -1,0 +1,25 @@
+{
+    "landingpage": {
+        "undertitel": "Kammarslusen Ribe ist ein Zahlungssystem für Schiffe in Ribe. Das System macht es den Schiffen leicht, für die Schleusendurchfahrt zu bezahlen, während es den Schleusenbetreibern ermöglicht, Zahlungen und Status effizient zu verfolgen.",
+        "learnmore": "Mehr erfahren",
+        "signup": "Registrieren"
+    },
+    "dashboard": {
+        "oversigt": {
+            "title": "Übersicht"
+        },
+        "historik": {
+            "title": "Verlauf"
+        },
+        "settings": {
+            "fullname": "Vollständigen Namen ändern",
+            "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, wie er in Ihrem Profil und bei Ihren Transaktionen angezeigt wird.",
+            "saveChanges": "Änderungen speichern",
+            "email": "E-Mail-Adresse ändern",
+            "emailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse, die für die Anmeldung bei Ihrem Konto und den Erhalt wichtiger Benachrichtigungen verwendet wird.",
+            "deleteAccount": "Konto löschen",
+            "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+            "deleteAccountButton": "Konto löschen"
+        }
+    }
+}
