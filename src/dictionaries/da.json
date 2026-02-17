@@ -1,0 +1,25 @@
+{
+    "landingpage": {
+        "undertitel": "Kammarslusen Ribe et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har.",
+        "learnmore": "Lær mere",
+        "signup": "Tilmeld dig"
+    },
+    "dashboard": {
+        "oversigt": {
+
+        },
+        "historik": {
+
+        },
+        "settings": {
+            "fullname": "Ændre dit fulde navn",
+            "fullnameDescription": "Opdatér dit fulde navn, som vises på din profil og i dine transaktioner.",
+            "saveChanges": "Gem ændringer",
+            "email": "Ændre din e-mailadresse",
+            "emailDescription": "Opdatér din e-mailadresse, som bruges til at logge ind på din konto og modtage vigtige meddelelser.",
+            "deleteAccount": "Slet konto",
+            "deleteAccountDescription": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes.",
+            "deleteAccountButton": "Slet konto"
+        }
+    }
+}

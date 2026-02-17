@@ -12,6 +12,8 @@ export default async function SignupAction(
     const email = data.get('email') as string;
     const phone = data.get('phone') as string;
     const phoneCountry = data.get('phoneCountry') as string;
+
+    const emailLower = email.toLowerCase();
     //const turnstileToken = data.get('cf-turnstile-response') as string;
     console.log(data);
 
@@ -36,7 +38,7 @@ export default async function SignupAction(
     //     return { error: "Sikkerhedstjek fejlede. Venligst bekræft at du ikke er en robot." };
     // }
 
-    if (!(await validateEmail(email))) {
+    if (!(await validateEmail(emailLower))) {
         return { error: "Invalid email" };
     }
     
@@ -47,7 +49,7 @@ export default async function SignupAction(
         },
         body: JSON.stringify({
             name: fullName,
-            email,
+            email: emailLower,
             phone,
             phoneCountry,
         }),

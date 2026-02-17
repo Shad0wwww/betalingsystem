@@ -10,7 +10,9 @@ export default async function VerifyOtpAction(
     const email = data.get('email') as string;
     const code = data.get('otp') as string;
 
-    if (!(await validateEmail(email))) {
+    const emailLower = email.toLowerCase();
+
+    if (!(await validateEmail(emailLower))) {
         return { error: "Invalid email" };
     }
 
@@ -21,7 +23,7 @@ export default async function VerifyOtpAction(
         },
         credentials: 'include',
         body: JSON.stringify({
-            email,
+            email: emailLower,
             code
         }),
     });
