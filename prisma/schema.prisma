@@ -12,7 +12,11 @@ model User {
     phone        String   @unique
     phoneCountry String   @default("DK")
     Role         Role     @default(value: USER)
+
+    balance      Float    @default(0)
+
     createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 
     stripeCustomerId String? @unique
 

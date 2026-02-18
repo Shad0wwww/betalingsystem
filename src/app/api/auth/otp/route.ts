@@ -16,7 +16,6 @@ export async function POST(
 
     const email = rawEmail.toLowerCase();
 
-
     if (!code || code.length !== 6) {
         return Response.json(
             { error: "Invalid code" }
@@ -79,7 +78,6 @@ export async function POST(
             identifier: email
         }
     });
-
 
     const response = NextResponse.json(
         {

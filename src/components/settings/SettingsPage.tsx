@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
+import RegisterShipModal from "../modals/RegisterShipModal";
 
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
@@ -29,8 +30,10 @@ export default function SettingsClient({ dict }: { dict: any }) {
     const [name, setName] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState<string>("");
+    
 
     useEffect(() => {
+        setLoading(true);
         fetchUserFullName().then((data) => {
             setName(data.name);
             setEmail(data.email);
@@ -52,17 +55,29 @@ export default function SettingsClient({ dict }: { dict: any }) {
     return (
         <div className="min-h-screen px-4">
             <div className="flex flex-col max-w-3xl mx-auto mt-2 gap-10">
+
+
+                {/* Register boat */}
+                <SettingsCard
+                    title={dict.dashboard.settings.registerBoat}
+                    description={dict.dashboard.settings.registerBoatDescription}
+                    dialog={<RegisterShipModal />}
+                    footerText=""
+                    buttonText=""
+                />
+
+
                 <SettingsCard
                     title={dict.dashboard.settings.fullname}
                     description={dict.dashboard.settings.fullnameDescription}
                     buttonText={dict.dashboard.settings.saveChanges}
+                    disabled={(!name || name.length === 0)}
                     onAction={() => updateUserFullName(name)}
                 >
                     <Input
                         type="text"
-                        value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Your full name"
+                        placeholder={name || dict.dashboard.settings.fullnamePlaceholder}
                     />
                 </SettingsCard>
 
@@ -71,12 +86,12 @@ export default function SettingsClient({ dict }: { dict: any }) {
                     description={dict.dashboard.settings.emailDescription}
                     buttonText={dict.dashboard.settings.saveChanges}
                     onAction={() => console.log("Changing email...")}
+                    disabled={(!email || email.length === 0)}
                 >
                     <Input
                         type="text"
-                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Your email address"
+                        placeholder={email || dict.dashboard.settings.emailPlaceholder}
                     />
                 </SettingsCard>
 

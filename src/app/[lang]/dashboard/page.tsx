@@ -1,6 +1,7 @@
 import GridContainer from "@/components/dashboard/GridContainer";
 import { notFound } from "next/dist/client/components/navigation";
 import { getDictionary } from "../dictionaries";
+import Overview from "@/components/dashboard/Overview";
 
 
 
@@ -15,8 +16,6 @@ export default async function Page(
 
     if (!dict) notFound();
     return (
-        <GridContainer>
-            <p>Oversigt</p>
-        </GridContainer>
+        <Overview dict={dict} />
     );
 }

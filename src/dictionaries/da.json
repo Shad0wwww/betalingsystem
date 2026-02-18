@@ -19,7 +19,12 @@
             "emailDescription": "Opdatér din e-mailadresse, som bruges til at logge ind på din konto og modtage vigtige meddelelser.",
             "deleteAccount": "Slet konto",
             "deleteAccountDescription": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes.",
-            "deleteAccountButton": "Slet konto"
+            "deleteAccountButton": "Slet konto",
+            "fullnamePlaceholder": "Dit fulde navn",
+            "emailPlaceholder": "Din e-mailadresse",
+            "registerBoat": "Registrér et nyt skib",
+            "registerBoatDescription": "Register et nyt skib, så vi kan holde styr på det i vores skib, og så vi sikre at du er den rigtige der benytter sig af strømmen.",
+            "registerBoatButton": "Registrér skib"
         }
     },
     "termsofservice": {

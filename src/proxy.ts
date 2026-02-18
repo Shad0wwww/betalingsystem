@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { checkAuthentication } from "./lib/jwt/Jwt";
+import { GetUser } from "./lib/users/GetUser";
 
 const locales = ["en-US", "da-DK", "de-DE"];
 const defaultLocale = "da-DK";
@@ -28,19 +29,34 @@ export default async function middleware(request: NextRequest) {
         );
     }
 
+
     const token = request.cookies.get("auth_token")?.value;
     const isAuthenticated = token ? await checkAuthentication(token) : false;
 
     const isLoginOrSignup = pathname.match(/\/(login|signup)$/);
     const isDashboard = pathname.includes("/dashboard");
 
-    if (isAuthenticated && isLoginOrSignup) {
+    
+    const user = token ? await GetUser.getUserFromJsonWebToken(token) : null;
+    console.log(`Middleware: User from token: ${user ? user.email : "No user"}`);
+    const userExist = await GetUser.doesUserExistByEmail(user?.email || "");
+
+    console.log(`Middleware: isAuthenticated=${isAuthenticated}, isLoginOrSignup=${isLoginOrSignup}, isDashboard=${isDashboard}, token=${!!token}, userExist=${userExist}`);
+
+    if (isDashboard && !isAuthenticated && !userExist) {
+        if (token) {
+            cookieStore.delete("auth_token");
+        }
+        return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (isAuthenticated && isLoginOrSignup && userExist) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
-    if (!isAuthenticated && isDashboard) {
-        return NextResponse.redirect(new URL("/login", request.url));
-    }
+
+    console.log(`Middleware: Checking authentication for ${pathname}`);
+
 
     return NextResponse.next();
 }
