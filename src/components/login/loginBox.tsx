@@ -139,12 +139,12 @@ const LoginBox: React.FC = () => {
                                     required
                                 />
                             </div>
-                            {/* <div className="mb-4 flex justify-center">
+                            <div className="mb-4 flex justify-center">
                                 <Turnstile
                                     siteKey={env ?? ''}
                                     options={{ theme: 'dark' }}
                                 />
-                            </div> */}
+                            </div> 
 
                             <ErrorMessage error={error1} />
 
