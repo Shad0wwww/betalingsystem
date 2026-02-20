@@ -10,7 +10,7 @@ import 'react-phone-number-input/style.css'
 
 
 const FormContainer = ({ children }: { children: React.ReactNode }) => (
-    <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
+    <div className="border rounded-lg custom-box2 py-8 px-5 sm:py-10 sm:px-12 border-[#292828] bg-[#131313]">
         {children}
     </div>
 );
@@ -28,7 +28,7 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
         suppressHydrationWarning
-        className="w-full border rounded-md p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
+        className="w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
     />
 );
 
@@ -36,8 +36,6 @@ const SignUpBox: React.FC = () => {
     const [isMounted, setIsMounted] = useState(false);
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
     const [validatePhone, setPhone] = useState<string | null>(null);
-
-    const env = process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY;
 
     useEffect(() => {
         setIsMounted(true);
@@ -48,7 +46,7 @@ const SignUpBox: React.FC = () => {
     if (!isMounted) return null;
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto px-4 sm:px-0">
             <FormContainer>
                 <div className="text-center mb-8">
                     <h1 className="text-white font-bold text-2xl mb-2">Create an account</h1>
@@ -87,7 +85,8 @@ const SignUpBox: React.FC = () => {
                             placeholder="12345678"
                             value={validatePhone ?? ''}
                             onChange={(value) => setPhone(value || null)}
-                            className="flex w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus-within:ring-1 focus-within:ring-gray-500 transition-all"
+                            required
+                            className="flex w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus-within:ring-1 focus-within:ring-gray-500 transition-all"
                         />
                     </Field>
 
@@ -102,7 +101,7 @@ const SignUpBox: React.FC = () => {
                             />
                             <label htmlFor="tos" className="text-gray-400 text-sm">
                                 I agree to the{' '}
-                                <Link href="/terms-of-service" className="text-white underline hover:text-gray-300">
+                                <Link href="/terms-of-service" className="text-white underline hover:text-gray-300" target='_blank'>
                                     Terms of Service
                                 </Link>
                             </label>

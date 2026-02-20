@@ -11,7 +11,7 @@ import { Turnstile } from "@marsidev/react-turnstile";
 const FormContainer = (
     { children }: { children: React.ReactNode }
 ) => (
-    <div className="border rounded-lg custom-box2 py-10 px-12 border-[#292828] bg-[#131313]">
+    <div className="border rounded-lg custom-box2 py-8 px-5 sm:py-10 sm:px-12 border-[#292828] bg-[#131313]">
         {children}
     </div>
 );
@@ -32,7 +32,7 @@ const Label = (
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
-        className={`w-full border rounded-md p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 ${props.className}`}
+        className={`w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 ${props.className}`}
     />
 );
 
@@ -72,7 +72,7 @@ const LoginBox: React.FC = () => {
     if (!isMounted) return null;
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto px-4 sm:px-0">
             <FormContainer>
                 {isOtpSent ? (
 
@@ -80,7 +80,7 @@ const LoginBox: React.FC = () => {
                         <h1 className="text-white font-bold text-2xl text-center mb-4">
                             Indtast engangskode
                         </h1>
-                        <p className="text-gray-400 text-center text-sm mb-8">
+                        <p className="text-gray-400 text-center text-sm mb-8 break-words">
                             Vi har sendt en 6-cifret kode til{" "}
                             <span className="text-white font-semibold">{email}</span>
                         </p>
@@ -93,7 +93,7 @@ const LoginBox: React.FC = () => {
                                     name="otp"
                                     placeholder="123456"
                                     maxLength={6}
-                                    className="text-center text-2xl tracking-[0.5em] font-mono"
+                                    className="text-center text-xl tracking-[0.3em] sm:text-2xl sm:tracking-[0.5em] font-mono"
                                     autoFocus
                                     required
                                 />
@@ -139,7 +139,7 @@ const LoginBox: React.FC = () => {
                                     required
                                 />
                             </div>
-                            <div className="mb-4 flex justify-center">
+                            <div className="mb-4 flex justify-center max-w-full overflow-hidden">
                                 <Turnstile
                                     siteKey={env ?? ''}
                                     options={{ theme: 'dark' }}
