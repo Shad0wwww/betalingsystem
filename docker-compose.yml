@@ -17,7 +17,7 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-    command: sh -c "npm install -g pnpm && pnpm install && pnpm build && pnpm start"
+    command: sh -c "npm install -g pnpm && pnpm install && npx prisma generate && npx prisma db push && pnpm build && pnpm start"
     env_file:
       - .env
     depends_on:
