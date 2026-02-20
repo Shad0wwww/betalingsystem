@@ -1,25 +1,60 @@
 {
     "landingpage": {
-        "undertitel": "Kammarslusen Ribe ist ein Zahlungssystem für Schiffe in Ribe. Das System macht es den Schiffen leicht, für die Schleusendurchfahrt zu bezahlen, während es den Schleusenbetreibern ermöglicht, Zahlungen und Status effizient zu verfolgen.",
+        "undertitel": "Kammarslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen leicht macht, für die Durchfahrt durch die Schleuse zu bezahlen, und es macht es auch der Schleuse leicht, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
         "learnmore": "Mehr erfahren",
         "signup": "Registrieren"
     },
     "dashboard": {
         "oversigt": {
-            "title": "Übersicht"
         },
         "historik": {
-            "title": "Verlauf"
         },
         "settings": {
             "fullname": "Vollständigen Namen ändern",
-            "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, wie er in Ihrem Profil und bei Ihren Transaktionen angezeigt wird.",
+            "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, der in Ihrem Profil und in Ihren Transaktionen angezeigt wird.",
             "saveChanges": "Änderungen speichern",
             "email": "E-Mail-Adresse ändern",
-            "emailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse, die für die Anmeldung bei Ihrem Konto und den Erhalt wichtiger Benachrichtigungen verwendet wird.",
+            "emailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse, die zum Anmelden bei Ihrem Konto und zum Erhalt wichtiger Mitteilungen verwendet wird.",
             "deleteAccount": "Konto löschen",
-            "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
-            "deleteAccountButton": "Konto löschen"
+            "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "deleteAccountButton": "Konto löschen",
+            "fullnamePlaceholder": "Ihr vollständiger Name",
+            "emailPlaceholder": "Ihre E-Mail-Adresse",
+            "registerBoat": "Neues Schiff registrieren",
+            "registerBoatDescription": "Registrieren Sie ein neues Schiff, damit wir es in unserem System verfolgen können und sicherstellen, dass Sie die richtige Person sind, die die Schleuse nutzt.",
+            "registerBoatButton": "Schiff registrieren"
+        }
+    },
+    "termsofservice": {
+        "title": "Nutzungsbedingungen",
+        "undertitle": "Einleitung",
+        "introduction": "Willkommen beim Zahlungssystem des Ribe Segelclubs. Durch die Nutzung unserer Dienste akzeptieren Sie diese Nutzungsbedingungen. Bitte lesen Sie diese Bedingungen sorgfältig durch, da sie wichtige Informationen zu Ihren Rechten und Pflichten enthalten.",
+        "publisher": {
+            "title": "Herausgeber"
+        },
+        "section1": {
+            "title": "§1 Lieferung",
+            "content": "Wenn Sie einen Kauf über unser Zahlungssystem tätigen, bemühen wir uns, den gekauften Dienst so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Lieferung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen kann es jedoch zu Verzögerungen kommen."
+        },
+        "section2": {
+            "title": "§2 Rückerstattungen",
+            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Bei Problemen mit Ihrem Dienst kontaktieren Sie bitte unser Support-Team, damit wir Ihnen helfen können."
+        },
+        "section3": {
+            "title": "§3 Haftungsausschluss",
+            "content": "Der Ribe Segelclub und sein Zahlungssystem werden 'wie besehen' ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jegliche Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
+        },
+        "section4": {
+            "title": "§4 DSGVO und Datenschutz",
+            "content": "Der Ribe Segelclub verpflichtet sich, Ihre personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir erheben nur die notwendigen Informationen, um unsere Dienste bereitzustellen, und geben Ihre Daten niemals ohne Ihre Zustimmung an Dritte weiter."
+        },
+        "section5": {
+            "title": "§5 Änderungen der Bedingungen",
+            "content": "Der Ribe Segelclub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Alle Änderungen werden auf unserer Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich über etwaige Änderungen auf dem Laufenden zu halten."
+        },
+        "section6": {
+            "title": "§6 Kontaktinformationen",
+            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
         }
     }
 }
