@@ -39,7 +39,12 @@ services:
       - 3001:8080 
     depends_on:
       - db
-
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiNzI3Yjg4ZjQ0ODliMDhhYTI5MzE2ZGMzNjI0NWM0MzQiLCJ0IjoiODUzN2YyOTUtZmNhYy00OGFhLTk4ZTUtMTU0NWJmZTJlMzQwIiwicyI6Ik16QTFZV1UxWW1FdE5UTmhaaTAwWmpnNExUZzBPREF0TVdSa00yUmtNR1ZqTkRndyJ9 
 networks:
   default:
     driver: bridge
