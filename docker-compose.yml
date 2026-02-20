@@ -5,14 +5,7 @@ services:
   db:
     image: postgres
     restart: always
-    # set shared memory limit when using docker compose
     shm_size: 128mb
-    # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
       POSTGRES_PASSWORD: HEJSA
       POSTGRES_USER: admin
@@ -20,19 +13,59 @@ services:
     ports:
       - 5432:5432
 
-  adminer:
-    container_name: WebSQL
-    image: adminer
-    restart: always
+  homesite:
+    image: octoblu/pnpm
+    restart: unless-stopped
+    working_dir: staticbuild:/app
+    volumes:
+      - .:/app
+    command: pnpm deploy
     ports:
-      - 8080:8080
-  
-  mailgun:
-    image: stevenolen/mailgun-smtp-server
-    restart: always
-    container_name: Mail
-    ports:
-      - 25:25
+      - 3000:3000
+    env_file:
+      - .env
     environment:
-      MG_KEY: 
-      MG_DOMAIN:
+      - URL_BASE={URL_BASE}
+      - NODE_ENV={NODE_ENV}
+
+      #Email config
+      - MAILGUN_HOST={MAILGUN_HOST}
+      - MAILGUN_API_KEY={MAILGUN_API_KEY}
+      - MAILGUN_LOGIN={MAILGUN_LOGIN}
+      - MAILGUN_PASSWORD={MAILGUN_PASSWORD}
+
+      #Database config
+      - DATABASE_URL={DATABASE_URL}
+
+      #Stripe config
+      - STRIPE_SECRET_KEY={STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET={STRIPE_WEBHOOK_SECRET}
+
+      #Json Web Token
+      - JWT_SECRET={JWT_SECRET}
+      #Cloudflare
+      - NEXT_PUBLIC_CLOUDFLARE_SITE_KEY={NEXT_PUBLIC_CLOUDFLARE_SITE_KEY}
+      - CLOUDFLARE_SECRET_KEY={CLOUDFLARE_SECRET_KEY}
+
+      - R2_ACCOUNT_ID={R2_ACCOUNT_ID}
+      - R2_ACCESS_KEY_ID={R2_ACCESS_KEY_ID}
+      - R2_SECRET_ACCESS_KEY={R2_SECRET_ACCESS_KEY}
+      - R2_BUCKET_NAME={R2_BUCKET_NAME}
+    depends_on:
+      - db
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - staticbuild:/app/public
+    depends_on:
+      - homesite
+  
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  staticbuild:
