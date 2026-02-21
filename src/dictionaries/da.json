@@ -107,6 +107,18 @@
         "section6": {
             "title": "§6 Kontaktinformation",
             "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
+        },
+        "section7": {
+            "title": "§7 Lovvalg og jurisdiktion",
+            "content": "Disse servicevilkår er underlagt og skal fortolkes i overensstemmelse med dansk lovgivning. Enhver tvist, der måtte opstå i forbindelse med disse vilkår, skal indbringes for de danske domstole."
+        },
+        "section8": {
+            "title": "§8 Accept af vilkår",
+            "content": "Ved at bruge vores betalingssystem bekræfter du, at du har læst, forstået og accepteret disse servicevilkår. Hvis du ikke accepterer disse vilkår, bedes du ikke bruge vores tjenester."
+        },
+        "section9": {
+            "title": "§9 Skoleprojekt Disclaimer",
+            "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Ved at oprette en konto eller bruge vores tjenester, accepterer du, at du gør det på eget ansvar og forstår, at dette projekt ikke er beregnet til kommerciel brug. Ribe Sejlklub og de studerende bag dette projekt fraskriver sig ethvert ansvar for eventuelle problemer, der måtte opstå som følge af brugen af dette system."
         }
     }
 }

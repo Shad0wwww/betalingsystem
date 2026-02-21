@@ -107,6 +107,35 @@ async function Page({
                             {dict.termsofservice.section6.content}
                         </p>
                     </section>
+                    <hr className="border-zinc-800/50" />
+                    <section>
+                        <h2 className="text-xl font-semibold text-white mb-4">
+                            {dict.termsofservice.section7.title}
+                        </h2>
+                        <p className="leading-relaxed">
+                            {dict.termsofservice.section7.content}
+                        </p>
+                    </section>
+
+                    <hr className="border-zinc-800/50" />
+                    <section>
+                        <h2 className="text-xl font-semibold text-white mb-4">
+                            {dict.termsofservice.section8.title}
+                        </h2>
+                        <p className="leading-relaxed">
+                            {dict.termsofservice.section8.content}
+                        </p>
+                    </section>
+
+                    <hr className="border-zinc-800/50" />
+                    <section>
+                        <h2 className="text-xl font-semibold text-white mb-4">
+                            {dict.termsofservice.section9.title}
+                        </h2>
+                        <p className="leading-relaxed">
+                            {dict.termsofservice.section9.content}
+                        </p>
+                    </section>
 
 
                 </div>
