@@ -1,10 +1,10 @@
 {
     "landingpage": {
-        "undertitel": "Kammarslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
+        "undertitel": "Kammerslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
         "learnmore": "Learn more",
         "signup": "Sign up",
-        "stats1": "Vessels through the lock",
-        "stats2": "Payments recorded",
+        "stats1": "Ships through the lock",
+        "stats2": "Payments registered",
         "stats3": "Active accounts"
     },
     "dashboard": {
@@ -24,47 +24,16 @@
             "fullnamePlaceholder": "Your full name",
             "emailPlaceholder": "Your email address",
             "registerBoat": "Register a new boat",
-            "registerBoatDescription": "Register a new boat so we can keep track of it in our system and ensure that you are the correct person using the lock.",
-            "registerBoatButton": "Register boat"
-        }
-    },
-    "termsofservice": {
-        "title": "Terms of Service",
-        "undertitle": "Introduction",
-        "introduction": "Welcome to Ribe Sailing Club's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully, as they contain important information about your rights and obligations.",
-        "publisher": {
-            "title": "Publisher"
-        },
-        "section1": {
-            "title": "§1 Delivery",
-            "content": "When you make a purchase through our payment system, we will strive to deliver the purchased service as quickly as possible. In most cases, the delivery will take place within a few minutes after the purchase. In rare cases, however, delays may occur."
-        },
-        "section2": {
-            "title": "§2 Refunds",
-            "content": "All sales are final, and we offer no refunds. If you have problems with your service, please contact our support team so we can help you."
-        },
-        "section3": {
-            "title": "§3 Disclaimer of Liability",
-            "content": "Ribe Sailing Club and its payment system are provided 'as is' without any form of warranty, express or implied. We disclaim all liability for any damages or losses that may arise from the use of our services."
-        },
-        "section4": {
-            "title": "§4 GDPR and Data Protection",
-            "content": "Ribe Sailing Club undertakes to protect your personal data and comply with applicable data protection laws, including GDPR. We only collect the necessary information to provide our services and will never share your information with third parties without your consent."
-        },
-        "section5": {
-            "title": "§5 Changes to the Terms",
-            "content": "Ribe Sailing Club reserves the right to change these terms of service at any time. Any changes will be published on our website, and it is your responsibility to keep yourself updated on any changes."
-        },
-        "section6": {
-            "title": "§6 Contact Information",
-            "content": "If you have any questions or concerns regarding these terms of service, please contact us at support@pins.dk."
+            "registerBoatDescription": "Register a new boat so we can keep track of it in our system, and to ensure that you are the right person using the lock.",
+            "registerBoatButton": "Register boat",
+            "fullnameUpdatedToast": "Your full name has been updated!"
         }
     },
     "login": {
         "title": "Log in",
         "subtitle": "Enter your email to receive a one-time code",
         "emailLabel": "Email",
-        "emailPlaceholder": "name@domain.com",
+        "emailPlaceholder": "name@domain.dk",
         "sendOtpButton": "Send one-time code",
         "sendOtpButtonLoading": "Sending code...",
         "noAccount": "Don't have an account?",
@@ -78,31 +47,75 @@
         "backToEmail": "Back to email"
     },
     "signup": {
-        "title": "Create an account",
-        "subtitle": "Enter your details below to create your account",
-        "fullNameLabel": "Full Name",
+        "title": "Create account",
+        "subtitle": "Enter your information below to create your account",
+        "fullNameLabel": "Full name",
         "fullNamePlaceholder": "John Doe",
         "emailLabel": "Email",
         "emailPlaceholder": "example@gmail.com",
-        "phoneLabel": "Phone Number",
+        "phoneLabel": "Phone number",
         "phonePlaceholder": "12345678",
-        "tosLabel": "Terms of Service",
-        "tosPrefix": "I agree to the",
-        "tosLink": "Terms of Service",
-        "submit": "Create Account",
+        "tosLabel": "Terms of service",
+        "tosPrefix": "I accept",
+        "tosLink": "Terms of service",
+        "submit": "Create account",
         "submitLoading": "Creating account...",
         "haveAccount": "Already have an account?",
-        "loginLink": "Login"
+        "loginLink": "Log in"
     },
     "footer": {
         "allRightsReserved": "All rights reserved.",
         "support": "support@pins.dk",
-        "company": "Ribe Sailing Club ApS",
+        "company": "Ribe Sejlklub ApS",
         "cvr": "CVR: 74852513",
         "address1": "Erik Menvedsvej 20,",
         "address2": "6760 Ribe",
         "information": "Information",
-        "termsLink": "Terms of Service",
-        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sailing Club. All information and features are fictional and for demonstration purposes only."
+        "termsLink": "Terms of service",
+        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sejlklub. All information and functions are fictional and only for demonstration."
+    },
+    "termsofservice": {
+        "title": "Terms of service",
+        "undertitle": "Introduction",
+        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully, as they contain important information about your rights and obligations.",
+        "publisher": {
+            "title": "Publisher"
+        },
+        "section1": {
+            "title": "§1 Delivery",
+            "content": "When you make a purchase through our payment system, we will endeavor to deliver the purchased service as quickly as possible. In most cases, delivery will occur within a few minutes after the purchase. In rare cases, however, delays may occur."
+        },
+        "section2": {
+            "title": "§2 Refunds",
+            "content": "All sales are final, and we offer no refunds. If you have problems with your service, please contact our support team so we can help you."
+        },
+        "section3": {
+            "title": "§3 Disclaimer",
+            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any form of warranty, express or implied. We disclaim any liability for any damages or losses that may arise from the use of our services."
+        },
+        "section4": {
+            "title": "§4 GDPR and data protection",
+            "content": "Ribe Sejlklub undertakes to protect your personal information and comply with applicable data protection legislation, including GDPR. We only collect the necessary information to provide our services and will never share your information with third parties without your consent."
+        },
+        "section5": {
+            "title": "§5 Changes to the terms",
+            "content": "Ribe Sejlklub reserves the right to change these terms of service at any time. Any changes will be published on our website, and it is your responsibility to keep yourself updated on any changes."
+        },
+        "section6": {
+            "title": "§6 Contact information",
+            "content": "If you have questions or concerns regarding these terms of service, please contact us at support@pins.dk."
+        },
+        "section7": {
+            "title": "§7 Choice of law and jurisdiction",
+            "content": "These terms of service are governed by and shall be interpreted in accordance with Danish law. Any dispute arising in connection with these terms shall be brought before the Danish courts."
+        },
+        "section8": {
+            "title": "§8 Acceptance of terms",
+            "content": "By using our payment system, you confirm that you have read, understood and accepted these terms of service. If you do not accept these terms, please do not use our services."
+        },
+        "section9": {
+            "title": "§9 School project disclaimer",
+            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration only. By creating an account or using our services, you accept that you do so at your own risk and understand that this project is not intended for commercial use. Ribe Sejlklub and the students behind this project disclaim any liability for any problems that may arise as a result of using this system."
+        }
     }
 }
