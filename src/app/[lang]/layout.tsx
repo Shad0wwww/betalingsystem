@@ -19,7 +19,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: "Ribe Sejlklub",
-	description: "Betalingssystem for Kammerslusen Ribe",
+	description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT)",
+	keywords: ["Ribe Sejlklub", "Kammerslusen Ribe", "Betalingssystem", "Sejlklub", "Ribe"],
+	robots: "index, follow",
+	openGraph: {
+		title: "Ribe Sejlklub",
+		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
+		url: "https://ribe-sejlklub.dk",
+		siteName: "Ribe Sejlklub",
+	},
 };
 
 type LayoutProps = Readonly<{
@@ -32,6 +40,9 @@ export default function RootLayout(
 ) {
 	return (
 		<html lang="en">
+			<head>
+				<meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
+			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
