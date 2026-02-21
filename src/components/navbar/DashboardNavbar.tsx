@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-
+import logo from "../../../public/Logo.png";
 const DashboardNavbar: React.FC = () => {
     const handleLogout = async () => {
         try {
@@ -11,7 +11,7 @@ const DashboardNavbar: React.FC = () => {
             redirect("/");
 
         } catch (error) {
-            console.error("Logud fejlede:", error);
+            new Error("Logout failed", { cause: error instanceof Error ? error : undefined });
         }
     };
     
@@ -23,7 +23,7 @@ const DashboardNavbar: React.FC = () => {
                 <div className="flex items-center gap-3">
                     <Link href="/">
                         <Image
-                            src="https://cdn.discordapp.com/attachments/1087323413384794172/1472583490238156841/image.png?ex=699513ff&is=6993c27f&hm=4d98a37daa44505b4780f24f7f426bde47747b13731135a81fdc51551f51ef43"
+                            src={logo}
                             alt="Logo"
                             width={100}
                             height={100}    

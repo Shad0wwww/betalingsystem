@@ -15,6 +15,7 @@ export async function POST(
 
 
     const email = rawEmail.toLowerCase();
+    const codeUpper = code.toUpperCase();
 
     if (!code || code.length !== 6) {
         return Response.json(
@@ -48,7 +49,7 @@ export async function POST(
     }
 
     const isValid = await verifyOTPCode(
-        code,
+        codeUpper,
         storedToknen.token
     )
 
