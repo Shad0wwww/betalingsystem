@@ -1,5 +1,5 @@
 'use client';
-import Image from "next/image";
+
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import style from "../navbar.module.css";
