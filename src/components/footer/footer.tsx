@@ -2,15 +2,27 @@
 
 export const fetchCache = "force-no-store";
 
-import Link from "next/link";
 
-//TODO: Oversættelse her
-export default async function Footer() {
+
+import { getDictionary } from "@/app/[lang]/dictionaries";
+import { notFound } from "next/dist/client/components/navigation.react-server";
+import Link from "next/link";
+type PageParams = Promise<{ lang: string }>;
+
+export default async function Footer(
+    { params }: { params: PageParams }
+) {
+
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+
+    if (!dict) notFound();
+
     const sections = [
         {
-            title: "Information",
+            title: dict.footer.information,
             links: [
-                { name: "Servicevilkår", href: "/terms-of-service" },
+                { name: dict.footer.termsLink, href: "/terms-of-service" },
             ],
         },
     ];
@@ -25,17 +37,17 @@ export default async function Footer() {
                                 <p className="text-[#888]">© {new Date().getFullYear()}</p>
                             </div>
                             <p className="text-blue-500 text-sm text-right xl:text-left max-w-[110px] sm:max-w-full">
-                                Alle rettigheder forbeholdes.
+                                {dict.footer.allRightsReserved}
                             </p>
                         </div>
                         <div>
                             <br />
-                            <h1 className="text-sm text-white/50">support@pins.dk</h1>
-                            <h1 className="text-sm text-white/50">Ribe Sejlkub ApS</h1>
+                            <h1 className="text-sm text-white/50">{dict.footer.support}</h1>
+                            <h1 className="text-sm text-white/50">{dict.footer.company}</h1>
                             <br />
-                            <h1 className="text-sm text-white/50">CVR: 74852513</h1>
-                            <h1 className="text-sm text-white/50">Erik Menvedsvej 20,</h1>
-                            <h1 className="text-sm text-white/50">6760 Ribe</h1>
+                            <h1 className="text-sm text-white/50">{dict.footer.cvr}</h1>
+                            <h1 className="text-sm text-white/50">{dict.footer.address1}</h1>
+                            <h1 className="text-sm text-white/50">{dict.footer.address2}</h1>
                         </div>
                     </div>
                 </div>
@@ -60,8 +72,11 @@ export default async function Footer() {
                 </div>
             </div>
             <div className="text-sm text-white/50 text-right mb-4 mt-4 lg:ml-auto">
-                Disclaimer: Pins.dk er en betalingsløsning udviklet af Ribe Sejlkub ApS. Alle transaktioner og data håndteres sikkert og i overensstemmelse med gældende lovgivning. For spørgsmål eller support, kontakt os på support@pins.dk
+                {dict.footer.disclaimer}
             </div>
         </div>
     );
 }
+
+
+

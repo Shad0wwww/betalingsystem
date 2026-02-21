@@ -2,7 +2,10 @@
     "landingpage": {
         "undertitel": "Kammarslusen Ribe is a payment system for vessels in Ribe. The system makes it easy for ships to pay for lock passage, while allowing the lock operators to efficiently track payments and status.",
         "learnmore": "Learn more",
-        "signup": "Sign up"
+        "signup": "Sign up",
+        "stats1": "Vessels through the lock",
+        "stats2": "Payments recorded",
+        "stats3": "Active accounts"
     },
     "dashboard": {
         "oversigt": {
@@ -21,5 +24,50 @@
             "deleteAccountDescription": "Are you sure you want to delete your account? This action cannot be undone.",
             "deleteAccountButton": "Delete account"
         }
+    },
+    "login": {
+        "title": "Log in",
+        "subtitle": "Enter your email to receive a one-time code",
+        "emailLabel": "Email",
+        "emailPlaceholder": "name@domain.com",
+        "sendOtpButton": "Send one-time code",
+        "sendOtpButtonLoading": "Sending code...",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create account",
+        "otpTitle": "Enter one-time code",
+        "otpIntro": "We have sent a 6-digit code to",
+        "otpLabel": "One-time code",
+        "otpPlaceholder": "123456",
+        "loginButton": "Log in",
+        "loginButtonLoading": "Logging in...",
+        "backToEmail": "Back to email"
+    },
+    "signup": {
+        "title": "Create an account",
+        "subtitle": "Enter your details below to create your account",
+        "fullNameLabel": "Full Name",
+        "fullNamePlaceholder": "John Doe",
+        "emailLabel": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "phoneLabel": "Phone Number",
+        "phonePlaceholder": "12345678",
+        "tosLabel": "Terms of Service",
+        "tosPrefix": "I agree to the",
+        "tosLink": "Terms of Service",
+        "submit": "Create Account",
+        "submitLoading": "Creating account...",
+        "haveAccount": "Already have an account?",
+        "loginLink": "Login"
+    },
+    "footer": {
+        "allRightsReserved": "All rights reserved.",
+        "support": "support@pins.dk",
+        "company": "Ribe Sailing Club ApS",
+        "cvr": "CVR: 74852513",
+        "address1": "Erik Menvedsvej 20,",
+        "address2": "6760 Ribe",
+        "information": "Information",
+        "termsLink": "Terms of Service",
+        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sailing Club. All information and features are fictional and for demonstration purposes only."
     }
 }

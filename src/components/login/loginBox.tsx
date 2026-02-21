@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useActionState } from "react";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import LoginAction from "@/components/auth/LoginAction";
 import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
 import { Turnstile } from "@marsidev/react-turnstile";
@@ -36,11 +36,13 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     />
 );
 
-const LoginBox: React.FC = () => {
+const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [email, setEmail] = useState("");
     const [isOtpSent, setIsOtpSent] = useState(false);
     const router = useRouter();
+
+    if (!dict) return notFound();
 
     const env = process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY;
 
@@ -78,20 +80,20 @@ const LoginBox: React.FC = () => {
 
                     <div className="fade-in">
                         <h1 className="text-white font-bold text-2xl text-center mb-4">
-                            Indtast engangskode
+                            {dict.login.otpTitle}
                         </h1>
                         <p className="text-gray-400 text-center text-sm mb-8">
-                            Vi har sendt en 6-cifret kode til{" "}
+                            {dict.login.otpIntro}{" "}
                             <span className="text-white font-semibold">{email}</span>
                         </p>
 
                         <form action={formAction2}>
                             <input type="hidden" name="email" value={email} />
                             <div className="mb-4">
-                                <Label>Engangskode</Label>
+                                <Label>{dict.login.otpLabel}</Label>
                                 <Input
                                     name="otp"
-                                    placeholder="123456"
+                                    placeholder={dict.login.otpPlaceholder}
                                     maxLength={6}
                                     className="text-center text-2xl tracking-[0.5em] font-mono"
                                     autoFocus
@@ -107,7 +109,7 @@ const LoginBox: React.FC = () => {
                                 disabled={isPending2}
                                 className="w-full py-3 font-medium bg-white text-black rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
                             >
-                                {isPending2 ? "Logger ind..." : "Log ind"}
+                                {isPending2 ? dict.login.loginButtonLoading : dict.login.loginButton}
                             </button>
                         </form>
 
@@ -115,26 +117,26 @@ const LoginBox: React.FC = () => {
                             onClick={() => setIsOtpSent(false)}
                             className="text-gray-400 text-xs mt-6 underline block mx-auto hover:text-white"
                         >
-                            Tilbage til email
+                            {dict.login.backToEmail}
                         </button>
                     </div>
                 ) : (
                     /* EMAIL TRIN */
                     <div className="fade-in">
                         <h1 className="text-white font-bold text-2xl text-center mb-2">
-                            Log ind
+                            {dict.login.title}
                         </h1>
                         <p className="text-gray-400 text-center text-sm mb-8">
-                            Indtast din email for at modtage en engangskode
+                            {dict.login.subtitle}
                         </p>
 
                         <form action={formAction1}>
                             <div className="mb-6">
-                                <Label>Email</Label>
+                                <Label>{dict.login.emailLabel}</Label>
                                 <Input
                                     name="email"
                                     type="email"
-                                    placeholder="navn@domæne.dk"
+                                    placeholder={dict.login.emailPlaceholder}
                                     autoFocus
                                     required
                                 />
@@ -153,18 +155,18 @@ const LoginBox: React.FC = () => {
                                 disabled={isPending1}
                                 className="w-full py-3 font-medium bg-white text-black rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
                             >
-                                {isPending1 ? "Sender kode..." : "Send engangskode"}
+                                {isPending1 ? dict.login.sendOtpButtonLoading : dict.login.sendOtpButton}
                             </button>
                         </form>
 
                         <div className="text-center mt-6">
                             <p className="text-gray-400 text-sm">
-                                Har du ikke en konto?{" "}
+                                {dict.login.noAccount}{" "}
                                 <Link
                                     href="/signup"
                                     className="text-white underline hover:text-gray-300"
                                 >
-                                    Opret konto
+                                    {dict.login.createAccount}
                                 </Link>
                             </p>
                         </div>

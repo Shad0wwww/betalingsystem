@@ -2,7 +2,10 @@
     "landingpage": {
         "undertitel": "Kammarslusen Ribe et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har.",
         "learnmore": "Lær mere",
-        "signup": "Tilmeld dig"
+        "signup": "Tilmeld dig",
+        "stats1": "Skibe gennem slusen",
+        "stats2": "Betalinger registreret",
+        "stats3": "Aktive kontoer"
     },
     "dashboard": {
         "oversigt": {
@@ -26,6 +29,51 @@
             "registerBoatDescription": "Register et nyt skib, så vi kan holde styr på det i vores skib, og så vi sikre at du er den rigtige der benytter sig af strømmen.",
             "registerBoatButton": "Registrér skib"
         }
+    },
+    "login": {
+        "title": "Log ind",
+        "subtitle": "Indtast din email for at modtage en engangskode",
+        "emailLabel": "Email",
+        "emailPlaceholder": "navn@domæne.dk",
+        "sendOtpButton": "Send engangskode",
+        "sendOtpButtonLoading": "Sender kode...",
+        "noAccount": "Har du ikke en konto?",
+        "createAccount": "Opret konto",
+        "otpTitle": "Indtast engangskode",
+        "otpIntro": "Vi har sendt en 6-cifret kode til",
+        "otpLabel": "Engangskode",
+        "otpPlaceholder": "123456",
+        "loginButton": "Log ind",
+        "loginButtonLoading": "Logger ind...",
+        "backToEmail": "Tilbage til email"
+    },
+    "signup": {
+        "title": "Opret konto",
+        "subtitle": "Indtast dine oplysninger herunder for at oprette din konto",
+        "fullNameLabel": "Fulde navn",
+        "fullNamePlaceholder": "John Doe",
+        "emailLabel": "Email",
+        "emailPlaceholder": "eksempel@gmail.com",
+        "phoneLabel": "Telefonnummer",
+        "phonePlaceholder": "12345678",
+        "tosLabel": "Servicevilkår",
+        "tosPrefix": "Jeg accepterer",
+        "tosLink": "Servicevilkår",
+        "submit": "Opret konto",
+        "submitLoading": "Opretter konto...",
+        "haveAccount": "Har du allerede en konto?",
+        "loginLink": "Log ind"
+    },
+    "footer": {
+        "allRightsReserved": "Alle rettigheder forbeholdes.",
+        "support": "support@pins.dk",
+        "company": "Ribe Sejlklub ApS",
+        "cvr": "CVR: 74852513",
+        "address1": "Erik Menvedsvej 20,",
+        "address2": "6760 Ribe",
+        "information": "Information",
+        "termsLink": "Servicevilkår",
+        "disclaimer": "Disclaimer: Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration."
     },
     "termsofservice": {
         "title": "Servicevilkår",

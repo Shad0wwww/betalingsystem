@@ -17,7 +17,7 @@ export default async function Page(
     
     return (
         <div>
-            <LandingLoginPage />
+            <LandingLoginPage dict={dict} />
         </div>
     );    
 }

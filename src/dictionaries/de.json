@@ -2,7 +2,10 @@
     "landingpage": {
         "undertitel": "Kammarslusen Ribe ist ein Zahlungssystem für Schiffe in Ribe. Das System macht es den Schiffen leicht, für die Schleusendurchfahrt zu bezahlen, während es den Schleusenbetreibern ermöglicht, Zahlungen und Status effizient zu verfolgen.",
         "learnmore": "Mehr erfahren",
-        "signup": "Registrieren"
+        "signup": "Registrieren",
+        "stats1": "Schiffe durch die Schleuse",
+        "stats2": "Zahlungen erfasst",
+        "stats3": "Aktive Konten"
     },
     "dashboard": {
         "oversigt": {
@@ -21,5 +24,50 @@
             "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
             "deleteAccountButton": "Konto löschen"
         }
+    },
+    "login": {
+        "title": "Anmelden",
+        "subtitle": "Geben Sie Ihre E-Mail-Adresse ein, um einen Einmalcode zu erhalten",
+        "emailLabel": "E-Mail",
+        "emailPlaceholder": "name@domain.de",
+        "sendOtpButton": "Einmalcode senden",
+        "sendOtpButtonLoading": "Code wird gesendet...",
+        "noAccount": "Noch kein Konto?",
+        "createAccount": "Konto erstellen",
+        "otpTitle": "Einmalcode eingeben",
+        "otpIntro": "Wir haben einen 6-stelligen Code gesendet an",
+        "otpLabel": "Einmalcode",
+        "otpPlaceholder": "123456",
+        "loginButton": "Anmelden",
+        "loginButtonLoading": "Anmeldung läuft...",
+        "backToEmail": "Zurück zur E-Mail"
+    },
+    "signup": {
+        "title": "Konto erstellen",
+        "subtitle": "Geben Sie Ihre Daten ein, um Ihr Konto zu erstellen",
+        "fullNameLabel": "Vollständiger Name",
+        "fullNamePlaceholder": "Max Mustermann",
+        "emailLabel": "E-Mail",
+        "emailPlaceholder": "beispiel@gmail.com",
+        "phoneLabel": "Telefonnummer",
+        "phonePlaceholder": "12345678",
+        "tosLabel": "Nutzungsbedingungen",
+        "tosPrefix": "Ich stimme den",
+        "tosLink": "Nutzungsbedingungen",
+        "submit": "Konto erstellen",
+        "submitLoading": "Konto wird erstellt...",
+        "haveAccount": "Haben Sie bereits ein Konto?",
+        "loginLink": "Anmelden"
+    },
+    "footer": {
+        "allRightsReserved": "Alle Rechte vorbehalten.",
+        "support": "support@pins.dk",
+        "company": "Ribe Segelclub ApS",
+        "cvr": "CVR: 74852513",
+        "address1": "Erik Menvedsvej 20,",
+        "address2": "6760 Ribe",
+        "information": "Information",
+        "termsLink": "Servicebestimmungen",
+        "disclaimer": "Haftungsausschluss: Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Segelclubs. Alle Informationen und Funktionen sind fiktiv und nur zu Demonstrationszwecken."
     }
 }

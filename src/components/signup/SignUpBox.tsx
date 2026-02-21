@@ -32,7 +32,7 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     />
 );
 
-const SignUpBox: React.FC = () => {
+const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
     const [validatePhone, setPhone] = useState<string | null>(null);
@@ -51,47 +51,47 @@ const SignUpBox: React.FC = () => {
         <div className="w-full max-w-md mx-auto">
             <FormContainer>
                 <div className="text-center mb-8">
-                    <h1 className="text-white font-bold text-2xl mb-2">Create an account</h1>
+                    <h1 className="text-white font-bold text-2xl mb-2">{dict.signup.title}</h1>
                     <p className="text-gray-400 text-[15px]">
-                        Enter your details below to create your account
+                        {dict.signup.subtitle}
                     </p>
                 </div>
 
                 <form action={formAction} autoComplete="off">
-                    <Field label="Full Name">
+                    <Field label={dict.signup.fullNameLabel}>
                         <Input
                             id="fullName"
                             name="fullName"
                             type="text"
-                            placeholder="John Doe"
+                            placeholder={dict.signup.fullNamePlaceholder}
                             min={2}
                             required
                         />
                     </Field>
 
-                    <Field label="Email">
+                    <Field label={dict.signup.emailLabel}>
                         <Input
                             id="email"
                             name="email"
                             type="email"
-                            placeholder="example@gmail.com"
+                            placeholder={dict.signup.emailPlaceholder}
                             required
                         />
                     </Field>
 
-                    <Field label="Phone Number">
+                    <Field label={dict.signup.phoneLabel}>
                         <PhoneInput
                             id="phone"
                             name="phone"
                             defaultCountry="DK"
-                            placeholder="12345678"
+                            placeholder={dict.signup.phonePlaceholder}
                             value={validatePhone ?? ''}
                             onChange={(value) => setPhone(value || null)}
                             className="flex w-full border rounded-md p-2 border-[#292828] bg-[#131313] text-white focus-within:ring-1 focus-within:ring-gray-500 transition-all"
                         />
                     </Field>
 
-                    <Field label="Term of Service">
+                    <Field label={dict.signup.tosLabel}>
                         <div className="flex items-center gap-2">
                             <input
                                 id="tos"
@@ -101,9 +101,9 @@ const SignUpBox: React.FC = () => {
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 focus:ring-offset-0 transition-all"
                             />
                             <label htmlFor="tos" className="text-gray-400 text-sm">
-                                I agree to the{' '}
+                                {dict.signup.tosPrefix}{' '}
                                 <Link href="/terms-of-service" className="text-white underline hover:text-gray-300">
-                                    Terms of Service
+                                    {dict.signup.tosLink}
                                 </Link>
                             </label>
                         </div>
@@ -127,14 +127,14 @@ const SignUpBox: React.FC = () => {
                         disabled={isPending}
                         className="w-full py-3 font-medium bg-white text-black rounded-md mt-2 hover:bg-gray-200 transition-colors disabled:opacity-50"
                     >
-                        {isPending ? 'Creating account...' : 'Create Account'}
+                        {isPending ? dict.signup.submitLoading : dict.signup.submit}
                     </button>
 
                     <div className="mt-6 text-center">
                         <p className="text-gray-400 text-sm">
-                            Already have an account?{' '}
+                            {dict.signup.haveAccount}{' '}
                             <Link href="/login" className="text-white underline hover:text-gray-300" >
-                                Login
+                                {dict.signup.loginLink}
                             </Link>
                         </p>
                     </div>

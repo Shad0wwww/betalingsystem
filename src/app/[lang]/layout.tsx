@@ -21,11 +21,14 @@ export const metadata: Metadata = {
 	description: "Betalingssystem for Kammerslusen Ribe",
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
+type LayoutProps = Readonly<{
 	children: React.ReactNode;
-}>) {
+	params: Promise<{ lang: string }>;
+}>;
+
+export default function RootLayout(
+	{ children, params }: LayoutProps
+) {
 	return (
 		<html lang="en">
 			<body
@@ -33,7 +36,7 @@ export default function RootLayout({
 			>
 				<ChooseNavbar />
 				{children}
-				<Footer />
+				<Footer params={params} />
 			</body>
 		</html>
 	);
