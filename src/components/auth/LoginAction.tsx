@@ -11,9 +11,8 @@ export default async function LoginAction(
 
     const email = data.get('email') as string;
     const emailLower = email.toLowerCase();
-    const turnstileToken = data.get('cf-turnstile-response') as string;
+    /* const turnstileToken = data.get('cf-turnstile-response') as string;
 
-    console.log(email, turnstileToken);
 
     if (!turnstileToken) {
         return { error: "Sikkerhedstjek mangler. Prøv igen." };
@@ -34,7 +33,7 @@ export default async function LoginAction(
 
     if (!verification.success) {
         return { error: "Sikkerhedstjek fejlede. Venligst bekræft at du ikke er en robot." };
-    } 
+    }  */
 
     if (!(await validateEmail(emailLower))) {
         return { error: "Invalid email" };

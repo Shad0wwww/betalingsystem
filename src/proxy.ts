@@ -38,6 +38,7 @@ export default async function middleware(request: NextRequest) {
 
     
     const user = token ? await GetUser.getUserFromJsonWebToken(token) : null;
+    console.log("User", user);
     console.log(`Middleware: User from token: ${user ? user.email : "No user"}`);
     const userExist = await GetUser.doesUserExistByEmail(user?.email || "");
 

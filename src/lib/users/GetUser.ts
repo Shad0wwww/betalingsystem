@@ -7,6 +7,7 @@ export class GetUser {
         userId: number
     ) {
         try {
+            console.log(`GetUser.byId: Fetching user with ID ${userId}`);
             return await prisma.user.findUnique({
                 where: { id: userId },
             });
@@ -32,9 +33,12 @@ export class GetUser {
         token: string
     ) {
         const decodedToken = await verifyJsonWebtoken(token) as unknown as {
-            userId: number
+            userId: number;
+            email: string;
         };
-        return await this.byId(decodedToken.userId);
+
+        console.log(`GetUser: Decoded token: ${JSON.stringify(decodedToken)}`);
+        return await this.byEmail(decodedToken?.email);
 
     }
 

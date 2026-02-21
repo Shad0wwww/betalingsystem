@@ -1,4 +1,4 @@
 .active {
-    border-bottom: var(--primary-color) 2px solid;
+    border-bottom: #3b82f6 2px solid;
     color: var(--headline-color);
 }

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
 import RegisterShipModal from "../modals/RegisterShipModal";
+import toast, { Toaster } from "react-hot-toast";
 
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
@@ -54,6 +55,7 @@ export default function SettingsClient({ dict }: { dict: any }) {
 
     return (
         <div className="min-h-screen px-4">
+            <div><Toaster /></div>
             <div className="flex flex-col max-w-3xl mx-auto mt-2 gap-10">
 
 
@@ -72,12 +74,17 @@ export default function SettingsClient({ dict }: { dict: any }) {
                     description={dict.dashboard.settings.fullnameDescription}
                     buttonText={dict.dashboard.settings.saveChanges}
                     disabled={(!name || name.length === 0)}
-                    onAction={() => updateUserFullName(name)}
+                    onAction={async () => {
+                        await updateUserFullName(name);
+                        setName(name);
+                        toast.success(dict.dashboard.settings.fullnameUpdatedToast);
+                    }}
                 >
                     <Input
                         type="text"
+                        value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder={name || dict.dashboard.settings.fullnamePlaceholder}
+                        placeholder={dict.dashboard.settings.fullnamePlaceholder}
                     />
                 </SettingsCard>
 
@@ -90,8 +97,9 @@ export default function SettingsClient({ dict }: { dict: any }) {
                 >
                     <Input
                         type="text"
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder={email || dict.dashboard.settings.emailPlaceholder}
+                        placeholder={dict.dashboard.settings.emailPlaceholder}
                     />
                 </SettingsCard>
 

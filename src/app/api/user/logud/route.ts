@@ -6,7 +6,6 @@ export async function GET(
 ) {
     const cookie = req.cookies.get("auth_token")?.value;
 
-    console.log("Received logout request with token:", cookie);
 
     if (!cookie) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

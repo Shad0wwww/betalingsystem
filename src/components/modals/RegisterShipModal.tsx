@@ -4,6 +4,29 @@ import { useState } from "react";
 
 import "@/components/modals/styles.css";
 
+const FormContainer = ({ children }: { children: React.ReactNode }) => (
+    <div className="border rounded-lg custom-box2 py-8 px-5 sm:py-10 sm:px-12 border-[#292828] bg-[#131313]">
+        {children}
+    </div>
+);
+
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+    <div className="mb-4">
+        <label className="block text-white font-normal text-[15px] leading-none mb-2">
+            {label}
+        </label>
+        {children}
+    </div>
+);
+
+const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+    <input
+        {...props}
+        suppressHydrationWarning
+        className="w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
+    />
+);
+
 export default function RegisterShipModal(
 
 ) {
@@ -17,14 +40,33 @@ export default function RegisterShipModal(
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
                 <Dialog.Content className="DialogContent box-color custom-border box-shadow">
-                    <Dialog.Title className="text-white font-semibold text-lg mb-1 leading-3">
+                    <Dialog.Title className="text-white font-semibold text-lg mb-3 leading-3">
                         Opret nyt skib
                     </Dialog.Title>
-                    <div className="flex flex-col">
-                        <p className="sub-headline text-sm">
-                            Tilknyt dit nye skib via UnikPay.
-                        </p>
-                    </div>
+             
+                    <Field label="Skibets navn">
+                        <Input 
+                            type="text" 
+                            name="shipName" 
+                            placeholder="Indtast skibets navn" 
+                            required
+                        />
+                    </Field>
+                    <Field label="Skibets IMO-nummer">
+                        <Input 
+                            type="text" 
+                            name="imoNumber" 
+                            placeholder="Indtast skibets IMO-nummer"
+                            required 
+                        />
+                    </Field>
+                    <button
+                        type="submit"
+                  
+                        className="w-full py-3 font-medium bg-white text-black rounded-md mt-2 hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    >
+                        Opret Skib  
+                    </button>
                 </Dialog.Content>
             </Dialog.Portal>
         </Dialog.Root>

@@ -15,8 +15,6 @@ export default async function SignupAction(
 
     const emailLower = email.toLowerCase();
     //const turnstileToken = data.get('cf-turnstile-response') as string;
-    console.log(data);
-
     // if (!turnstileToken) {
     //     return { error: "Sikkerhedstjek mangler. Prøv igen." };
     // }

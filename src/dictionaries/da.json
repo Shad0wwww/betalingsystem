@@ -27,7 +27,8 @@
             "emailPlaceholder": "Din e-mailadresse",
             "registerBoat": "Registrér et nyt skib",
             "registerBoatDescription": "Register et nyt skib, så vi kan holde styr på det i vores skib, og så vi sikre at du er den rigtige der benytter sig af strømmen.",
-            "registerBoatButton": "Registrér skib"
+            "registerBoatButton": "Registrér skib",
+            "fullnameUpdatedToast": "Dit fulde navn er blevet opdateret!"
         }
     },
     "login": {

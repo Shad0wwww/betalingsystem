@@ -1,6 +1,5 @@
 'use client';
 
-import { Stats } from 'fs';
 import Link from 'next/link';
 import StatsSection from '../stats/StatsSection';
 

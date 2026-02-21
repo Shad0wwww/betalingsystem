@@ -83,7 +83,7 @@ const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
                             {dict.login.otpTitle}
                         </h1>
                         <p className="text-gray-400 text-center text-sm mb-8">
-                            Vi har sendt en 6-cifret kode til{" "}
+                            {dict.login.otpIntro}{" "}
                             <span className="text-white font-semibold">{email}</span>
                         </p>
 
