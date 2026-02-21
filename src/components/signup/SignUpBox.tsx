@@ -108,12 +108,12 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                         </div>
                     </Field>
 
-                    {/* <div className="mb-4 flex justify-center">
+                    <div className="mb-4 flex justify-center">
                         <Turnstile
-                            siteKey={env ?? ''}
+                            siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY ?? ''}
                             options={{ theme: 'dark' }}
                         />
-                    </div> */}
+                    </div>
 
                     {errorMessage && (
                         <p className="text-red-500 text-sm mb-4 text-center">
@@ -132,7 +132,7 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                     <div className="mt-6 text-center">
                         <p className="text-gray-400 text-sm">
                             {dict.signup.haveAccount}{' '}
-                            <Link href="/login" className="text-white underline hover:text-gray-300" >
+                            <Link href="/login" className="text-white underline hover:text-gray-300" target='_blank'>
                                 {dict.signup.loginLink}
                             </Link>
                         </p>
