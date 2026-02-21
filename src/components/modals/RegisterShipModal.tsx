@@ -52,11 +52,11 @@ export default function RegisterShipModal(
                             required
                         />
                     </Field>
-                    <Field label="Skibets IMO-nummer">
+                    <Field label="Skibets model">
                         <Input 
                             type="text" 
-                            name="imoNumber" 
-                            placeholder="Indtast skibets IMO-nummer"
+                            name="shipModel" 
+                            placeholder="Indtast skibets model"
                             required 
                         />
                     </Field>

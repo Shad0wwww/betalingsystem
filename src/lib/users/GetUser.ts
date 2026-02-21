@@ -7,7 +7,6 @@ export class GetUser {
         userId: number
     ) {
         try {
-            console.log(`GetUser.byId: Fetching user with ID ${userId}`);
             return await prisma.user.findUnique({
                 where: { id: userId },
             });
@@ -36,8 +35,6 @@ export class GetUser {
             userId: number;
             email: string;
         };
-
-        console.log(`GetUser: Decoded token: ${JSON.stringify(decodedToken)}`);
         return await this.byEmail(decodedToken?.email);
 
     }
@@ -48,8 +45,6 @@ export class GetUser {
 
         const user = await this.byEmail(email);
         return !!user;
-
-
     }
 
 }

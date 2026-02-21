@@ -24,6 +24,7 @@ model User {
     verificationTokens VerificationToken[]
     invoices           Invoice[]
     meterReadings      MeterReading[]
+    boats              Boat[]
 }
 
 model VerificationToken {
@@ -54,6 +55,15 @@ model Invoice {
     dueDate   DateTime
     paidAt    DateTime?
     createdAt DateTime  @default(now())
+}
+
+model Boat {
+    id     Int  @id @default(autoincrement())
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    kaldeNavn  String 
+    skibModel  String
 }
 
 model MeterReading {
