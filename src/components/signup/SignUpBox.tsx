@@ -100,15 +100,9 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 focus:ring-offset-0 transition-all"
                             />
                             <label htmlFor="tos" className="text-gray-400 text-sm">
-<<<<<<< HEAD
                                 {dict.signup.tosPrefix}{' '}
                                 <Link href="/terms-of-service" className="text-white underline hover:text-gray-300">
                                     {dict.signup.tosLink}
-=======
-                                I agree to the{' '}
-                                <Link href="/terms-of-service" className="text-white underline hover:text-gray-300" target='_blank'>
-                                    Terms of Service
->>>>>>> 6bd9854671223223c43d92d5191c4d5d0674a924
                                 </Link>
                             </label>
                         </div>
