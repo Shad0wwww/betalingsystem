@@ -1,10 +1,10 @@
 import 'server-only';
 import { NextRequest, NextResponse } from "next/server";
-import { InvoiceService } from "@/lib/stripe/invoiceService";
-import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import { $Enums } from "@prisma/client";
+
+import getStripe from '@/lib/stripe/Stripe';
 
 type CreatePaymentLinkBody = {
     amount: number;
@@ -47,17 +47,20 @@ export async function POST(
 
         const userId = (verifyJWTToken as any).userId;
 
-        const paymentLink = await InvoiceService.createInvoiceWithPayment(
-            userId,
-            body.amount,
-            body.type,
-            body.description
-        );
+        const paymentIntent = await getStripe().paymentIntents.create({
+            amount: body.amount,
+            currency: "dkk",
+            description: body.description,
+            metadata: {
+                userId: userId,
+                type: body.type,
+            },
+            automatic_payment_methods: {
+                enabled: true,
+            },
+        });
 
-
-
-        return NextResponse.json({ url: paymentLink });
-
+        return NextResponse.json({ clientSecret: paymentIntent.client_secret });
 
 
     } catch (error) {
@@ -67,4 +70,5 @@ export async function POST(
         );
     }
 }
+
 

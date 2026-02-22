@@ -1,10 +1,11 @@
+import { Stripe, loadStripe } from '@stripe/stripe-js';
 
-import Stripe from "stripe";
+let stripePromise: Promise<Stripe | null>;
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  }
+  return stripePromise;
+};
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-
-if (!stripeSecretKey) {
-    throw new Error("Missing STRIPE_SECRET_KEY environment variable.");
-}
-
-export const stripeInstance = new Stripe(stripeSecretKey);
+export default getStripe;

@@ -1,3 +1,4 @@
+
 import GridContainer from "@/components/dashboard/GridContainer";
 import { notFound } from "next/dist/client/components/navigation";
 import { getDictionary } from "../../dictionaries";
@@ -16,6 +17,7 @@ export default async function Page(
     return (
         <GridContainer>
             <p>Transaktioner</p>
+            
         </GridContainer>
     );
 }

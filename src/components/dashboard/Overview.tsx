@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import UdbetalModal from "../modals/UdbetalModal";
 import GridContainer from "./GridContainer";
+import { Elements } from "@stripe/react-stripe-js";
+import getStripe from "@/lib/stripe/Stripe";
 
 type Props = {
     dict: any;
@@ -31,8 +33,8 @@ export default function Overview(
         fetchBalance().then((data) => {
             setbalance(data.balance);
         }).catch(() => { });
-        
-     }, []);
+
+    }, []);
 
     return (
 
@@ -64,7 +66,18 @@ export default function Overview(
                     </div>
                 </Box>
             </GridContainer>
+            {/* TEST STRIPE BETALING  */}
+            <Elements
+                stripe={getStripe()}
+                options={{
+                    mode: "payment",
+                    currency: "dkk",
+                    amount: 1000,
 
+                }}
+            >
+                'TEST STRIPE BETALING'
+            </Elements>
 
         </main>
     );
