@@ -28,6 +28,10 @@ export const metadata: Metadata = {
 		url: "https://ribe-sejlklub.dk",
 		siteName: "Ribe Sejlklub",
 	},
+	verification: {
+		google: process.env.GOOGLE_SITE_VERIFICATION || "",
+	},
+	metadataBase: new URL("https://web.pins.dk"),
 	
 };
 
