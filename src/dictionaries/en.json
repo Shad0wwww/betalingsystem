@@ -1,17 +1,17 @@
 {
     "landingpage": {
-        "undertitel": "Kammerslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
+        "undertitel": "Kammarslusen Ribe – a payment system for ships in Ribe. It is a system that makes it easy for ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
         "learnmore": "Learn more",
         "signup": "Sign up",
         "stats1": "Ships through the lock",
         "stats2": "Payments registered",
-        "stats3": "Active accounts"
+        "stats3": "Active accounts",
+        "section1Title": "What is Kammarslusen Ribe?",
+        "section1Content": "Kammarslusen Ribe is a payment system for ships in Ribe. It is a system that makes it easy for ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not."
     },
     "dashboard": {
-        "oversigt": {
-        },
-        "historik": {
-        },
+        "oversigt": {},
+        "historik": {},
         "settings": {
             "fullname": "Change your full name",
             "fullnameDescription": "Update your full name, which is displayed on your profile and in your transactions.",
@@ -23,10 +23,16 @@
             "deleteAccountButton": "Delete account",
             "fullnamePlaceholder": "Your full name",
             "emailPlaceholder": "Your email address",
-            "registerBoat": "Register a new boat",
-            "registerBoatDescription": "Register a new boat so we can keep track of it in our system, and to ensure that you are the right person using the lock.",
-            "registerBoatButton": "Register boat",
-            "fullnameUpdatedToast": "Your full name has been updated!"
+            "registerBoat": "Register a new ship",
+            "registerBoatDescription": "Register a new ship so we can keep track of it in our system and ensure that you are the rightful user of the passage.",
+            "registerBoatButton": "Register ship",
+            "fullnameUpdatedToast": "Your full name has been updated!",
+            "emailUpdatedToast": "Your email address has been updated!",
+            "accountDeletedToast": "Your account has been deleted. We hope to see you again someday!",
+            "noShipsRegistered": "You have no registered ships yet.",
+            "shipName": "Name",
+            "shipModel": "Model",
+            "shipLimitReached": "You have reached the limit of 2 ships."
         }
     },
     "login": {
@@ -48,16 +54,16 @@
     },
     "signup": {
         "title": "Create account",
-        "subtitle": "Enter your information below to create your account",
+        "subtitle": "Enter your details below to create your account",
         "fullNameLabel": "Full name",
         "fullNamePlaceholder": "John Doe",
         "emailLabel": "Email",
         "emailPlaceholder": "example@gmail.com",
         "phoneLabel": "Phone number",
         "phonePlaceholder": "12345678",
-        "tosLabel": "Terms of service",
-        "tosPrefix": "I accept",
-        "tosLink": "Terms of service",
+        "tosLabel": "Terms of Service",
+        "tosPrefix": "I accept the",
+        "tosLink": "Terms of Service",
         "submit": "Create account",
         "submitLoading": "Creating account...",
         "haveAccount": "Already have an account?",
@@ -71,13 +77,13 @@
         "address1": "Erik Menvedsvej 20,",
         "address2": "6760 Ribe",
         "information": "Information",
-        "termsLink": "Terms of service",
-        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sejlklub. All information and functions are fictional and only for demonstration."
+        "termsLink": "Terms of Service",
+        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration purposes only."
     },
     "termsofservice": {
-        "title": "Terms of service",
+        "title": "Terms of Service",
         "undertitle": "Introduction",
-        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully, as they contain important information about your rights and obligations.",
+        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these Terms of Service. Please read these terms carefully as they contain important information about your rights and obligations.",
         "publisher": {
             "title": "Publisher"
         },
@@ -87,35 +93,39 @@
         },
         "section2": {
             "title": "§2 Refunds",
-            "content": "All sales are final, and we offer no refunds. If you have problems with your service, please contact our support team so we can help you."
+            "content": "All sales are final, and we offer no refunds. If you have any issues with your service, please contact our support team so we can assist you."
         },
         "section3": {
-            "title": "§3 Disclaimer",
-            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any form of warranty, express or implied. We disclaim any liability for any damages or losses that may arise from the use of our services."
+            "title": "§3 Disclaimer of Liability",
+            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any kind of warranty, express or implied. We disclaim any liability for any damages or losses that may arise from the use of our services."
         },
         "section4": {
-            "title": "§4 GDPR and data protection",
-            "content": "Ribe Sejlklub undertakes to protect your personal information and comply with applicable data protection legislation, including GDPR. We only collect the necessary information to provide our services and will never share your information with third parties without your consent."
+            "title": "§4 GDPR and Data Protection",
+            "content": "Ribe Sejlklub is committed to protecting your personal information and complying with applicable data protection legislation, including GDPR. We only collect the necessary information to provide our services and will never share your information with third parties without your consent."
         },
         "section5": {
-            "title": "§5 Changes to the terms",
-            "content": "Ribe Sejlklub reserves the right to change these terms of service at any time. Any changes will be published on our website, and it is your responsibility to keep yourself updated on any changes."
+            "title": "§5 Changes to the Terms",
+            "content": "Ribe Sejlklub reserves the right to change these Terms of Service at any time. Any changes will be published on our website, and it is your responsibility to stay informed about any changes."
         },
         "section6": {
-            "title": "§6 Contact information",
-            "content": "If you have questions or concerns regarding these terms of service, please contact us at support@pins.dk."
+            "title": "§6 Contact Information",
+            "content": "If you have any questions or concerns regarding these Terms of Service, please contact us at support@pins.dk."
         },
         "section7": {
-            "title": "§7 Choice of law and jurisdiction",
-            "content": "These terms of service are governed by and shall be interpreted in accordance with Danish law. Any dispute arising in connection with these terms shall be brought before the Danish courts."
+            "title": "§7 Governing Law and Jurisdiction",
+            "content": "These Terms of Service are governed by and shall be interpreted in accordance with Danish law. Any dispute arising in connection with these terms shall be brought before the Danish courts."
         },
         "section8": {
-            "title": "§8 Acceptance of terms",
-            "content": "By using our payment system, you confirm that you have read, understood and accepted these terms of service. If you do not accept these terms, please do not use our services."
+            "title": "§8 Acceptance of Terms",
+            "content": "By using our payment system, you confirm that you have read, understood, and accepted these Terms of Service. If you do not accept these terms, please do not use our services."
         },
         "section9": {
-            "title": "§9 School project disclaimer",
-            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration only. By creating an account or using our services, you accept that you do so at your own risk and understand that this project is not intended for commercial use. Ribe Sejlklub and the students behind this project disclaim any liability for any problems that may arise as a result of using this system."
+            "title": "§9 School Project Disclaimer",
+            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration purposes only. By creating an account or using our services, you accept that you do so at your own risk and understand that this project is not intended for commercial use. Ribe Sejlklub and the students behind this project disclaim any liability for any issues that may arise from the use of this system."
+        },
+        "section10": {
+            "title": "§10 Contact Information",
+            "content": "If you have any questions or concerns regarding these Terms of Service, please contact us at support@pins.dk."
         }
     }
 }

@@ -18,3 +18,19 @@
     padding: 25px;
     animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.IconButton {
+    all: unset;
+    font-family: inherit;
+    height: 25px;
+    width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px;
+    cursor: pointer;
+}

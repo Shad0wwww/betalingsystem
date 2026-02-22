@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 		url: "https://ribe-sejlklub.dk",
 		siteName: "Ribe Sejlklub",
 	},
+	
 };
 
 type LayoutProps = Readonly<{

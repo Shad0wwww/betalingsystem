@@ -3,6 +3,7 @@ import LandingPage from "@/components/landingpage/Landingpage";
 import { getDictionary } from "./dictionaries";
 import { notFound } from "next/dist/client/components/navigation";
 import { Suspense } from "react";
+import LoadingScreen from "@/components/utils/LoadingScreen";
 
 type PageParams = Promise<{ lang: string }>;
 
@@ -18,7 +19,7 @@ export default async function Page(
 	return (
 		
 		<main>
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<LoadingScreen />}>
 				<LandingPage dict={dict} />
 			</Suspense>
 		</main>

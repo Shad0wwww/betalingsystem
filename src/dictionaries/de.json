@@ -1,45 +1,51 @@
 {
     "landingpage": {
-        "undertitel": "Kammerslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen erleichtert, die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert auch der Schleuse, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
+        "undertitel": "Kammarslusen Ribe – ein Zahlungssystem für Schiffe in Ribe. Es ist ein System, das es Schiffen erleichtert, für die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert der Schleuse auch, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
         "learnmore": "Mehr erfahren",
         "signup": "Registrieren",
         "stats1": "Schiffe durch die Schleuse",
         "stats2": "Registrierte Zahlungen",
-        "stats3": "Aktive Konten"
+        "stats3": "Aktive Konten",
+        "section1Title": "Was ist Kammarslusen Ribe?",
+        "section1Content": "Kammarslusen Ribe ist ein Zahlungssystem für Schiffe in Ribe. Es ist ein System, das es Schiffen erleichtert, für die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert der Schleuse auch, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht."
     },
     "dashboard": {
-        "oversigt": {
-        },
-        "historik": {
-        },
+        "oversigt": {},
+        "historik": {},
         "settings": {
-            "fullname": "Deinen vollen Namen ändern",
-            "fullnameDescription": "Aktualisiere deinen vollen Namen, der in deinem Profil und in deinen Transaktionen angezeigt wird.",
+            "fullname": "Vollständigen Namen ändern",
+            "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, der in Ihrem Profil und in Ihren Transaktionen angezeigt wird.",
             "saveChanges": "Änderungen speichern",
-            "email": "Deine E-Mail-Adresse ändern",
-            "emailDescription": "Aktualisiere deine E-Mail-Adresse, die zum Anmelden bei deinem Konto und zum Erhalten wichtiger Mitteilungen verwendet wird.",
+            "email": "Ihre E-Mail-Adresse ändern",
+            "emailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse, die zum Einloggen in Ihr Konto und zum Empfang wichtiger Benachrichtigungen verwendet wird.",
             "deleteAccount": "Konto löschen",
-            "deleteAccountDescription": "Bist du sicher, dass du dein Konto löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
             "deleteAccountButton": "Konto löschen",
-            "fullnamePlaceholder": "Dein voller Name",
-            "emailPlaceholder": "Deine E-Mail-Adresse",
-            "registerBoat": "Ein neues Schiff registrieren",
-            "registerBoatDescription": "Registriere ein neues Schiff, damit wir es in unserem System verfolgen können und sicherstellen, dass du die richtige Person bist, die die Schleuse nutzt.",
+            "fullnamePlaceholder": "Ihr vollständiger Name",
+            "emailPlaceholder": "Ihre E-Mail-Adresse",
+            "registerBoat": "Neues Schiff registrieren",
+            "registerBoatDescription": "Registrieren Sie ein neues Schiff, damit wir es in unserem System verfolgen und sicherstellen können, dass Sie der berechtigte Nutzer der Durchfahrt sind.",
             "registerBoatButton": "Schiff registrieren",
-            "fullnameUpdatedToast": "Dein voller Name wurde aktualisiert!"
+            "fullnameUpdatedToast": "Ihr vollständiger Name wurde aktualisiert!",
+            "emailUpdatedToast": "Ihre E-Mail-Adresse wurde aktualisiert!",
+            "accountDeletedToast": "Ihr Konto wurde gelöscht. Wir hoffen, Sie irgendwann wiederzusehen!",
+            "noShipsRegistered": "Sie haben noch keine registrierten Schiffe.",
+            "shipName": "Name",
+            "shipModel": "Modell",
+            "shipLimitReached": "Sie haben die Grenze von 2 Schiffen erreicht."
         }
     },
     "login": {
         "title": "Anmelden",
-        "subtitle": "Gib deine E-Mail ein, um einen Einmalcode zu erhalten",
+        "subtitle": "Geben Sie Ihre E-Mail ein, um einen Einmalcode zu erhalten",
         "emailLabel": "E-Mail",
         "emailPlaceholder": "name@domain.dk",
         "sendOtpButton": "Einmalcode senden",
         "sendOtpButtonLoading": "Code wird gesendet...",
-        "noAccount": "Hast du kein Konto?",
+        "noAccount": "Haben Sie noch kein Konto?",
         "createAccount": "Konto erstellen",
         "otpTitle": "Einmalcode eingeben",
-        "otpIntro": "Wir haben einen 6-stelligen Code gesendet an",
+        "otpIntro": "Wir haben einen 6-stelligen Code an gesendet",
         "otpLabel": "Einmalcode",
         "otpPlaceholder": "123456",
         "loginButton": "Anmelden",
@@ -48,19 +54,19 @@
     },
     "signup": {
         "title": "Konto erstellen",
-        "subtitle": "Gib deine Daten unten ein, um dein Konto zu erstellen",
+        "subtitle": "Geben Sie Ihre Daten unten ein, um Ihr Konto zu erstellen",
         "fullNameLabel": "Vollständiger Name",
-        "fullNamePlaceholder": "Max Mustermann",
+        "fullNamePlaceholder": "John Doe",
         "emailLabel": "E-Mail",
         "emailPlaceholder": "beispiel@gmail.com",
         "phoneLabel": "Telefonnummer",
         "phonePlaceholder": "12345678",
         "tosLabel": "Nutzungsbedingungen",
-        "tosPrefix": "Ich akzeptiere",
+        "tosPrefix": "Ich akzeptiere die",
         "tosLink": "Nutzungsbedingungen",
         "submit": "Konto erstellen",
         "submitLoading": "Konto wird erstellt...",
-        "haveAccount": "Hast du bereits ein Konto?",
+        "haveAccount": "Haben Sie bereits ein Konto?",
         "loginLink": "Anmelden"
     },
     "footer": {
@@ -70,52 +76,56 @@
         "cvr": "CVR: 74852513",
         "address1": "Erik Menvedsvej 20,",
         "address2": "6760 Ribe",
-        "information": "Information",
+        "information": "Informationen",
         "termsLink": "Nutzungsbedingungen",
-        "disclaimer": "Haftungsausschluss: Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und nur zur Demonstration."
+        "disclaimer": "Hinweis: Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken."
     },
     "termsofservice": {
         "title": "Nutzungsbedingungen",
-        "undertitle": "Einführung",
-        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklärst du dich damit einverstanden, diese Nutzungsbedingungen einzuhalten. Bitte lies diese Bedingungen sorgfältig durch, da sie wichtige Informationen zu deinen Rechten und Pflichten enthalten.",
+        "undertitle": "Einleitung",
+        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklären Sie sich mit der Einhaltung dieser Nutzungsbedingungen einverstanden. Bitte lesen Sie diese Bedingungen sorgfältig durch, da sie wichtige Informationen über Ihre Rechte und Pflichten enthalten.",
         "publisher": {
             "title": "Herausgeber"
         },
         "section1": {
             "title": "§1 Lieferung",
-            "content": "Wenn du einen Kauf über unser Zahlungssystem tätigst, werden wir uns bemühen, die gekaufte Dienstleistung so schnell wie möglich zu liefern. In den meisten Fällen erfolgt die Lieferung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen kann es jedoch zu Verzögerungen kommen."
+            "content": "Wenn Sie einen Kauf über unser Zahlungssystem tätigen, bemühen wir uns, die gekaufte Dienstleistung so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Bereitstellung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen können jedoch Verzögerungen auftreten."
         },
         "section2": {
             "title": "§2 Rückerstattungen",
-            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Wenn du Probleme mit deiner Dienstleistung hast, kontaktiere bitte unser Support-Team, damit wir dir helfen können."
+            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Bei Problemen mit Ihrer Dienstleistung kontaktieren Sie bitte unser Support-Team, damit wir Ihnen helfen können."
         },
         "section3": {
             "title": "§3 Haftungsausschluss",
-            "content": "Das Ribe Sejlklub und sein Zahlungssystem werden 'wie es ist' ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jegliche Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
+            "content": "Der Ribe Sejlklub und sein Zahlungssystem werden „wie sie sind“ ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jede Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
         },
         "section4": {
             "title": "§4 DSGVO und Datenschutz",
-            "content": "Das Ribe Sejlklub verpflichtet sich, deine personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir sammeln nur die notwendigen Informationen, um unsere Dienste bereitzustellen, und werden deine Daten niemals ohne deine Zustimmung an Dritte weitergeben."
+            "content": "Der Ribe Sejlklub verpflichtet sich, Ihre personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir erheben nur die notwendigen Informationen zur Bereitstellung unserer Dienste und geben Ihre Daten niemals ohne Ihre Zustimmung an Dritte weiter."
         },
         "section5": {
             "title": "§5 Änderungen der Bedingungen",
-            "content": "Das Ribe Sejlklub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Alle Änderungen werden auf unserer Website veröffentlicht, und es liegt in deiner Verantwortung, dich über etwaige Änderungen auf dem Laufenden zu halten."
+            "content": "Der Ribe Sejlklub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden auf unserer Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich über etwaige Änderungen zu informieren."
         },
         "section6": {
             "title": "§6 Kontaktinformationen",
-            "content": "Wenn du Fragen oder Bedenken zu diesen Nutzungsbedingungen hast, kontaktiere uns bitte unter support@pins.dk."
+            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
         },
         "section7": {
-            "title": "§7 Rechtswahl und Gerichtsstand",
-            "content": "Diese Nutzungsbedingungen unterliegen dem dänischen Recht und sind danach auszulegen. Jeder Streit, der im Zusammenhang mit diesen Bedingungen entsteht, muss vor den dänischen Gerichten beigelegt werden."
+            "title": "§7 Anwendbares Recht und Gerichtsstand",
+            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht und sind entsprechend auszulegen. Streitigkeiten im Zusammenhang mit diesen Bedingungen sind vor den dänischen Gerichten auszutragen."
         },
         "section8": {
             "title": "§8 Annahme der Bedingungen",
-            "content": "Durch die Nutzung unseres Zahlungssystems bestätigst du, dass du diese Nutzungsbedingungen gelesen, verstanden und akzeptiert hast. Wenn du diese Bedingungen nicht akzeptierst, nutze bitte unsere Dienste nicht."
+            "content": "Durch die Nutzung unseres Zahlungssystems bestätigen Sie, dass Sie diese Nutzungsbedingungen gelesen, verstanden und akzeptiert haben. Wenn Sie diese Bedingungen nicht akzeptieren, nutzen Sie bitte unsere Dienste nicht."
         },
         "section9": {
-            "title": "§9 Haftungsausschluss für Schulprojekt",
-            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und nur zur Demonstration. Durch die Erstellung eines Kontos oder die Nutzung unserer Dienste akzeptierst du, dass du dies auf eigene Gefahr tust und verstehst, dass dieses Projekt nicht für kommerzielle Nutzung bestimmt ist. Das Ribe Sejlklub und die Studierenden hinter diesem Projekt lehnen jegliche Haftung für Probleme ab, die durch die Nutzung dieses Systems entstehen könnten."
+            "title": "§9 Hinweis zum Schulprojekt",
+            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken. Durch die Erstellung eines Kontos oder die Nutzung unserer Dienste akzeptieren Sie, dass Sie dies auf eigenes Risiko tun und verstehen, dass dieses Projekt nicht für kommerzielle Nutzung gedacht ist. Der Ribe Sejlklub und die Studierenden hinter diesem Projekt lehnen jede Haftung für Probleme ab, die durch die Nutzung dieses Systems entstehen könnten."
+        },
+        "section10": {
+            "title": "§10 Kontaktinformationen",
+            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
         }
     }
 }

@@ -5,7 +5,9 @@
         "signup": "Tilmeld dig",
         "stats1": "Skibe gennem slusen",
         "stats2": "Betalinger registreret",
-        "stats3": "Aktive kontoer"
+        "stats3": "Aktive kontoer",
+        "section1Title": "Hvad er Kammarslusen Ribe?",
+        "section1Content": "Kammarslusen Ribe er et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har."
     },
     "dashboard": {
         "oversigt": {
@@ -28,7 +30,13 @@
             "registerBoat": "Registrér et nyt skib",
             "registerBoatDescription": "Register et nyt skib, så vi kan holde styr på det i vores skib, og så vi sikre at du er den rigtige der benytter sig af strømmen.",
             "registerBoatButton": "Registrér skib",
-            "fullnameUpdatedToast": "Dit fulde navn er blevet opdateret!"
+            "fullnameUpdatedToast": "Dit fulde navn er blevet opdateret!",
+            "emailUpdatedToast": "Din e-mailadresse er blevet opdateret!",
+            "accountDeletedToast": "Din konto er blevet slettet. Vi håber at se dig igen en dag!",
+            "noShipsRegistered": "Du har ingen registrerede skibe endnu.",
+            "shipName": "Navn",
+            "shipModel": "Model",
+            "shipLimitReached": "Du har nået grænsen på 2 skibe."
         }
     },
     "login": {
@@ -119,6 +127,10 @@
         "section9": {
             "title": "§9 Skoleprojekt Disclaimer",
             "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Ved at oprette en konto eller bruge vores tjenester, accepterer du, at du gør det på eget ansvar og forstår, at dette projekt ikke er beregnet til kommerciel brug. Ribe Sejlklub og de studerende bag dette projekt fraskriver sig ethvert ansvar for eventuelle problemer, der måtte opstå som følge af brugen af dette system."
+        },
+        "section10": {
+            "title": "§10 Kontaktinformation",
+            "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
         }
     }
 }
