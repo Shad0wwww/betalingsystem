@@ -52,8 +52,6 @@ export default async function middleware(request: NextRequest) {
     }
 
 
-    console.log(`Middleware: Checking authentication for ${pathname}`);
-
 
     return NextResponse.next();
 }
