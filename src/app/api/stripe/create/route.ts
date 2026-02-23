@@ -47,7 +47,7 @@ export async function POST(
 
         const userId = (verifyJWTToken as any).userId;
 
-        const paymentIntent = await getStripe().paymentIntents.create({
+        /* const paymentIntent = await getStripe().paymentIntents.create({
             amount: body.amount,
             currency: "dkk",
             description: body.description,
@@ -60,7 +60,9 @@ export async function POST(
             },
         });
 
-        return NextResponse.json({ clientSecret: paymentIntent.client_secret });
+        return NextResponse.json({ clientSecret: paymentIntent.client_secret }); */
+
+        return NextResponse.json({ message: "Payment link creation is currently disabled." });
 
 
     } catch (error) {
