@@ -1,5 +1,4 @@
 import { uploadFile } from '@/lib/cloudflare/Upload';
-import { Invoice } from './../../../../../node_modules/.pnpm/@prisma+client@7.4.0_prisma_e568bafc725adf08cceb4afe52e79c7d/node_modules/.prisma/client/index.d';
 import { sendEmail } from "@/lib/emailer/Mail";
 import { generateInvoiceEmailContent } from "@/lib/emailer/MailCreatorInvoice";
 import prisma from "@/lib/prisma";
