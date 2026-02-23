@@ -2,9 +2,11 @@ import 'server-only';
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
-import { $Enums } from "@prisma/client";
+import { $Enums, InvoiceStatus, UtilityType } from "@prisma/client";
 
 import getStripe from '@/lib/stripe/Stripe';
+import prisma from '@/lib/prisma';
+import { GetUser } from '@/lib/users/GetUser';
 
 type CreatePaymentLinkBody = {
     amount: number;
@@ -45,24 +47,56 @@ export async function POST(
             );
         }
 
-        const userId = (verifyJWTToken as any).userId;
+        const {
+            userId,
+            email
+        } = verifyJWTToken as unknown as {
+            userId: number;
+            email: string;
+        };
 
-        /* const paymentIntent = await getStripe().paymentIntents.create({
-            amount: body.amount,
-            currency: "dkk",
-            description: body.description,
+        const customerId = await GetUser.getCustomerIDByEmail(email);
+
+        const session = await getStripe().checkout.sessions.create({
+            customer: customerId!,
+            payment_method_types: ["card", "samsung_pay"],
+            
+            line_items: [
+                {
+                    price_data: {
+                        currency: "dkk",
+                        unit_amount: body.amount,
+                        product_data: {
+                            name: body.description,
+                        },
+                    },
+                    
+                    quantity: 1,
+                },
+            ],
+            mode: "payment",
+            success_url: `${process.env.URL_BASE}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.URL_BASE}/api/stripe/cancel`,
             metadata: {
-                userId: userId,
+                userId: userId.toString(),
                 type: body.type,
-            },
-            automatic_payment_methods: {
-                enabled: true,
+            }
+        })
+
+
+        await prisma.invoice.create({
+            data: {
+                userId: parseInt(userId.toString()),
+                amount: body.amount, 
+                type: body.type as UtilityType,
+                stripePaymentIntentId: session.id, 
+                status: InvoiceStatus.PENDING,
+                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), 
             },
         });
 
-        return NextResponse.json({ clientSecret: paymentIntent.client_secret }); */
+        return NextResponse.json({ url: session.url });
 
-        return NextResponse.json({ message: "Payment link creation is currently disabled." });
 
 
     } catch (error) {

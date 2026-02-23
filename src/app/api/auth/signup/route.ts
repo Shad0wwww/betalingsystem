@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import DoesEmailExist from "@/lib/users/DoesEmailExist";
 import { validatePhone } from "@/lib/users/Phone";
 import { validateEmail } from "@/lib/utils/Email";
+import { createStripeCustomer } from '@/lib/stripe/CreateCustomer';
 
 export async function POST(
     req: Request
@@ -41,12 +42,15 @@ export async function POST(
         return Response.json({ error: "Phone already exists" }, { status: 400 });
     }
 
+    const customer = await createStripeCustomer(email, name, phone);
+
     const user = await prisma.user.create({
         data: {
             name,
             email,
             phone,
             phoneCountry,
+            stripeCustomerId: customer.id,
         },
     });
 

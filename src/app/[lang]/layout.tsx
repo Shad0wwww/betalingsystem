@@ -49,10 +49,10 @@ export default function RootLayout(
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<GoogleAnalytics gaId="G-ZZC8062EPQ" />
 				<ChooseNavbar />
 				{children}
 				<Toaster position="top-center" />
+				<GoogleAnalytics gaId="G-ZZC8062EPQ" />
 				<Footer params={params} />
 			</body>
 		</html>

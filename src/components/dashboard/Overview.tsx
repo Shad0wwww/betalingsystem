@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import UdbetalModal from "../modals/UdbetalModal";
 import GridContainer from "./GridContainer";
-import { Elements } from "@stripe/react-stripe-js";
-import getStripe from "@/lib/stripe/Stripe";
+import { UtilityType } from "@prisma/client";
 
 type Props = {
     dict: any;
@@ -65,19 +64,28 @@ export default function Overview(
                         <p className="text-gray-500 text-sm mt-2">Du har ingen transaktioner endnu.</p>
                     </div>
                 </Box>
+                {/* TEST STRIPE BETALING  */}
+                <button className="mt-10 bg-blue-500 text-white px-4 py-2 rounded" onClick={() => {
+                    fetch("/api/stripe/create", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            amount: 5000,
+                            description: "Test betaling",
+                            type: UtilityType.ELECTRICITY,
+                        }),
+                    }).then((res) => res.json()).then((data) => {
+                        if (data.url) {
+                            window.location.href = data.url;
+                        }
+                    });
+                }}>
+                    Test Stripe Betaling
+                </button>
             </GridContainer>
-            {/* TEST STRIPE BETALING  */}
-            <Elements
-                stripe={getStripe()}
-                options={{
-                    mode: "payment",
-                    currency: "dkk",
-                    amount: 1000,
 
-                }}
-            >
-                'TEST STRIPE BETALING'
-            </Elements>
 
         </main>
     );

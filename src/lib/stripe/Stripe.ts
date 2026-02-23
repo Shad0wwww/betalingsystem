@@ -1,11 +1,10 @@
-import { Stripe, loadStripe } from '@stripe/stripe-js';
+import stripe from "stripe";
 
-let stripePromise: Promise<Stripe | null>;
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-  }
-  return stripePromise;
+const getStripe = (): stripe => {
+    if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error("STRIPE_SECRET_KEY is not defined in environment variables.");
+    }
+    return new stripe(process.env.STRIPE_SECRET_KEY);
 };
 
 export default getStripe;

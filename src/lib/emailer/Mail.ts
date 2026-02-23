@@ -18,7 +18,7 @@ export async function sendEmail(
     html: string,
 ){
     await transporter.sendMail({
-        from: `"Betalingsystem" <${process.env.MAILGUN_LOGIN!!}>`,
+        from: `"Ribe Sejlklub" <${process.env.MAILGUN_LOGIN!!}>`,
         to: to,
         subject: subject,
         html: html,

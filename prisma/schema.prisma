@@ -1,22 +1,23 @@
 generator client {
     provider = "prisma-client-js"
 }
+
 datasource db {
     provider = "postgresql"
-	
 }
+
 model User {
-    id           Int      @id @default(autoincrement())
+    id           Int    @id @default(autoincrement())
     name         String
-    email        String   @unique
-    phone        String   @unique
-    phoneCountry String   @default("DK")
-    Role         Role     @default(value: USER)
+    email        String @unique
+    phone        String @unique
+    phoneCountry String @default("DK")
+    Role         Role   @default(value: USER)
 
-    balance      Float    @default(0)
+    balance Float @default(0)
 
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     stripeCustomerId String? @unique
 
@@ -25,6 +26,7 @@ model User {
     invoices           Invoice[]
     meterReadings      MeterReading[]
     boats              Boat[]
+    transactions       Transaction[]
 }
 
 model VerificationToken {
@@ -43,6 +45,8 @@ model Invoice {
     userId Int
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+    InvoiceNumber String? @unique
+
     amount   Int
     currency String        @default("dkk")
     status   InvoiceStatus @default(PENDING)
@@ -50,7 +54,6 @@ model Invoice {
     type UtilityType
 
     stripePaymentIntentId String? @unique
-    stripeInvoiceId       String? @unique
 
     dueDate   DateTime
     paidAt    DateTime?
@@ -62,8 +65,8 @@ model Boat {
     userId Int
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    kaldeNavn  String 
-    skibModel  String
+    kaldeNavn String
+    skibModel String
 }
 
 model MeterReading {
@@ -74,6 +77,25 @@ model MeterReading {
     type  UtilityType
     value Float
     date  DateTime    @default(now())
+}
+
+model Transaction {
+    id     Int  @id @default(autoincrement())
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
+
+    amount Float @default(0)
+    type   TransactionType
+
+    stripeSessionId String? @unique
+
+    createdAt DateTime @default(now())
+}
+
+enum TransactionType {
+    DEPOSIT
+    PAYMENT
+    REFUND
 }
 
 enum InvoiceStatus {

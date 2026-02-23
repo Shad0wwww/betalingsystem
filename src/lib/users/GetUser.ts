@@ -47,4 +47,12 @@ export class GetUser {
         return !!user;
     }
 
+    static async getCustomerIDByEmail(
+        email: string
+    ) {
+        const user = await this.byEmail(email);
+        return user?.stripeCustomerId || null;
+    }
+    
+
 }
