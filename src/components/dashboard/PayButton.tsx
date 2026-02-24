@@ -11,7 +11,7 @@ async function createPaymentLink(amount: number, description: string, type: Util
 }
 
 export default function PayButton(
-    { amount, description, type }: { amount: number; description: string; type: UtilityType }
+    { amount, description, type, dict }: { amount: number; description: string; type: UtilityType; dict: any }
 ) {
 
     return (
@@ -28,7 +28,7 @@ export default function PayButton(
             }}
             className="rounded-lg px-7 py-[7px] min-w-[55.5px] cursor-pointer  bg-blue-500 text-white hover:bg-blue-600 text-xs font-bold transition-colors duration-300"
         >
-            Pay {amount} DKK
+            {dict.dashboard.oversigt.payButton} {amount} DKK
         </button>
         
     )

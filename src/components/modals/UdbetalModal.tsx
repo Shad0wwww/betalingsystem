@@ -4,15 +4,13 @@ import { useState } from "react";
 
 import "@/components/modals/styles.css";
 
-export default function UdbetalModal(
-
-) {
+export default function UdbetalModal({ dict }: { dict: any }) {
     const [open, setOpen] = useState(false)
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger className={`cursor-pointer text-white font-bold text-xs bg-green-600 rounded-md text-center px-7 py-[7px] min-w-[55.5px] `}>
-                UDBETAL
+                {dict?.dashboard?.oversigt?.payoutbutton ?? 'Udbetal'}
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />

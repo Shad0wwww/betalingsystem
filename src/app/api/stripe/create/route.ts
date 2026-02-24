@@ -87,8 +87,6 @@ export async function POST(
             }
         });
 
-        console.log("Stripe session created:", session);
-
 
         await prisma.invoice.create({
             data: {

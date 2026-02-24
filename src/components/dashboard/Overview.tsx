@@ -5,6 +5,7 @@ import GridContainer from "./GridContainer";
 import { UtilityType } from "@prisma/client";
 import PayButton from "./PayButton";
 import LoadingScreen from "../utils/LoadingScreen";
+import LatestTrans from "./LatestTrans";
 
 type Props = {
     dict: any;
@@ -29,14 +30,15 @@ export default function Overview(
     { dict }: Props
 ) {
     const [balance, setbalance] = useState<number>(0);
+    const [latestTransactions, setLatestTransactions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchBalance().then((data) => {
             setbalance(data.balance);
-            setLoading(false);
+            
         });
-
+        setLoading(false);
     }, []);
 
     if (loading) return <LoadingScreen />;
@@ -49,21 +51,18 @@ export default function Overview(
                 <Box>
                     <div className="flex flex-row justify-between items-center">
 
-                        <PayButton amount={200} description="Test betaling" type={UtilityType.ELECTRICITY} />
-                        <UdbetalModal />
+                        <PayButton amount={200} description="Test betaling" type={UtilityType.ELECTRICITY} dict={dict} />
+                        <UdbetalModal dict={dict} />
                     </div>
 
                     <div className="flex flex-col mt-6 mb-1">
-                        <p className="text-sm sub-headline">Balance</p>
+                        <p className="text-sm sub-headline">{dict.dashboard.oversigt.balance}</p>
                         <p className="text-white font-bold text-lg">{balance.toLocaleString("da-DK", { style: "currency", currency: "DKK" })}</p>
                     </div>
                 </Box>
 
                 <Box>
-                    <div className="flex flex-col">
-                        <p className="text-sm sub-headline">Seneste transaktioner</p>
-                        <p className="text-gray-500 text-sm mt-2">Du har ingen transaktioner endnu.</p>
-                    </div>
+                    <LatestTrans dict={dict} />
                 </Box>
 
                 <Box>

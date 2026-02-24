@@ -11,8 +11,13 @@
     },
     "dashboard": {
         "oversigt": {
-
+            "latestTransactions": "Seneste transaktioner",
+            "noTransactionsYet": "Du har ingen transaktioner endnu.",
+            "balance": "Beløb",
+            "payButton": "Betal nu",
+            "payoutbutton": "Udbetal"
         },
+
         "historik": {
 
         },
