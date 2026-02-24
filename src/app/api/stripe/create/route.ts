@@ -20,6 +20,7 @@ export async function POST(
     try {
         const body = (await request.json()) as CreatePaymentLinkBody;
 
+        const URL_BASE = process.env.URL_BASE || "https://web.pins.dk/da-DK";
 
         if (!body?.amount || !body?.description || body?.type === undefined) {
             return NextResponse.json(
