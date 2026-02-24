@@ -12,6 +12,8 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const sessionId = searchParams.get("session_id");
 
+    const URL_LINK = process.env.URL_BASE || "https://web.pins.dk";
+
     if (!sessionId) {
         return NextResponse.json(
             { error: "Missing session_id" },
@@ -23,7 +25,7 @@ export async function GET(
 
     if (!session || session.payment_status !== "paid") {
         await handleInvoiceUpdate(sessionId, InvoiceStatus.FAILED, "");
-        return NextResponse.redirect(new URL("/dashboard?payment=failed&reason=payment_not_completed", request.url));
+        return NextResponse.redirect(new URL("/dashboard?payment=failed&reason=payment_not_completed", URL_LINK));
     }
 
     const email = session.customer_details?.email;
@@ -33,7 +35,7 @@ export async function GET(
 
     if (!email) {
         return NextResponse.redirect(
-            new URL("/dashboard?payment=failed&reason=missing_user_email", request.url)
+            new URL("/dashboard?payment=failed&reason=missing_user_email", URL_LINK)
         );
     }
 
@@ -63,7 +65,7 @@ export async function GET(
 
 
 
-    return NextResponse.redirect(new URL("/dashboard?payment=success", request.url));
+    return NextResponse.redirect(new URL("/dashboard?payment=success", URL_LINK));
 
 }
 
