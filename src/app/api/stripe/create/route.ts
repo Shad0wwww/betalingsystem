@@ -18,7 +18,9 @@ export async function POST(
     request: NextRequest
 ) {
     try {
-        const body = (await request.json()) as CreatePaymentLinkBody;
+        const body = await request.json() as CreatePaymentLinkBody;
+
+        console.log("Received payment link creation request with body:", body);
 
         const URL_BASE = process.env.URL_BASE || "https://web.pins.dk/da-DK";
 
@@ -58,7 +60,6 @@ export async function POST(
 
         const customerId = await GetUser.getCustomerIDByEmail(email);
 
-        console.log("Creating Stripe session for user:", email, "with customer ID:", customerId);
 
         const session = await getStripe().checkout.sessions.create({
             customer: customerId!,

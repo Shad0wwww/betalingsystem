@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import UdbetalModal from "../modals/UdbetalModal";
 import GridContainer from "./GridContainer";
 import { UtilityType } from "@prisma/client";
+import PayButton from "./PayButton";
+import LoadingScreen from "../utils/LoadingScreen";
 
 type Props = {
     dict: any;
@@ -26,22 +28,28 @@ const Box = (
 export default function Overview(
     { dict }: Props
 ) {
-    const [balance, setbalance] = useState<Float16Array>(new Float16Array(0));
+    const [balance, setbalance] = useState<number>(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchBalance().then((data) => {
             setbalance(data.balance);
-        }).catch(() => { });
+            setLoading(false);
+        });
 
     }, []);
 
+    if (loading) return <LoadingScreen />;
+
     return (
+        
 
         <main>
             <GridContainer>
                 <Box>
                     <div className="flex flex-row justify-between items-center">
 
+                        <PayButton amount={200} description="Test betaling" type={UtilityType.ELECTRICITY} />
                         <UdbetalModal />
                     </div>
 
@@ -65,25 +73,7 @@ export default function Overview(
                     </div>
                 </Box>
                 {/* TEST STRIPE BETALING  */}
-                <button className="mt-10 bg-blue-500 text-white px-4 py-2 rounded" onClick={() => {
-                    fetch("/api/stripe/create", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            amount: 5000,
-                            description: "Test betaling",
-                            type: UtilityType.ELECTRICITY,
-                        }),
-                    }).then((res) => res.json()).then((data) => {
-                        if (data.url) {
-                            window.location.href = data.url;
-                        }
-                    });
-                }}>
-                    Test Stripe Betaling
-                </button>
+                
             </GridContainer>
 
 
