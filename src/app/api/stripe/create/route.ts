@@ -57,9 +57,11 @@ export async function POST(
 
         const customerId = await GetUser.getCustomerIDByEmail(email);
 
+        console.log("Creating Stripe session for user:", email, "with customer ID:", customerId);
+
         const session = await getStripe().checkout.sessions.create({
             customer: customerId!,
-            payment_method_types: ["card", "samsung_pay"],
+            payment_method_types: ["card"],
             
             line_items: [
                 {
@@ -81,7 +83,9 @@ export async function POST(
                 userId: userId.toString(),
                 type: body.type,
             }
-        })
+        });
+
+        console.log("Stripe session created:", session);
 
 
         await prisma.invoice.create({
@@ -100,6 +104,7 @@ export async function POST(
 
 
     } catch (error) {
+        console.error("Error creating payment link:", error);
         return NextResponse.json(
             { error: "Failed to create payment link." },
             { status: 500 }
