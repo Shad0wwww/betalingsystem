@@ -140,6 +140,7 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
                                     autoFocus
                                     required
                                     value={emailInput}
+                                    onChange={(e) => setEmailInput((e.target as HTMLInputElement).value)}
                                 />
                             </div>
                             <div className="mb-4 flex justify-center max-w-full overflow-hidden">

@@ -34,11 +34,22 @@ export default function Overview(
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchBalance().then((data) => {
-            setbalance(data.balance);
-            
-        });
-        setLoading(false);
+        let mounted = true;
+        (async () => {
+            setLoading(true);
+            try {
+                const data = await fetchBalance();
+                if (!mounted) return;
+                const bal = Number((data && data.balance) ?? 0);
+                setbalance(isNaN(bal) ? 0 : bal);
+            } catch (err) {
+                console.error(err);
+                if (mounted) setbalance(0);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        })();
+        return () => { mounted = false; };
     }, []);
 
     if (loading) return <LoadingScreen />;

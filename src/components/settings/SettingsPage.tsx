@@ -1,14 +1,18 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
 import RegisterShipModal from "../modals/RegisterShipModal";
-import toast, { Toaster } from "react-hot-toast";
+import ChangeEmail from "../modals/ChangeEmailModal";
 
-
+// ==========================================
+// 1. TYPER & INTERFACES
+// ==========================================
 interface Ship {
-    id?: string; // Anbefalet at have et unikt ID
+    id?: string;
     name: string;
     model: string;
 }
@@ -18,6 +22,9 @@ interface UserData {
     email: string;
 }
 
+// ==========================================
+// 2. HJÆLPE-KOMPONENTER & FUNKTIONER
+// ==========================================
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
@@ -25,7 +32,14 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     />
 );
 
-// 2. Tilføj basal fejlhåndtering til dine API-kald
+const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
+// ==========================================
+// 3. API KALD (Uafhængige af komponenten)
+// ==========================================
 async function fetchUserData(): Promise<UserData> {
     const res = await fetch(`/api/user/me`);
     if (!res.ok) throw new Error("Kunne ikke hente brugerdata");
@@ -44,31 +58,44 @@ async function updateUserFullName(name: string) {
 
 async function fetchUserShips(): Promise<Ship[]> {
     const res = await fetch(`/api/boat/myboats`);
-
     if (!res.ok) throw new Error("Kunne ikke hente skibe");
-
     const data = await res.json();
-
-    const mappedShips = data.map((ship: any) => ({
+    return data.map((ship: any) => ({
         id: ship.id,
-        name: ship.kaldeNavn, 
-        model: ship.skibModel 
+        name: ship.kaldeNavn,
+        model: ship.skibModel
     }));
-
-    return mappedShips;
 }
 
-export default function SettingsClient(
-    { dict }: { dict: any }
-) {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [ships, setShips] = useState<Ship[]>([]);
-    const [loading, setLoading] = useState(true);
+async function requestEmailChangeOtp(newEmail: string) {
+    const res = await fetch(`/api/user/update-email/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail }),
+    });
+    if (!res.ok) throw new Error("Kunne ikke sende OTP koder");
+    return res.json();
+}
 
+// ==========================================
+// 4. HOVEDKOMPONENT
+// ==========================================
+export default function SettingsClient({ dict }: { dict: any }) {
+    // --- STATE ---
+    const [loading, setLoading] = useState(true);
+    const [name, setName] = useState<string>("");
+
+    // Email states
+    const [oldEmail, setOldEmail] = useState<string>("");
+    const [email, setEmail] = useState<string>(""); // Den brugeren taster i
+    const [isRequestingEmail, setIsRequestingEmail] = useState(false);
+
+    // Skib states
+    const [ships, setShips] = useState<Ship[]>([]);
+
+    // --- EFFECT (Data Hentning) ---
     useEffect(() => {
         let isMounted = true;
-
         const loadData = async () => {
             setLoading(true);
             try {
@@ -78,11 +105,11 @@ export default function SettingsClient(
                 ]);
                 if (isMounted) {
                     setName(userData.name);
-                    setEmail(userData.email);
+                    setOldEmail(userData.email); // Gemmer den oprindelige email én gang
+                    setEmail(userData.email);    // Sætter inputfeltets startværdi
                     setShips(shipData);
                 }
             } catch (error) {
-                console.error(error);
                 toast.error("Der opstod en fejl ved hentning af data.");
             } finally {
                 if (isMounted) setLoading(false);
@@ -93,8 +120,7 @@ export default function SettingsClient(
         return () => { isMounted = false; };
     }, []);
 
-
-
+    // --- HANDLERS (Handlinger) ---
     const handleSaveName = async () => {
         try {
             await updateUserFullName(name);
@@ -104,6 +130,24 @@ export default function SettingsClient(
         }
     };
 
+    const isEmailReadyToChange =
+        email.trim().toLowerCase() !== oldEmail.trim().toLowerCase() &&
+        isValidEmail(email);
+
+    const handleEmailRequest = async () => {
+        setIsRequestingEmail(true);
+        try {
+            await requestEmailChangeOtp(email);
+            toast.success("Engangskoder er sendt til begge emails!");
+        } catch (error) {
+            toast.error("Der skete en fejl. Kunne ikke sende koder.");
+            throw error; // Kaster fejlen videre, så modalen ikke åbner
+        } finally {
+            setIsRequestingEmail(false);
+        }
+    };
+
+    // --- RENDER LOAD STATE ---
     if (loading) {
         return (
             <div className="max-w-3xl mx-auto mt-10 px-4">
@@ -115,12 +159,13 @@ export default function SettingsClient(
         );
     }
 
+    // --- RENDER HOVEDVISNING ---
     return (
         <div className="min-h-screen px-4">
             <div><Toaster /></div>
             <div className="flex flex-col max-w-3xl mx-auto mt-2 gap-10">
 
-                {/* Register boat */}
+                {/* 1. SKIBE */}
                 <SettingsCard
                     title={dict.dashboard.settings.registerBoat}
                     description={dict.dashboard.settings.registerBoatDescription}
@@ -151,12 +196,12 @@ export default function SettingsClient(
                     )}
                 </SettingsCard>
 
-                {/* Full Name */}
+                {/* 2. FULDE NAVN */}
                 <SettingsCard
                     title={dict.dashboard.settings.fullname}
                     description={dict.dashboard.settings.fullnameDescription}
                     buttonText={dict.dashboard.settings.saveChanges}
-                    disabled={!name.trim()} // .trim() sørger for man ikke kan gemme "    "
+                    disabled={!name.trim()}
                     onAction={handleSaveName}
                 >
                     <Input
@@ -167,23 +212,31 @@ export default function SettingsClient(
                     />
                 </SettingsCard>
 
-                {/* Email */}
+                {/* 3. EMAIL */}
                 <SettingsCard
                     title={dict.dashboard.settings.email}
                     description={dict.dashboard.settings.emailDescription}
-                    buttonText={dict.dashboard.settings.saveChanges}
-                    onAction={() => console.log("Changing email...")}
-                    disabled={!email.trim()}
+                    disabled={!isEmailReadyToChange || isRequestingEmail}
+                    dialog={
+                        <ChangeEmail
+                            dict={dict}
+                            newEmail={email}
+                            oldEmail={oldEmail}
+                            disabled={!isEmailReadyToChange || isRequestingEmail}
+                            onAction={handleEmailRequest}
+                        />
+                    }
                 >
                     <Input
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={email} // <-- FIKSET HER!
+                        onChange={(e) => setEmail(e.target.value)} // <-- FIKSET HER!
                         placeholder={dict.dashboard.settings.emailPlaceholder}
+                        className={!isValidEmail(email) && email.length > 0 ? "border-red-500/50 focus:ring-red-500" : ""}
                     />
                 </SettingsCard>
 
-                {/* Delete Account */}
+                {/* 4. SLET KONTO */}
                 <SettingsCard
                     title={dict.dashboard.settings.deleteAccount}
                     description={dict.dashboard.settings.deleteAccountDescription}
@@ -195,4 +248,3 @@ export default function SettingsClient(
         </div>
     );
 }
-

@@ -2,10 +2,11 @@ import { sendEmail } from "@/lib/emailer/Mail";
 import { generateHtmlOTP } from "@/lib/emailer/MailCreator";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
+import DoesEmailExist from "@/lib/users/DoesEmailExist";
 import { generateCode, hashOTPCode } from "@/lib/utils/OTP";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const cookie = req.cookies.get("auth_token")?.value;
 
     const { newEmail } = await req.json();
@@ -14,9 +15,14 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
+    if (await DoesEmailExist(newEmail)) {
+        return NextResponse.json({ error: "Email already in use" }, { status: 400 });
+    }
+
     if (!cookie) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    
 
     const { userId, email } = (await verifyJsonWebtoken(cookie)) as unknown as {
         userId: string;
@@ -40,25 +46,22 @@ export async function GET(req: NextRequest) {
     }
 
 
-    const {
-            code, hashedCode
-    } = await generateAndHashOTPCode()
+    const { code: oldCode, hashedCode: oldHashedCode } = await generateAndHashOTPCode();
+    const { code: newCode, hashedCode: newHashedCode } = await generateAndHashOTPCode();
 
-    await sendEmail(email, "Her er din engangskode", generateHtmlOTP(code));
-    await sendEmail(newEmail, "Her er din engangskode", generateHtmlOTP(code));
 
     await prisma.verificationToken.upsert({
         where: {
             identifier: email
         },
         create: {
-            identifier: userId,
-            token: hashedCode,
+            identifier: email,
+            token: oldHashedCode,
             expires: new Date(Date.now() + 10 * 60 * 1000),
             userId: userId,
         },
         update: {
-            token: hashedCode
+            token: oldHashedCode
         }
     });
 
@@ -67,15 +70,18 @@ export async function GET(req: NextRequest) {
             identifier: newEmail
         },
         create: {
-            identifier: userId,
-            token: hashedCode,
+            identifier: newEmail,
+            token: newHashedCode,
             expires: new Date(Date.now() + 10 * 60 * 1000),
             userId: userId, 
         },
         update: {
-            token: hashedCode
+            token: newHashedCode
         }
     });
+
+    await sendEmail(email, "Ændring af email", generateHtmlOTP(oldCode));
+    await sendEmail(newEmail, "Ny email adresse", generateHtmlOTP(newCode));
 
 
     return NextResponse.json({ message: "Email sended" }, { status: 200 });

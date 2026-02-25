@@ -41,7 +41,8 @@
             "noShipsRegistered": "Du har ingen registrerede skibe endnu.",
             "shipName": "Navn",
             "shipModel": "Model",
-            "shipLimitReached": "Du har nået grænsen på 2 skibe."
+            "shipLimitReached": "Du har nået grænsen på 2 skibe.",
+            "sendemail": "Send e-mail"
         }
     },
     "login": {
