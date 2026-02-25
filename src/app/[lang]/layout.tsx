@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/components/footer/footer";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { CookiesProvider } from "next-client-cookies/server";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -49,11 +50,15 @@ export default function RootLayout(
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
+				
 				<ChooseNavbar />
-				{children}
+				<CookiesProvider >
+					{children}
+				</CookiesProvider>
 				<Toaster position="top-center" />
 				<GoogleAnalytics gaId="G-ZZC8062EPQ" />
 				<Footer params={params} />
+				
 			</body>
 		</html>
 	);

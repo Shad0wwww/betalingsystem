@@ -60,6 +60,6 @@ export default async function SignupAction(
 
     const user = await res.json();
 
-    redirect('/login?signup=success&email=' + encodeURIComponent(emailLower));
+    redirect('/login?email=' + encodeURIComponent(emailLower));
 
 }

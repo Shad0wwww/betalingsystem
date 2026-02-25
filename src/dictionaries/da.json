@@ -17,10 +17,7 @@
             "payButton": "Betal nu",
             "payoutbutton": "Udbetal"
         },
-
-        "historik": {
-
-        },
+        "historik": {},
         "settings": {
             "fullname": "Ændre dit fulde navn",
             "fullnameDescription": "Opdatér dit fulde navn, som vises på din profil og i dine transaktioner.",
@@ -113,7 +110,6 @@
             "title": "§4 GDPR og databeskyttelse",
             "content": "Ribe Sejlklub forpligter sig til at beskytte dine personlige oplysninger og overholde gældende databeskyttelseslovgivning, herunder GDPR. Vi indsamler kun de nødvendige oplysninger for at levere vores tjenester og vil aldrig dele dine oplysninger med tredjepart uden dit samtykke."
         },
-        
         "section5": {
             "title": "§5 Ændringer af vilkår",
             "content": "Ribe Sejlklub forbeholder sig retten til at ændre disse servicevilkår til enhver tid. Eventuelle ændringer vil blive offentliggjort på vores hjemmeside, og det er dit ansvar at holde dig opdateret om eventuelle ændringer."
@@ -138,5 +134,33 @@
             "title": "§10 Kontaktinformation",
             "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
         }
+    },
+    
+    "faq": {
+        "title": "Har du spørgsmål?",
+        "undertitle": "Her er nogle af de mest almindelige spørgsmål, vi får fra vores brugere. Hvis du ikke finder svar på dit spørgsmål her, er du velkommen til at kontakte os direkte.",
+        "questions": [
+            {
+                "question": "Hvordan opretter jeg en konto?",
+                "answer": "Du kan oprette en konto ved at klikke på 'Tilmeld dig' knappen på forsiden og udfylde registreringsformularen med dine oplysninger."
+            },
+            {
+                "question": "Hvordan betaler jeg for at komme igennem slusen?",
+                "answer": "Du kan betale ved at logge ind på din konto og følge instruktionerne for at gennemføre betalingen."
+            },
+            {
+                "question": "Hvad gør jeg, hvis jeg har problemer med betalingen?",
+                "answer": "Hvis du oplever problemer med betalingen, bedes du kontakte vores supportteam på support@pins.dk."
+            },
+            {
+                "question": "Hvordan kan jeg se min betalingshistorik?",
+                "answer": "Du kan se din betalingshistorik ved at logge ind på din konto og navigere til 'Historik' sektionen."
+            },
+            {
+                "question": "Hvordan kan jeg ændre mine kontooplysninger?",
+                "answer": "Du kan ændre dine kontooplysninger ved at logge ind på din konto og gå til 'Indstillinger' sektionen, hvor du kan opdatere dine oplysninger."
+            }
+        ]
     }
+    
 }

@@ -1,5 +1,6 @@
 import { FC, Suspense } from 'react'
 import SignUpBox from './SignUpBox'
+import LoadingScreen from '../utils/LoadingScreen';
 
 type SignupLandingPageProps = {
     dict: any;
@@ -11,7 +12,7 @@ const LandingSignUpPage: FC<SignupLandingPageProps> = (
     return (
         <div>
             <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-24 bg-[#0d0d0d]">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<LoadingScreen />}>
 				    <SignUpBox dict={dict} />
                 </Suspense>
 			</main>

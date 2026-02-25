@@ -12,7 +12,7 @@ model User {
     email        String @unique
     phone        String @unique
     phoneCountry String @default("DK")
-    Role         Role   @default(value: USER)
+    role         Role   @default(USER)
 
     balance Float @default(0)
 

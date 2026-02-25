@@ -65,13 +65,15 @@ export async function POST(
             email
         },
         select: {
-            id: true
+            id: true,
+            role: true,
         }
     });
 
     const token = await generateJsonWebtoken(
         user!.id.toString(),
-        email
+        email,
+        user!.role
     )
 
     await prisma.verificationToken.deleteMany({

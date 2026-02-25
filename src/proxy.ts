@@ -16,7 +16,7 @@ function getLocale(request: NextRequest) {
 }
 
 export default async function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const { pathname, search } = request.nextUrl;   
 
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
@@ -24,8 +24,9 @@ export default async function middleware(request: NextRequest) {
 
     if (!pathnameHasLocale) {
         const locale = getLocale(request);
+        // Tilføj ${search} til sidst i URL'en
         return NextResponse.redirect(
-            new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url),
+            new URL(`/${locale}${pathname === "/" ? "" : pathname}${search}`, request.url),
         );
     }
 

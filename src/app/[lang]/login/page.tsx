@@ -1,5 +1,5 @@
 import LandingLoginPage from "@/components/login/landingLoginPage";
-import { notFound } from "next/navigation"; // RETTELSE 1: Korrekt import
+import { notFound } from "next/navigation";
 import { getDictionary } from "../dictionaries";
 
 type PageParams = Promise<{ lang: string }>;
@@ -9,23 +9,23 @@ export default async function Page(props: {
     params: PageParams;
     searchParams: SearchParams;
 }) {
-    const params = await props.params;
-    const searchParams = await props.searchParams;
 
-    console.log("Received params:", params);
-    console.log("Received searchParams:", searchParams);
+    const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
+    
+    console.log("DEBUG - Params:", params);
+    console.log("DEBUG - SearchParams:", searchParams);
+
+    const email = searchParams.email;
 
     const lang = params.lang;
-
-    const email = typeof searchParams.email === 'string' ? searchParams.email : undefined;
-
     const dict = await getDictionary(lang);
 
     if (!dict) notFound();
 
     return (
         <div>
-            <LandingLoginPage dict={dict} email={email} />
+            {/* Vi sender den udtrukne email videre som prop */}
+            <LandingLoginPage dict={dict} email={email as string || ""} />
         </div>
     );
 }
