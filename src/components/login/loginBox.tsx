@@ -36,9 +36,9 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     />
 );
 
-const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
+const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
     const [isMounted, setIsMounted] = useState(false);
-    const [email, setEmail] = useState("");
+    const [emailInput, setEmailInput] = useState(email || '');
     const [isOtpSent, setIsOtpSent] = useState(false);
     const router = useRouter();
 
@@ -53,7 +53,7 @@ const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
         async (prevState: any, formData: FormData) => {
             const result = await LoginAction(prevState, formData);
             if (result?.success) {
-                setEmail(formData.get("email") as string);
+                setEmailInput(formData.get("email") as string);
                 setIsOtpSent(true);
             }
             return result?.error || null;
@@ -84,11 +84,11 @@ const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
                         </h1>
                         <p className="text-gray-400 text-center text-sm mb-8">
                             {dict.login.otpIntro}{" "}
-                            <span className="text-white font-semibold">{email}</span>
+                            <span className="text-white font-semibold">{emailInput}</span>
                         </p>
 
                         <form action={formAction2}>
-                            <input type="hidden" name="email" value={email} />
+                            <input type="hidden" name="email" value={emailInput} />
                             <div className="mb-4">
                                 <Label>{dict.login.otpLabel}</Label>
                                 <Input
@@ -139,6 +139,7 @@ const LoginBox: React.FC<{ dict: any }> = ({ dict }) => {
                                     placeholder={dict.login.emailPlaceholder}
                                     autoFocus
                                     required
+                                    value={emailInput}
                                 />
                             </div>
                             <div className="mb-4 flex justify-center max-w-full overflow-hidden">

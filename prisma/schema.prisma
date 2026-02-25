@@ -7,7 +7,7 @@ datasource db {
 }
 
 model User {
-    id           Int    @id @default(autoincrement())
+    id           String    @id @default(uuid())
     name         String
     email        String @unique
     phone        String @unique
@@ -34,7 +34,7 @@ model VerificationToken {
     token      String   @unique
     expires    DateTime
 
-    userId Int
+    userId String
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([identifier, token])
@@ -42,7 +42,7 @@ model VerificationToken {
 
 model Invoice {
     id     Int  @id @default(autoincrement())
-    userId Int
+    userId String
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     InvoiceNumber String? @unique
@@ -62,7 +62,7 @@ model Invoice {
 
 model Boat {
     id     Int  @id @default(autoincrement())
-    userId Int
+    userId String
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     kaldeNavn String
@@ -71,7 +71,7 @@ model Boat {
 
 model MeterReading {
     id     Int  @id @default(autoincrement())
-    userId Int
+    userId String
     user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     type  UtilityType
@@ -81,7 +81,7 @@ model MeterReading {
 
 model Transaction {
     id     Int  @id @default(autoincrement())
-    userId Int
+    userId String
     user   User @relation(fields: [userId], references: [id])
 
     amount Float @default(0)

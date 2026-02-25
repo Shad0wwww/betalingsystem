@@ -37,7 +37,7 @@ export async function POST(
 
     const existingBoats = await prisma.boat.count({
         where: {
-            user: { email: payload.email }
+            userId: payload.id
         }
     });
 
@@ -49,9 +49,7 @@ export async function POST(
         data: {
             kaldeNavn: name,
             skibModel: model,
-            user: {
-                connect: { email: payload.email }
-            }
+            userId: payload.id
         },
     })
 

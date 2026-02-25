@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(
     request: NextRequest
 ) {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = await new URL(request.url);
     const sessionId = searchParams.get("session_id");
 
     const URL_LINK = process.env.URL_BASE || "https://web.pins.dk";
@@ -28,8 +28,8 @@ export async function GET(
         return NextResponse.redirect(new URL("/dashboard?payment=failed&reason=payment_not_completed", URL_LINK));
     }
 
-    const email = session.customer_details?.email;
-    const userId = parseInt(session.metadata?.userId!);
+    const email: string = session.customer_details?.email!;
+    const userId : string = session.metadata?.userId!;
 
     const amount = (session.amount_total! / 100)
 
@@ -47,7 +47,7 @@ export async function GET(
         handleInvoiceUpdate(sessionId, InvoiceStatus.PAID, InvoiceNumber),
 
         prisma.user.update({
-            where: { email: email! },
+            where: { id: userId },
             data: { balance: { increment: amount } }
         }),
 
@@ -82,7 +82,7 @@ async function handleInvoiceUpdate(
 }
 
 async function handleTransactionUpdate(
-    userid: number,
+    userid: string,
     sessionId: string,
     amount: number,
     type: TransactionType

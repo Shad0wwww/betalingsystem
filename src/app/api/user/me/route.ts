@@ -11,18 +11,25 @@ export async function GET(
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const payload = await verifyJsonWebtoken(cookie);
+    const {
+        userId,
+        email
+    } = await verifyJsonWebtoken(cookie) as unknown as {
+        userId: string
+        email: string
+    };
 
-    if (!payload || typeof payload === "string") {
+    if (!userId || !email) {
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({
-        where: { email: payload.email },
+        where: { id: userId },
         select: {
             id: true,
             email: true,
             name: true,
+            phone: true,
             balance: true,
         }
     });

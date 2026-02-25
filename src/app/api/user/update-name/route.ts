@@ -21,7 +21,7 @@ export async function POST(
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    if (!GetUser.doesUserExistByEmail(payload.email)) {
+    if (!GetUser.doesUserExistById(payload.id)) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
@@ -32,7 +32,7 @@ export async function POST(
     }
 
     await prisma.user.update({
-        where: { email: payload.email },
+        where: { id: payload.id },
         data: { name },
     });
 

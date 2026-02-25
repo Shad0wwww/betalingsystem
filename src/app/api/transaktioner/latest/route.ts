@@ -18,14 +18,14 @@ export async function GET(request: NextRequest) {
 	}
 
 	const { userId, email } = verifyJWTToken as unknown as {
-		userId: number;
+		userId: string;
 		email: string;
 	};
 
 	const findLatestTransactions = await prisma.transaction.findMany({
-		where: { userId: parseInt(userId.toString()) },
+		where: { userId: userId },
 		orderBy: { createdAt: "desc" },
-		take: 5,
+		take: 2,
 	});
 
 	return NextResponse.json(findLatestTransactions);

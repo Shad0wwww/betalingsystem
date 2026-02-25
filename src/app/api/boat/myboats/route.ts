@@ -27,7 +27,7 @@ export async function GET(
 
     const boats = await prisma.boat.findMany({
         where: {
-            user: { email: payload.email }
+            userId: payload.id
         },
         select: {
             kaldeNavn: true,

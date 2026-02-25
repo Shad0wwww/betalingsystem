@@ -11,15 +11,12 @@ export async function GET(
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("Verifying token for logout:", cookie);
 
     const payload = await verifyJsonWebtoken(cookie);
 
     if (!payload || typeof payload === "string") {
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
-
-    console.log("Token verified successfully for logout:", payload);
 
     const response = NextResponse.json({ message: "Logged out successfully" });
     response.cookies.set("auth_token", "", {

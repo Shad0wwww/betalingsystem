@@ -9,7 +9,7 @@ import prisma from '@/lib/prisma';
 import { GetUser } from '@/lib/users/GetUser';
 
 type CreatePaymentLinkBody = {
-    amount: number;
+    amount: number ;
     description: string;
     type: $Enums.UtilityType;
 };
@@ -54,7 +54,7 @@ export async function POST(
             userId,
             email
         } = verifyJWTToken as unknown as {
-            userId: number;
+            userId: string;
             email: string;
         };
 
@@ -82,7 +82,7 @@ export async function POST(
             success_url: `${process.env.URL_BASE}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.URL_BASE}/api/stripe/cancel`,
             metadata: {
-                userId: userId.toString(),
+                userId: userId,
                 type: body.type,
             }
         });
@@ -90,7 +90,7 @@ export async function POST(
 
         await prisma.invoice.create({
             data: {
-                userId: parseInt(userId.toString()),
+                userId: userId,
                 amount: body.amount, 
                 type: body.type as UtilityType,
                 stripePaymentIntentId: session.id, 

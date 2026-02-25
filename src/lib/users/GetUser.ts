@@ -4,7 +4,7 @@ import prisma from "../prisma";
 
 export class GetUser {
     static async byId(
-        userId: number
+        userId: string
     ) {
         try {
             return await prisma.user.findUnique({
@@ -46,6 +46,13 @@ export class GetUser {
         const user = await this.byEmail(email);
         return !!user;
     }
+
+    static async doesUserExistById(
+        userId: string
+    ) {
+        const user = await this.byId(userId);
+        return !!user;
+    }   
 
     static async getCustomerIDByEmail(
         email: string

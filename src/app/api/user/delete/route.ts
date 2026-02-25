@@ -22,7 +22,7 @@ export async function DELETE(
     }
 
     const user = await prisma.user.findUnique({
-        where: { email: payload.email },
+        where: { id: payload.id },
     });
 
     if (!user) {
@@ -30,7 +30,7 @@ export async function DELETE(
     }
 
     await prisma.user.delete({
-        where: { email: payload.email }
+        where: { id: payload.id }
     });
 
     return NextResponse.json({ message: "User deleted successfully" });
