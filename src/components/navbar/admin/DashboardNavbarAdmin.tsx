@@ -1,6 +1,9 @@
+"use client";
 import Link from "next/link";
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
+
 import { Role } from "@prisma/client";
+import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
+import { use } from "react";
 
 type Props = {
     params: { lang: string };
