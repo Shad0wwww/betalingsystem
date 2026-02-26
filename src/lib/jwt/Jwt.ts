@@ -1,8 +1,7 @@
-
-
 import { Role } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import { getCookies } from "next-client-cookies/server";
+// Importer den indbyggede funktion fra Next.js
+import { cookies } from "next/headers"; 
 
 export async function generateJsonWebtoken(
     userId: string,
@@ -35,21 +34,24 @@ export async function checkAuthentication(
     }
 }
 
-export async function getCurrentUserIdFromToken(
-
-)  {
+export async function getCurrentUserIdFromToken() {
     try {
-        const cookies = await getCookies();
-        console.log("Cookies:", cookies);
+        const cookieStore = await cookies();
+        const token = cookieStore.get("auth_token")?.value;
 
-        const token = cookies.get("token");
+        if (!token) {
+            console.log("Ingen token cookie fundet.");
+            return null;
+        }
 
-        const decoded = await verifyJsonWebtoken(token!) as unknown as {
-            userId: string
-            role: Role
+        const decoded = await verifyJsonWebtoken(token) as unknown as {
+            userId: string;
+            role: Role;
         };
+        
         return decoded;
     } catch (error) {
+        console.error("Fejl ved læsning eller validering af token:", error);
         return null;
     }
 }

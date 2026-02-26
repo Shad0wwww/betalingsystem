@@ -50,14 +50,13 @@ export default function RootLayout(
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				
-				<ChooseNavbar />
 				<CookiesProvider >
+					<ChooseNavbar />
 					{children}
+					<Toaster position="top-center" />
+					<GoogleAnalytics gaId="G-ZZC8062EPQ" />
+					<Footer params={params} />
 				</CookiesProvider>
-				<Toaster position="top-center" />
-				<GoogleAnalytics gaId="G-ZZC8062EPQ" />
-				<Footer params={params} />
 				
 			</body>
 		</html>
