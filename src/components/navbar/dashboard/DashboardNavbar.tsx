@@ -1,4 +1,5 @@
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
+
+import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
 import NavLinks from "./NavLinks";
 import { Role } from "@prisma/client";
 
