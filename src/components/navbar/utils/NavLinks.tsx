@@ -20,7 +20,7 @@ export default function NavLinks({ links }: NavLinkProps) {
                     <Link
                         key={link.href}
                         href={link.href}
-                        className={`px-5 py-1 hover:border-b-2 hover:border-white/20 transition-colors ${isActive ? "border-b-2 border-white font-semibold text-white" : "text-gray-400"
+                        className={`px-5 py-1 hover:border-b-2 hover:border-white/20 ${isActive ? "border-b-2 border-blue-400 font-semibold text-white" : "text-gray-400"
                             }`}
                     >
                         <div className="pb-1">

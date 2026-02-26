@@ -1,8 +1,10 @@
-// src/lib/jwt/session.ts
+
 import { verifyJsonWebtoken } from "./Jwt";
 import { Role } from "@prisma/client";
 
-export async function getCurrentUserIdFromToken(token?: string | null) {
+export async function getCurrentUserIdFromToken(
+    token?: string | null
+) {
     try {
         if (!token) {
             return null;

@@ -1,23 +1,29 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { Role } from "@prisma/client";
+import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
 import DashboardNavbarWrapperAdmin from "@/components/navbar/admin/DashboardNavbarAdminWrapper";
-import DashboardNavbar from "@/components/navbar/dashboard/DashboardNavbar";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ['latin'] })
 
-type LayoutProps = Readonly<{
-    children: React.ReactNode;
-    params: Promise<{ lang: string }>;
-}>;
-
-export default async function AdminDashboardLayout({
+export default async function AdminLayout({
     children,
     params,
-}: LayoutProps) {
+}: {
+    children: React.ReactNode;
+    params: { lang: string };
+}) {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+    if (!token) redirect(`/${params.lang}/login`);
     const { lang } = await params;
 
+    const user = await getCurrentUserIdFromToken(token);
+    if (user?.role !== Role.ADMIN) redirect(`/${params.lang}/login`);
+
     return (
-        <section className={inter.className}>
+        <>
             <DashboardNavbarWrapperAdmin params={{ lang }} />
             {children}
-        </section>
+        </>
     );
 }
