@@ -9,16 +9,16 @@ export default async function AdminLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: { lang: string };
+    params: Promise<{ lang: string }>;
 }) {
 
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
-    if (!token) redirect(`/${params.lang}/login`);
     const { lang } = await params;
+    if (!token) redirect(`/${lang}/login`);
 
     const user = await getCurrentUserIdFromToken(token);
-    if (user?.role !== Role.ADMIN) redirect(`/${params.lang}/login`);
+    if (user?.role !== Role.ADMIN) redirect(`/${lang}/login`);
 
     return (
         <>
