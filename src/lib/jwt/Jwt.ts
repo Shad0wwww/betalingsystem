@@ -1,8 +1,8 @@
-'use server';
+
 
 import { Role } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+import { getCookies } from "next-client-cookies/server";
 
 export async function generateJsonWebtoken(
     userId: string,
@@ -39,8 +39,8 @@ export async function getCurrentUserIdFromToken(
 
 )  {
     try {
-        const cookieStore = cookies();
-        const token = (await cookieStore).get("auth_token")?.value;
+        const cookies = await getCookies();
+        const token = cookies.get("token");
 
         const decoded = await verifyJsonWebtoken(token!) as unknown as {
             userId: string

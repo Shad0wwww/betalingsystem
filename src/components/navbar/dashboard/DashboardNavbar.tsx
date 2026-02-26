@@ -1,14 +1,11 @@
-import Link from "next/link";
-import style from "../navbar.module.css";
 import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
+import NavLinks from "./NavLinks";
 
 type Props = {
     params: { lang: string };
 };
 
-export default async function DashboardNavbar({
-    params,
-}: Props) {
+export default async function DashboardNavbar({ params }: Props) {
     const user = await getCurrentUserIdFromToken();
     const isAdmin = user?.role?.toLowerCase() === "admin";
 
@@ -27,21 +24,10 @@ export default async function DashboardNavbar({
 
     return (
         <div className="mx-auto container lg:max-w-7xl max-w-screen-xl px-4 md:px-20 pb-10 overflow-x-auto no-scrollbar">
-            <div className="flex flex-row pt-1 sub-headline gap-3">
-                {links.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className="px-5 py-1 hover:border-b-2 hover:border-white/20"
-                    >
-                        <div className="pb-1">
-                            <p>{link.label}</p>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+           
+            <NavLinks links={links} />
 
-            <div className="w-full border-[#252424] border-t-[1px]"></div>
+            <div className="w-full border-[#252424] border-t-[1px] mt-1"></div>
         </div>
     );
 }

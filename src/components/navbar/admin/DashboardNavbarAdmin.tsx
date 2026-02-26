@@ -1,5 +1,4 @@
 import Link from "next/link";
-import style from "../navbar.module.css";
 import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
 import { Role } from "@prisma/client";
 

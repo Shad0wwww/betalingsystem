@@ -1,6 +1,5 @@
-'use client';
 
-import { usePathname } from "next/navigation";
+
 import DashboardNavbar from "./DashboardNavbar";
 
 export default function DashboardNavbarWrapper({
@@ -8,11 +7,5 @@ export default function DashboardNavbarWrapper({
 }: {
     params: { lang: string };
 }) {
-    const pathname = usePathname();
-
-    return (
-        <DashboardNavbar
-            params={params}
-        />
-    );
+    return <DashboardNavbar params={params} />;
 }
