@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
+import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
 import { Role } from "@prisma/client";
 
 type Props = {
