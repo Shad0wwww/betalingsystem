@@ -1,5 +1,5 @@
+import DashboardNavbarWrapperAdmin from "@/components/navbar/admin/DashboardNavbarAdminWrapper";
 import DashboardNavbar from "@/components/navbar/dashboard/DashboardNavbar";
-import DashboardNavbarWrapper from "@/components/navbar/dashboard/DashboardNavbarWrapper";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ['latin'] })
 
@@ -8,7 +8,7 @@ type LayoutProps = Readonly<{
     params: Promise<{ lang: string }>;
 }>;
 
-export default async function DashboardLayout({
+export default async function AdminDashboardLayout({
     children,
     params,
 }: LayoutProps) {
@@ -16,7 +16,7 @@ export default async function DashboardLayout({
 
     return (
         <section className={inter.className}>
-            <DashboardNavbarWrapper params={{ lang }} />
+            <DashboardNavbarWrapperAdmin params={{ lang }} />
             {children}
         </section>
     );
