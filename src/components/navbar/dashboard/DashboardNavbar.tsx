@@ -1,5 +1,6 @@
 import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
 import NavLinks from "./NavLinks";
+import { Role } from "@prisma/client";
 
 type Props = {
     params: { lang: string };
@@ -7,7 +8,7 @@ type Props = {
 
 export default async function DashboardNavbar({ params }: Props) {
     const user = await getCurrentUserIdFromToken();
-    const isAdmin = user?.role?.toLowerCase() === "admin";
+    const isAdmin = user?.role === Role.ADMIN;
 
     const links = [
         { href: `/${params.lang}/dashboard`, label: "Oversigt" },
