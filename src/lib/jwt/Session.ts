@@ -22,3 +22,15 @@ export async function getCurrentUserIdFromToken() {
         return null;
     }
 }
+
+export async function checkAuthentication(token: string) {
+    try {
+        const decoded = await verifyJsonWebtoken(token) as unknown as {
+            userId: string;
+            role: Role;
+        };
+        return !!decoded.userId;
+    } catch (error) {
+        return false;
+    }   
+}

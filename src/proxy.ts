@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-import { checkAuthentication } from "./lib/jwt/Jwt";
 import { GetUser } from "./lib/users/GetUser";
+import { checkAuthentication } from "./lib/jwt/Session";
 
 const locales = ["en-US", "da-DK", "de-DE"];
 const defaultLocale = "da-DK";
