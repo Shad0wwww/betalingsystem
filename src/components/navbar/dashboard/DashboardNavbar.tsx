@@ -6,9 +6,14 @@ type Props = {
     params: { lang: string };
 };
 
-export default async function DashboardNavbar({ params }: Props) {
+export default async function DashboardNavbar(
+    { params }: Props
+) {
     const user = await getCurrentUserIdFromToken();
+    console.log("Current user ID from token:", user);
     const isAdmin = user?.role === Role.ADMIN;
+
+    console.log("User role:", user?.role);
 
     const links = [
         { href: `/${params.lang}/dashboard`, label: "Oversigt" },
