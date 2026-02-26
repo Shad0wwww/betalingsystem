@@ -40,6 +40,8 @@ export async function getCurrentUserIdFromToken(
 )  {
     try {
         const cookies = await getCookies();
+        console.log("Cookies:", cookies);
+
         const token = cookies.get("token");
 
         const decoded = await verifyJsonWebtoken(token!) as unknown as {
