@@ -1,4 +1,5 @@
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Jwt";
+
+import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
 import { Role } from "@prisma/client";
 import { redirect } from "next/navigation";
 
