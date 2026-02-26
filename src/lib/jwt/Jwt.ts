@@ -1,7 +1,8 @@
+'use server';
+
 import { Role } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { redirect } from 'next/navigation';
 
 export async function generateJsonWebtoken(
     userId: string,
