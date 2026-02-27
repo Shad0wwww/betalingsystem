@@ -21,37 +21,21 @@ export async function GET(request: NextRequest) {
             email: string;
         };
 
-        // Vi bruger Prisma's $queryRaw til at lave en UNION mellem de to tabeller
+        // Henter data fra Invoice-tabellen
         const allTransactions = await prisma.$queryRaw`
-            SELECT 
-                'txn-' || id::text AS id,
+            SELECT
                 amount::float AS amount,
-                'success' AS status,
-                COALESCE("stripeSessionId", 'TXN-' || id::text) AS "kvitteringId",
-                TO_CHAR("createdAt", 'YYYY-MM-DD') AS dato,
-                "createdAt" AS "rawDate",
-                LOWER(type::text) AS transaktion
-            FROM "Transaction"
-            WHERE "userId" = ${userId}
-
-            UNION ALL
-
-            SELECT 
-                'inv-' || id::text AS id,
-                amount::float AS amount,
-                CASE 
+                CASE
                     WHEN status = 'PAID' THEN 'success'
                     WHEN status IN ('FAILED', 'OVERDUE') THEN 'failed'
                     ELSE 'pending'
                 END AS status,
                 COALESCE("InvoiceNumber", 'INV-' || id::text) AS "kvitteringId",
-                TO_CHAR("createdAt", 'YYYY-MM-DD') AS dato,
-                "createdAt" AS "rawDate",
+                TO_CHAR(COALESCE("paidAt", "createdAt"), 'YYYY-MM-DD') AS dato,
                 'payment' AS transaktion
             FROM "Invoice"
             WHERE "userId" = ${userId}
-
-            ORDER BY "rawDate" DESC
+            ORDER BY COALESCE("paidAt", "createdAt") DESC
         `;
 
         // Løser problemet hvor Prisma/Postgres returnerer BigInts, som NextResponse.json ikke kan håndtere

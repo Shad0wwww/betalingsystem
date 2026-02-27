@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export type Payment = {
     amount: number
-    status: InvoiceStatus
-    transaktion: TransactionType
+    status: string
+    transaktion: string
     kvitteringId: string
     dato: string
 }
@@ -20,7 +20,6 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { InvoiceStatus, TransactionType } from "@prisma/client"
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -55,7 +54,7 @@ export const columns: ColumnDef<Payment>[] = [
 
             const statusStyles: Record<string, string> = {
                 pending: "border-yellow-500/50 bg-yellow-500/10 text-yellow-500",
-                processing: "border-blue-500/50 bg-blue-500/10 text-blue-400", 
+                processing: "border-blue-500/50 bg-blue-500/10 text-blue-400",
                 success: "border-emerald-500/50 bg-emerald-500/10 text-emerald-400",
                 failed: "border-red-500/50 bg-red-500/10 text-red-400",
             }
@@ -97,7 +96,7 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "amount",
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"))
+            const amount = parseFloat(row.getValue("amount")) / 100
             const formatted = new Intl.NumberFormat("da-DK", {
                 style: "currency",
                 currency: "DKK",
