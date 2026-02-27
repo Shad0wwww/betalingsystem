@@ -1,58 +1,58 @@
 {
     "landingpage": {
-        "undertitel": "Kammerslusen Ribe – ein Zahlungssystem für Schiffe in Ribe. Es ist ein System, das es Schiffen erleichtert, für die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert der Schleuse auch, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
+        "undertitel": "Kammerslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen erleichtert, die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert auch der Schleuse, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
         "learnmore": "Mehr erfahren",
         "signup": "Registrieren",
         "stats1": "Schiffe durch die Schleuse",
         "stats2": "Registrierte Zahlungen",
         "stats3": "Aktive Konten",
         "section1Title": "Was ist Kammerslusen Ribe?",
-        "section1Content": "Kammerslusen Ribe ist ein Zahlungssystem für Schiffe in Ribe. Es ist ein System, das es Schiffen erleichtert, für die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert der Schleuse auch, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht."
+        "section1Content": "Kammerslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen erleichtert, die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert auch der Schleuse, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht."
     },
     "dashboard": {
         "oversigt": {
             "latestTransactions": "Letzte Transaktionen",
-            "noTransactionsYet": "Sie haben noch keine Transaktionen.",
+            "noTransactionsYet": "Du hast noch keine Transaktionen.",
             "balance": "Betrag",
             "payButton": "Jetzt bezahlen",
-            "payoutbutton": "Auszahlung"
+            "payoutbutton": "Auszahlen"
         },
         "historik": {},
         "settings": {
-            "fullname": "Vollständigen Namen ändern",
-            "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, der in Ihrem Profil und in Ihren Transaktionen angezeigt wird.",
+            "fullname": "Deinen vollen Namen ändern",
+            "fullnameDescription": "Aktualisiere deinen vollen Namen, der in deinem Profil und in deinen Transaktionen angezeigt wird.",
             "saveChanges": "Änderungen speichern",
-            "email": "Ihre E-Mail-Adresse ändern",
-            "emailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse, die zum Einloggen in Ihr Konto und zum Empfang wichtiger Benachrichtigungen verwendet wird.",
+            "email": "Deine E-Mail-Adresse ändern",
+            "emailDescription": "Aktualisiere deine E-Mail-Adresse, die zum Anmelden bei deinem Konto und zum Erhalten wichtiger Mitteilungen verwendet wird.",
             "deleteAccount": "Konto löschen",
-            "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+            "deleteAccountDescription": "Bist du sicher, dass du dein Konto löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
             "deleteAccountButton": "Konto löschen",
-            "fullnamePlaceholder": "Ihr vollständiger Name",
-            "emailPlaceholder": "Ihre E-Mail-Adresse",
-            "registerBoat": "Neues Schiff registrieren",
-            "registerBoatDescription": "Registrieren Sie ein neues Schiff, damit wir es in unserem System verfolgen und sicherstellen können, dass Sie der berechtigte Nutzer der Durchfahrt sind.",
+            "fullnamePlaceholder": "Dein voller Name",
+            "emailPlaceholder": "Deine E-Mail-Adresse",
+            "registerBoat": "Ein neues Schiff registrieren",
+            "registerBoatDescription": "Registriere ein neues Schiff, damit wir es in unserem System verfolgen können und sicherstellen, dass du die richtige Person bist, die die Schleuse nutzt.",
             "registerBoatButton": "Schiff registrieren",
-            "fullnameUpdatedToast": "Ihr vollständiger Name wurde aktualisiert!",
-            "emailUpdatedToast": "Ihre E-Mail-Adresse wurde aktualisiert!",
-            "accountDeletedToast": "Ihr Konto wurde gelöscht. Wir hoffen, Sie irgendwann wiederzusehen!",
-            "noShipsRegistered": "Sie haben noch keine registrierten Schiffe.",
+            "fullnameUpdatedToast": "Dein voller Name wurde aktualisiert!",
+            "emailUpdatedToast": "Deine E-Mail-Adresse wurde aktualisiert!",
+            "accountDeletedToast": "Dein Konto wurde gelöscht. Wir hoffen, dich eines Tages wiederzusehen!",
+            "noShipsRegistered": "Du hast noch keine registrierten Schiffe.",
             "shipName": "Name",
             "shipModel": "Modell",
-            "shipLimitReached": "Sie haben die Grenze von 2 Schiffen erreicht.",
+            "shipLimitReached": "Du hast das Limit von 2 Schiffen erreicht.",
             "sendemail": "E-Mail senden"
         }
     },
     "login": {
         "title": "Anmelden",
-        "subtitle": "Geben Sie Ihre E-Mail ein, um einen Einmalcode zu erhalten",
+        "subtitle": "Gib deine E-Mail ein, um einen Einmalcode zu erhalten",
         "emailLabel": "E-Mail",
         "emailPlaceholder": "name@domain.dk",
         "sendOtpButton": "Einmalcode senden",
         "sendOtpButtonLoading": "Code wird gesendet...",
-        "noAccount": "Haben Sie noch kein Konto?",
+        "noAccount": "Hast du kein Konto?",
         "createAccount": "Konto erstellen",
         "otpTitle": "Einmalcode eingeben",
-        "otpIntro": "Wir haben einen 6-stelligen Code an gesendet",
+        "otpIntro": "Wir haben einen 6-stelligen Code gesendet an",
         "otpLabel": "Einmalcode",
         "otpPlaceholder": "123456",
         "loginButton": "Anmelden",
@@ -61,19 +61,19 @@
     },
     "signup": {
         "title": "Konto erstellen",
-        "subtitle": "Geben Sie Ihre Daten unten ein, um Ihr Konto zu erstellen",
+        "subtitle": "Gib deine Daten unten ein, um dein Konto zu erstellen",
         "fullNameLabel": "Vollständiger Name",
-        "fullNamePlaceholder": "John Doe",
+        "fullNamePlaceholder": "Max Mustermann",
         "emailLabel": "E-Mail",
         "emailPlaceholder": "beispiel@gmail.com",
         "phoneLabel": "Telefonnummer",
         "phonePlaceholder": "12345678",
         "tosLabel": "Nutzungsbedingungen",
-        "tosPrefix": "Ich akzeptiere die",
+        "tosPrefix": "Ich akzeptiere",
         "tosLink": "Nutzungsbedingungen",
         "submit": "Konto erstellen",
         "submitLoading": "Konto wird erstellt...",
-        "haveAccount": "Haben Sie bereits ein Konto?",
+        "haveAccount": "Hast du bereits ein Konto?",
         "loginLink": "Anmelden"
     },
     "footer": {
@@ -83,81 +83,93 @@
         "cvr": "CVR: 74852513",
         "address1": "Erik Menvedsvej 20,",
         "address2": "6760 Ribe",
-        "information": "Informationen",
+        "information": "Information",
         "termsLink": "Nutzungsbedingungen",
-        "disclaimer": "Hinweis: Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken."
+        "disclaimer": "Haftungsausschluss: Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und nur zur Demonstration."
     },
     "termsofservice": {
         "title": "Nutzungsbedingungen",
-        "undertitle": "Einleitung",
-        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklären Sie sich mit der Einhaltung dieser Nutzungsbedingungen einverstanden. Bitte lesen Sie diese Bedingungen sorgfältig durch, da sie wichtige Informationen über Ihre Rechte und Pflichten enthalten.",
+        "undertitle": "Einführung",
+        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklärst du dich damit einverstanden, diese Nutzungsbedingungen einzuhalten. Bitte lies diese Bedingungen sorgfältig durch, da sie wichtige Informationen zu deinen Rechten und Pflichten enthalten.",
         "publisher": {
             "title": "Herausgeber"
         },
         "section1": {
             "title": "§1 Lieferung",
-            "content": "Wenn Sie einen Kauf über unser Zahlungssystem tätigen, bemühen wir uns, die gekaufte Dienstleistung so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Bereitstellung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen können jedoch Verzögerungen auftreten."
+            "content": "Wenn du einen Kauf über unser Zahlungssystem tätigst, werden wir uns bemühen, die gekaufte Dienstleistung so schnell wie möglich zu liefern. In den meisten Fällen erfolgt die Lieferung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen kann es jedoch zu Verzögerungen kommen."
         },
         "section2": {
             "title": "§2 Rückerstattungen",
-            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Bei Problemen mit Ihrer Dienstleistung kontaktieren Sie bitte unser Support-Team, damit wir Ihnen helfen können."
+            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Wenn du Probleme mit deiner Dienstleistung hast, kontaktiere bitte unser Support-Team, damit wir dir helfen können."
         },
         "section3": {
             "title": "§3 Haftungsausschluss",
-            "content": "Der Ribe Sejlklub und sein Zahlungssystem werden „wie sie sind“ ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jede Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
+            "content": "Das Ribe Sejlklub und sein Zahlungssystem werden 'wie es ist' ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jegliche Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
         },
         "section4": {
             "title": "§4 DSGVO und Datenschutz",
-            "content": "Der Ribe Sejlklub verpflichtet sich, Ihre personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir erheben nur die notwendigen Informationen zur Bereitstellung unserer Dienste und geben Ihre Daten niemals ohne Ihre Zustimmung an Dritte weiter."
+            "content": "Das Ribe Sejlklub verpflichtet sich, deine personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir sammeln nur die notwendigen Informationen, um unsere Dienste bereitzustellen, und werden deine Daten niemals ohne deine Zustimmung an Dritte weitergeben."
         },
         "section5": {
             "title": "§5 Änderungen der Bedingungen",
-            "content": "Der Ribe Sejlklub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden auf unserer Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich über etwaige Änderungen zu informieren."
+            "content": "Das Ribe Sejlklub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Alle Änderungen werden auf unserer Website veröffentlicht, und es liegt in deiner Verantwortung, dich über etwaige Änderungen auf dem Laufenden zu halten."
         },
         "section6": {
             "title": "§6 Kontaktinformationen",
-            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
+            "content": "Wenn du Fragen oder Bedenken zu diesen Nutzungsbedingungen hast, kontaktiere uns bitte unter support@pins.dk."
         },
         "section7": {
-            "title": "§7 Anwendbares Recht und Gerichtsstand",
-            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht und sind entsprechend auszulegen. Streitigkeiten im Zusammenhang mit diesen Bedingungen sind vor den dänischen Gerichten auszutragen."
+            "title": "§7 Rechtswahl und Gerichtsstand",
+            "content": "Diese Nutzungsbedingungen unterliegen dem dänischen Recht und sind danach auszulegen. Jeder Streit, der im Zusammenhang mit diesen Bedingungen entsteht, muss vor den dänischen Gerichten beigelegt werden."
         },
         "section8": {
             "title": "§8 Annahme der Bedingungen",
-            "content": "Durch die Nutzung unseres Zahlungssystems bestätigen Sie, dass Sie diese Nutzungsbedingungen gelesen, verstanden und akzeptiert haben. Wenn Sie diese Bedingungen nicht akzeptieren, nutzen Sie bitte unsere Dienste nicht."
+            "content": "Durch die Nutzung unseres Zahlungssystems bestätigst du, dass du diese Nutzungsbedingungen gelesen, verstanden und akzeptiert hast. Wenn du diese Bedingungen nicht akzeptierst, nutze bitte unsere Dienste nicht."
         },
         "section9": {
-            "title": "§9 Hinweis zum Schulprojekt",
-            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken. Durch die Erstellung eines Kontos oder die Nutzung unserer Dienste akzeptieren Sie, dass Sie dies auf eigenes Risiko tun und verstehen, dass dieses Projekt nicht für kommerzielle Nutzung gedacht ist. Der Ribe Sejlklub und die Studierenden hinter diesem Projekt lehnen jede Haftung für Probleme ab, die durch die Nutzung dieses Systems entstehen könnten."
+            "title": "§9 Haftungsausschluss für Schulprojekt",
+            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und nur zur Demonstration. Durch die Erstellung eines Kontos oder die Nutzung unserer Dienste akzeptierst du, dass du dies auf eigene Gefahr tust und verstehst, dass dieses Projekt nicht für kommerzielle Nutzung bestimmt ist. Das Ribe Sejlklub und die Studierenden hinter diesem Projekt lehnen jegliche Haftung für Probleme ab, die durch die Nutzung dieses Systems entstehen könnten."
         },
         "section10": {
             "title": "§10 Kontaktinformationen",
-            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
+            "content": "Wenn du Fragen oder Bedenken zu diesen Nutzungsbedingungen hast, kontaktiere uns bitte unter support@pins.dk."
+        },
+        "section11": {
+            "title": "§11 Cookies und Tracking",
+            "content": "Unsere Website verwendet Cookies, um dein Login zu merken."
+        },
+        "section12": {
+            "title": "§12 Speicherung von Zahlungsinformationen",
+            "content": "Wir speichern deine Zahlungsinformationen nicht, da wir einen Drittanbieter-Zahlungsanbieter verwenden, um alle Zahlungen zu handhaben. Alle Zahlungsinformationen werden sicher und in Übereinstimmung mit den geltenden Datenschutzgesetzen verarbeitet. Wir behalten uns jedoch das Recht vor, bestimmte Informationen über deine Transaktionen zu speichern, wie Datum, Betrag und Art der Transaktion, um unsere Dienste bereitzustellen und unseren rechtlichen Verpflichtungen nachzukommen. Diese Informationen werden sicher gespeichert und nicht ohne deine Zustimmung an Dritte weitergegeben, es sei denn, es ist notwendig, um dem Gesetz nachzukommen oder unsere Rechte zu schützen."
+        },
+        "section13": {
+            "title": "§13 Löschung von Konto und Daten",
+            "content": "Du kannst dein Konto und alle zugehörigen Daten auf der Website unter 'Einstellungen' löschen. Wenn du dein Konto löschst, werden alle deine persönlichen Informationen und Transaktionsdaten dauerhaft aus unserem System gelöscht. Beachte, dass diese Aktion nicht rückgängig gemacht werden kann und du den Zugriff auf alle deine Daten und Dienste verlierst, sobald dein Konto gelöscht ist. Wir behalten uns jedoch das Recht vor, bestimmte Informationen für einen begrenzten Zeitraum aufzubewahren, wenn es notwendig ist, um unseren rechtlichen Verpflichtungen nachzukommen oder unsere Rechte zu schützen. Wenn du Fragen zur Löschung deines Kontos oder deiner Daten hast, kontaktiere uns bitte unter support@pins.dk."
         }
     },
     "faq": {
-        "title": "Haben Sie Fragen?",
-        "undertitle": "Hier sind einige der häufigsten Fragen, die wir von unseren Nutzern erhalten. Wenn Sie hier keine Antwort auf Ihre Frage finden, kontaktieren Sie uns gerne direkt.",
+        "title": "Hast du Fragen?",
+        "undertitle": "Hier sind einige der häufigsten Fragen, die wir von unseren Benutzern erhalten. Wenn du die Antwort auf deine Frage hier nicht findest, kontaktiere uns gerne direkt.",
         "questions": [
             {
                 "question": "Wie erstelle ich ein Konto?",
-                "answer": "Sie können ein Konto erstellen, indem Sie auf der Startseite auf die Schaltfläche „Registrieren“ klicken und das Registrierungsformular mit Ihren Daten ausfüllen."
+                "answer": "Du kannst ein Konto erstellen, indem du auf der Startseite auf die Schaltfläche 'Registrieren' klickst und das Registrierungsformular mit deinen Daten ausfüllst."
             },
             {
                 "question": "Wie bezahle ich für die Durchfahrt durch die Schleuse?",
-                "answer": "Sie können bezahlen, indem Sie sich in Ihr Konto einloggen und den Anweisungen zur Durchführung der Zahlung folgen."
+                "answer": "Du kannst bezahlen, indem du dich in dein Konto einloggst und den Anweisungen folgst, um die Zahlung abzuschließen."
             },
             {
-                "question": "Was tue ich, wenn ich Probleme mit der Zahlung habe?",
-                "answer": "Wenn Sie Probleme mit der Zahlung haben, kontaktieren Sie bitte unser Support-Team unter support@pins.dk."
+                "question": "Was mache ich, wenn ich Probleme mit der Zahlung habe?",
+                "answer": "Wenn du Probleme mit der Zahlung hast, kontaktiere bitte unser Support-Team unter support@pins.dk."
             },
             {
-                "question": "Wie kann ich meinen Zahlungsverlauf einsehen?",
-                "answer": "Sie können Ihren Zahlungsverlauf einsehen, indem Sie sich in Ihr Konto einloggen und zum Abschnitt „Historie“ navigieren."
+                "question": "Wie kann ich meinen Zahlungsverlauf sehen?",
+                "answer": "Du kannst deinen Zahlungsverlauf sehen, indem du dich in dein Konto einloggst und zum Abschnitt 'Verlauf' navigierst."
             },
             {
                 "question": "Wie kann ich meine Kontoinformationen ändern?",
-                "answer": "Sie können Ihre Kontoinformationen ändern, indem Sie sich in Ihr Konto einloggen und zum Abschnitt „Einstellungen“ gehen, wo Sie Ihre Daten aktualisieren können."
+                "answer": "Du kannst deine Kontoinformationen ändern, indem du dich in dein Konto einloggst und zum Abschnitt 'Einstellungen' gehst, wo du deine Informationen aktualisieren kannst."
             }
         ]
     }
