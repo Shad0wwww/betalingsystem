@@ -7,9 +7,10 @@ import { $Enums, InvoiceStatus, UtilityType } from "@prisma/client";
 import getStripe from '@/lib/stripe/Stripe';
 import prisma from '@/lib/prisma';
 import { GetUser } from '@/lib/users/GetUser';
+import { createStripeCustomer } from '@/lib/stripe/CreateCustomer';
 
 type CreatePaymentLinkBody = {
-    amount: number ;
+    amount: number;
     description: string;
     type: $Enums.UtilityType;
 };
@@ -58,13 +59,34 @@ export async function POST(
             email: string;
         };
 
-        const customerId = await GetUser.getCustomerIDByEmail(email);
+        const user = await GetUser.byEmail(email);
+
+        if (!user) {
+            return NextResponse.json({ error: "User not found." }, { status: 404 });
+        }
+
+        let customerId = user.stripeCustomerId;
+
+        if (!customerId) {
+            const stripeCustomer = await createStripeCustomer(user.email, user.name, user.phone);
+            customerId = stripeCustomer.id;
+            await prisma.user.update({
+                where: { id: user.id },
+                data: { stripeCustomerId: customerId },
+            });
+        }
 
 
         const session = await getStripe().checkout.sessions.create({
-            customer: customerId!,
+            customer: customerId,
             payment_method_types: ["card"],
-            
+            mode: "payment",
+
+    
+            payment_intent_data: {
+                capture_method: "manual", 
+            },
+
             line_items: [
                 {
                     price_data: {
@@ -74,11 +96,9 @@ export async function POST(
                             name: body.description,
                         },
                     },
-                    
                     quantity: 1,
                 },
             ],
-            mode: "payment",
             success_url: `${process.env.URL_BASE}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.URL_BASE}/api/stripe/cancel`,
             metadata: {
@@ -91,11 +111,11 @@ export async function POST(
         await prisma.invoice.create({
             data: {
                 userId: userId,
-                amount: body.amount, 
+                amount: body.amount,
                 type: body.type as UtilityType,
-                stripePaymentIntentId: session.id, 
+                stripeSessionId: session.id, 
                 status: InvoiceStatus.PENDING,
-                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), 
+                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
             },
         });
 

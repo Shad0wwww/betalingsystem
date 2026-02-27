@@ -80,8 +80,8 @@ export async function POST(req: NextRequest) {
         }
     });
 
-    await sendEmail(email, "Ændring af email", generateHtmlOTP(oldCode));
-    await sendEmail(newEmail, "Ny email adresse", generateHtmlOTP(newCode));
+    await sendEmail(email, "Du er i gang med at ændre din email adresse, godkend ved at skrive koden", generateHtmlOTP(oldCode));
+    await sendEmail(newEmail, "Godkend din nye email adresse - ved at skrive koden", generateHtmlOTP(newCode));
 
 
     return NextResponse.json({ message: "Email sended" }, { status: 200 });

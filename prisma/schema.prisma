@@ -14,7 +14,8 @@ model User {
     phoneCountry String @default("DK")
     role         Role   @default(USER)
 
-    balance Float @default(0)
+    balance         Float @default(0)
+    reservedBalance  Float @default(0)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -52,6 +53,7 @@ model Invoice {
 
     type UtilityType
 
+    stripeSessionId       String? @unique 
     stripePaymentIntentId String? @unique
 
     dueDate   DateTime
@@ -91,9 +93,10 @@ model Transaction {
 }
 
 enum TransactionType {
-    DEPOSIT
-    PAYMENT
+    PAID
     REFUND
+    RESERVED
+    RESERVATION_RELEASED
 }
 
 enum InvoiceStatus {

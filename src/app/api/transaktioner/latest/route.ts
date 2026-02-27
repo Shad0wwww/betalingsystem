@@ -1,5 +1,6 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
+import { TransactionType } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,7 +26,12 @@ export async function GET(
 	};
 
 	const findLatestTransactions = await prisma.transaction.findMany({
-		where: { userId: userId },
+		where: {
+			userId: userId,
+			type: {
+				notIn: [TransactionType.RESERVED, TransactionType.RESERVATION_RELEASED],
+			},
+		},
 		orderBy: { createdAt: "desc" },
 		take: 2,
 	});
