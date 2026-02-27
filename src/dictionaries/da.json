@@ -133,9 +133,20 @@
         "section10": {
             "title": "§10 Kontaktinformation",
             "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
+        },
+        "section11": {
+            "title": "§11 Cookies og sporing",
+            "content": "Vores hjemmeside bruger cookies til at huske dit login."
+        },
+        "section12": {
+            "title": "§12 Gemning af betalingsoplysninger",
+            "content": "Vi gemmer ikke dine betalingsoplysninger, da vi bruger en tredjeparts betalingsudbyder til at håndtere alle betalinger. Alle betalingsoplysninger behandles sikkert og i overensstemmelse med gældende databeskyttelseslovgivning. Dog forbeholder vi os retten til at gemme visse oplysninger om dine transaktioner, såsom dato, beløb og type af transaktion, for at kunne levere vores tjenester og overholde vores juridiske forpligtelser. Disse oplysninger vil blive opbevaret sikkert og vil ikke blive delt med tredjepart uden dit samtykke, medmindre det er nødvendigt for at overholde loven eller beskytte vores rettigheder. "
+        },
+        "section13": {
+            "title": "§13 Sletning af konto og data",
+            "content": "Du kan slette din konto og alle tilknyttede data på hjemmesiden under 'Indstillinger'. Når du sletter din konto, vil alle dine personlige oplysninger og transaktionsdata blive permanent slettet fra vores system. Bemærk, at denne handling ikke kan fortrydes, og du vil miste adgangen til alle dine data og tjenester, når din konto er slettet. Dog forbeholder vi os retten til at opbevare visse oplysninger i en begrænset periode, hvis det er nødvendigt for at overholde vores juridiske forpligtelser eller beskytte vores rettigheder. Hvis du har spørgsmål om sletning af din konto eller data, bedes du kontakte os på support@pins.dk."
         }
     },
-    
     "faq": {
         "title": "Har du spørgsmål?",
         "undertitle": "Her er nogle af de mest almindelige spørgsmål, vi får fra vores brugere. Hvis du ikke finder svar på dit spørgsmål her, er du velkommen til at kontakte os direkte.",

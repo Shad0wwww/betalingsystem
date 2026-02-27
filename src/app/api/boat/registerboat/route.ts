@@ -35,9 +35,11 @@ export async function POST(
         return NextResponse.json({ message: "Name and model must be less than 50 characters." }, { status: 400 });
     }
 
+    const userId = (payload as any).userId || (payload as any).id;
+
     const existingBoats = await prisma.boat.count({
         where: {
-            userId: payload.id
+            userId: userId
         }
     });
 
@@ -49,7 +51,7 @@ export async function POST(
         data: {
             kaldeNavn: name,
             skibModel: model,
-            userId: payload.id
+            userId: userId
         },
     })
 

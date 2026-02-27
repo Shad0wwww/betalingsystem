@@ -21,8 +21,10 @@ export async function DELETE(
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
+    const userId = (payload as any).userId || (payload as any).id;
+
     const user = await prisma.user.findUnique({
-        where: { id: payload.id },
+        where: { id: userId },
     });
 
     if (!user) {
@@ -30,7 +32,7 @@ export async function DELETE(
     }
 
     await prisma.user.delete({
-        where: { id: payload.id }
+        where: { id: userId }
     });
 
     return NextResponse.json({ message: "User deleted successfully" });

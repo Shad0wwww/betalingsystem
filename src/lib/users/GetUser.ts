@@ -32,7 +32,7 @@ export class GetUser {
         token: string
     ) {
         const decodedToken = await verifyJsonWebtoken(token) as unknown as {
-            userId: number;
+            userId: string;
             email: string;
         };
         return await this.byEmail(decodedToken?.email);

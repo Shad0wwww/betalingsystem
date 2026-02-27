@@ -1,23 +1,42 @@
 
-import GridContainer from "@/components/dashboard/GridContainer";
-import { notFound } from "next/dist/client/components/navigation";
-import { getDictionary } from "../../dictionaries";
+import { cookies } from "next/headers"
+import { columns, Payment } from "./columns"
+import { DataTable } from "./data-table"
 
-type PageParams = Promise<{ lang: string }>;
+async function getData(): Promise<Payment[]> {
+    const cookieStore = await cookies()
 
-export default async function Page(
-    { params }: { params: PageParams }
-) {
+    const token = cookieStore.get("auth_token")?.value
+    // Fetch data from your API here.
 
-    const { lang } = await params;
-    const dict = await getDictionary(lang);
+    const response = await fetch(`${process.env.URL_BASE}/api/transaktioner/all`, {
+        method: "GET",
+        credentials: "include", 
+        headers: {
+            "authorization": `Bearer ${token}`,
+        },
 
-    if (!dict) notFound();
+    })
     
+    const data = await response.json()
+
+    console.log("Fetched data:", data)
+
+    return data
+}
+
+export default async function DemoPage() {
+    const data = await getData()
+
     return (
-        <GridContainer>
-            <p>Transaktioner</p>
+        <div className="mx-auto max-w-screen-xl px-4 md:px-20">
+            <div className="container mx-auto py-10">
+                <DataTable columns={columns} data={data} />
+              
+            </div>
+        </div>
             
-        </GridContainer>
-    );
+    
+        
+    )
 }

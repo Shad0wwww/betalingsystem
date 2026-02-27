@@ -25,9 +25,11 @@ export async function GET(
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    const userId = (payload as any).userId || (payload as any).id;
+
     const boats = await prisma.boat.findMany({
         where: {
-            userId: payload.id
+            userId: userId
         },
         select: {
             kaldeNavn: true,

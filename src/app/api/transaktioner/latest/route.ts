@@ -3,7 +3,9 @@ import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(
+	request: NextRequest
+) {
 	const cookieStore = await cookies();
 	const authToken = cookieStore.get("auth_token");
 

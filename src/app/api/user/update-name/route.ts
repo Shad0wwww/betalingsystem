@@ -21,7 +21,7 @@ export async function POST(
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    if (!GetUser.doesUserExistById(payload.id)) {
+    if (!GetUser.doesUserExistById((payload as any).userId || (payload as any).id)) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
@@ -31,8 +31,10 @@ export async function POST(
         return NextResponse.json({ error: "Invalid name" }, { status: 400 });
     }
 
+    const userId = (payload as any).userId || (payload as any).id;
+
     await prisma.user.update({
-        where: { id: payload.id },
+        where: { id: userId },
         data: { name },
     });
 
