@@ -24,7 +24,6 @@ model User {
     //Relationer
     verificationTokens VerificationToken[]
     invoices           Invoice[]
-    meterReadings      MeterReading[]
     boats              Boat[]
     transactions       Transaction[]
 }
@@ -71,8 +70,7 @@ model Boat {
 
 model MeterReading {
     id     Int  @id @default(autoincrement())
-    userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    deviceID Int @unique
 
     type  UtilityType
     value Float
