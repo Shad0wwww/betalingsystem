@@ -8,7 +8,7 @@ const DashboardNavbar: React.FC = () => {
     const handleLogout = async () => {
         try {
             await fetch("/api/user/logud");
-            redirect("/");
+            redirect("/login");
 
         } catch (error) {
             new Error("Logout failed", { cause: error instanceof Error ? error : undefined });

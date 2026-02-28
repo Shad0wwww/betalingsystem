@@ -27,6 +27,16 @@ model User {
     invoices           Invoice[]
     boats              Boat[]
     transactions       Transaction[]
+    auditLogs          AuditLog[]
+}
+
+model AuditLog {
+    id        String      @id @default(cuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    action    ActionType
+    details   String?
+    timestamp DateTime @default(now())
 }
 
 model VerificationToken {
@@ -114,4 +124,23 @@ enum UtilityType {
 enum Role {
     USER
     ADMIN
+}
+
+
+enum ActionType {
+    LOGIN
+    LOGOUT
+    EMAIL_CHANGE
+    RESERVED_BALANCE
+    PAYMENT_MADE
+    PAYMENT_FAILED
+    BOAT_ADDED
+    BOAT_REMOVED
+    LINKED_STRIPE
+    NAME_CHANGE
+    EMAIL_SEND_OTP_SUCCESS
+    EMAIL_SEND_OTP_FAILED
+    PAYMENT_LINK_CREATED
+    LOGIN_OTP_SENT
+    LOGIN_OTP_SENT_SUCCESS
 }

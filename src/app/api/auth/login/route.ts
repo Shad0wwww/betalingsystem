@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import DoesEmailExist from "@/lib/users/DoesEmailExist";
 import { validateEmail } from "@/lib/utils/Email";
 import { generateCode, hashOTPCode } from "@/lib/utils/OTP";
+import { ActionType } from '@prisma/client';
 
 
 export async function POST(
@@ -45,6 +46,14 @@ export async function POST(
         "Her er din engangskode",
         generateHtmlOTP(code)
     );
+
+    await prisma.auditLog.create({
+        data: {
+            userId: userid!.id,
+            action: ActionType.LOGIN_OTP_SENT,
+            details: `Sent login OTP to ${email}`
+        }
+    });
 
 
     const hashedCode = await hashOTPCode(code);

@@ -4,10 +4,12 @@ import NavLinks from "../utils/NavLinks";
 import { Role } from "@prisma/client";
 
 type Props = {
-    params: { lang: string };
+    params: { lang: string, dict: any };
 };
 
-export default async function DashboardNavbar({ params }: Props) {
+export default async function DashboardNavbar(
+    { params }: Props
+) {
     const cookieStore = cookies();
     const token = (await cookieStore).get("auth_token")?.value;
 
@@ -15,16 +17,18 @@ export default async function DashboardNavbar({ params }: Props) {
 
     const isAdmin = user?.role === Role.ADMIN;
 
+    
+
     const links = [
-        { href: `/${params.lang}/dashboard`, label: "Oversigt" },
-        { href: `/${params.lang}/dashboard/historik`, label: "Historik" },
-        { href: `/${params.lang}/dashboard/settings`, label: "Settings" },
+        { href: `/${params.lang}/dashboard`, label: params.dict.dashboard.navbar.oversigt },
+        { href: `/${params.lang}/dashboard/historik`, label: params.dict.dashboard.navbar.historik },
+        { href: `/${params.lang}/dashboard/settings`, label: params.dict.dashboard.navbar.settings },
     ];
 
     if (isAdmin) {
         links.push({
             href: `/${params.lang}/admin/dashboard`,
-            label: "Admin",
+            label: params.dict.dashboard.navbar.admin,
         });
     }
 

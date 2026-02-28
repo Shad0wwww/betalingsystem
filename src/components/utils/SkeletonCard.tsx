@@ -1,5 +1,11 @@
 import { cn } from "./utils";
 
+export function skelelonText(length: number) {
+    return (
+        <div className="h-4 bg-[#252424] animate-pulse rounded-md" style={{ width: `${length}ch` }} />
+    );
+}
+
 const SkeletonCard = ({ noBorderBottom = false }: { noBorderBottom?: boolean }) => (
     <div className={cn(
         "w-full border border-[#252424] bg-black overflow-hidden",
@@ -17,3 +23,5 @@ const SkeletonCard = ({ noBorderBottom = false }: { noBorderBottom?: boolean }) 
 );
 
 export { SkeletonCard };
+
+

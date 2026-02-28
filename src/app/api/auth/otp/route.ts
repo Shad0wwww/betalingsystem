@@ -3,6 +3,7 @@ import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { verifyOTPCode } from "@/lib/utils/OTP";
 import { NextRequest, NextResponse } from "next/server";
+import { ActionType } from '@prisma/client';
 
 export async function POST(
     request: NextRequest
@@ -79,6 +80,14 @@ export async function POST(
     await prisma.verificationToken.deleteMany({
         where: {
             identifier: email
+        }
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId: user!.id,
+            action: ActionType.LOGIN_OTP_SENT_SUCCESS,
+            details: `User logged in with OTP`
         }
     });
 

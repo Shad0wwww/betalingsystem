@@ -4,6 +4,7 @@ export async function generateInvoiceEmailContent(
     email: string,
     date: Date = new Date(),
     InvoiceNumber: string,
+    dict: any
 ) {
     const utilityType = type === "ELECTRICITY" ? "El-forbrug" : "Vand-forbrug";
     

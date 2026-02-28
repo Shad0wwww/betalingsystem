@@ -17,6 +17,12 @@
             "payButton": "Betal nu",
             "payoutbutton": "Udbetal"
         },
+        "navbar": {
+            "oversigt": "Oversigt",
+            "historik": "Historik",
+            "settings": "Indstillinger",
+            "admin": "Admin"
+        },
         "historik": {},
         "settings": {
             "fullname": "Ændre dit fulde navn",

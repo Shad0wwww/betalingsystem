@@ -1,6 +1,7 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { GetUser } from "@/lib/users/GetUser";
+import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -55,6 +56,13 @@ export async function POST(
         },
     })
 
+    await prisma.auditLog.create({
+        data: {
+            userId: userId,
+            action: ActionType.BOAT_ADDED,
+            details: `User registered a boat named ${name} with model ${model}`
+        }
+    });
 
     return NextResponse.json({ message: "Boat registered successfully!", status: 200 });
 }

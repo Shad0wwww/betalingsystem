@@ -1,15 +1,20 @@
+import { getDictionary } from "@/app/[lang]/dictionaries";
 import { sendEmail } from "@/lib/emailer/Mail";
 import { generateHtmlOTP } from "@/lib/emailer/MailCreator";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import DoesEmailExist from "@/lib/users/DoesEmailExist";
 import { generateCode, hashOTPCode } from "@/lib/utils/OTP";
+import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     const cookie = req.cookies.get("auth_token")?.value;
+    const searchParams = new URL(req.url).searchParams;
 
     const { newEmail } = await req.json();
+
+    const dict = getDictionary(searchParams.get("lang") || "da-DK");
 
     if (!newEmail || typeof newEmail !== "string") {
         return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -80,8 +85,16 @@ export async function POST(req: NextRequest) {
         }
     });
 
-    await sendEmail(email, "Du er i gang med at ændre din email adresse, godkend ved at skrive koden", generateHtmlOTP(oldCode));
-    await sendEmail(newEmail, "Godkend din nye email adresse - ved at skrive koden", generateHtmlOTP(newCode));
+    await prisma.auditLog.create({
+        data: {
+            userId: userId,
+            action: ActionType.EMAIL_CHANGE,
+            details: `User requested email change from ${email} to ${newEmail}`
+        }
+    });
+
+    await sendEmail(email, "Du er i gang med at ændre din email adresse, godkend ved at skrive koden", generateHtmlOTP(oldCode, dict));
+    await sendEmail(newEmail, "Godkend din nye email adresse - ved at skrive koden", generateHtmlOTP(newCode, dict));
 
 
     return NextResponse.json({ message: "Email sended" }, { status: 200 });

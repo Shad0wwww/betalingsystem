@@ -1,4 +1,4 @@
-export function generateHtmlOTP(code: string) {
+export function generateHtmlOTP(code: string, dict?: any) {
     const digits = code.split('');
     const digitHtml = digits.map(d => 
         `<div class="digit">${d.toUpperCase()}</div>`

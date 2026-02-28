@@ -2,7 +2,7 @@ import 'server-only';
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
-import { $Enums, InvoiceStatus, UtilityType } from "@prisma/client";
+import { $Enums, ActionType, InvoiceStatus, UtilityType } from "@prisma/client";
 
 import getStripe from '@/lib/stripe/Stripe';
 import prisma from '@/lib/prisma';
@@ -119,12 +119,20 @@ export async function POST(
             },
         });
 
+        await prisma.auditLog.create({
+            data: {
+                userId: userId,
+                action: ActionType.PAYMENT_LINK_CREATED,
+                details: `User created a payment link for ${body.description} with amount ${body.amount}`
+            }
+        });
+
         return NextResponse.json({ url: session.url });
 
 
 
     } catch (error) {
-        console.error("Error creating payment link:", error);
+
         return NextResponse.json(
             { error: "Failed to create payment link." },
             { status: 500 }

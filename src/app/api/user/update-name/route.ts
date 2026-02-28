@@ -1,6 +1,7 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { GetUser } from "@/lib/users/GetUser";
+import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -36,6 +37,14 @@ export async function POST(
     await prisma.user.update({
         where: { id: userId },
         data: { name },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId: userId,
+            action: ActionType.NAME_CHANGE,
+            details: `User changed name to ${name}`
+        }
     });
 
     return NextResponse.json({ message: "Name updated successfully!", status: 200 });

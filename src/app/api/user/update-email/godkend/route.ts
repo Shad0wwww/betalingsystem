@@ -1,3 +1,4 @@
+import { ActionType } from "@prisma/client";
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import getStripe from "@/lib/stripe/Stripe";
@@ -28,7 +29,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Invalid token" }, { status: 401 });
         }
 
-        // 1. Brug AWAIT i stedet for .then()
         const [storedOldToken, storedNewToken] = await Promise.all([
             prisma.verificationToken.findUnique({
                 where: { identifier: email },
@@ -43,8 +43,6 @@ export async function POST(req: NextRequest) {
         if (!storedOldToken || !storedNewToken) {
             return NextResponse.json({ error: "OTP not found" }, { status: 400 });
         }
-
-        // 2. Tjek udløbsdato med den simplificerede isExpired funktion
         if (isExpired(storedOldToken.expires) || isExpired(storedNewToken.expires)) {
             return NextResponse.json({ error: "OTP has expired" }, { status: 400 });
         }
@@ -56,7 +54,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Invalid OTP code" }, { status: 400 });
         }
 
-        // 3. Opdater Stripe-kunden
         const customerId = await prisma.user.findUnique({
             where: { id: userId },
             select: { stripeCustomerId: true }
@@ -64,7 +61,7 @@ export async function POST(req: NextRequest) {
 
         
         await updateStripeCustomerEmail(customerId!, newEmail);
-        // 3. Opdater bruger
+
         await prisma.user.update({
             where: { id: userId },
             data: { email: newEmail }
@@ -73,6 +70,14 @@ export async function POST(req: NextRequest) {
         await prisma.verificationToken.deleteMany({
             where: {
                 identifier: { in: [email, newEmail] }
+            }
+        });
+
+        await prisma.auditLog.create({
+            data: {
+                userId: userId,
+                action: ActionType.EMAIL_CHANGE,
+                details: `User changed email from ${email} to ${newEmail}`
             }
         });
 

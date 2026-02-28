@@ -4,7 +4,7 @@ import { generateInvoiceEmailContent } from "@/lib/emailer/MailCreatorInvoice";
 import { generateReservationEmailContent } from '@/lib/emailer/MailReservation';
 import prisma from "@/lib/prisma";
 import getStripe from "@/lib/stripe/Stripe";
-import { InvoiceStatus, TransactionType } from "@prisma/client";
+import { ActionType, InvoiceStatus, TransactionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -60,8 +60,19 @@ export async function GET(
         uploadFile({
             name: `invoices/${InvoiceNumber}.html`,
             buffer: Buffer.from(emailContent, "utf-8"),
+        }),
+
+        prisma.auditLog.create({
+            data: {
+                userId: userId,
+                action: ActionType.RESERVED_BALANCE,
+                details: `User completed a payment of ${amount} for ${session.metadata?.type}`
+            }
         })
+
     ]);
+
+
 
     return NextResponse.redirect(new URL("/dashboard?payment=success", URL_LINK));
 }

@@ -10,7 +10,7 @@ export type Payment = {
     dato: string
 }
 
-import { MoreHorizontal, ArrowUpDown } from "lucide-react"
+import { MoreHorizontal, ArrowUpDown, ReceiptText, Copy } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +18,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -113,17 +114,25 @@ export const columns: ColumnDef<Payment>[] = [
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
+                        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-zinc-800/50 focus-visible:ring-0">
+                            <MoreHorizontal className="h-4 w-4 text-zinc-400" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuContent align="end" className="w-[200px] bg-[#0c0c0e] border-zinc-800 text-zinc-200">
+                        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-zinc-500 py-2">
+                            Betalingsdetaljer
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator className="bg-zinc-800" />
                         <DropdownMenuItem
+                            className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-white"
                             onClick={() => navigator.clipboard.writeText(payment.kvitteringId)}
                         >
-                            Copy kvittering ID
+                            <Copy className="h-3.5 w-3.5 text-zinc-500" />
+                            Kopier ID
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-white">
+                            <ReceiptText className="h-3.5 w-3.5 text-zinc-500" />
+                            Se kvittering
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
