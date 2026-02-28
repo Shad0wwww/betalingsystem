@@ -15,8 +15,6 @@ services:
     image: node:22-alpine
     restart: unless-stopped
     working_dir: /app
-    extra_hosts:
-      - "pins.dk:host-gateway"
     volumes:
       - .:/app
     command: sh -c "corepack enable && pnpm install && npx prisma generate && npx prisma db push && pnpm build && pnpm start"
@@ -33,11 +31,6 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - homesite
-    networks:
-      default:
-        aliases:
-          - pins.dk
-          - web.pins.dk
   
   adminer:
     image: adminer
