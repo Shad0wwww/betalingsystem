@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 	verification: {
 		google: process.env.GOOGLE_SITE_VERIFICATION || "",
 	},
-	metadataBase: new URL("pins.dk"),
+	metadataBase: new URL("https://pins.dk"),
 	
 };
 
