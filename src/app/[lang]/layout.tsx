@@ -30,6 +30,15 @@ export const metadata: Metadata = {
 		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
 		url: "https://pins.dk",
 		siteName: "Ribe Sejlklub",
+		images: [
+			{
+				url: Logo.src,
+				width: 800,
+				height: 600,
+				alt: "Ribe Sejlklub Logo",
+			},
+		],
+		type: "website",
 	},
 	icons: {
 		icon: Logo.src,

@@ -33,7 +33,7 @@ async function Page({ params }: { params: PageParams }) {
         termsofservice.section10,
         termsofservice.section11,
         termsofservice.section12,
-        termsofservice.section13,
+
     ];
 
     return (

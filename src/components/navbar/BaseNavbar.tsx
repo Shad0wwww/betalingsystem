@@ -35,8 +35,8 @@ const Navbar: React.FC<NavbarProps> = (
                         className="
                             inline-flex items-center justify-center
                             bg-[#1a1a1a] text-white 
-                            px-8 py-2 rounded-2xl 
-                            text-lg font-medium 
+                            px-6 py-2 rounded-2xl 
+                            text-lg
                             transition-all duration-200 
                             hover:bg-[#252525] hover:scale-[1.02] 
                             active:scale-[0.98] 

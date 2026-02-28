@@ -98,59 +98,56 @@
         "undertitle": "Einleitung",
         "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklären Sie sich mit der Einhaltung dieser Nutzungsbedingungen einverstanden. Bitte lesen Sie diese Bedingungen sorgfältig durch, da sie wichtige Informationen über Ihre Rechte und Pflichten enthalten.",
         "publisher": {
-            "title": "Herausgeber"
+            "title": "Herausgeber",
+            "name": "Schulprojekt - Gruppe [Nummer/Name einfügen]"
         },
         "section1": {
             "title": "§1 Lieferung",
-            "content": "Wenn Sie einen Kauf über unser Zahlungssystem tätigen, bemühen wir uns, die gekaufte Dienstleistung so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Bereitstellung innerhalb weniger Minuten nach dem Kauf. In seltenen Fällen können jedoch Verzögerungen auftreten."
+            "content": "Wenn Sie einen Kauf über unser Zahlungssystem tätigen, bemühen wir uns, die gekaufte Dienstleistung so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Bereitstellung innerhalb weniger Minuten nach dem Kauf."
         },
         "section2": {
-            "title": "§2 Rückerstattungen",
-            "content": "Alle Verkäufe sind endgültig, und wir bieten keine Rückerstattungen an. Bei Problemen mit Ihrer Dienstleistung kontaktieren Sie bitte unser Support-Team, damit wir Ihnen helfen können."
+            "title": "§2 Widerrufsrecht und Rückerstattungen",
+            "content": "Da es sich um die Lieferung digitaler Inhalte handelt, die nicht auf einem körperlichen Datenträger geliefert werden, akzeptieren Sie durch Abschluss des Kaufs, dass das Widerrufsrecht erlischt, sobald der Dienst beginnt. Alle Verkäufe sind grundsätzlich endgültig, kontaktieren Sie jedoch support@pins.dk bei technischen Fehlern."
         },
         "section3": {
             "title": "§3 Haftungsausschluss",
-            "content": "Der Ribe Sejlklub und sein Zahlungssystem werden „wie sie sind“ ohne jegliche Garantie, weder ausdrücklich noch stillschweigend, bereitgestellt. Wir lehnen jede Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
+            "content": "Der Ribe Sejlklub und sein Zahlungssystem werden „wie sie sind“ ohne jegliche Garantie bereitgestellt. Wir lehnen jede Haftung für Schäden oder Verluste ab, die durch die Nutzung unserer Dienste entstehen könnten."
         },
         "section4": {
             "title": "§4 DSGVO und Datenschutz",
-            "content": "Der Ribe Sejlklub verpflichtet sich, Ihre personenbezogenen Daten zu schützen und die geltenden Datenschutzgesetze, einschließlich der DSGVO, einzuhalten. Wir erheben nur die notwendigen Informationen zur Bereitstellung unserer Dienste und geben Ihre Daten niemals ohne Ihre Zustimmung an Dritte weiter."
+            "content": "Wir halten die geltenden Datenschutzgesetze ein, einschließlich der DSGVO. Wir erheben nur die notwendigen Informationen zur Bereitstellung unserer Dienste und teilen Ihre Daten niemals ohne Ihre Zustimmung mit Dritten."
         },
         "section5": {
-            "title": "§5 Änderungen der Bedingungen",
-            "content": "Der Ribe Sejlklub behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden auf unserer Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich über etwaige Änderungen zu informieren."
+            "title": "§5 Sicherheitsmaßnahmen (2FA)",
+            "content": "Um den höchstmöglichen Schutz Ihrer Daten zu gewährleisten und unbefugten Zugriff zu verhindern, ist es eine interne Anforderung, dass alle Administratoren und Entwickler Zwei-Faktor-Authentifizierung (2FA) verwenden. Dies gilt für den Zugriff auf alle kritischen Systeme, einschließlich Zahlungsgateways (Stripe), Infrastruktur (Cloudflare) und Datenbanken."
         },
         "section6": {
-            "title": "§6 Kontaktinformationen",
-            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
+            "title": "§6 Cookies und Tracking",
+            "content": "Unsere Website verwendet notwendige Cookies, um Ihr Login zu handhaben und die Funktionalität des Systems zu gewährleisten."
         },
         "section7": {
-            "title": "§7 Anwendbares Recht und Gerichtsstand",
-            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht und sind entsprechend auszulegen. Streitigkeiten im Zusammenhang mit diesen Bedingungen sind vor den dänischen Gerichten auszutragen."
+            "title": "§7 Aufbewahrung von Belegen (Buchführungsgesetz)",
+            "content": "Wir speichern Ihre Kartendaten nicht, da diese von Stripe verarbeitet werden. Gemäß dem dänischen Buchführungsgesetz sind wir jedoch verpflichtet, Belege und zugehörige Transaktionsdaten, einschließlich Ihrer E-Mail-Adresse, 5 Jahre ab Ende des betreffenden Geschäftsjahres aufzubewahren. Diese Daten werden ausschließlich zu Buchführungszwecken gespeichert und können vor Ablauf der Frist nicht gelöscht werden."
         },
         "section8": {
-            "title": "§8 Annahme der Bedingungen",
-            "content": "Durch die Nutzung unseres Zahlungssystems bestätigen Sie, dass Sie diese Nutzungsbedingungen gelesen, verstanden und akzeptiert haben. Wenn Sie diese Bedingungen nicht akzeptieren, nutzen Sie bitte unsere Dienste nicht."
+            "title": "§8 Löschung von Konto und Daten",
+            "content": "Sie können Ihr Konto unter 'Einstellungen' löschen. Bei Löschung werden Ihre personenbezogenen Daten dauerhaft aus unserem System entfernt. Beachten Sie jedoch, dass Daten, die dem Buchführungsgesetz unterliegen (siehe §7), 5 Jahre archiviert werden, bevor sie endgültig gelöscht werden, unabhängig davon, ob Ihr Benutzerkonto aktiv ist oder nicht."
         },
         "section9": {
             "title": "§9 Hinweis zum Schulprojekt",
-            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken. Durch die Erstellung eines Kontos oder die Nutzung unserer Dienste akzeptieren Sie, dass Sie dies auf eigenes Risiko tun und verstehen, dass dieses Projekt nicht für kommerzielle Nutzung gedacht ist. Der Ribe Sejlklub und die Studierenden hinter diesem Projekt lehnen jede Haftung für Probleme ab, die durch die Nutzung dieses Systems entstehen könnten."
+            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken. Die Nutzung des Systems erfolgt auf eigenes Risiko."
         },
         "section10": {
-            "title": "§10 Kontaktinformationen",
-            "content": "Bei Fragen oder Bedenken zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter support@pins.dk."
+            "title": "§10 Änderungen der Bedingungen",
+            "content": "Wir behalten uns das Recht vor, diese Bedingungen zu ändern. Änderungen werden auf der Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich auf dem Laufenden zu halten."
         },
         "section11": {
-            "title": "§11 Cookies und Tracking",
-            "content": "Unsere Website verwendet Cookies, um Ihr Login zu speichern."
+            "title": "§11 Anwendbares Recht und Gerichtsstand",
+            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht. Streitigkeiten sind vor den dänischen Gerichten auszutragen."
         },
         "section12": {
-            "title": "§12 Speicherung von Zahlungsinformationen",
-            "content": "Wir speichern Ihre Zahlungsinformationen nicht, da wir einen Drittanbieter für die Abwicklung aller Zahlungen nutzen. Alle Zahlungsinformationen werden sicher und im Einklang mit den geltenden Datenschutzgesetzen verarbeitet. Wir behalten uns jedoch das Recht vor, bestimmte Informationen zu Ihren Transaktionen wie Datum, Betrag und Art der Transaktion zu speichern, um unsere Dienste bereitzustellen und unseren rechtlichen Verpflichtungen nachzukommen. Diese Informationen werden sicher aufbewahrt und nicht ohne Ihre Zustimmung an Dritte weitergegeben, es sei denn, es ist gesetzlich erforderlich oder zum Schutz unserer Rechte notwendig."
-        },
-        "section13": {
-            "title": "§13 Löschung von Konto und Daten",
-            "content": "Sie können Ihr Konto und alle zugehörigen Daten auf der Website unter 'Einstellungen' löschen. Bei Löschung Ihres Kontos werden alle Ihre personenbezogenen Daten und Transaktionsdaten dauerhaft aus unserem System entfernt. Beachten Sie, dass diese Aktion nicht rückgängig gemacht werden kann und Sie den Zugriff auf alle Ihre Daten und Dienste verlieren, sobald Ihr Konto gelöscht ist. Wir behalten uns jedoch das Recht vor, bestimmte Informationen für eine begrenzte Zeit aufzubewahren, falls dies zur Einhaltung unserer rechtlichen Verpflichtungen oder zum Schutz unserer Rechte erforderlich ist. Bei Fragen zur Löschung Ihres Kontos oder Ihrer Daten kontaktieren Sie uns bitte unter support@pins.dk."
+            "title": "§12 Kontaktinformationen",
+            "content": "Bei Fragen zu diesen Bedingungen kontaktieren Sie uns bitte unter support@pins.dk."
         }
     },
     "faq": {
@@ -178,5 +175,26 @@
                 "answer": "Sie können Ihre Kontoinformationen ändern, indem Sie sich in Ihr Konto einloggen und zum Abschnitt „Einstellungen“ gehen, wo Sie Ihre Daten aktualisieren können."
             }
         ]
+    },
+    "HowToPay": {
+        "title": "Zahlungsprozess",
+        "subtitle": "Einfach und sicher – Stromzahlung leicht gemacht",
+        "description": "Wir nutzen Stripe, um alle Transaktionen abzuwickeln, damit Sie sich ganz auf das Segeln konzentrieren können.",
+        "footer": "Zahlung gesichert durch",
+        "footer1": "Bank-Grade-Sicherheit • Verschlüsselte Verbindung",
+        "steps": {
+            "step1": {
+                "title": "Betrag reservieren",
+                "description": "Wenn Sie eine Schleusendurchfahrt reservieren, reservieren wir einen Betrag auf Ihrer Karte, um sicherzustellen, dass Sie Deckung für die Durchfahrt haben. Dieser Betrag wird automatisch nach der Durchfahrt zurückerstattet."
+            },
+            "step2": {
+                "title": "Zahlung abschließen",
+                "description": "Wir verwenden Stripe, einen der weltweit vertrauenswürdigsten Zahlungsdienstleister, um sicherzustellen, dass Ihre Informationen während des gesamten Prozesses geschützt sind."
+            },
+            "step3": {
+                "title": "Genießen Sie die Durchfahrt",
+                "description": "Nach der Durchfahrt rechnen wir Ihren tatsächlichen Verbrauch automatisch ab. Falls Sie zu viel reserviert haben, erstatten wir den Überschuss sofort zurück."
+            }
+        }
     }
 }

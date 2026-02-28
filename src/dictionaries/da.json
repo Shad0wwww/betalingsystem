@@ -98,59 +98,56 @@
         "undertitle": "Introduktion",
         "introduction": "Velkommen til Ribe Sejlklubs betalingssystem. Ved at bruge vores tjenester accepterer du at overholde disse servicevilkår. Læs venligst disse vilkår omhyggeligt, da de indeholder vigtige oplysninger om dine rettigheder og forpligtelser.",
         "publisher": {
-            "title": "Udgiver"
+            "title": "Udgiver",
+            "name": "Skoleprojekt - Gruppe [Indsæt Nummer/Navn]"
         },
         "section1": {
             "title": "§1 Levering",
-            "content": "Når du foretager et køb gennem vores betalingssystem, vil vi bestræbe os på at levere den købte service så hurtigt som muligt. I de fleste tilfælde vil leveringen ske inden for få minutter efter købet. I sjældne tilfælde kan der dog forekomme forsinkelser."
+            "content": "Når du foretager et køb gennem vores betalingssystem, vil vi bestræbe os på at levere den købte service så hurtigt som muligt. I de fleste tilfælde vil leveringen ske inden for få minutter efter købet."
         },
         "section2": {
-            "title": "§2 Refusioner",
-            "content": "Alle salg er endelige, og vi tilbyder ingen refusioner. Hvis du har problemer med din service, bedes du kontakte vores supportteam, så vi kan hjælpe dig."
+            "title": "§2 Fortrydelsesret og Refusioner",
+            "content": "Da der er tale om levering af digitalt indhold, som ikke leveres på et fysisk medium, accepterer du ved købets gennemførelse, at fortrydelsesretten bortfalder, så snart tjenesten påbegyndes. Alle salg er som udgangspunkt endelige, men kontakt support@pins.dk ved tekniske fejl."
         },
         "section3": {
             "title": "§3 Ansvarsfraskrivelse",
-            "content": "Ribe Sejlklub og dets betalingssystem leveres 'som det er' uden nogen form for garanti, hverken udtrykkelig eller underforstået. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
+            "content": "Ribe Sejlklub og dets betalingssystem leveres 'som det er' uden nogen form for garanti. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
         },
         "section4": {
             "title": "§4 GDPR og databeskyttelse",
-            "content": "Ribe Sejlklub forpligter sig til at beskytte dine personlige oplysninger og overholde gældende databeskyttelseslovgivning, herunder GDPR. Vi indsamler kun de nødvendige oplysninger for at levere vores tjenester og vil aldrig dele dine oplysninger med tredjepart uden dit samtykke."
+            "content": "Vi overholder gældende databeskyttelseslovgivning, herunder GDPR. Vi indsamler kun de nødvendige oplysninger for at levere vores tjenester og deler aldrig dine oplysninger med tredjepart uden dit samtykke."
         },
         "section5": {
-            "title": "§5 Ændringer af vilkår",
-            "content": "Ribe Sejlklub forbeholder sig retten til at ændre disse servicevilkår til enhver tid. Eventuelle ændringer vil blive offentliggjort på vores hjemmeside, og det er dit ansvar at holde dig opdateret om eventuelle ændringer."
+            "title": "§5 Sikkerhedsforanstaltninger (2FA)",
+            "content": "For at sikre højest mulige beskyttelse af dine data og forhindre uautoriseret adgang, er det et internt krav, at alle administratorer og udviklere anvender to-faktor-godkendelse (2FA). Dette gælder for adgang til alle kritiske systemer, herunder betalingsgateways (Stripe), infrastruktur (Cloudflare) og databaser."
         },
         "section6": {
-            "title": "§6 Kontaktinformation",
-            "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
+            "title": "§6 Cookies og sporing",
+            "content": "Vores hjemmeside bruger nødvendige cookies til at håndtere dit login og sikre systemets funktionalitet."
         },
         "section7": {
-            "title": "§7 Lovvalg og jurisdiktion",
-            "content": "Disse servicevilkår er underlagt og skal fortolkes i overensstemmelse med dansk lovgivning. Enhver tvist, der måtte opstå i forbindelse med disse vilkår, skal indbringes for de danske domstole."
+            "title": "§7 Opbevaring af kvitteringer (Bogføringsloven)",
+            "content": "Vi gemmer ikke dine kortoplysninger, da disse håndteres af Stripe. I henhold til den danske bogføringslov er vi dog forpligtet til at opbevare kvitteringer og tilhørende transaktionsdata, herunder din e-mailadresse, i 5 år fra udgangen af det pågældende regnskabsår. Disse data opbevares udelukkende til regnskabsmæssige formål og kan ikke slettes før periodens udløb."
         },
         "section8": {
-            "title": "§8 Accept af vilkår",
-            "content": "Ved at bruge vores betalingssystem bekræfter du, at du har læst, forstået og accepteret disse servicevilkår. Hvis du ikke accepterer disse vilkår, bedes du ikke bruge vores tjenester."
+            "title": "§8 Sletning af konto og data",
+            "content": "Du kan slette din konto under 'Indstillinger'. Ved sletning fjernes dine personlige oplysninger permanent fra vores system. Bemærk dog, at data omfattet af bogføringsloven (se §7) vil blive arkiveret i 5 år, før de endeligt slettes, uanset om din brugerkonto er aktiv eller ej."
         },
         "section9": {
             "title": "§9 Skoleprojekt Disclaimer",
-            "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Ved at oprette en konto eller bruge vores tjenester, accepterer du, at du gør det på eget ansvar og forstår, at dette projekt ikke er beregnet til kommerciel brug. Ribe Sejlklub og de studerende bag dette projekt fraskriver sig ethvert ansvar for eventuelle problemer, der måtte opstå som følge af brugen af dette system."
+            "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Brug af systemet sker på eget ansvar."
         },
         "section10": {
-            "title": "§10 Kontaktinformation",
-            "content": "Hvis du har spørgsmål eller bekymringer vedrørende disse servicevilkår, bedes du kontakte os på support@pins.dk."
+            "title": "§10 Ændringer af vilkår",
+            "content": "Vi forbeholder os retten til at ændre disse vilkår. Eventuelle ændringer vil blive offentliggjort på hjemmesiden, og det er dit ansvar at holde dig opdateret."
         },
         "section11": {
-            "title": "§11 Cookies og sporing",
-            "content": "Vores hjemmeside bruger cookies til at huske dit login."
+            "title": "§11 Lovvalg og jurisdiktion",
+            "content": "Disse servicevilkår er underlagt dansk lovgivning. Enhver tvist skal indbringes for de danske domstole."
         },
         "section12": {
-            "title": "§12 Gemning af betalingsoplysninger",
-            "content": "Vi gemmer ikke dine betalingsoplysninger, da vi bruger en tredjeparts betalingsudbyder til at håndtere alle betalinger. Alle betalingsoplysninger behandles sikkert og i overensstemmelse med gældende databeskyttelseslovgivning. Dog forbeholder vi os retten til at gemme visse oplysninger om dine transaktioner, såsom dato, beløb og type af transaktion, for at kunne levere vores tjenester og overholde vores juridiske forpligtelser. Disse oplysninger vil blive opbevaret sikkert og vil ikke blive delt med tredjepart uden dit samtykke, medmindre det er nødvendigt for at overholde loven eller beskytte vores rettigheder. "
-        },
-        "section13": {
-            "title": "§13 Sletning af konto og data",
-            "content": "Du kan slette din konto og alle tilknyttede data på hjemmesiden under 'Indstillinger'. Når du sletter din konto, vil alle dine personlige oplysninger og transaktionsdata blive permanent slettet fra vores system. Bemærk, at denne handling ikke kan fortrydes, og du vil miste adgangen til alle dine data og tjenester, når din konto er slettet. Dog forbeholder vi os retten til at opbevare visse oplysninger i en begrænset periode, hvis det er nødvendigt for at overholde vores juridiske forpligtelser eller beskytte vores rettigheder. Hvis du har spørgsmål om sletning af din konto eller data, bedes du kontakte os på support@pins.dk."
+            "title": "§12 Kontaktinformation",
+            "content": "Har du spørgsmål til disse vilkår, kan du kontakte os på support@pins.dk."
         }
     },
     "faq": {
@@ -178,6 +175,29 @@
                 "answer": "Du kan ændre dine kontooplysninger ved at logge ind på din konto og gå til 'Indstillinger' sektionen, hvor du kan opdatere dine oplysninger."
             }
         ]
+    },
+    
+    "HowToPay": {
+        "title": "Betalingsprocessen",
+        "subtitle": "Nemt og sikkert - El betaling gjort enkelt",
+        "description": "Vi bruger Stripe til at håndtere alle transaktioner, så du kan fokusere på sejladsen.",
+        "footer": "Betalingen sikres af",
+        "footer1": "Bank-grade sikkerhed • Krypteret forbindelse",
+        "steps": {
+            "step1": {
+                "title": "Reserver beløb",
+                "description": "Når du reserverer en sluse, reserverer vi et beløb på dit kort for at sikre, at du har dækning til sejladsen. Dette beløb refunderes automatisk efter sejladsen."
+            },
+            "step2": {
+                "title": "Gennemfør betaling",
+                "description": "Vi bruger Stripe, en af verdens mest pålidelige betalingsudbydere, for at sikre at dine oplysninger er beskyttet under hele processen."
+            },
+            "step3": {
+                "title": "Nyd sejladsen",
+                "description": "Efter sejladsen afregner vi automatisk dit faktiske forbrug. Hvis du har reserveret for meget, refunderer vi det overskydende beløb med det samme."
+            }
+        }
     }
+
     
 }

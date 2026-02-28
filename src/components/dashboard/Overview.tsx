@@ -33,7 +33,6 @@ export default function Overview(
                     <div className="flex flex-row justify-between items-center">
 
                         <PayButton amount={200} description="Reserverer 200 DKK" type={UtilityType.ELECTRICITY} dict={dict} />
-                        <UdbetalModal dict={dict} />
                     </div>
                     <Reserved dict={dict} />
                     

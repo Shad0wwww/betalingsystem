@@ -98,59 +98,56 @@
         "undertitle": "Introduction",
         "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these Terms of Service. Please read these terms carefully as they contain important information about your rights and obligations.",
         "publisher": {
-            "title": "Publisher"
+            "title": "Publisher",
+            "name": "School Project - Group [Insert Number/Name]"
         },
         "section1": {
             "title": "§1 Delivery",
-            "content": "When you make a purchase through our payment system, we will endeavor to deliver the purchased service as quickly as possible. In most cases, delivery will occur within a few minutes after the purchase. In rare cases, however, delays may occur."
+            "content": "When you make a purchase through our payment system, we will endeavor to deliver the purchased service as quickly as possible. In most cases, delivery will occur within a few minutes after the purchase."
         },
         "section2": {
-            "title": "§2 Refunds",
-            "content": "All sales are final, and we offer no refunds. If you have any issues with your service, please contact our support team so we can assist you."
+            "title": "§2 Right of Withdrawal and Refunds",
+            "content": "Since this involves the delivery of digital content not supplied on a tangible medium, you accept by completing the purchase that the right of withdrawal expires as soon as the service begins. All sales are in principle final, but contact support@pins.dk in case of technical errors."
         },
         "section3": {
             "title": "§3 Disclaimer of Liability",
-            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any kind of warranty, express or implied. We disclaim any liability for any damages or losses that may arise from the use of our services."
+            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any warranty. We disclaim any liability for any damages or losses that may arise from the use of our services."
         },
         "section4": {
             "title": "§4 GDPR and Data Protection",
-            "content": "Ribe Sejlklub is committed to protecting your personal information and complying with applicable data protection legislation, including GDPR. We only collect the necessary information to provide our services and will never share your information with third parties without your consent."
+            "content": "We comply with applicable data protection legislation, including GDPR. We only collect the necessary information to provide our services and never share your information with third parties without your consent."
         },
         "section5": {
-            "title": "§5 Changes to the Terms",
-            "content": "Ribe Sejlklub reserves the right to change these Terms of Service at any time. Any changes will be published on our website, and it is your responsibility to stay informed about any changes."
+            "title": "§5 Security Measures (2FA)",
+            "content": "To ensure the highest possible protection of your data and prevent unauthorized access, it is an internal requirement that all administrators and developers use two-factor authentication (2FA). This applies to access to all critical systems, including payment gateways (Stripe), infrastructure (Cloudflare), and databases."
         },
         "section6": {
-            "title": "§6 Contact Information",
-            "content": "If you have any questions or concerns regarding these Terms of Service, please contact us at support@pins.dk."
+            "title": "§6 Cookies and Tracking",
+            "content": "Our website uses necessary cookies to handle your login and ensure system functionality."
         },
         "section7": {
-            "title": "§7 Governing Law and Jurisdiction",
-            "content": "These Terms of Service are governed by and shall be interpreted in accordance with Danish law. Any dispute arising in connection with these terms shall be brought before the Danish courts."
+            "title": "§7 Storage of Receipts (Bookkeeping Act)",
+            "content": "We do not store your card details, as these are handled by Stripe. Pursuant to the Danish Bookkeeping Act, however, we are required to retain receipts and associated transaction data, including your email address, for 5 years from the end of the relevant financial year. This data is stored solely for accounting purposes and cannot be deleted before the period expires."
         },
         "section8": {
-            "title": "§8 Acceptance of Terms",
-            "content": "By using our payment system, you confirm that you have read, understood, and accepted these Terms of Service. If you do not accept these terms, please do not use our services."
+            "title": "§8 Deletion of Account and Data",
+            "content": "You can delete your account under 'Settings'. Upon deletion, your personal information is permanently removed from our system. Note, however, that data subject to the Bookkeeping Act (see §7) will be archived for 5 years before final deletion, regardless of whether your user account is active or not."
         },
         "section9": {
             "title": "§9 School Project Disclaimer",
-            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration purposes only. By creating an account or using our services, you accept that you do so at your own risk and understand that this project is not intended for commercial use. Ribe Sejlklub and the students behind this project disclaim any liability for any issues that may arise from the use of this system."
+            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration purposes only. Use of the system is at your own risk."
         },
         "section10": {
-            "title": "§10 Contact Information",
-            "content": "If you have any questions or concerns regarding these Terms of Service, please contact us at support@pins.dk."
+            "title": "§10 Changes to the Terms",
+            "content": "We reserve the right to change these terms. Any changes will be published on the website, and it is your responsibility to stay informed."
         },
         "section11": {
-            "title": "§11 Cookies and Tracking",
-            "content": "Our website uses cookies to remember your login."
+            "title": "§11 Governing Law and Jurisdiction",
+            "content": "These Terms of Service are governed by Danish law. Any dispute shall be brought before the Danish courts."
         },
         "section12": {
-            "title": "§12 Storage of Payment Information",
-            "content": "We do not store your payment information, as we use a third-party payment provider to handle all payments. All payment information is processed securely and in accordance with applicable data protection legislation. However, we reserve the right to store certain information about your transactions, such as date, amount, and type of transaction, in order to provide our services and comply with our legal obligations. This information will be stored securely and will not be shared with third parties without your consent, unless required by law or to protect our rights."
-        },
-        "section13": {
-            "title": "§13 Deletion of Account and Data",
-            "content": "You can delete your account and all associated data on the website under 'Settings'. When you delete your account, all your personal information and transaction data will be permanently deleted from our system. Note that this action cannot be undone, and you will lose access to all your data and services once your account is deleted. However, we reserve the right to retain certain information for a limited period if necessary to comply with our legal obligations or to protect our rights. If you have questions about deleting your account or data, please contact us at support@pins.dk."
+            "title": "§12 Contact Information",
+            "content": "If you have questions regarding these terms, you can contact us at support@pins.dk."
         }
     },
     "faq": {
@@ -178,5 +175,26 @@
                 "answer": "You can change your account information by logging into your account and going to the 'Settings' section, where you can update your details."
             }
         ]
+    },
+    "HowToPay": {
+        "title": "Payment Process",
+        "subtitle": "Simple and secure – Electricity payment made easy",
+        "description": "We use Stripe to handle all transactions, so you can focus on sailing.",
+        "footer": "Payment secured by",
+        "footer1": "Bank-grade security • Encrypted connection",
+        "steps": {
+            "step1": {
+                "title": "Reserve amount",
+                "description": "When you reserve a lock passage, we reserve an amount on your card to ensure you have coverage for the passage. This amount is automatically refunded after the passage."
+            },
+            "step2": {
+                "title": "Complete payment",
+                "description": "We use Stripe, one of the world's most trusted payment providers, to ensure your information is protected throughout the process."
+            },
+            "step3": {
+                "title": "Enjoy the passage",
+                "description": "After the passage, we automatically settle your actual usage. If you reserved too much, we refund the excess amount immediately."
+            }
+        }
     }
 }

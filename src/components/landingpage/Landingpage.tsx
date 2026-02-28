@@ -1,9 +1,8 @@
-
-
 import Link from 'next/link';
 import StatsSection from '../stats/StatsSection';
 import ScrollButton from './ScroollButton';
 import FAQ from './FAQ';
+import HowToPay from './HowToPay';
 
 export default function LandingPage(
     { dict }: { dict: any }
@@ -38,8 +37,11 @@ export default function LandingPage(
                 { value: "20+", label: dict.landingpage.stats3 },
             ]} />
 
-            <div id="more">
-                
+            <div>
+                <HowToPay dict={dict}/>
+            </div>
+
+            <div id="more mt-20">              
                 <FAQ dict={dict} />
             </div>
         </main>
