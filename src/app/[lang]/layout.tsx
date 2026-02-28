@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "Ribe Sejlklub",
 		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
-		url: "https://ribe-sejlklub.dk",
+		url: "https://pins.dk",
 		siteName: "Ribe Sejlklub",
 	},
 	icons: {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 	verification: {
 		google: process.env.GOOGLE_SITE_VERIFICATION || "",
 	},
-	metadataBase: new URL("https://pins.dk"),
+	metadataBase: new URL("pins.dk"),
 	
 };
 
