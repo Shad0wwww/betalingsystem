@@ -1,6 +1,7 @@
 
 import ChooseNavbar from "@/components/navbar/NavbarChoser";
 import "./globals.css";
+import Logo from "@/../public/Logo.png";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -29,6 +30,9 @@ export const metadata: Metadata = {
 		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
 		url: "https://ribe-sejlklub.dk",
 		siteName: "Ribe Sejlklub",
+	},
+	icons: {
+		icon: Logo.src,
 	},
 	verification: {
 		google: process.env.GOOGLE_SITE_VERIFICATION || "",
