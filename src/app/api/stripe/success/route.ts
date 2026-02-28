@@ -13,7 +13,7 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const sessionId = searchParams.get("session_id");
 
-    const URL_LINK = process.env.URL_BASE || "https://web.pins.dk";
+    const URL_LINK = process.env.URL_BASE || "https://pins.dk";
 
     if (!sessionId) {
         return NextResponse.json(
