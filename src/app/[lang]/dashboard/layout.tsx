@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 type LayoutProps = Readonly<{
     children: React.ReactNode;
-    params: Promise<{ lang: string, dict: any }>;
+    params: Promise<{ lang: string }>;
 }>;
 
 export default async function DashboardLayout({
