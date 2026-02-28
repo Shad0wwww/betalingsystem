@@ -11,7 +11,6 @@ services:
       POSTGRES_DB: betaling
     volumes:
       - db_data:/var/lib/postgresql/data
-
   homesite:
     image: node:22-alpine
     restart: unless-stopped
@@ -20,7 +19,7 @@ services:
       - "pins.dk:host-gateway"
     volumes:
       - .:/app
-    command: sh -c "npm install -g pnpm && pnpm install && npx prisma generate && npx prisma db push && pnpm build && pnpm start"
+    command: sh -c "pnpm install && npx prisma generate && npx prisma db push && pnpm build && pnpm start"
     env_file:
       - .env
     depends_on:
@@ -56,3 +55,5 @@ networks:
   default:
     driver: bridge
 
+volumes:
+  db_data:
