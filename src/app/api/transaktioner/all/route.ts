@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
-        const authToken = request.headers.get("authorization")?.replace("Bearer ", "");
-
-        console.log("Authorization header:", request.headers.get("authorization"));
+        const authToken =
+            request.headers.get("authorization")?.replace("Bearer ", "") ??
+            request.cookies.get("auth_token")?.value;
 
         if (!authToken) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
