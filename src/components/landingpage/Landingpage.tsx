@@ -37,11 +37,11 @@ export default function LandingPage(
                 { value: "20+", label: dict.landingpage.stats3 },
             ]} />
 
-            <div>
+            <div id='more'>
                 <HowToPay dict={dict}/>
             </div>
 
-            <div id="more mt-20">              
+            <div>              
                 <FAQ dict={dict} />
             </div>
         </main>

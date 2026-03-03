@@ -6,6 +6,8 @@ export async function GET(request: NextRequest) {
     try {
         const authToken = request.headers.get("authorization")?.replace("Bearer ", "");
 
+        console.log("Authorization header:", request.headers.get("authorization"));
+
         if (!authToken) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
@@ -21,37 +23,47 @@ export async function GET(request: NextRequest) {
             email: string;
         };
 
-        // Henter data fra Invoice-tabellen
-        const allTransactions = await prisma.$queryRaw`
-            SELECT
-                amount::float AS amount,
-                CASE
-                    WHEN status = 'PAID' THEN 'success'
-                    WHEN status IN ('FAILED', 'OVERDUE') THEN 'failed'
-                    ELSE 'pending'
-                END AS status,
-                COALESCE("InvoiceNumber", 'INV-' || id::text) AS "kvitteringId",
-                TO_CHAR(COALESCE("paidAt", "createdAt"), 'YYYY-MM-DD') AS dato,
-                'payment' AS transaktion
-            FROM "Invoice"
-            WHERE "userId" = ${userId}
-            ORDER BY COALESCE("paidAt", "createdAt") DESC
-        `;
+        const page = Math.max(1, parseInt(request.nextUrl.searchParams.get("page") ?? "1"));
+        const limit = Math.min(100, Math.max(1, parseInt(request.nextUrl.searchParams.get("limit") ?? "20")));
+        const offset = (page - 1) * limit;
 
-        // Løser problemet hvor Prisma/Postgres returnerer BigInts, som NextResponse.json ikke kan håndtere
+        console.log(`Fetching transactions for userId: ${userId}, page: ${page}, limit: ${limit}`);
+
+        const [totalResult, allTransactions] = await Promise.all([
+            prisma.$queryRaw<[{ count: bigint }]>`
+                SELECT COUNT(*) FROM "Invoice" WHERE "userId" = ${userId}
+            `,
+            prisma.$queryRaw`
+                SELECT
+                    amount::float AS amount,
+                    CASE
+                        WHEN status = 'PAID' THEN 'success'
+                        WHEN status IN ('FAILED', 'OVERDUE') THEN 'failed'
+                        ELSE 'pending'
+                    END AS status,
+                    COALESCE("InvoiceNumber", 'INV-' || id::text) AS "kvitteringId",
+                    TO_CHAR(COALESCE("paidAt", "createdAt"), 'YYYY-MM-DD') AS dato,
+                    'payment' AS transaktion
+                FROM "Invoice"
+                WHERE "userId" = ${userId}
+                ORDER BY COALESCE("paidAt", "createdAt") DESC
+                LIMIT ${limit} OFFSET ${offset}
+            `,
+        ]);
+
+        const total = Number(totalResult[0].count);
+
         const safeData = JSON.parse(
-            JSON.stringify(allTransactions, (key, value) =>
+            JSON.stringify(allTransactions, (_, value) =>
                 typeof value === "bigint" ? value.toString() : value
             )
         );
 
-        return NextResponse.json(safeData);
-
+        return NextResponse.json({ data: safeData, total, page, limit });
     } catch (error) {
-        // Nu vil du faktisk kunne se i din terminal, PRÆCIS hvad der går galt
         console.error("Database Query Fejl:", error);
         return NextResponse.json(
-            { error: "Der skete en fejl under hentning af transaktioner." }, 
+            { error: "Der skete en fejl under hentning af transaktioner." },
             { status: 500 }
         );
     }

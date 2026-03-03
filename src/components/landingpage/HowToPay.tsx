@@ -58,7 +58,7 @@ export default function HowToPay(
                 </div>
 
                 {/* Stripe Trust Footer */}
-                <div className="mt-20 flex flex-col items-center justify-center border-t border-white/10 pt-10">
+                <div className="mt-20 flex flex-col items-center justify-centerpt-10 mb-10">
                     <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                         <span className="text-white text-sm font-medium">{dict.HowToPay.footer}</span>
                         <div className="flex items-center text-white font-bold text-2xl tracking-tighter">

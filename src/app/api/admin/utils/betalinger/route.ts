@@ -31,30 +31,24 @@ export async function GET(req: NextRequest) {
     const limit = Math.min(100, Math.max(1, parseInt(req.nextUrl.searchParams.get("limit") ?? "20")));
     const skip = (page - 1) * limit;
 
-    const [total, allLogs] = await Promise.all([
-        prisma.auditLog.count(),
-        prisma.auditLog.findMany({
-            orderBy: { timestamp: "desc" },
-            include: { user: { select: { email: true } } },
+    const [total, betalingsLog] = await Promise.all([
+        prisma.transaction.count(),
+        prisma.transaction.findMany({
+            orderBy: { createdAt: "desc" },
             skip,
             take: limit,
         }),
     ]);
 
-    const data = allLogs.map(({ user, ...log }) => ({
-        ...log,
-        email: user.email,
-        timestamp: new Date(log.timestamp).toLocaleDateString("da-DK", {
+    const data = betalingsLog.map(({ id, createdAt, amount }) => ({
+        id,
+        createdAt: new Date(createdAt).toLocaleDateString("da-DK", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         }),
+        amount,
     }));
 
-    return NextResponse.json({ data, total, page, limit });
+    return NextResponse.json({ data: data, total, page, limit });
 }
-
-
-
-
-

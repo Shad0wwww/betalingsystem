@@ -11,9 +11,9 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
     return (
         <BaseDataTable
             columns={columns}
-            fetchUrl="/api/admin/auditlogs/all"
-            searchColumn="email"
-            searchPlaceholder="Søg efter brugere..."
+            fetchUrl="/api/admin/utils/betalinger"
+            searchColumn="id"
+            searchPlaceholder="Søg efter log..."
             emptyMessage="Ingen data at vise."
         />
     )
