@@ -7,15 +7,14 @@ datasource db {
 }
 
 model User {
-    id           String    @id @default(uuid())
+    id           String @id @default(uuid())
     name         String
     email        String @unique
     phone        String @unique
     phoneCountry String @default("DK")
     role         Role   @default(USER)
 
-    balance         Float @default(0)
-    reservedBalance  Float @default(0)
+    reservedBalance Float @default(0)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -28,15 +27,16 @@ model User {
     boats              Boat[]
     transactions       Transaction[]
     auditLogs          AuditLog[]
+    meterSessions      MeterSession[]
 }
 
 model AuditLog {
-    id        String      @id @default(cuid())
+    id        String     @id @default(cuid())
     userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
     action    ActionType
     details   String?
-    timestamp DateTime @default(now())
+    timestamp DateTime   @default(now())
 }
 
 model VerificationToken {
@@ -45,15 +45,15 @@ model VerificationToken {
     expires    DateTime
 
     userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([identifier, token])
 }
 
 model Invoice {
-    id     Int  @id @default(autoincrement())
+    id     Int    @id @default(autoincrement())
     userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     InvoiceNumber String? @unique
 
@@ -63,7 +63,7 @@ model Invoice {
 
     type UtilityType
 
-    stripeSessionId       String? @unique 
+    stripeSessionId       String? @unique
     stripePaymentIntentId String? @unique
 
     dueDate   DateTime
@@ -72,29 +72,73 @@ model Invoice {
 }
 
 model Boat {
-    id     Int  @id @default(autoincrement())
+    id     Int    @id @default(autoincrement())
     userId String
-    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     kaldeNavn String
     skibModel String
+
+    meterSessions MeterSession[]
+}
+
+model MeterSession {
+    id Int @id @default(autoincrement())
+
+    // Brug meterId (intern database ID) til relationen, ikke Modbus deviceID
+    meterId Int
+    meter   Meter @relation(fields: [meterId], references: [id])
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    boatId Int
+    boat   Boat @relation(fields: [boatId], references: [id], onDelete: Cascade)
+
+    type UtilityType
+
+    startValue Float
+    endValue   Float?
+
+    startTime DateTime  @default(now())
+    endTime   DateTime?
+    isActive  Boolean   @default(true)
+
+    readings MeterReading[]
 }
 
 model MeterReading {
-    id     Int  @id @default(autoincrement())
-    deviceID Int @unique
+    id Int @id @default(autoincrement())
+
+    meterId Int
+    meter   Meter @relation(fields: [meterId], references: [id])
 
     type  UtilityType
     value Float
     date  DateTime    @default(now())
+
+    sessionId Int?
+    session   MeterSession? @relation(fields: [sessionId], references: [id])
+
+    @@index([meterId, date])
+}
+
+model Meter {
+    id       Int         @id @default(autoincrement())
+    deviceId Int         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
+    type     UtilityType
+    location String?
+
+    sessions MeterSession[]
+    readings MeterReading[]
 }
 
 model Transaction {
-    id     Int  @id @default(autoincrement())
+    id     Int    @id @default(autoincrement())
     userId String
-    user   User @relation(fields: [userId], references: [id])
+    user   User   @relation(fields: [userId], references: [id])
 
-    amount Float @default(0)
+    amount Float           @default(0)
     type   TransactionType
 
     stripeSessionId String? @unique
@@ -125,7 +169,6 @@ enum Role {
     USER
     ADMIN
 }
-
 
 enum ActionType {
     LOGIN

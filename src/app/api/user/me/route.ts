@@ -30,7 +30,7 @@ export async function GET(
             email: true,
             name: true,
             phone: true,
-            balance: true,
+            reservedBalance: true,
         }
     });
 

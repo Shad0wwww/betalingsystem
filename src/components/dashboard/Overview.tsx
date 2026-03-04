@@ -31,7 +31,6 @@ export default function Overview(
             <GridContainer>
                 <Box>
                     <div className="flex flex-row justify-between items-center">
-
                         <PayButton amount={200} description="Reserverer 200 DKK" type={UtilityType.ELECTRICITY} dict={dict} />
                     </div>
                     <Reserved dict={dict} />

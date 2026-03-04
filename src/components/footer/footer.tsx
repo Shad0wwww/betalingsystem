@@ -23,6 +23,7 @@ export default async function Footer(
             title: dict.footer.information,
             links: [
                 { name: dict.footer.termsLink, href: "/terms-of-service" },
+                { name: dict.footer.privacyLink, href: "/privacy-policy" },
             ],
         },
     ];

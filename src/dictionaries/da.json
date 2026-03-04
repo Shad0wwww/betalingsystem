@@ -74,9 +74,11 @@
         "emailPlaceholder": "eksempel@gmail.com",
         "phoneLabel": "Telefonnummer",
         "phonePlaceholder": "12345678",
-        "tosLabel": "Servicevilkår",
+        "tosLabel": "Vilkår & Privatlivspolitik",
         "tosPrefix": "Jeg accepterer",
         "tosLink": "Servicevilkår",
+        "tosAnd": " og ",
+        "privacyLink": "Privatlivspolitik",
         "submit": "Opret konto",
         "submitLoading": "Opretter konto...",
         "haveAccount": "Har du allerede en konto?",
@@ -91,6 +93,7 @@
         "address2": "6760 Ribe",
         "information": "Information",
         "termsLink": "Servicevilkår",
+        "privacyLink": "Privatlivspolitik",
         "disclaimer": "Disclaimer: Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration."
     },
     "termsofservice": {
@@ -114,40 +117,61 @@
             "content": "Ribe Sejlklub og dets betalingssystem leveres 'som det er' uden nogen form for garanti. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
         },
         "section4": {
-            "title": "§4 GDPR og databeskyttelse",
-            "content": "Vi overholder gældende databeskyttelseslovgivning, herunder GDPR. Vi indsamler kun de nødvendige oplysninger for at levere vores tjenester og deler aldrig dine oplysninger med tredjepart uden dit samtykke."
-        },
-        "section5": {
-            "title": "§5 Sikkerhedsforanstaltninger (2FA)",
-            "content": "For at sikre højest mulige beskyttelse af dine data og forhindre uautoriseret adgang, er det et internt krav, at alle administratorer og udviklere anvender to-faktor-godkendelse (2FA). Dette gælder for adgang til alle kritiske systemer, herunder betalingsgateways (Stripe), infrastruktur (Cloudflare) og databaser."
-        },
-        "section6": {
-            "title": "§6 Cookies og sporing",
-            "content": "Vores hjemmeside bruger nødvendige cookies til at håndtere dit login og sikre systemets funktionalitet."
-        },
-        "section7": {
-            "title": "§7 Opbevaring af kvitteringer (Bogføringsloven)",
-            "content": "Vi gemmer ikke dine kortoplysninger, da disse håndteres af Stripe. I henhold til den danske bogføringslov er vi dog forpligtet til at opbevare kvitteringer og tilhørende transaktionsdata, herunder din e-mailadresse, i 5 år fra udgangen af det pågældende regnskabsår. Disse data opbevares udelukkende til regnskabsmæssige formål og kan ikke slettes før periodens udløb."
-        },
-        "section8": {
-            "title": "§8 Sletning af konto og data",
-            "content": "Du kan slette din konto under 'Indstillinger'. Ved sletning fjernes dine personlige oplysninger permanent fra vores system. Bemærk dog, at data omfattet af bogføringsloven (se §7) vil blive arkiveret i 5 år, før de endeligt slettes, uanset om din brugerkonto er aktiv eller ej."
-        },
-        "section9": {
-            "title": "§9 Skoleprojekt Disclaimer",
+            "title": "§4 Skoleprojekt Disclaimer",
             "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Brug af systemet sker på eget ansvar."
         },
-        "section10": {
-            "title": "§10 Ændringer af vilkår",
+        "section5": {
+            "title": "§5 Ændringer af vilkår",
             "content": "Vi forbeholder os retten til at ændre disse vilkår. Eventuelle ændringer vil blive offentliggjort på hjemmesiden, og det er dit ansvar at holde dig opdateret."
         },
-        "section11": {
-            "title": "§11 Lovvalg og jurisdiktion",
+        "section6": {
+            "title": "§6 Lovvalg og jurisdiktion",
             "content": "Disse servicevilkår er underlagt dansk lovgivning. Enhver tvist skal indbringes for de danske domstole."
         },
-        "section12": {
-            "title": "§12 Kontaktinformation",
+        "section7": {
+            "title": "§7 Kontaktinformation",
             "content": "Har du spørgsmål til disse vilkår, kan du kontakte os på support@pins.dk."
+        }
+    },
+    "privacypolicy": {
+        "title": "Privatlivspolitik (Privacy Policy)",
+        "undertitle": "Introduktion til databehandling",
+        "introduction": "Denne privatlivspolitik beskriver, hvordan Ribe Sejlklub indsamler, bruger og beskytter dine personoplysninger, når du benytter vores betalingssystem. Vi tager din data-sikkerhed alvorligt og overholder gældende lovgivning, herunder GDPR.",
+        "publisher": {
+            "title": "Dataansvarlig",
+            "name": "Skoleprojekt - Gruppe [Indsæt Nummer/Navn]"
+        },
+        "section1": {
+            "title": "§1 Hvilke data indsamler vi?",
+            "content": "Når du opretter en konto og foretager et køb, indsamler vi de nødvendige oplysninger for at kunne levere tjenesten. Dette inkluderer typisk dit navn, din e-mailadresse, tekniske netværksdata (såsom IP-adresse af sikkerhedshensyn) og din købshistorik."
+        },
+        "section2": {
+            "title": "§2 Tredjeparter og datadeling",
+            "content": "Vi sælger aldrig dine personoplysninger. For at kunne drive platformen deler vi nødvendige data med betroede underleverandører (databehandlere). Dine betalingsoplysninger håndteres udelukkende af vores betalingsgateway, Stripe, og vi har aldrig direkte adgang til dine fulde kortoplysninger. Vores infrastruktur og sikkerhed leveres af Cloudflare."
+        },
+        "section3": {
+            "title": "§3 Cookies og sporing",
+            "content": "Vores hjemmeside bruger udelukkende nødvendige cookies (tekniske cookies) til at håndtere dit login og sikre, at betalingssystemet fungerer korrekt. Vi anvender ikke markedsførings- eller sporing-cookies fra tredjepart."
+        },
+        "section4": {
+            "title": "§4 Sikkerhedsforanstaltninger",
+            "content": "For at sikre den højest mulige beskyttelse af dine data og forhindre uautoriseret adgang, krypteres al datatrafik. Det er desuden et internt krav, at alle vores administratorer og udviklere anvender to-faktor-godkendelse (2FA) for adgang til kritiske systemer."
+        },
+        "section5": {
+            "title": "§5 Opbevaring af kvitteringer (Bogføringsloven)",
+            "content": "Selvom du sletter din konto, er vi i henhold til den danske bogføringslov forpligtet til at opbevare kvitteringer og tilhørende transaktionsdata (herunder din e-mailadresse knyttet til købet) i 5 år fra udgangen af det pågældende regnskabsår. Disse data opbevares udelukkende til regnskabsmæssige formål."
+        },
+        "section6": {
+            "title": "§6 Dine rettigheder og sletning af data",
+            "content": "Du har til enhver tid ret til at få indsigt i, hvilke data vi har registreret om dig. Du kan slette din konto under 'Indstillinger'. Ved sletning fjernes dine personlige oplysninger permanent fra vores aktive databaser, dog med undtagelse af de data, der er omfattet af bogføringsloven (se §5)."
+        },
+        "section7": {
+            "title": "§7 Skoleprojekt Disclaimer",
+            "content": "Dette system og denne privatlivspolitik er udviklet som et skoleprojekt og udgør ikke et officielt eller juridisk bindende dokument for Ribe Sejlklub. Alle oplysninger, datahåndteringer og funktioner er fiktive og udelukkende til demonstration."
+        },
+        "section8": {
+            "title": "§8 Kontaktinformation",
+            "content": "Har du spørgsmål til vores behandling af dine data, eller ønsker du at gøre brug af dine rettigheder, kan du kontakte os på support@pins.dk."
         }
     },
     "faq": {
@@ -176,7 +200,6 @@
             }
         ]
     },
-    
     "HowToPay": {
         "title": "Betalingsprocessen",
         "subtitle": "Nemt og sikkert - El betaling gjort enkelt",
@@ -198,6 +221,4 @@
             }
         }
     }
-
-    
 }

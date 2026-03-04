@@ -13,7 +13,6 @@ export async function GET(
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-
     const payload = await verifyJsonWebtoken(cookie);
 
     if (!payload || typeof payload === "string") {
@@ -34,6 +33,8 @@ export async function GET(
         secure: true,
         sameSite: "strict",
     });
+
+    
 
 
 

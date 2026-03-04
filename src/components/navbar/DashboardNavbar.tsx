@@ -6,13 +6,13 @@ import { redirect } from "next/navigation";
 import logo from "../../../public/Logo.png";
 const DashboardNavbar: React.FC = () => {
     const handleLogout = async () => {
-        try {
-            await fetch("/api/user/logud");
+   
+        await fetch("/api/user/logud").then((res) => {
             redirect("/login");
+        });
+    
 
-        } catch (error) {
-            new Error("Logout failed", { cause: error instanceof Error ? error : undefined });
-        }
+        
     };
     
     return (

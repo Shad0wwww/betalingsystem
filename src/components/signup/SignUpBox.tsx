@@ -104,6 +104,10 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                                 <Link href="/terms-of-service" className="text-white underline hover:text-gray-300">
                                     {dict.signup.tosLink}
                                 </Link>
+                                {dict.signup.tosAnd}
+                                <Link href="/privacy-policy" className="text-white underline hover:text-gray-300">
+                                    {dict.signup.privacyLink}
+                                </Link>
                             </label>
                         </div>
                     </Field>

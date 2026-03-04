@@ -2,6 +2,8 @@ import GridContainer from "@/components/dashboard/GridContainer";
 import { notFound } from "next/dist/client/components/navigation";
 import { getDictionary } from "../dictionaries";
 import Overview from "@/components/dashboard/Overview";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/utils/LoadingScreen";
 
 
 
@@ -15,7 +17,11 @@ export default async function Page(
     const dict = await getDictionary(lang);
 
     if (!dict) notFound();
+
     return (
-        <Overview dict={dict} />
+        <Suspense fallback={<LoadingScreen />}>
+            <Overview dict={dict} />
+        </Suspense>
+        
     );
 }

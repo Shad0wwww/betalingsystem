@@ -2,8 +2,7 @@ import { getDictionary } from "../dictionaries";
 
 type PageParams = Promise<{ lang: string }>;
 
-
-const ServiceSection = (
+const PolicySection = (
     { title, content }: { title: string; content: string }
 ) => (
     <>
@@ -15,21 +14,20 @@ const ServiceSection = (
     </>
 );
 
-async function Page({ params }: { params: PageParams }) {
+async function PrivacyPolicyPage({ params }: { params: PageParams }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
-    const { termsofservice } = dict;
+    const privacypolicy = dict.privacypolicy;
 
     const sections = [
-        termsofservice.section1,
-        termsofservice.section2,
-        termsofservice.section3,
-        termsofservice.section4,
-        termsofservice.section5,
-        termsofservice.section6,
-        termsofservice.section7,
-  
-
+        privacypolicy.section1,
+        privacypolicy.section2,
+        privacypolicy.section3,
+        privacypolicy.section4,
+        privacypolicy.section5,
+        privacypolicy.section6,
+        privacypolicy.section7,
+        privacypolicy.section8,
     ];
 
     return (
@@ -38,7 +36,7 @@ async function Page({ params }: { params: PageParams }) {
 
                 <header className="mb-12">
                     <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                        {termsofservice.title}
+                        {privacypolicy.title}
                     </h1>
                     <p className="text-sm text-zinc-500">
                         Senest opdateret: 22. Februar, 2026
@@ -48,14 +46,14 @@ async function Page({ params }: { params: PageParams }) {
                 <div className="space-y-12">
                     <section>
                         <h2 className="text-xl font-semibold text-white mb-4">
-                            {termsofservice.undertitle}
+                            {privacypolicy.undertitle}
                         </h2>
                         <div className="space-y-6 leading-relaxed">
-                            <p>{termsofservice.introduction}</p>
+                            <p>{privacypolicy.introduction}</p>
 
                             <address className="not-italic bg-[#171717] p-6 rounded-lg border border-zinc-800/50">
                                 <h3 className="text-white font-medium mb-3 text-sm uppercase tracking-wider">
-                                    {termsofservice.publisher.title}
+                                    {privacypolicy.publisher.title}
                                 </h3>
                                 <div className="text-zinc-400 text-sm space-y-1">
                                     <p className="font-semibold text-zinc-300">Ribe Sejlklub ApS</p>
@@ -69,9 +67,8 @@ async function Page({ params }: { params: PageParams }) {
                         </div>
                     </section>
 
-
                     {sections.map((section, index) => (
-                        <ServiceSection
+                        <PolicySection
                             key={index}
                             title={section.title}
                             content={section.content}
@@ -83,4 +80,4 @@ async function Page({ params }: { params: PageParams }) {
     );
 }
 
-export default Page;
+export default PrivacyPolicyPage;

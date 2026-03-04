@@ -57,10 +57,10 @@ export async function GET(
 
         sendEmail(email, "Reservation Confirmed", emailContent),
 
-        uploadFile({
-            name: `invoices/${InvoiceNumber}.html`,
-            buffer: Buffer.from(emailContent, "utf-8"),
-        }),
+        // uploadFile({
+        //     name: `invoices/${InvoiceNumber}.html`,
+        //     buffer: Buffer.from(emailContent, "utf-8"),
+        // }),
 
         prisma.auditLog.create({
             data: {
