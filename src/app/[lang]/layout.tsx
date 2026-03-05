@@ -1,7 +1,7 @@
 
 import ChooseNavbar from "@/components/navbar/NavbarChoser";
 import "./globals.css";
-import Logo from "@/../public/Logo.png";
+import Logo from "@/../public/Logo.svg";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

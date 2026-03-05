@@ -16,7 +16,6 @@ export default function LandingPage(
 
                     <div className='text-center max-w-5xl flex flex-col justify-center items-center z-10 '>
                         <h1 className="text-6xl font-bold text-white" >
-                            <div className='blurBlob '></div>
                             <span className='text-blue-500'>Ribe</span> Sejlklub
                         </h1>
                         <p className="text-secondaryText font-medium mt-8 text-lg max-w-2xl text-gray-300">

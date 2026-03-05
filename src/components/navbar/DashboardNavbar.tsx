@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import logo from "../../../public/Logo.png";
+import logo from "../../../public/Logo.svg";
 const DashboardNavbar: React.FC = () => {
     const handleLogout = async () => {
    
