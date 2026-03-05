@@ -4,6 +4,8 @@ import ScrollButton from './ScroollButton';
 import FAQ from './FAQ';
 import HowToPay from './HowToPay';
 
+import './landing.css';
+
 export default function LandingPage(
     { dict }: { dict: any }
 ) {
@@ -12,8 +14,9 @@ export default function LandingPage(
             <div className="mx-auto max-w-screen-xl sm:px-10 px-5 py-10 pt-40 mb-40">
                 <div className="flex flex-col justify-center items-center">
 
-                    <div className='text-center max-w-5xl flex flex-col justify-center items-center z-10'>
-                        <h1 className="text-6xl font-bold text-white">
+                    <div className='text-center max-w-5xl flex flex-col justify-center items-center z-10 '>
+                        <h1 className="text-6xl font-bold text-white" >
+                            <div className='blurBlob '></div>
                             <span className='text-blue-500'>Ribe</span> Sejlklub
                         </h1>
                         <p className="text-secondaryText font-medium mt-8 text-lg max-w-2xl text-gray-300">

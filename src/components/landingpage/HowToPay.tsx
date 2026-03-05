@@ -22,7 +22,7 @@ export default function HowToPay(
     ];
 
     return (
-        <section className="bg-[#0d0d0d] py-24 px-6 ">
+        <section className="bg-[#0d0d0d] py-20 px-6 ">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-20">
                     <h2 className="text-[#3b82f6] font-semibold tracking-widest uppercase text-sm mb-4">
