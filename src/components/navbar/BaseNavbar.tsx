@@ -2,14 +2,16 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 import logo from "../../../public/Logo.svg";
 interface NavbarProps {
     buttonText: string;
     buttonHref: string;
+    isBack?: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = (
-    { buttonText, buttonHref }
+    { buttonText, buttonHref, isBack }
 ) => {
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-[#0d0d0d]/80 backdrop-blur-md">
@@ -25,13 +27,22 @@ const Navbar: React.FC<NavbarProps> = (
                     />
                 </Link>
 
-                {/* Dynamisk Knap */}
-                <Link
-                    href={buttonHref}
-                    className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors duration-150 shadow-[0_0_16px_rgba(59,130,246,0.25)]"
-                >
-                    {buttonText}
-                </Link>
+                {isBack ? (
+                    <Link
+                        href={buttonHref}
+                        className="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-150 hover:bg-white/5"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        {buttonText}
+                    </Link>
+                ) : (
+                    <Link
+                        href={buttonHref}
+                        className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors duration-150 shadow-[0_0_16px_rgba(59,130,246,0.25)]"
+                    >
+                        {buttonText}
+                    </Link>
+                )}
             </div>
         </nav>
     );

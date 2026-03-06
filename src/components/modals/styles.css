@@ -1,36 +1,145 @@
+/* ── Overlay ───────────────────────────────────────────── */
 .DialogOverlay {
-    background-color: rgb(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: fixed;
     inset: 0;
-    animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 50;
 }
 
+/* ── Dialog card ───────────────────────────────────────── */
 .DialogContent {
-    border-radius: 6px;
+    /* dark navy base */
+    background-color: #07101e;
+    /* subtle grid — same pattern as the landing page hero */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    border-radius: 18px;
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 30px 70px rgba(0, 0, 0, 0.85),
+        0 0 90px rgba(59, 130, 246, 0.08);
+
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90vw;
-    max-width: 450px;
+    max-width: 460px;
     max-height: 85vh;
-    padding: 25px;
-    animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 28px;
+    overflow-y: auto;
+    animation: contentShow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 51;
 }
 
+/* ── Close button ──────────────────────────────────────── */
 .IconButton {
     all: unset;
     font-family: inherit;
-    height: 25px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    border: 1px;
+    top: 16px;
+    right: 16px;
     cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.IconButton:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.IconButton svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* ── Shared input / select ─────────────────────────────── */
+.modal-input {
+    width: 100%;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 10px;
+    padding: 11px 14px;
+    background-color: rgba(0, 0, 0, 0.35);
+    color: white;
+    font-size: 0.9375rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.modal-input::placeholder {
+    color: #3a4658;
+}
+
+.modal-input:focus {
+    border-color: rgba(59, 130, 246, 0.55);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.09);
+}
+
+.modal-input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ── Submit button ─────────────────────────────────────── */
+.modal-submit-btn {
+    width: 100%;
+    padding: 13px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    border-radius: 10px;
+    margin-top: 8px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    box-shadow: 0 2px 20px rgba(37, 99, 235, 0.28);
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.modal-submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 2px 28px rgba(59, 130, 246, 0.38);
+}
+
+.modal-submit-btn:active:not(:disabled) {
+    transform: scale(0.985);
+}
+
+.modal-submit-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ── Animations ────────────────────────────────────────── */
+@keyframes overlayShow {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes contentShow {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -47%) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }

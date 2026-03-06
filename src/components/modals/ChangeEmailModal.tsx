@@ -8,7 +8,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 // Ændret 'label' typen til ReactNode, så vi kan sende HTML/spans med ind
 const Field = ({ label, error, children }: { label: React.ReactNode; error?: string; children: React.ReactNode }) => (
     <div className="mb-5">
-        <label className="block text-zinc-300 font-medium text-sm mb-2">
+        <label className="block text-zinc-400 font-medium text-sm mb-1.5">
             {label}
         </label>
         {children}
@@ -16,11 +16,10 @@ const Field = ({ label, error, children }: { label: React.ReactNode; error?: str
     </div>
 );
 
-// Fixet: Nu overskriver den faste className ikke dine specifikke props
 const Input = ({ className = '', ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
-        className={`w-full border rounded-lg py-3 px-4 border-zinc-800 bg-[#111111] text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-zinc-500 transition-all placeholder:text-zinc-600 ${className}`}
+        className={`modal-input ${className}`}
     />
 );
 
@@ -90,21 +89,21 @@ export default function ChangeEmail(
                 type="button"
                 onClick={handleInitialClick}
                 disabled={disabled || isSendingRequest}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all bg-white hover:bg-gray-200 text-black shadow-sm active:scale-[0.98]
-                 ${(disabled || isSendingRequest) ? 'opacity-50 cursor-not-allowed active:scale-100' : ''}`}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-[#2563eb] hover:bg-[#1d4ed8] text-white border border-blue-600/40 shadow-md shadow-blue-900/30
+                 ${(disabled || isSendingRequest) ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
                 {isSendingRequest ? "Sender koder..." : (dict?.dashboard?.settings?.sendemail ?? 'Ret email')}
             </button>
 
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
-                <Dialog.Content className="DialogContent box-color custom-border box-shadow fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md rounded-xl p-6 bg-[#0a0a0a] border border-zinc-800">
+                <Dialog.Content className="DialogContent">
 
                     <div className="mb-6">
-                        <Dialog.Title className="text-white font-semibold text-xl mb-1.5">
+                        <Dialog.Title className="text-white font-semibold text-xl mb-1">
                             Godkend ændring af email
                         </Dialog.Title>
-                        <Dialog.Description className="text-sm text-zinc-400">
+                        <Dialog.Description className="text-sm text-zinc-500">
                             Indtast engangskoderne sendt til dine indbakker.
                         </Dialog.Description>
                     </div>
@@ -151,9 +150,8 @@ export default function ChangeEmail(
 
                         <button
                             type="submit"
-                          
                             disabled={isLoading}
-                            className="w-full py-3 bg-white text-black rounded-lg mt-2 hover:bg-gray-200 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                            className="modal-submit-btn"
                         >
                             {isLoading ? "Godkender..." : "Godkend ændring af email"}
                         </button>
@@ -161,11 +159,11 @@ export default function ChangeEmail(
 
                     <Dialog.Close asChild>
                         <button
-                            className="absolute top-4 right-4 p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors focus:outline-none"
+                            className="IconButton"
                             aria-label="Close"
                             disabled={isLoading}
                         >
-                            <Cross2Icon className="w-5 h-5" />
+                            <Cross2Icon />
                         </button>
                     </Dialog.Close>
                 </Dialog.Content>

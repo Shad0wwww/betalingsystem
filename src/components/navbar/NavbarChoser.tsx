@@ -28,5 +28,9 @@ export default function ChooseNavbar() {
         return <DashboardNavbar />;
     }
 
+    if (path.includes('/terms-of-service') || path.includes('/privacy-policy')) {
+        return <Navbar buttonText="Tilbage" buttonHref="/" isBack />;
+    }
+
     return <Navbar buttonText="Home" buttonHref="/" />;
 }

@@ -16,7 +16,7 @@ export default function ScrollButton(
     return (
         <button
             onClick={handleClick}
-            className='sm:max-w-[140px] whitespace-nowrap text-base px-5 font-sans py-2 bg-blue-600 hover:bg-blue-800 duration-150 rounded-lg text-white shadow-2xl'>
+            className='w-full sm:w-auto sm:max-w-[160px] whitespace-nowrap text-base px-5 font-sans py-2 bg-blue-600 hover:bg-blue-700 duration-150 rounded-lg text-white shadow-2xl'>
             {label}
         </button>
     );

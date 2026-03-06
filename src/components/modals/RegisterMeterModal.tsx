@@ -15,26 +15,20 @@ export interface MeterData {
 
 const Field = ({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) => (
     <div className="mb-4">
-        <label className="block text-white font-normal text-[15px] leading-none mb-2">
+        <label className="block text-zinc-400 font-medium text-sm mb-1.5">
             {label}
         </label>
         {children}
-        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+        {error && <p className="text-red-400 text-xs mt-1.5">{error}</p>}
     </div>
 );
 
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
-    <input
-        {...props}
-        className="w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all placeholder:text-zinc-600"
-    />
+    <input {...props} className="modal-input" />
 );
 
 const Select = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
-    <select
-        {...props}
-        className="w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 transition-all"
-    />
+    <select {...props} className="modal-input" />
 );
 
 export default function RegisterMeterModal({
@@ -104,16 +98,19 @@ export default function RegisterMeterModal({
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
-            <Dialog.Trigger className="px-4 py-1.5 rounded-md text-sm font-medium transition-colors bg-white hover:bg-gray-200 text-black">
+            <Dialog.Trigger className="px-4 py-1.5 rounded-md text-sm font-semibold transition-all bg-[#2563eb] hover:bg-[#1d4ed8] text-white border border-blue-600/40 shadow-md shadow-blue-900/30">
                 REGISTRÉR MÅLER
             </Dialog.Trigger>
 
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
-                <Dialog.Content className="DialogContent box-color custom-border box-shadow">
-                    <Dialog.Title className="text-white font-semibold text-lg mb-6">
-                        Opret ny måler
-                    </Dialog.Title>
+                <Dialog.Content className="DialogContent">
+                    <div className="mb-6">
+                        <Dialog.Title className="text-white font-semibold text-xl mb-1">
+                            Opret ny måler
+                        </Dialog.Title>
+                        <p className="text-zinc-500 text-sm">Udfyld oplysningerne for at registrere en ny måler.</p>
+                    </div>
 
                     <form onSubmit={handleSubmit}>
                         <Field label="Device ID">
@@ -159,14 +156,14 @@ export default function RegisterMeterModal({
                             </Select>
                         </Field>
 
-                        {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
+                        {error && (
+                            <div className="p-3 mb-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                                <p className="text-red-400 text-sm">{error}</p>
+                            </div>
+                        )}
 
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full py-3 font-medium bg-white text-black rounded-md mt-2 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isLoading ? "Opretter..." : "Opret Måler"}
+                        <button type="submit" disabled={isLoading} className="modal-submit-btn">
+                            {isLoading ? "Opretter..." : "Opret måler"}
                         </button>
                     </form>
 

@@ -6,6 +6,7 @@
 - [x] Lav en liste med alle Users
 - [x] Gør så man kan kopier OT
 - [] Lav liste på admin siden, med alle personer / både der er i gang med at få strøm.
+- [x] Redesign hjemmesiden
 
 
 ### Modbus system
