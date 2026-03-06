@@ -1,11 +1,13 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
-import getStripe from "@/lib/stripe/Stripe";
 import { takeMoneyUsed } from "@/lib/stripe/TakeMoneyUsed";
-import { ActionType, InvoiceStatus } from "@prisma/client";
+import { ActionType, InvoiceStatus, UtilityType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// Ends the user's active session
+type JwtPayload = { userId?: string; id?: string };
+
+const RATE_PER_HOUR = 45.5;
+
 export async function POST(req: NextRequest) {
     const cookie = req.cookies.get("auth_token")?.value;
 
@@ -18,7 +20,12 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const userId = (payload as any).userId || (payload as any).id;
+    const { userId, id } = payload as JwtPayload;
+    const resolvedUserId = userId ?? id;
+
+    if (!resolvedUserId) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const { sessionId }: { sessionId: number } = await req.json();
 
@@ -27,50 +34,54 @@ export async function POST(req: NextRequest) {
     }
 
     const session = await prisma.meterSession.findFirst({
-        where: { id: sessionId, userId, isActive: true },
+        where: { id: sessionId, userId: resolvedUserId, isActive: true },
     });
 
     if (!session) {
         return NextResponse.json({ error: "Aktiv session ikke fundet" }, { status: 404 });
     }
 
-    const updated = await prisma.meterSession.update({
-        where: { id: sessionId },
-        data: { isActive: false, endTime: new Date() },
-    });
+    const endTime = new Date();
 
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.DISCONNECTED_METER,
-            details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId})`,
-        },
-    });
+    const [updated] = await Promise.all([
+        prisma.meterSession.update({
+            where: { id: sessionId },
+            data: { isActive: false, endTime },
+        }),
+        prisma.auditLog.create({
+            data: {
+                userId: resolvedUserId,
+                action: ActionType.DISCONNECTED_METER,
+                details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId})`,
+            },
+        }),
+    ]);
 
     const pendingInvoice = await prisma.invoice.findFirst({
-        where: { 
-            userId: userId, 
+        where: {
+            userId: resolvedUserId,
             status: InvoiceStatus.PENDING,
-            meterSessionId: sessionId
+            meterSessionId: sessionId,
         },
-        orderBy: { createdAt: "desc" }
+        orderBy: { createdAt: "desc" },
     });
 
-    if (!pendingInvoice || !pendingInvoice.stripePaymentIntentId) {
+    if (!pendingInvoice?.stripePaymentIntentId) {
         return NextResponse.json({ error: "Kunne ikke finde en aktiv betalingsreservation" }, { status: 400 });
     }
-        
 
-    const paymentResult = await takeMoneyUsed(
-        userId,
-        pendingInvoice.stripePaymentIntentId, 
-        45.5,                 
-        pendingInvoice.amount
+    await takeMoneyUsed(
+        resolvedUserId,
+        pendingInvoice.stripePaymentIntentId,
+        calculateAmountUsed(session.startTime, endTime),
+        pendingInvoice.amount,
+        UtilityType.ELECTRICITY
     );
-    
 
     return NextResponse.json({ session: updated });
 }
 
-
-
+function calculateAmountUsed(startTime: Date, endTime: Date): number {
+    const durationInHours = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
+    return Math.round(durationInHours * RATE_PER_HOUR * 100);
+}

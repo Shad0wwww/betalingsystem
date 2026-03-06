@@ -1,36 +1,38 @@
+import { UtilityType } from "@prisma/client";
+
 export async function generateInvoiceEmailContent(
-    amount: number,
-    type: string,
-    email: string,
-    date: Date = new Date(),
-    InvoiceNumber: string,
-    dict?: any
+	amount: number,
+	type: UtilityType,
+	email: string,
+	date: Date = new Date(),
+	InvoiceNumber: string,
+	dict?: any
 ) {
-    const t = dict?.email?.invoice;
-    const title = t?.title ?? "Faktura";
-    const sellerLabel = t?.seller ?? "S\u00e6lger";
-    const invoiceNumberLabel = t?.invoiceNumber ?? "Fakturanummer";
-    const dateLabel = t?.date ?? "Dato";
-    const customerLabel = t?.customer ?? "Kunde";
-    const descLabel = t?.description ?? "Beskrivelse";
-    const priceLabel = t?.price ?? "Pris";
-    const vatLabel = t?.vatLabel ?? "Heraf moms (25%)";
-    const totalLabel = t?.totalLabel ?? "Total inkl. moms";
-    const electricity = t?.electricity ?? "El-forbrug";
-    const water = t?.water ?? "Vand-forbrug";
-    const balanceDeposit = t?.balanceDeposit ?? "Indbetaling til balance";
-    const infoTitle = t?.infoTitle ?? "Vigtigt";
-    const infoText = t?.infoText ?? "Dette er din dokumentation for k\u00f8bet. Gem denne e-mail i mindst 2 \u00e5r som dokumentation for din reklamationsret.";
-    const withdrawalTitle = t?.withdrawalTitle ?? "Fortrydelsesret";
-    const withdrawalText = t?.withdrawalText ?? "Da der er tale om \u00f8jeblikkelig levering af energi til din balance, accepterer du ved k\u00f8bet, at fortrydelsesretten bortfalder, n\u00e5r ydelsen tages i brug.";
+	const t = dict?.email?.invoice;
+	const title = t?.title ?? "Faktura";
+	const sellerLabel = t?.seller ?? "S\u00e6lger";
+	const invoiceNumberLabel = t?.invoiceNumber ?? "Fakturanummer";
+	const dateLabel = t?.date ?? "Dato";
+	const customerLabel = t?.customer ?? "Kunde";
+	const descLabel = t?.description ?? "Beskrivelse";
+	const priceLabel = t?.price ?? "Pris";
+	const vatLabel = t?.vatLabel ?? "Heraf moms (25%)";
+	const totalLabel = t?.totalLabel ?? "Total inkl. moms";
+	const electricity = t?.electricity ?? "El-forbrug";
+	const water = t?.water ?? "Vand-forbrug";
+	const balanceDeposit = t?.balanceDeposit ?? "Indbetaling til balance";
+	const infoTitle = t?.infoTitle ?? "Vigtigt";
+	const infoText = t?.infoText ?? "Dette er din dokumentation for k\u00f8bet. Gem denne e-mail i mindst 2 \u00e5r som dokumentation for din reklamationsret.";
+	const withdrawalTitle = t?.withdrawalTitle ?? "Fortrydelsesret";
+	const withdrawalText = t?.withdrawalText ?? "Da der er tale om \u00f8jeblikkelig levering af energi til din balance, accepterer du ved k\u00f8bet, at fortrydelsesretten bortfalder, n\u00e5r ydelsen tages i brug.";
 
-    const utilityType = type === "ELECTRICITY" ? electricity : water;
-    const mva = amount * 0.2;
-    const priceExMva = amount - mva;
-    const formattedDate = date.toLocaleDateString("da-DK");
+	const utilityType = type === "ELECTRICITY" ? electricity : water;
+	const mva = amount * 0.2;
+	const priceExMva = amount - mva;
+	const formattedDate = date.toLocaleDateString("da-DK");
 
 
-    return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8" />

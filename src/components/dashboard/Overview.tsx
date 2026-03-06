@@ -2,32 +2,24 @@
 
 import GridContainer from "./GridContainer";
 import LatestTrans from "./LatestTrans";
-import Reserved from "./reserved";
 import MeterSessionBox from "./MeterSessionBox";
+import AccountSummaryBox from "./AccountSummaryBox";
+import SpendingChart from "./SpendingChart";
 
 type Props = {
     dict: any;
 };
 
-
-const Box = (
-    { children }: { children: React.ReactNode }
-) => (
+const Box = ({ children }: { children: React.ReactNode }) => (
     <div className="border rounded-lg custom-box2 py-6 px-7">
         {children}
     </div>
 );
 
-
-export default function Overview(
-    { dict }: Props
-) {
+export default function Overview({ dict }: Props) {
     return (
-        
-
-        <main>
+        <main className="pb-8">
             <GridContainer>
-
                 <Box>
                     <LatestTrans dict={dict} />
                 </Box>
@@ -35,11 +27,13 @@ export default function Overview(
                 <Box>
                     <MeterSessionBox dict={dict} />
                 </Box>
-                
+
+                <Box>
+                    <AccountSummaryBox />
+                </Box>
             </GridContainer>
 
-
+            <SpendingChart />
         </main>
     );
-
 }
