@@ -19,8 +19,8 @@ const Navbar: React.FC<NavbarProps> = (
                     <Image
                         src={logo}
                         alt="Logo"
-                        width={88}
-                        height={88}
+                        width={100}
+                        height={100}
                         className="rounded-sm"
                     />
                 </Link>

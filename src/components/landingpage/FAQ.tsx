@@ -13,16 +13,24 @@ export default function FAQ(
     };
 
     return (
-        <div className="bg-[#0a0a0a] border-y border-[#1b1b1d]">
-            <div className="mx-auto max-w-screen-xl sm:px-10 px-5 py-16 mb-40 ">
+        <div className="relative bg-[#0a0a0a] border-y border-[#1b1b1d] overflow-hidden">
+            {/* Subtle radial background */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(59,130,246,0.04)_0%,transparent_60%)] pointer-events-none" />
+
+            <div className="relative mx-auto max-w-screen-xl sm:px-10 px-5 py-20 mb-20">
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center text-center">
-                    <h2 className="text-3xl font-bold text-white">
-                        {dict.faq.title}
-                    </h2>
-                    <p className="text-[#cccccc] mt-4 text-lg max-w-2xl">
+                    {/* Decorative label */}
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-blue-500/50" />
+                        <span className="text-blue-400 text-xs font-semibold uppercase tracking-[0.18em]">
+                            {dict.faq.title}
+                        </span>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-blue-500/50" />
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white">
                         {dict.faq.undertitle}
-                    </p>
+                    </h2>
                 </div>
 
                 {/* Accordion */}

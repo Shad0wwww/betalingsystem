@@ -62,11 +62,13 @@ export default function RootLayout(
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
 			>
 				<CookiesProvider >
 					<ChooseNavbar />
-					{children}
+					<main className="flex-1">
+						{children}
+					</main>
 					<Toaster position="top-center" />
 					<GoogleAnalytics gaId="G-ZZC8062EPQ" />
 					<Footer params={params} />

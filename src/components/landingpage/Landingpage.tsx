@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Anchor } from 'lucide-react';
 import StatsSection from '../stats/StatsSection';
 import ScrollButton from './ScroollButton';
 import FAQ from './FAQ';
@@ -12,7 +13,7 @@ export default function LandingPage(
     return (
         <main>
             {/* ── Hero ─────────────────────────────────────────────── */}
-            <section className="relative overflow-hidden">
+            <section className="hero-section relative overflow-hidden">
                 {/* Background grid */}
                 <div className="hero-grid" aria-hidden="true" />
 
@@ -27,11 +28,12 @@ export default function LandingPage(
                         {/* Badge */}
                         <div className="hero-badge mb-8">
                             <span className="hero-badge__dot" />
+                            <Anchor className="w-3 h-3 opacity-70" />
                             {dict.landingpage.badge}
                         </div>
 
                         <div className="hero-content text-center max-w-5xl flex flex-col justify-center items-center">
-                            <h1 className="text-6xl sm:text-7xl font-bold text-white leading-tight">
+                            <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-white leading-[1.08] tracking-tight">
                                 <span className="hero-gradient-text">Ribe</span> Sejlklub
                             </h1>
                             <p className="font-medium mt-8 text-lg max-w-2xl text-gray-400 leading-relaxed">
@@ -50,6 +52,14 @@ export default function LandingPage(
                         </div>
 
                     </div>
+                </div>
+
+                {/* Scroll indicator */}
+                <div className="scroll-indicator" aria-hidden="true">
+                    <div className="scroll-indicator__mouse">
+                        <div className="scroll-indicator__wheel" />
+                    </div>
+                    <span className="scroll-indicator__label">Scroll</span>
                 </div>
             </section>
 
