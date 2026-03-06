@@ -1,7 +1,8 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import getStripe from "@/lib/stripe/Stripe";
-import { ActionType } from "@prisma/client";
+import { takeMoneyUsed } from "@/lib/stripe/TakeMoneyUsed";
+import { ActionType, InvoiceStatus } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // Ends the user's active session
@@ -46,7 +47,30 @@ export async function POST(req: NextRequest) {
         },
     });
 
+    const pendingInvoice = await prisma.invoice.findFirst({
+        where: { 
+            userId: userId, 
+            status: InvoiceStatus.PENDING,
+            meterSessionId: sessionId
+        },
+        orderBy: { createdAt: "desc" }
+    });
+
+    if (!pendingInvoice || !pendingInvoice.stripePaymentIntentId) {
+        return NextResponse.json({ error: "Kunne ikke finde en aktiv betalingsreservation" }, { status: 400 });
+    }
+        
+
+    const paymentResult = await takeMoneyUsed(
+        userId,
+        pendingInvoice.stripePaymentIntentId, 
+        45.5,                 
+        pendingInvoice.amount
+    );
     
 
     return NextResponse.json({ session: updated });
 }
+
+
+

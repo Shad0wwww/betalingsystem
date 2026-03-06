@@ -54,7 +54,6 @@ export async function GET(req: NextRequest) {
         }),
     }));
 
-    console.log("Fetched users:", data);
 
     return NextResponse.json({ data, total, page, limit });
     
