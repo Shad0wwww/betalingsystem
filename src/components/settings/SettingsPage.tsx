@@ -142,7 +142,19 @@ export default function SettingsClient({ dict }: { dict: any }) {
     return (
         <div className="min-h-screen px-4">
             <Toaster />
-            <div className="flex flex-col max-w-3xl mx-auto mt-2 gap-6">
+            {/* Page header */}
+            <div className="max-w-3xl mx-auto pt-8 pb-6">
+                <div className="flex items-center gap-3 mb-1">
+                    <div className="h-px w-5 bg-gradient-to-r from-transparent to-blue-500/50" />
+                    <span className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.2em]">
+                        Dashboard
+                    </span>
+                </div>
+                <h1 className="text-2xl font-bold text-white">{dict?.dashboard?.settings?.title ?? "Indstillinger"}</h1>
+                <p className="text-zinc-500 text-sm mt-1">{dict?.dashboard?.settings?.subtitle ?? "Administrér din konto og dine skibe."}</p>
+            </div>
+
+            <div className="flex flex-col max-w-3xl mx-auto gap-6">
 
                 {/* Ships */}
                 <SettingsCard

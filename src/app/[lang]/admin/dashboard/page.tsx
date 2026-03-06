@@ -3,7 +3,6 @@
 import React from "react";
 import { get } from "@/components/admin/actions";
 import { Box } from "@/components/admin/Box";
-import GridContainer from "@/components/dashboard/GridContainer";
 import { Users, CreditCard, TrendingUp } from "lucide-react";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
@@ -33,30 +32,18 @@ function StatBox({
 }) {
     return (
         <Box>
-            <div className="flex items-center justify-between mb-4">
-                <span
-                    className="text-sm font-medium uppercase tracking-widest"
-                    style={{ color: "var(--sub-headline)" }}
-                >
+            <div className="flex items-center justify-between mb-5">
+                <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
                     {label}
                 </span>
-                <div
-                    className="p-2 rounded-lg"
-                    style={{ background: "var(--box-color-lighter)" }}
-                >
-                    <Icon className="w-4 h-4" style={{ color: "var(--primary-color)" }} />
+                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                    <Icon className="w-4 h-4 text-blue-400" />
                 </div>
             </div>
             {loading ? (
-                <div
-                    className="h-9 w-28 rounded-md animate-pulse"
-                    style={{ background: "var(--box-color-lighter)" }}
-                />
+                <div className="h-9 w-32 rounded-md animate-pulse bg-zinc-800/60" />
             ) : (
-                <p
-                    className="text-3xl font-bold tracking-tight"
-                    style={{ color: "var(--headline-color)" }}
-                >
+                <p className="text-3xl font-bold tracking-tight text-white">
                     {value ?? "—"}
                 </p>
             )}
@@ -76,46 +63,60 @@ export default function AdminPage() {
     }, []);
 
     return (
-        <div>
-            <GridContainer>
-                <StatBox
-                    label="Brugere"
-                    value={data?.usersSize}
-                    icon={Users}
-                    loading={loading}
-                />
-                <StatBox
-                    label="Betalinger"
-                    value={data?.paymentsSize}
-                    icon={CreditCard}
-                    loading={loading}
-                />
-                <StatBox
-                    label="Total omsætning"
-                    value={
-                        data?.totalRevenue != null
-                            ? `${data.totalRevenue.toLocaleString("da-DK")} kr.`
-                            : undefined
-                    }
-                    icon={TrendingUp}
-                    loading={loading}
-                />
-            </GridContainer>
+        <div className="min-h-screen pb-12">
+            {/* Page header */}
+            <div className="mx-auto max-w-screen-xl px-4 md:px-20 pt-8 pb-6">
+                <div className="flex items-center gap-3 mb-1">
+                    <div className="h-px w-5 bg-gradient-to-r from-transparent to-blue-500/50" />
+                    <span className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.2em]">
+                        Admin
+                    </span>
+                </div>
+                <h1 className="text-2xl font-bold text-white">Oversigt</h1>
+                <p className="text-zinc-500 text-sm mt-1">Samlet overblik over systemet.</p>
+            </div>
 
-            <div className="mx-auto max-w-screen-xl px-4 md:px-20 mt-6 mb-10">
+            {/* Stat boxes */}
+            <div className="mx-auto max-w-screen-xl px-4 md:px-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <StatBox
+                        label="Brugere"
+                        value={data?.usersSize}
+                        icon={Users}
+                        loading={loading}
+                    />
+                    <StatBox
+                        label="Betalinger"
+                        value={data?.paymentsSize}
+                        icon={CreditCard}
+                        loading={loading}
+                    />
+                    <StatBox
+                        label="Total omsætning"
+                        value={
+                            data?.totalRevenue != null
+                                ? `${data.totalRevenue.toLocaleString("da-DK")} kr.`
+                                : undefined
+                        }
+                        icon={TrendingUp}
+                        loading={loading}
+                    />
+                </div>
+            </div>
+
+            {/* Payments table */}
+            <div className="mx-auto max-w-screen-xl px-4 md:px-20 mt-6">
                 <Box>
-                    <h2
-                        className="text-lg font-semibold mb-5"
-                        style={{ color: "var(--headline-color)" }}
-                    >
-                        Seneste betalinger
-                    </h2>
+                    <div className="flex items-center justify-between mb-5">
+                        <div>
+                            <h2 className="text-base font-semibold text-white">Seneste betalinger</h2>
+                            <p className="text-zinc-500 text-sm mt-0.5">Alle registrerede transaktioner</p>
+                        </div>
+                        <div className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_6px_2px_rgba(96,165,250,0.5)]" />
+                    </div>
                     <DataTable columns={columns} />
                 </Box>
             </div>
         </div>
-
-
-
     );
 }
