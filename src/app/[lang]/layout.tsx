@@ -21,34 +21,53 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Ribe Sejlklub",
-	description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
-	keywords: ["Ribe Sejlklub", "Kammerslusen Ribe", "Betalingssystem", "Sejlklub", "Ribe"],
-	robots: "index, follow",
+	title: {
+		default: "Ribe Sejlklub — Betalingsportal",
+		template: "%s | Ribe Sejlklub",
+	},
+	description: "Ribe Sejlklubs skole projekt betalingsportal til Kammerslusen. Book, betal og administrér din bådplads hurtigt og sikkert. (VIGTIGT IKKE DEN RIGTIGE HJEMMESIDE SKOLE PROJEKT)",
+	keywords: [
+		"Ribe Sejlklub", "Kammerslusen Ribe", "bådplads betaling",
+		"sejlklub portal", "Ribe havn", "el til båd", "marina Ribe",
+	],
+	authors: [{ name: "Ribe Sejlklub", url: "https://pins.dk" }],
+	creator: "Ribe Sejlklub",
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: { index: true, follow: true },
+	},
 	openGraph: {
-		title: "Ribe Sejlklub",
-		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
+		title: "Ribe Sejlklub — Betalingsportal",
+		description: "Book, betal og administrér din bådplads ved Kammerslusen i Ribe. Hurtigt, sikkert og nemt.",
 		url: "https://pins.dk",
-		
 		siteName: "Ribe Sejlklub",
 		images: [
 			{
 				url: Logo.src,
-				width: 800,
-				height: 600,
-				alt: "Ribe Sejlklub Logo",
+				width: 1200,
+				height: 630,
+				alt: "Ribe Sejlklub — Betalingsportal",
 			},
 		],
+		locale: "da_DK",
 		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Ribe Sejlklub — Betalingsportal",
+		description: "Book, betal og administrér din bådplads ved Kammerslusen i Ribe.",
+		images: [Logo.src],
 	},
 	icons: {
 		icon: Logo.src,
+		shortcut: Logo.src,
+		apple: Logo.src,
 	},
 	verification: {
 		google: process.env.GOOGLE_SITE_VERIFICATION || "",
 	},
 	metadataBase: new URL("https://pins.dk"),
-	
 };
 
 type LayoutProps = Readonly<{
