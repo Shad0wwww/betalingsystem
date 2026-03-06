@@ -27,6 +27,7 @@ interface DataTableProps<TData, TValue> {
     searchColumn?: string
     searchPlaceholder?: string
     emptyMessage?: string
+    refreshKey?: number
 }
 
 export function DataTable<TData, TValue>({
@@ -36,6 +37,7 @@ export function DataTable<TData, TValue>({
     searchColumn,
     searchPlaceholder = "Søg...",
     emptyMessage = "Ingen data at vise.",
+    refreshKey = 0,
 }: DataTableProps<TData, TValue>) {
     const [data, setData] = React.useState<TData[]>([])
     const [total, setTotal] = React.useState(0)
@@ -67,7 +69,7 @@ export function DataTable<TData, TValue>({
             })
             .catch((err) => setError(err.message))
             .finally(() => setLoading(false))
-    }, [page, limit, fetchUrl])
+    }, [page, limit, fetchUrl, refreshKey])
 
     const table = useReactTable({
         data,

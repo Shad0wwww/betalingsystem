@@ -22,13 +22,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: "Ribe Sejlklub",
-	description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT)",
+	description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
 	keywords: ["Ribe Sejlklub", "Kammerslusen Ribe", "Betalingssystem", "Sejlklub", "Ribe"],
 	robots: "index, follow",
 	openGraph: {
 		title: "Ribe Sejlklub",
 		description: "Betalingssystem for Kammerslusen Ribe (KUN SKOLEPROJEKT) FIKTIV WEBSITE",
 		url: "https://pins.dk",
+		
 		siteName: "Ribe Sejlklub",
 		images: [
 			{

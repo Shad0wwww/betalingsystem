@@ -125,9 +125,10 @@ model MeterReading {
 
 model Meter {
     id       Int         @id @default(autoincrement())
-    deviceId Int         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
+    deviceId String         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
     type     UtilityType
     location String?
+    status   MeterStatus @default(INACTIVE)
 
     sessions MeterSession[]
     readings MeterReading[]
@@ -185,5 +186,14 @@ enum ActionType {
     EMAIL_SEND_OTP_FAILED
     PAYMENT_LINK_CREATED
     LOGIN_OTP_SENT
+    CREATE_METER
+    UPDATE_METER
+    DELETE_METER
     LOGIN_OTP_SENT_SUCCESS
+}
+
+enum MeterStatus {
+    ACTIVE
+    INACTIVE
+    MAINTENANCE
 }

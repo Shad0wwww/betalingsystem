@@ -10,8 +10,6 @@ export async function POST(req: NextRequest) {
         const cookie = req.cookies.get("auth_token")?.value;
         const { oldCode, newCode, newEmail } = await req.json();
 
-        console.log("Received request to approve email change:", { newEmail });
-
         if (!cookie) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }

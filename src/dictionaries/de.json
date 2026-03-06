@@ -214,9 +214,53 @@
                 "description": "Wir nutzen Stripe, einen der weltweit zuverlässigsten Zahlungsanbieter, um sicherzustellen, dass deine Daten während des gesamten Prozesses geschützt sind."
             },
             "step3": {
-                "title": "Genieße die Fahrt",
-                "description": "Nach der Fahrt rechnen wir deinen tatsächlichen Verbrauch automatisch ab. Solltest du zu viel reserviert haben, erstatten wir den Überschuss sofort zurück."
+                "title": "Genie\u00dfe die Fahrt",
+                "description": "Nach der Fahrt rechnen wir deinen tats\u00e4chlichen Verbrauch automatisch ab. Solltest du zu viel reserviert haben, erstatten wir den \u00dcberschuss sofort zur\u00fcck."
             }
+        }
+    },
+    "email": {
+        "otp": {
+            "title": "Ihr Einmalcode",
+            "subtitle": "Geben Sie diesen Code ein, um sich anzumelden",
+            "validFor": "Der Code ist 10 Minuten g\u00fcltig",
+            "warning": "Teilen Sie diesen Code niemals mit anderen \u2013 auch nicht mit uns!"
+        },
+        "invoice": {
+            "title": "Rechnung",
+            "seller": "Verk\u00e4ufer",
+            "invoiceNumber": "Rechnungsnummer",
+            "date": "Datum",
+            "customer": "Kunde",
+            "description": "Beschreibung",
+            "price": "Preis",
+            "vatLabel": "MwSt. (25%)",
+            "totalLabel": "Gesamt inkl. MwSt.",
+            "electricity": "Stromverbrauch",
+            "water": "Wasserverbrauch",
+            "balanceDeposit": "Guthabenaufladung",
+            "infoTitle": "Wichtig",
+            "infoText": "Dies ist Ihr Kaufbeleg. Bewahren Sie diese E-Mail mindestens 2 Jahre als Nachweis f\u00fcr Ihr Reklamationsrecht auf.",
+            "withdrawalTitle": "Widerrufsrecht",
+            "withdrawalText": "Da es sich um eine sofortige Lieferung von Energie handelt, erlischt das Widerrufsrecht bei Inanspruchnahme der Leistung."
+        },
+        "reservation": {
+            "title": "Reservierungsbest\u00e4tigung",
+            "intro": "Wir haben einen Betrag auf Ihrer Zahlungskarte reserviert.",
+            "notCharged": "Das Geld wurde noch nicht abgebucht.",
+            "provider": "Anbieter",
+            "reservationNumber": "Reservierungsnummer",
+            "date": "Datum",
+            "customer": "Kunde",
+            "description": "Beschreibung",
+            "reserved": "Reserviert",
+            "electricity": "Stromverbrauch",
+            "water": "Wasserverbrauch",
+            "maxAmount": "Max. Abbuchungsbetrag",
+            "howTitle": "Wie funktioniert es?",
+            "howText": "Der Betrag ist auf Ihrem Bankkonto reserviert. Nach Ihrem Verbrauch buchen wir genau das Verbrauchte ab und geben den Rest frei.",
+            "invoiceTitle": "Rechnung",
+            "invoiceText": "Ihre endg\u00fcltige Rechnung wird nach Abschluss des Verbrauchs gesendet."
         }
     }
 }

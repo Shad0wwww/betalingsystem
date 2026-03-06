@@ -220,5 +220,49 @@
                 "description": "Efter sejladsen afregner vi automatisk dit faktiske forbrug. Hvis du har reserveret for meget, refunderer vi det overskydende beløb med det samme."
             }
         }
+    },
+    "email": {
+        "otp": {
+            "title": "Din Engangskode",
+            "subtitle": "Indtast denne kode for at logge ind",
+            "validFor": "Koden er gyldig i 10 minutter",
+            "warning": "Del aldrig denne kode med andre \u2013 heller ikke med os!"
+        },
+        "invoice": {
+            "title": "Faktura",
+            "seller": "S\u00e6lger",
+            "invoiceNumber": "Fakturanummer",
+            "date": "Dato",
+            "customer": "Kunde",
+            "description": "Beskrivelse",
+            "price": "Pris",
+            "vatLabel": "Heraf moms (25%)",
+            "totalLabel": "Total inkl. moms",
+            "electricity": "El-forbrug",
+            "water": "Vand-forbrug",
+            "balanceDeposit": "Indbetaling til balance",
+            "infoTitle": "Vigtigt",
+            "infoText": "Dette er din dokumentation for k\u00f8bet. Gem denne e-mail i mindst 2 \u00e5r som dokumentation for din reklamationsret.",
+            "withdrawalTitle": "Fortrydelsesret",
+            "withdrawalText": "Da der er tale om \u00f8jeblikkelig levering af energi til din balance, accepterer du ved k\u00f8bet, at fortrydelsesretten bortfalder, n\u00e5r ydelsen tages i brug."
+        },
+        "reservation": {
+            "title": "Reservationsbek\u00e6ftelse",
+            "intro": "Vi har reserveret et bel\u00f8b p\u00e5 dit betalingskort.",
+            "notCharged": "Pengene er endnu ikke trukket.",
+            "provider": "Udbyder",
+            "reservationNumber": "Reservationsnummer",
+            "date": "Dato",
+            "customer": "Kunde",
+            "description": "Beskrivelse",
+            "reserved": "Reserveret",
+            "electricity": "El-forbrug",
+            "water": "Vand-forbrug",
+            "maxAmount": "Maks. bel\u00f8b til tr\u00e6kning",
+            "howTitle": "Hvordan fungerer det?",
+            "howText": "Bel\u00f8bet er reserveret p\u00e5 din bankkonto. N\u00e5r du afslutter forbruget, tr\u00e6kker vi pr\u00e6cis det forbrugte bel\u00f8b og frigiver resten.",
+            "invoiceTitle": "Faktura",
+            "invoiceText": "Din endelige faktura sendes, n\u00e5r forbruget er afsluttet."
+        }
     }
 }

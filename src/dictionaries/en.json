@@ -218,5 +218,49 @@
                 "description": "After the sailing, we automatically settle your actual usage. If you reserved too much, we refund the excess amount immediately."
             }
         }
+    },
+    "email": {
+        "otp": {
+            "title": "Your One-Time Code",
+            "subtitle": "Enter this code to log in",
+            "validFor": "The code is valid for 10 minutes",
+            "warning": "Never share this code with anyone \u2013 not even with us!"
+        },
+        "invoice": {
+            "title": "Invoice",
+            "seller": "Seller",
+            "invoiceNumber": "Invoice number",
+            "date": "Date",
+            "customer": "Customer",
+            "description": "Description",
+            "price": "Price",
+            "vatLabel": "VAT (25%)",
+            "totalLabel": "Total incl. VAT",
+            "electricity": "Electricity",
+            "water": "Water",
+            "balanceDeposit": "Balance deposit",
+            "infoTitle": "Important",
+            "infoText": "This is your purchase documentation. Keep this email for at least 2 years as proof of your right of complaint.",
+            "withdrawalTitle": "Right of withdrawal",
+            "withdrawalText": "Since this is an immediate delivery of energy to your balance, you accept that the right of withdrawal expires when the service is used."
+        },
+        "reservation": {
+            "title": "Reservation Confirmation",
+            "intro": "We have reserved an amount on your payment card.",
+            "notCharged": "The money has not yet been charged.",
+            "provider": "Provider",
+            "reservationNumber": "Reservation number",
+            "date": "Date",
+            "customer": "Customer",
+            "description": "Description",
+            "reserved": "Reserved",
+            "electricity": "Electricity",
+            "water": "Water",
+            "maxAmount": "Max. amount to charge",
+            "howTitle": "How does it work?",
+            "howText": "The amount is reserved on your bank account. When you finish your usage, we charge exactly what you used and release the rest.",
+            "invoiceTitle": "Invoice",
+            "invoiceText": "Your final invoice will be sent when your usage is complete."
+        }
     }
 }
