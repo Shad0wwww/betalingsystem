@@ -38,8 +38,5 @@ export async function GET(
         }
     });
 
-    console.log("Boats found for user:", boats);
-
-
     return NextResponse.json(boats , { status: 200 });
 }
