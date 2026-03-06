@@ -39,9 +39,6 @@ export async function createStripePaymentSession({
         });
     }
 
-
-
-    // 2. Opret Stripe Checkout Session
     
     const session = await getStripe().checkout.sessions.create({
         customer: customerId,
@@ -81,11 +78,12 @@ export async function createStripePaymentSession({
                 dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
             },
         }),
+        
         prisma.auditLog.create({
             data: {
                 userId: userId,
                 action: ActionType.PAYMENT_LINK_CREATED,
-                details: `User created a payment link for ${description} with amount ${amount}`
+                details: `User created a payment link for ${description} with amount ${amount/100} DKK`,
             }
         })
     ]);

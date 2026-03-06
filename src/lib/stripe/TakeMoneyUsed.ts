@@ -32,7 +32,7 @@ export async function takeMoneyUsed(
         prisma.user.update({
             where: { id: userId },
             data: {
-                reservedBalance: { decrement: originalReservedAmount },
+                reservedBalance: 0,
             },
         }),
         prisma.auditLog.create({

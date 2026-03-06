@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import BrugerRegisterMeterModal from "../modals/BrugerRegisterMeterModal";
 import { UtilityType } from "@prisma/client";
 import { Zap, Droplets, MapPin, Anchor } from "lucide-react";
+import { refresh } from "next/cache";
 
 interface ActiveSession {
     id: number;
@@ -68,6 +69,7 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Kunne ikke afbryde session.");
+            refresh();
             setSession(null);
         } catch (err: any) {
             setError(err.message);

@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 type JwtPayload = { userId?: string; id?: string };
 
-const RATE_PER_HOUR = 45.5;
+const RATE_PER_HOUR = 20/24;
 
 export async function POST(req: NextRequest) {
     const cookie = req.cookies.get("auth_token")?.value;

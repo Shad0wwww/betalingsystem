@@ -97,7 +97,7 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "amount",
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount")) / 100
+            const amount = parseFloat(row.getValue("amount"))
             const formatted = new Intl.NumberFormat("da-DK", {
                 style: "currency",
                 currency: "DKK",

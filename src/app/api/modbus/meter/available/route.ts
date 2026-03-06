@@ -18,9 +18,6 @@ export async function GET(req: NextRequest) {
     const meters = await prisma.meter.findMany({
         where: {
             status: MeterStatus.ACTIVE,
-            sessions: {
-                none: { isActive: true },
-            },
         },
         select: {
             id: true,
