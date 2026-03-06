@@ -1,5 +1,6 @@
 {
     "landingpage": {
+        "badge": "Official payment portal",
         "undertitel": "Kammerslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
         "learnmore": "Learn more",
         "signup": "Sign up",

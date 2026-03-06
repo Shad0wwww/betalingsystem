@@ -29,53 +29,70 @@ export default async function Footer(
     ];
 
     return (
-        <div className="flex flex-col items-center gap-10 py-12 px-4 xl:px-10 relative">
-            <div className="flex flex-col xl:flex-row gap-16 justify-between w-full max-w-screen-xl">
-                <div className="flex flex-col justify-between">
-                    <div className="flex flex-col h-full justify-between">
-                        <div className="flex flex-row items-center xl:items-start justify-between xl:flex-col gap-2">
-                            <div className="flex flex-row items-center gap-2">
-                                <p className="text-[#888]">© {new Date().getFullYear()}</p>
-                            </div>
-                            <p className="text-blue-500 text-sm text-right xl:text-left max-w-[110px] sm:max-w-full">
+        <footer className="border-t border-white/[0.06] bg-[#0a0a0a]">
+            <div className="mx-auto max-w-screen-xl px-6 xl:px-10 pt-14 pb-8">
+
+                {/* Top row */}
+                <div className="flex flex-col xl:flex-row gap-12 xl:gap-0 justify-between">
+
+                    {/* Brand block */}
+                    <div className="flex flex-col gap-6 max-w-xs">
+                        <div>
+                            <p className="text-lg font-bold text-white">
+                                <span className="text-blue-500">Ribe</span> Sejlklub
+                            </p>
+                            <p className="text-blue-500 text-sm mt-1">
                                 {dict.footer.allRightsReserved}
                             </p>
                         </div>
-                        <div>
-                            <br />
-                            <h1 className="text-sm text-white/50">{dict.footer.support}</h1>
-                            <h1 className="text-sm text-white/50">{dict.footer.company}</h1>
-                            <br />
-                            <h1 className="text-sm text-white/50">{dict.footer.cvr}</h1>
-                            <h1 className="text-sm text-white/50">{dict.footer.address1}</h1>
-                            <h1 className="text-sm text-white/50">{dict.footer.address2}</h1>
+
+                        <div className="flex flex-col gap-1">
+                            <p className="text-sm text-white/45">{dict.footer.support}</p>
+                            <p className="text-sm text-white/45">{dict.footer.company}</p>
                         </div>
+
+                        <div className="flex flex-col gap-1">
+                            <p className="text-sm text-white/45">{dict.footer.cvr}</p>
+                            <p className="text-sm text-white/45">{dict.footer.address1}</p>
+                            <p className="text-sm text-white/45">{dict.footer.address2}</p>
+                        </div>
+                    </div>
+
+                    {/* Nav sections */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-24">
+                        {sections.map((section) => (
+                            <div key={section.title} className="flex flex-col gap-3">
+                                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/40">
+                                    {section.title}
+                                </p>
+                                <div className="flex flex-col gap-2">
+                                    {section.links.map((link) => (
+                                        <Link
+                                            key={link.name}
+                                            href={link.href}
+                                            className="text-sm text-white/55 hover:text-white transition-colors duration-150"
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 justify-center gap-10 lg:gap-36 my-3">
-                    {sections.map((section) => (
-                        <div key={section.title} className="flex flex-col gap-2">
-                            <h1 className="text-white">{section.title}</h1>
-                            <div className="flex flex-col text-[#888] gap-1">
-                                {section.links.map((link) => (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        className="hover:text-stone-300"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+                {/* Divider */}
+                <div className="border-t border-white/[0.06] mt-12 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <p className="text-xs text-white/30">
+                        © {new Date().getFullYear()} Ribe Sejlklub
+                    </p>
+                    <p className="text-xs text-white/30 sm:text-right max-w-xl">
+                        {dict.footer.disclaimer}
+                    </p>
                 </div>
+
             </div>
-            <div className="text-sm text-white/50 text-right mb-4 mt-4 lg:ml-auto">
-                {dict.footer.disclaimer}
-            </div>
-        </div>
+        </footer>
     );
 }
 

@@ -4,12 +4,12 @@ interface SettingsCardProps {
     title: string;
     description: string;
     footerText?: string;
-    buttonText?: string; // Nu valgfri
-    onAction?: () => void; // Nu valgfri
+    buttonText?: string;
+    onAction?: () => void;
     variant?: 'default' | 'danger';
     children?: React.ReactNode;
     disabled?: boolean;
-    dialog?: React.ReactNode; // Nu valgfri
+    dialog?: React.ReactNode;
 }
 
 const SettingsCard = ({
@@ -24,49 +24,56 @@ const SettingsCard = ({
     dialog,
 }: SettingsCardProps) => {
     const isDanger = variant === 'danger';
-
-    // Vi viser kun footer-baren, hvis der er enten footerText eller en knap
     const showFooter = footerText || buttonText;
 
     return (
-        <div className={`w-full max-w-3xl mx-auto border rounded-lg overflow-hidden bg-[#111111] ${isDanger ? 'border-red-900/50' : 'border-[#252424]'}`}>
+        <div className={`w-full max-w-3xl mx-auto rounded-xl overflow-hidden border bg-[#0f0f0f] ${
+            isDanger ? 'border-red-900/40' : 'border-white/[0.07]'
+        }`}>
 
+            {/* Body */}
             <div className="p-6">
-                <h2 className="text-white text-xl font-semibold mb-2">{title}</h2>
-                <p className="text-gray-400 text-sm mb-5">{description}</p>
+                <h2 className={`text-base font-semibold mb-1 ${
+                    isDanger ? 'text-red-400' : 'text-white'
+                }`}>{title}</h2>
+                <p className="text-white/40 text-sm leading-relaxed">{description}</p>
 
                 {children && (
-                    <div className="mt-4">
+                    <div className="mt-5">
                         {children}
                     </div>
                 )}
             </div>
 
-            {/* Dialog sektion - vises kun hvis dialog prop findes */}
+            {/* Dialog row */}
             {dialog && (
-                <div className="p-6 border-t border-[#252424]">
-                    <div className="flex items-center justify-end">
-                        {dialog}
-                    </div>
+                <div className={`px-6 py-4 border-t flex items-center justify-end ${
+                    isDanger ? 'border-red-900/40' : 'border-white/[0.07]'
+                }`}>
+                    {dialog}
                 </div>
             )}
 
-            {/* Footer sektion - vises kun hvis der er indhold til den */}
+            {/* Footer / action row */}
             {showFooter && (
-                <div className={`px-6 py-3 flex items-center justify-between border-t ${isDanger ? 'bg-red-950/20 border-red-900/50' : 'bg-[#111111] border-[#252424]'}`}>
-                    <p className="text-gray-500 text-xs">
-                        {footerText}
-                    </p>
+                <div className={`px-6 py-3 flex items-center justify-between border-t ${
+                    isDanger
+                        ? 'bg-red-950/20 border-red-900/40'
+                        : 'bg-white/[0.02] border-white/[0.07]'
+                }`}>
+                    <p className="text-white/30 text-xs">{footerText}</p>
 
                     {buttonText && (
                         <button
                             onClick={onAction}
                             disabled={disabled}
-                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors 
-                                ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-                                ${isDanger
-                                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                                    : 'bg-white hover:bg-gray-200 text-black'}`}
+                            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                                disabled ? 'opacity-40 cursor-not-allowed' : ''
+                            } ${
+                                isDanger
+                                    ? 'bg-red-600 hover:bg-red-500 text-white'
+                                    : 'bg-blue-600 hover:bg-blue-500 text-white'
+                            }`}
                         >
                             {buttonText}
                         </button>

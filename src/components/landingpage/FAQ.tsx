@@ -31,20 +31,32 @@ export default function FAQ(
                         const isOpen = openIndex === i;
 
                         return (
-                            <div key={i} className="border-b border-[#363636]">
+                            <div
+                                key={i}
+                                className={`border-b transition-colors duration-200 ${
+                                    isOpen ? "border-[#3b82f6]/20" : "border-[#2e2e2e]"
+                                }`}
+                            >
                                 {/* Question */}
                                 <button
                                     onClick={() => toggle(i)}
-                                    className="w-full flex items-center justify-between py-5 text-left"
+                                    className="w-full flex items-center justify-between py-5 text-left group"
                                 >
-                                    <span className="text-white text-lg font-medium">
+                                    <span className={`text-lg font-medium transition-colors duration-200 ${
+                                        isOpen
+                                            ? "text-blue-400"
+                                            : "text-white group-hover:text-blue-300"
+                                    }`}>
                                         {q.question}
                                     </span>
 
                                     <ChevronDown
-                                        className={`text-white transition-transform duration-300 ${isOpen ? "rotate-180" : ""
-                                            }`}
-                                        size={17}
+                                        className={`flex-shrink-0 ml-4 transition-all duration-300 ${
+                                            isOpen
+                                                ? "text-blue-400 rotate-180"
+                                                : "text-neutral-500 group-hover:text-blue-300"
+                                        }`}
+                                        size={18}
                                     />
                                 </button>
 
@@ -60,8 +72,8 @@ export default function FAQ(
                                     }}
                                     className="overflow-hidden transition-[height] duration-300 ease-in-out"
                                 >
-                                    <div className="pb-5">
-                                        <p className="text-white">{q.answer}</p>
+                                    <div className="pb-5 pl-4 border-l-2 border-[#3b82f6]/30">
+                                        <p className="text-gray-400">{q.answer}</p>
                                     </div>
                                 </div>
                             </div>

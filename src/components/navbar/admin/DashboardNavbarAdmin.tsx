@@ -24,9 +24,10 @@ export default async function DashboardNavbarAdmin({ params }: Props) {
     ];
 
     return (
-        <div className="mx-auto container lg:max-w-7xl max-w-screen-xl px-4 md:px-20 pb-10 overflow-x-auto no-scrollbar">
-            <NavLinks links={links} />
-            <div className="w-full border-[#252424] border-t-[1px]" />
+        <div className="w-full border-b border-white/[0.06] bg-[#0d0d0d]/60 backdrop-blur-sm mb-6">
+            <div className="mx-auto max-w-7xl px-4 md:px-20 overflow-x-auto no-scrollbar">
+                <NavLinks links={links} />
+            </div>
         </div>
     );
 }

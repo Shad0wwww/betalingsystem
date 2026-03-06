@@ -11,21 +11,29 @@ export default function NavLinks({ links }: NavLinkProps) {
     const pathname = usePathname();
 
     return (
-        <div className="flex flex-row pt-1 sub-headline gap-3">
+        <div className="flex flex-row gap-1">
             {links.map((link) => {
-             
                 const isActive = pathname === link.href;
 
                 return (
                     <Link
                         key={link.href}
                         href={link.href}
-                        className={`px-5 py-1 hover:border-b-2 hover:border-white/20 ${isActive ? "border-b-2 border-blue-400 font-semibold text-white" : "text-gray-400"
-                            }`}
+                        className={`relative px-4 py-3 text-sm font-medium transition-colors duration-150 ${
+                            isActive
+                                ? "text-white"
+                                : "text-white/40 hover:text-white/75"
+                        }`}
                     >
-                        <div className="pb-1">
-                            <p>{link.label}</p>
-                        </div>
+                        {link.label}
+                        {/* Animated underline */}
+                        <span
+                            className={`absolute bottom-0 left-0 h-[2px] w-full rounded-full transition-all duration-200 ${
+                                isActive
+                                    ? "bg-blue-500 opacity-100 scale-x-100"
+                                    : "bg-white/20 opacity-0 scale-x-0"
+                            } origin-center group-hover:opacity-100 group-hover:scale-x-100`}
+                        />
                     </Link>
                 );
             })}

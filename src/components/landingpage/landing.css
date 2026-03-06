@@ -1,14 +1,136 @@
-.blurBlob {
+/* ─────────────────────────────────────────────────────────────
+   Hero Background Grid
+───────────────────────────────────────────────────────────────── */
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 85% 85% at 50% 35%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 35%, black 30%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Gradient text on "Ribe"
+───────────────────────────────────────────────────────────────── */
+.hero-gradient-text {
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 55%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Badge / Pill
+───────────────────────────────────────────────────────────────── */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.28);
+    color: #93c5fd;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    animation: fadeInDown 0.6s ease-out both;
     position: relative;
-    top: 120px;
-    max-width: 700px;
-    width: 100%;
-    height: 100px;
-    filter: blur(60px);
-    z-index: 1;
+    z-index: 10;
+}
+
+.hero-badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 8px 3px rgba(59, 130, 246, 0.65);
+    animation: pulseDot 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1;   transform: scale(1);    }
+    50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Blur Blobs
+───────────────────────────────────────────────────────────────── */
+.blurBlob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.blurBlob--center {
+    width: 700px;
+    height: 130px;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: blur(75px);
     background: linear-gradient(90deg, #1a6fd4 0%, #0851da 100%);
-    background-size: 1000% 1000%;
-    animation: gradient 15s ease infinite;
-    overflow: hidden;
-    opacity: 0.9;
+    opacity: 0.7;
+    z-index: 2;
+    animation: blobCenter 8s ease-in-out infinite;
+}
+
+.blurBlob--left {
+    width: 420px;
+    height: 420px;
+    top: 0;
+    left: -10%;
+    filter: blur(110px);
+    background: rgba(59, 130, 246, 0.22);
+    opacity: 0.55;
+    z-index: 1;
+    animation: blobSide 11s ease-in-out infinite;
+    animation-delay: -4s;
+}
+
+.blurBlob--right {
+    width: 360px;
+    height: 360px;
+    top: 10%;
+    right: -8%;
+    filter: blur(110px);
+    background: rgba(8, 81, 218, 0.18);
+    opacity: 0.45;
+    z-index: 1;
+    animation: blobSide 14s ease-in-out infinite;
+    animation-delay: -9s;
+}
+
+@keyframes blobCenter {
+    0%, 100% { transform: translateX(-50%) translateY(0);     }
+    50%       { transform: translateX(-50%) translateY(-14px); }
+}
+
+@keyframes blobSide {
+    0%, 100% { transform: translateY(0)     scale(1);    }
+    50%       { transform: translateY(-18px) scale(1.03); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Hero entrance animations
+───────────────────────────────────────────────────────────────── */
+.hero-content {
+    animation: fadeInUp 0.75s ease-out both;
+    animation-delay: 0.15s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0);     }
 }
