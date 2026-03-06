@@ -6,6 +6,7 @@ import { UtilityType } from "@prisma/client";
 import PayButton from "./PayButton";
 import LatestTrans from "./LatestTrans";
 import Reserved from "./reserved";
+import MeterSessionBox from "./MeterSessionBox";
 
 type Props = {
     dict: any;
@@ -30,11 +31,13 @@ export default function Overview(
         <main>
             <GridContainer>
                 <Box>
-                    <div className="flex flex-row justify-between items-center">
+                    <p className="text-xs font-medium uppercase tracking-widest text-zinc-500 mb-4">
+                        Reserver saldo
+                    </p>
+                    <div className="flex items-center justify-between">
                         <PayButton amount={200} description="Reserverer 200 DKK" type={UtilityType.ELECTRICITY} dict={dict} />
                     </div>
                     <Reserved dict={dict} />
-                    
                 </Box>
 
                 <Box>
@@ -42,10 +45,7 @@ export default function Overview(
                 </Box>
 
                 <Box>
-                    <div className="flex flex-col">
-                        <p className="text-sm sub-headline">Seneste transaktioner</p>
-                        <p className="text-gray-500 text-sm mt-2">Du har ingen transaktioner endnu.</p>
-                    </div>
+                    <MeterSessionBox dict={dict} />
                 </Box>
                 
             </GridContainer>

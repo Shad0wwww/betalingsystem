@@ -1,62 +1,43 @@
+"use client";
 import { useEffect, useState } from "react";
-import LoadingScreen from "../utils/LoadingScreen";
-import { skelelonText } from '../utils/SkeletonCard';
+import { skelelonText } from "../utils/SkeletonCard";
 
-
-
-type Props = {
-    dict: any;
-};
+type Props = { dict: any };
 
 async function fetchBalance() {
     const res = await fetch(`/api/user/me`);
     return res.json();
 }
 
-
-
-export default function Reserved(
-    { dict }: Props
-) {
-
-    const [balance, setbalance] = useState<number>(0);
+export default function Reserved({ dict }: Props) {
+    const [balance, setBalance] = useState<number>(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let mounted = true;
-
-        async function loadBalance() {
-            setLoading(true);
-            try {
-                const data = await fetchBalance();
+        fetchBalance()
+            .then((data) => {
                 if (!mounted) return;
-                const bal = Number(data?.balance ?? 0);
-                setbalance(isNaN(bal) ? 0 : bal);
-            } catch (err) {
-                console.error(err);
-                if (mounted) setbalance(0);
-            } finally {
-                if (mounted) setLoading(false);
-            }
-        }
-
-        loadBalance();
+                const bal = Number(data?.reservedBalance ?? 0);
+                setBalance(isNaN(bal) ? 0 : bal);
+            })
+            .catch(() => mounted && setBalance(0))
+            .finally(() => mounted && setLoading(false));
         return () => { mounted = false; };
     }, []);
 
-
-    if (loading) return (
-        <div className="flex flex-col mt-6 mb-1">
-            <p className="text-sm sub-headline">{dict.dashboard.oversigt.balance}</p>
-            {skelelonText(10)}
-        </div>
-    );
-
-
     return (
-        <div className="flex flex-col mt-6 mb-1">
-            <p className="text-sm sub-headline">{dict.dashboard.oversigt.balance}</p>
-            <p className="text-white font-bold text-lg">{balance.toLocaleString("da-DK", { style: "currency", currency: "DKK" })}</p>
+        <div className="mt-5 pt-5 border-t border-[#292828]">
+            <p className="text-xs font-medium uppercase tracking-widest text-zinc-500 mb-1">
+                {dict.dashboard.oversigt.balance}
+            </p>
+            {loading ? (
+                skelelonText(12)
+            ) : (
+                <p className="text-2xl font-bold text-white">
+                    {balance.toLocaleString("da-DK", { style: "currency", currency: "DKK" })}
+                </p>
+            )}
         </div>
     );
 }
