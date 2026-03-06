@@ -17,7 +17,7 @@ export default async function DashboardLayout({
     const dict = await getDictionary(lang);
 
     return (
-        <section className={`${inter.className} flex flex-col flex-1`}>
+        <section className={`${inter.className}`}>
             <DashboardNavbarWrapper params={{ lang, dict }} />
             {children}
         </section>

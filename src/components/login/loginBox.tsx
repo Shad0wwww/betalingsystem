@@ -7,11 +7,13 @@ import { notFound, useRouter } from "next/navigation";
 import LoginAction from "@/components/auth/LoginAction";
 import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { Anchor } from "lucide-react";
 
 const FormContainer = (
     { children }: { children: React.ReactNode }
 ) => (
-    <div className="border rounded-lg custom-box2 py-8 px-5 sm:py-10 sm:px-12 border-[#292828] bg-[#131313]">
+    <div className="relative border rounded-2xl custom-box2 py-8 px-5 sm:py-10 sm:px-12 border-white/[0.08] bg-[#0c0c0f] overflow-hidden shadow-2xl">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         {children}
     </div>
 );
@@ -32,7 +34,7 @@ const Label = (
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
-        className={`w-full border rounded-md p-3 sm:p-2 border-[#292828] bg-[#111111] text-white focus:outline-none focus:ring-1 focus:ring-gray-500 ${props.className}`}
+        className={`w-full border rounded-md p-3 sm:p-2 border-white/[0.08] bg-[#08080c] text-white placeholder:text-white/25 focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/30 transition-all ${props.className}`}
     />
 );
 
@@ -75,6 +77,12 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
 
     return (
         <div className="w-full max-w-md mx-auto px-4 sm:px-0">
+            <div className="flex justify-center mb-6">
+                <div className="flex items-center gap-2 border border-white/[0.08] rounded-full px-4 py-1.5 bg-white/5 backdrop-blur-sm">
+                    <Anchor className="w-3.5 h-3.5 text-blue-400" />
+                    <span className="text-white/60 text-xs font-medium tracking-wide">Ribe Sejlklub</span>
+                </div>
+            </div>
             <FormContainer>
                 {isOtpSent ? (
 
@@ -107,7 +115,7 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
                             <button
                                 type="submit"
                                 disabled={isPending2}
-                                className="w-full py-3 font-medium bg-white text-black rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
+                                className="w-full py-3 font-medium bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors disabled:opacity-50"
                             >
                                 {isPending2 ? dict.login.loginButtonLoading : dict.login.loginButton}
                             </button>
@@ -155,7 +163,7 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
                             <button
                                 type="submit"
                                 disabled={isPending1}
-                                className="w-full py-3 font-medium bg-white text-black rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
+                                className="w-full py-3 font-medium bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors disabled:opacity-50"
                             >
                                 {isPending1 ? dict.login.sendOtpButtonLoading : dict.login.sendOtpButton}
                             </button>

@@ -1,24 +1,9 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 interface StatProps {
     value: string;
     label: string;
 }
-
-const Stat: FC<StatProps> = ({ value, label }) => {
-    return (
-        <div className="flex flex-col items-center px-12 py-4 min-w-[200px]">
-            {/* Tallet - Stor, hvid og fed */}
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                {value}
-            </h2>
-            {/* Label - Lille, grå, uppercase og med lidt afstand mellem bogstaverne */}
-            <p className="text-[10px] md:text-xs font-bold text-neutral-500 uppercase tracking-[0.15em] mt-2">
-                {label}
-            </p>
-        </div>
-    );
-};
 
 export interface StatsSectionProps {
     stats: StatProps[];
@@ -26,17 +11,23 @@ export interface StatsSectionProps {
 
 const StatsSection: FC<StatsSectionProps> = ({ stats }) => {
     return (
-        <section className="w-full bg-[#111111] py-4 flex justify-center border border-neutral-800 mb-20">
-            <div className="flex flex-col lg:flex-row items-center lg:divide-x lg:divide-neutral-800">
-                {stats.map((stat, index) => (
-                    <Stat
-                        key={index}
-                        value={stat.value}
-                        label={stat.label}
-                    />
-                ))}
-            </div>
-        </section>
+        <div className="flex items-center justify-center gap-0 mt-14 border border-white/10 rounded-2xl px-2 py-4 bg-white/5 backdrop-blur-sm">
+            {stats.map((stat, index) => (
+                <React.Fragment key={index}>
+                    <div className="flex flex-col items-center px-10 sm:px-14">
+                        <span className="text-4xl sm:text-5xl font-bold text-white tabular-nums tracking-tight">
+                            {stat.value}
+                        </span>
+                        <span className="text-[11px] font-semibold text-white/50 uppercase tracking-[0.18em] mt-2 whitespace-nowrap">
+                            {stat.label}
+                        </span>
+                    </div>
+                    {index < stats.length - 1 && (
+                        <div className="w-px h-10 bg-white/15 flex-shrink-0" />
+                    )}
+                </React.Fragment>
+            ))}
+        </div>
     );
 };
 

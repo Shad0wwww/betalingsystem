@@ -51,6 +51,12 @@ export default function LandingPage(
                             </Link>
                         </div>
 
+                        <StatsSection stats={[
+                            { value: "100+", label: dict.landingpage.stats1 },
+                            { value: "50+",  label: dict.landingpage.stats2 },
+                            { value: "20+",  label: dict.landingpage.stats3 },
+                        ]} />
+
                     </div>
                 </div>
 
@@ -61,13 +67,8 @@ export default function LandingPage(
                     </div>
                     <span className="scroll-indicator__label">Scroll</span>
                 </div>
-            </section>
 
-            <StatsSection stats={[
-                { value: "100+", label: dict.landingpage.stats1 },
-                { value: "50+",  label: dict.landingpage.stats2 },
-                { value: "20+",  label: dict.landingpage.stats3 },
-            ]} />
+            </section>
 
             <div id="more">
                 <HowToPay dict={dict} />
