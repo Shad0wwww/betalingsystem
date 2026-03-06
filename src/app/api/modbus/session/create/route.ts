@@ -1,7 +1,7 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
 import { createStripePaymentSession } from "@/lib/stripe/CreateReservation";
-import { ActionType, MeterStatus } from "@prisma/client";
+import { ActionType, InvoiceStatus, MeterStatus } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -63,6 +63,17 @@ export async function POST(req: NextRequest) {
             startValue: latestReading?.value ?? 0,
             isActive: true,
         },
+    });
+
+    await prisma.invoice.updateMany({
+        where: { 
+            userId: userId,
+            status: InvoiceStatus.PENDING,
+            meterSessionId: null
+        },
+        data: {
+            meterSessionId: session.id
+        }
     });
 
     await prisma.auditLog.create({

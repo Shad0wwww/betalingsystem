@@ -57,6 +57,9 @@ model Invoice {
 
     InvoiceNumber String? @unique
 
+    meterSessionId Int?
+    meterSession   MeterSession? @relation(fields: [meterSessionId], references: [id])
+
     amount   Int
     currency String        @default("dkk")
     status   InvoiceStatus @default(PENDING)
@@ -105,6 +108,7 @@ model MeterSession {
     isActive  Boolean   @default(true)
 
     readings MeterReading[]
+    invoice  Invoice[]
 }
 
 model MeterReading {

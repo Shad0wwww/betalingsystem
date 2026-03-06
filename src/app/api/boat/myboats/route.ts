@@ -38,5 +38,6 @@ export async function GET(
         }
     });
 
+
     return NextResponse.json(boats , { status: 200 });
 }
