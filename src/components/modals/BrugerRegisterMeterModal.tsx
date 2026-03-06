@@ -105,8 +105,10 @@ export default function BrugerRegisterMeterModal({
                 throw new Error(data.error || "Der skete en fejl.");
             }
 
+            
             onSuccess?.();
             setOpen(false);
+            window.location.href = data.url; 
         } catch (err: any) {
             setError(err.message || "Der skete en fejl. Prøv igen.");
         } finally {

@@ -13,7 +13,6 @@ export async function DELETE(
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("Verifying token for logout:", cookie);
 
     const payload = await verifyJsonWebtoken(cookie);
 

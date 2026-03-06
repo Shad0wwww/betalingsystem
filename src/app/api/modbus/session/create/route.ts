@@ -1,6 +1,7 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
-import { MeterStatus } from "@prisma/client";
+import { createStripePaymentSession } from "@/lib/stripe/CreateReservation";
+import { ActionType, MeterStatus } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -64,5 +65,23 @@ export async function POST(req: NextRequest) {
         },
     });
 
-    return NextResponse.json({ session }, { status: 201 });
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.CONNECTED_METER,
+            details: `Bruger startede session på måler ${meter.id} (Båd: ${boat.kaldeNavn})`,
+        },
+    });
+
+    const url = await createStripePaymentSession({
+        userId,
+        email: (payload as any).email,
+        amount: 20000, 
+        description: `Reservation for måler ${meter.deviceId} (Båd: ${boat.kaldeNavn})`,
+        type: meter.type,
+    }).catch((err) => {
+        return NextResponse.json({ error: "Kunne ikke oprette betalingssession. Prøv igen." }, { status: 500 });
+    }) as { url: string } | undefined;
+
+    return NextResponse.json({ session, url: url?.url }, { status: 201 });
 }

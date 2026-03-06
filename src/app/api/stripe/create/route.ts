@@ -21,8 +21,6 @@ export async function POST(
     try {
         const body = await request.json() as CreatePaymentLinkBody;
 
-        console.log("Received payment link creation request with body:", body);
-
         if (!body?.amount || !body?.description || body?.type === undefined) {
             return NextResponse.json(
                 { error: "amount, description, and type are required." },

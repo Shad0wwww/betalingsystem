@@ -12,8 +12,6 @@ export default async function Page(props: {
 
     const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
     
-    console.log("DEBUG - Params:", params);
-    console.log("DEBUG - SearchParams:", searchParams);
 
     const email = searchParams.email;
 
@@ -24,7 +22,6 @@ export default async function Page(props: {
 
     return (
         <div>
-            {/* Vi sender den udtrukne email videre som prop */}
             <LandingLoginPage dict={dict} email={email as string || ""} />
         </div>
     );

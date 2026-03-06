@@ -1,5 +1,7 @@
 import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
 import prisma from "@/lib/prisma";
+import getStripe from "@/lib/stripe/Stripe";
+import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // Ends the user's active session
@@ -35,6 +37,16 @@ export async function POST(req: NextRequest) {
         where: { id: sessionId },
         data: { isActive: false, endTime: new Date() },
     });
+
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.DISCONNECTED_METER,
+            details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId})`,
+        },
+    });
+
+    
 
     return NextResponse.json({ session: updated });
 }

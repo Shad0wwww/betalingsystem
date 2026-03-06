@@ -190,6 +190,9 @@ enum ActionType {
     UPDATE_METER
     DELETE_METER
     LOGIN_OTP_SENT_SUCCESS
+
+    CONNECTED_METER
+    DISCONNECTED_METER
 }
 
 enum MeterStatus {

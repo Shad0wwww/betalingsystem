@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
         const limit = Math.min(100, Math.max(1, parseInt(request.nextUrl.searchParams.get("limit") ?? "20")));
         const offset = (page - 1) * limit;
 
-        console.log(`Fetching transactions for userId: ${userId}, page: ${page}, limit: ${limit}`);
 
         const [totalResult, allTransactions] = await Promise.all([
             prisma.$queryRaw<[{ count: bigint }]>`
