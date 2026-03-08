@@ -89,7 +89,7 @@ export default function RootLayout(
 						{children}
 					</main>
 					<Toaster position="top-center" />
-					<GoogleAnalytics gaId="G-ZZC8062EPQ" />
+					<GoogleAnalytics gaId="G-4BWD2KMZCY" />
 					<Footer params={params} />
 				</CookiesProvider>
 				
