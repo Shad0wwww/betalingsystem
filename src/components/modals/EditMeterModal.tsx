@@ -1,25 +1,23 @@
 'use client'
+
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import "@/components/modals/styles.css";
 import { MeterStatus, UtilityType } from "@prisma/client";
 
-export interface MeterData {
-    id?: string;
+export interface EditMeterData {
+    id: number;
     deviceId: string;
     status: MeterStatus;
-    location: string;
+    location: string | null;
     type: UtilityType;
 }
 
-const Field = ({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) => (
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div className="mb-4">
-        <label className="block text-zinc-400 font-medium text-sm mb-1.5">
-            {label}
-        </label>
+        <label className="block text-zinc-400 font-medium text-sm mb-1.5">{label}</label>
         {children}
-        {error && <p className="text-red-400 text-xs mt-1.5">{error}</p>}
     </div>
 );
 
@@ -31,26 +29,35 @@ const Select = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
     <select {...props} className="modal-input" />
 );
 
-export default function RegisterMeterModal({
-    onSuccess
-}: {
-    onSuccess: (newMeter: MeterData) => void;
-}) {
+interface EditMeterModalProps {
+    meter: EditMeterData | null;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    onSuccess: (updated: EditMeterData) => void;
+}
+
+export default function EditMeterModal({ meter, open, onOpenChange, onSuccess }: EditMeterModalProps) {
     const [deviceId, setDeviceId] = useState("");
     const [status, setStatus] = useState<MeterStatus>(MeterStatus.OFFLINE);
     const [location, setLocation] = useState("");
     const [type, setType] = useState<UtilityType>(UtilityType.ELECTRICITY);
-
-    const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Populate fields when meter changes
+    useEffect(() => {
+        if (meter) {
+            setDeviceId(meter.deviceId);
+            setStatus(meter.status);
+            setLocation(meter.location ?? "");
+            setType(meter.type);
+            setError(null);
+        }
+    }, [meter]);
+
+    // Reset error when dialog closes
     useEffect(() => {
         if (!open) {
-            setDeviceId("");
-            setStatus(MeterStatus.OFFLINE);
-            setLocation("");
-            setType(UtilityType.ELECTRICITY);
             setError(null);
             setIsLoading(false);
         }
@@ -58,6 +65,7 @@ export default function RegisterMeterModal({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!meter) return;
         setError(null);
 
         if (!deviceId.trim() || !location.trim()) {
@@ -68,11 +76,9 @@ export default function RegisterMeterModal({
         setIsLoading(true);
 
         try {
-            const res = await fetch("/api/modbus/register/meter", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+            const res = await fetch(`/api/modbus/meter/${meter.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     deviceId: deviceId.trim(),
                     status,
@@ -84,32 +90,30 @@ export default function RegisterMeterModal({
             const data = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.error || "Der skete en fejl under oprettelsen.");
+                throw new Error(data.error || "Der skete en fejl under opdateringen.");
             }
 
-            onSuccess(data.meter || { deviceId: deviceId.trim(), status, location: location.trim(), type });
-            setOpen(false);
+            onSuccess(data.meter);
+            onOpenChange(false);
         } catch (err: any) {
-            setError(err.message || "Der skete en fejl. Prøv igen senere.");
+            setError(err.message || "Der skete en fejl. Prøv igen.");
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <Dialog.Root open={open} onOpenChange={setOpen}>
-            <Dialog.Trigger className="px-4 py-1.5 rounded-md text-sm font-semibold transition-all bg-[#2563eb] hover:bg-[#1d4ed8] text-white border border-blue-600/40 shadow-md shadow-blue-900/30">
-                REGISTRÉR MÅLER
-            </Dialog.Trigger>
-
+        <Dialog.Root open={open} onOpenChange={onOpenChange}>
             <Dialog.Portal>
                 <Dialog.Overlay className="DialogOverlay" />
                 <Dialog.Content className="DialogContent">
                     <div className="mb-6">
                         <Dialog.Title className="text-white font-semibold text-xl mb-1">
-                            Opret ny måler
+                            Rediger måler
                         </Dialog.Title>
-                        <p className="text-zinc-500 text-sm">Udfyld oplysningerne for at registrere en ny måler.</p>
+                        <p className="text-zinc-500 text-sm">
+                            Opdatér oplysningerne for måler <span className="font-mono text-zinc-400">#{meter?.id}</span>.
+                        </p>
                     </div>
 
                     <form onSubmit={handleSubmit}>
@@ -163,12 +167,12 @@ export default function RegisterMeterModal({
                         )}
 
                         <button type="submit" disabled={isLoading} className="modal-submit-btn">
-                            {isLoading ? "Opretter..." : "Opret måler"}
+                            {isLoading ? "Gemmer..." : "Gem ændringer"}
                         </button>
                     </form>
 
                     <Dialog.Close asChild>
-                        <button className="IconButton" aria-label="Close" disabled={isLoading}>
+                        <button className="IconButton" aria-label="Luk" disabled={isLoading}>
                             <Cross2Icon />
                         </button>
                     </Dialog.Close>

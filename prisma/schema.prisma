@@ -132,7 +132,7 @@ model Meter {
     deviceId String         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
     type     UtilityType
     location String?
-    status   MeterStatus @default(INACTIVE)
+    status   MeterStatus @default(OFFLINE)
 
     sessions MeterSession[]
     readings MeterReading[]
@@ -224,7 +224,7 @@ enum ActionType {
 }
 
 enum MeterStatus {
-    ACTIVE
-    INACTIVE
+    ONLINE
+    OFFLINE
     MAINTENANCE
 }

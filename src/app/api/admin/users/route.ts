@@ -42,6 +42,7 @@ export async function GET(req: NextRequest) {
 
     const data = allLogs.map((user) => ({
         id: user.id,
+        name: user.name,
         email: user.email,
         phoneNumber: user.phone,
         role: user.role,

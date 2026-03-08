@@ -35,7 +35,7 @@ export async function GET(
             _all: true,
         },
         where: {
-            status: MeterStatus.ACTIVE,
+            status: MeterStatus.ONLINE,
         },
     });
 

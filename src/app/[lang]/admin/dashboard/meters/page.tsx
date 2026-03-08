@@ -4,10 +4,12 @@ import React from "react";
 import { get } from "@/components/admin/actions";
 import { Box } from "@/components/admin/Box";
 import { Activity, Zap } from "lucide-react";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
 import RegisterMeterModal from "@/components/modals/RegisterMeterModal";
+import EditMeterModal from "@/components/modals/EditMeterModal";
 import { MeterData } from "@/components/modals/RegisterMeterModal";
+import { getColumns, Meter } from "./columns";
+import { DataTable } from "./data-table";
+import type { EditMeterData } from "@/components/modals/EditMeterModal";
 
 // TODO: Tilpas denne interface til hvad API'et returnerer
 interface MeterStats {
@@ -59,13 +61,30 @@ export default function AdminPageMeters() {
     }, []);
 
     const [refreshKey, setRefreshKey] = React.useState(0);
+    const [editingMeter, setEditingMeter] = React.useState<EditMeterData | null>(null);
+    const [editOpen, setEditOpen] = React.useState(false);
 
     const handleMeterRegistered = (_newMeter: MeterData) => {
         setRefreshKey((k) => k + 1);
     };
 
+    const handleEdit = (meter: Meter) => {
+        setEditingMeter(meter as EditMeterData);
+        setEditOpen(true);
+    };
+
+    const handleEditSuccess = () => {
+        setRefreshKey((k) => k + 1);
+    };
+
     return (
         <div className="min-h-screen pb-12">
+            <EditMeterModal
+                meter={editingMeter}
+                open={editOpen}
+                onOpenChange={setEditOpen}
+                onSuccess={handleEditSuccess}
+            />
             {/* Page header */}
             <div className="mx-auto max-w-screen-xl px-4 md:px-20 pt-8 pb-6">
                 <div className="flex items-center gap-3 mb-1">
@@ -105,7 +124,7 @@ export default function AdminPageMeters() {
                         </div>
                         <RegisterMeterModal onSuccess={handleMeterRegistered} />
                     </div>
-                    <DataTable columns={columns} refreshKey={refreshKey} />
+                    <DataTable columns={getColumns(handleEdit)} refreshKey={refreshKey} />
                 </Box>
             </div>
         </div>

@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
     if (!meter) {
         return NextResponse.json({ error: "Måler ikke fundet" }, { status: 404 });
     }
-    if (meter.status !== MeterStatus.ACTIVE) {
-        return NextResponse.json({ error: "Måleren er ikke aktiv" }, { status: 409 });
+    if (meter.status !== MeterStatus.ONLINE) {
+        return NextResponse.json({ error: "Måleren er ikke online" }, { status: 409 });
     }
     if (meter.sessions.length > 0) {
         return NextResponse.json({ error: "Måleren er allerede i brug" }, { status: 409 });

@@ -41,11 +41,13 @@ export default async function middleware(request: NextRequest) {
     const user = token ? await GetUser.getUserFromJsonWebToken(token) : null;
     const userExist = await GetUser.doesUserExistByEmail(user?.email || "");
 
-    if (isDashboard && !isAuthenticated && !userExist) {
+    if (isDashboard && (!isAuthenticated || !userExist)) {
+        const redirectUrl = new URL("/login", request.url);
+        const response = NextResponse.redirect(redirectUrl);
         if (token) {
-            cookieStore.delete("auth_token");
+            response.cookies.delete("auth_token");
         }
-        return NextResponse.redirect(new URL("/login", request.url));
+        return response;
     }
 
     if (isAuthenticated && isLoginOrSignup && userExist) {
