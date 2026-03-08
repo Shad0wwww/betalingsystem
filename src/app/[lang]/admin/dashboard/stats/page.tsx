@@ -123,14 +123,16 @@ function ChartBox({ title, sub, children }: { title: string; sub: string; childr
 }
 
 // ── Skeleton chart ─────────────────────────────────────────────────────
+const SKELETON_HEIGHTS = [60, 87, 74, 83, 63, 52, 51, 55, 53, 89, 54, 73];
+
 function ChartSkeleton() {
     return (
         <div className="h-56 flex items-end gap-2 px-2">
-            {Array.from({ length: 12 }).map((_, i) => (
+            {SKELETON_HEIGHTS.map((h, i) => (
                 <div
                     key={i}
                     className="flex-1 rounded-t animate-pulse bg-zinc-800/60"
-                    style={{ height: `${30 + Math.random() * 60}%` }}
+                    style={{ height: `${h}%` }}
                 />
             ))}
         </div>

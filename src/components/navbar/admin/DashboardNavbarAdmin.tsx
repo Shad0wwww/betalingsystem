@@ -18,6 +18,7 @@ export default async function DashboardNavbarAdmin({ params }: Props) {
     const links = [
         { href: `/${params.lang}/admin/dashboard`, label: "Oversigt" },
         { href: `/${params.lang}/admin/dashboard/stats`, label: "Statistikker" },
+        { href: `/${params.lang}/admin/dashboard/bogforing`, label: "Bogføring" },
         { href: `/${params.lang}/admin/dashboard/logs`, label: "Logs" },
         { href: `/${params.lang}/admin/dashboard/users`, label: "Brugere" },
         { href: `/${params.lang}/admin/dashboard/meters`, label: "Målere" },
