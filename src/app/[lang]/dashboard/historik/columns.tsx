@@ -130,7 +130,7 @@ export const columns: ColumnDef<Payment>[] = [
                             <Copy className="h-3.5 w-3.5 text-zinc-500" />
                             Kopier ID
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-white">
+                        <DropdownMenuItem className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-white" onClick={() => window.open(`/dashboard/kvittering/${payment.kvitteringId}`, "_blank")}>
                             <ReceiptText className="h-3.5 w-3.5 text-zinc-500" />
                             Se kvittering
                         </DropdownMenuItem>

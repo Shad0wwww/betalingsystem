@@ -1,8 +1,18 @@
+import { getDictionary } from "../../dictionaries";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { History } from "lucide-react"
 
-export default function DemoPage() {
+
+type PageParams = Promise<{ lang: string }>;
+
+
+export default async function Page(
+    { params }: { params: PageParams }
+) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+
     return (
         <div className="min-h-screen pb-12">
             {/* Page header */}

@@ -11,6 +11,20 @@
         "section1Content": "Kammarslusen Ribe er et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har."
     },
     "dashboard": {
+        "kvittering": {
+            "title": "Kvittering",
+            "seller": "Sælger",
+            "invoiceNumber": "Fakturanummer",
+            "date": "Dato",
+            "customer": "Kunde",
+            "description": "Beskrivelse",
+            "price": "Pris",
+            "vatLabel": "Heraf moms (25%)",
+            "totalLabel": "Total inkl. moms",
+            "electricity": "El-forbrug",
+            "water": "Vand-forbrug",
+            "balanceDeposit": "Indbetaling til balance"
+        },
         "oversigt": {
             "latestTransactions": "Seneste transaktioner",
             "noTransactionsYet": "Du har ingen transaktioner endnu.",

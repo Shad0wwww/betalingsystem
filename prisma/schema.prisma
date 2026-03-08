@@ -33,7 +33,7 @@ model User {
 model AuditLog {
     id        String     @id @default(cuid())
     userId    String
-    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user      User       @relation(fields: [userId], references: [id])
     action    ActionType
     details   String?
     timestamp DateTime   @default(now())
@@ -176,27 +176,51 @@ enum Role {
 }
 
 enum ActionType {
+    // Auth & Brugerstyring
+    ACCOUNT_CREATED
+    ACCOUNT_DELETED
     LOGIN
     LOGOUT
-    EMAIL_CHANGE
-    RESERVED_BALANCE
-    PAYMENT_MADE
-    PAYMENT_FAILED
-    BOAT_ADDED
-    BOAT_REMOVED
-    LINKED_STRIPE
-    NAME_CHANGE
+    LOGIN_OTP_SENT
+    LOGIN_OTP_SENT_SUCCESS
     EMAIL_SEND_OTP_SUCCESS
     EMAIL_SEND_OTP_FAILED
+    
+    // Brugerændringer
+    EMAIL_CHANGE
+    NAME_CHANGE
+    PHONE_CHANGE
+    ROLE_CHANGED
+    
+    // Økonomi & Betaling
+    LINKED_STRIPE
     PAYMENT_LINK_CREATED
-    LOGIN_OTP_SENT
+    PAYMENT_MADE
+    PAYMENT_FAILED
+    REFUND_PROCESSED
+    RESERVED_BALANCE
+    INVOICE_CREATED
+    INVOICE_CANCELED
+    
+    // Både
+    BOAT_ADDED
+    BOAT_REMOVED
+    
+    // Måler-administration (Hardware)
     CREATE_METER
     UPDATE_METER
     DELETE_METER
-    LOGIN_OTP_SENT_SUCCESS
-
     CONNECTED_METER
     DISCONNECTED_METER
+    
+    // Måler-sessioner (Forbrug)
+    SESSION_STARTED
+    SESSION_ENDED
+    SESSION_FORCE_STOPPED
+    SESSION_AUTO_STOPPED
+    
+    // Admin handlinger
+    ADMIN_ACTION
 }
 
 enum MeterStatus {
