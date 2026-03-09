@@ -95,7 +95,7 @@ export default function AdminPage() {
                         label="Total omsætning"
                         value={
                             data?.totalRevenue != null
-                                ? `${data.totalRevenue.toLocaleString("da-DK")} kr.`
+                                ? `${(data.totalRevenue/100).toLocaleString("da-DK")} kr.`
                                 : undefined
                         }
                         icon={TrendingUp}

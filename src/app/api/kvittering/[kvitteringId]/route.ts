@@ -35,7 +35,23 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ kvit
         return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const fetchedInvoice = await fetchInvoiceFile(kvitteringId);
+    let fetchedInvoice;
+    try {
+        fetchedInvoice = await fetchInvoiceFile(kvitteringId);
+    } catch {
+        // Fallback: older invoices were stored under the paymentIntentId
+        const dbInvoice = await prisma.invoice.findFirst({
+            where: { InvoiceNumber: kvitteringId },
+            select: { stripePaymentIntentId: true },
+        });
+        if (dbInvoice?.stripePaymentIntentId) {
+            try {
+                fetchedInvoice = await fetchInvoiceFile(dbInvoice.stripePaymentIntentId);
+            } catch {
+                fetchedInvoice = null;
+            }
+        }
+    }
 
     if (!fetchedInvoice) {
         return NextResponse.json({ error: "Kvittering not found" }, { status: 404 });

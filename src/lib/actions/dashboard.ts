@@ -10,30 +10,48 @@ import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
 import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
 import { cookies } from "next/headers";
 
+// Reservation amount in øre (200 kr)
+const RESERVATION_AMOUNT = 20000;
+// Fallback rate used when no spot price is available on the latest meter reading
+const FALLBACK_RATE_PER_KWH = 3.0; // DKK per kWh
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
     if (!token) throw new Error("Unauthorized");
+
     const payload = await verifyJsonWebtoken(token);
     if (!payload || typeof payload === "string") throw new Error("Invalid token");
+
     const userId = (payload as any).userId || (payload as any).id;
     const email = (payload as any).email;
     if (!userId || !email) throw new Error("Unauthorized");
+
     return { userId, email };
 }
 
+// ─── User ────────────────────────────────────────────────────────────────────
+
 export async function getMe() {
     const { userId } = await getAuthPayload();
+
     const user = await prisma.user.findUnique({
         where: { id: userId },
         select: { id: true, email: true, name: true, phone: true, reservedBalance: true },
     });
     if (!user) throw new Error("User not found");
+
     return user;
 }
 
+// ─── Transactions / Invoices ─────────────────────────────────────────────────
+
+/** Returns the 2 latest non-reservation transactions for the sidebar. */
 export async function getLatestTransactions() {
     const { userId } = await getAuthPayload();
+
     return prisma.transaction.findMany({
         where: {
             userId,
@@ -44,19 +62,21 @@ export async function getLatestTransactions() {
     });
 }
 
+/** Returns paginated invoice history. Amounts are converted from øre to kr. */
 export async function getAllTransactions(page = 1, limit = 20) {
     const { userId } = await getAuthPayload();
     const offset = (page - 1) * limit;
-    const [totalResult, allTransactions] = await Promise.all([
+
+    const [totalResult, rows] = await Promise.all([
         prisma.$queryRaw<[{ count: bigint }]>`
             SELECT COUNT(*) FROM "Invoice" WHERE "userId" = ${userId}
         `,
         prisma.$queryRaw`
             SELECT
-                amount::float AS amount,
+                amount::float / 100 AS amount,
                 CASE
-                    WHEN status = 'PAID' THEN 'success'
-                    WHEN status IN ('FAILED', 'OVERDUE') THEN 'failed'
+                    WHEN status = 'PAID'                  THEN 'success'
+                    WHEN status IN ('FAILED', 'OVERDUE')  THEN 'failed'
                     ELSE 'pending'
                 END AS status,
                 COALESCE("InvoiceNumber", 'INV-' || id::text) AS "kvitteringId",
@@ -68,17 +88,35 @@ export async function getAllTransactions(page = 1, limit = 20) {
             LIMIT ${limit} OFFSET ${offset}
         `,
     ]);
+
     const total = Number(totalResult[0].count);
+    // Serialize BigInt values that Prisma returns from raw queries
     const data = JSON.parse(
-        JSON.stringify(allTransactions, (_, value) =>
-            typeof value === "bigint" ? value.toString() : value
-        )
+        JSON.stringify(rows, (_, v) => (typeof v === "bigint" ? v.toString() : v))
     );
+
     return { data, total, page, limit };
 }
 
+// ─── Meter readings ───────────────────────────────────────────────────────────
+
+export async function getLatestMeterReading(meterId: number) {
+    await getAuthPayload();
+
+    const reading = await prisma.meterReading.findFirst({
+        where: { meterId },
+        orderBy: { date: "desc" },
+        select: { value: true, date: true, spotPris: true },
+    });
+
+    return { reading: reading ?? null };
+}
+
+// ─── Meter sessions ───────────────────────────────────────────────────────────
+
 export async function getActiveSession() {
     const { userId } = await getAuthPayload();
+
     const session = await prisma.meterSession.findFirst({
         where: { userId, isActive: true },
         include: {
@@ -87,62 +125,118 @@ export async function getActiveSession() {
         },
         orderBy: { startTime: "desc" },
     });
+
     return { session: session ?? null };
 }
 
-export async function getLatestMeterReading(meterId: number) {
+export async function getAvailableMeters() {
     await getAuthPayload();
-    const reading = await prisma.meterReading.findFirst({
-        where: { meterId },
-        orderBy: { date: "desc" },
-        select: { value: true, date: true, spotPris: true },
+
+    const meters = await prisma.meter.findMany({
+        where: { status: MeterStatus.ONLINE },
+        select: { id: true, deviceId: true, location: true, type: true },
+        orderBy: { id: "asc" },
     });
-    return { reading: reading ?? null };
+
+    return { meters };
 }
 
-const RATE_PER_KWH = 3.0; // DKK per kWh
+export async function createMeterSession(meterId: number, boatId: number) {
+    const { userId, email } = await getAuthPayload();
+
+    // Validate meter
+    const meter = await prisma.meter.findUnique({
+        where: { id: meterId },
+        include: { sessions: { where: { isActive: true } } },
+    });
+    if (!meter) throw new Error("Måler ikke fundet");
+    if (meter.status !== MeterStatus.ONLINE) throw new Error("Måleren er ikke online");
+    if (meter.sessions.length > 0) throw new Error("Måleren er allerede i brug");
+
+    // Validate boat ownership
+    const boat = await prisma.boat.findFirst({ where: { id: boatId, userId } });
+    if (!boat) throw new Error("Båden tilhører ikke din konto");
+
+    // Use the latest reading as the session start value
+    const latestReading = await prisma.meterReading.findFirst({
+        where: { meterId },
+        orderBy: { date: "desc" },
+    });
+
+    // Create the session
+    const session = await prisma.meterSession.create({
+        data: {
+            meterId,
+            userId,
+            boatId,
+            type: meter.type,
+            startValue: latestReading?.value ?? 0,
+            isActive: true,
+        },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.CONNECTED_METER,
+            details: `Bruger startede session på måler ${meter.id} (Båd: ${boat.kaldeNavn})`,
+        },
+    });
+
+    // Create the Stripe reservation and link the resulting invoice to this session
+    const result = await createStripePaymentSession({
+        userId,
+        email,
+        amount: RESERVATION_AMOUNT,
+        description: `Reservation for måler ${meter.deviceId} (Båd: ${boat.kaldeNavn})`,
+        type: meter.type,
+    });
+
+    await prisma.invoice.updateMany({
+        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: null },
+        data: { meterSessionId: session.id },
+    });
+
+    return { session, url: (result as { url: string }).url };
+}
 
 export async function stopSession(sessionId: number) {
     const { userId } = await getAuthPayload();
 
-    // 1. Verify the session is still active — do NOT touch isActive yet
+    // 1. Verify the session is still active (don't modify anything yet)
     const session = await prisma.meterSession.findFirst({
         where: { id: sessionId, userId, isActive: true },
     });
     if (!session) throw new Error("Aktiv session ikke fundet");
 
-    // 2. Check that a pending invoice with a captured payment intent exists
-    //    BEFORE making any changes, so the session stays active on any error
+    // 2. Verify a paid reservation exists before touching any data
     const pendingInvoice = await prisma.invoice.findFirst({
         where: { userId, status: InvoiceStatus.PENDING, meterSessionId: sessionId },
         orderBy: { createdAt: "desc" },
     });
     if (!pendingInvoice?.stripePaymentIntentId) throw new Error("Kunne ikke finde en aktiv betalingsreservation");
 
-    // 3. Get the latest meter reading as the end value
+    // 3. Calculate consumption
     const latestReading = await prisma.meterReading.findFirst({
         where: { meterId: session.meterId },
         orderBy: { date: "desc" },
         select: { value: true, spotPris: true },
     });
-    const endValue = latestReading?.value ?? session.startValue;
-    const kwhUsed = Math.max(0, endValue - session.startValue);
-    const rate = latestReading?.spotPris ?? RATE_PER_KWH;
-    const amountUsed = Math.round(kwhUsed * rate * 100); // øre
+    const endValue   = latestReading?.value ?? session.startValue;
+    const kwhUsed    = Math.max(0, endValue - session.startValue);
+    const rate       = latestReading?.spotPris ?? FALLBACK_RATE_PER_KWH;
+    const amountUsed = Math.round(kwhUsed * rate * 100); // in øre
 
-    // 4. Capture the Stripe payment — still no DB changes if this fails
-    await takeMoneyUsed(
-        userId,
-        pendingInvoice.stripePaymentIntentId,
-        amountUsed,
-        pendingInvoice.amount,
-        session.type
-    );
+    // 4. Capture the Stripe payment (still no DB changes — rolls back cleanly on failure)
+    await takeMoneyUsed(userId, pendingInvoice.stripePaymentIntentId, amountUsed, pendingInvoice.amount, session.type);
 
-    // 5. Payment succeeded — now safely deactivate the session
+    // 5. Payment captured — safely close the session
     const endTime = new Date();
     const [updated] = await Promise.all([
-        prisma.meterSession.update({ where: { id: sessionId }, data: { isActive: false, endTime, endValue } }),
+        prisma.meterSession.update({
+            where: { id: sessionId },
+            data: { isActive: false, endTime, endValue },
+        }),
         prisma.auditLog.create({
             data: {
                 userId,
@@ -155,77 +249,18 @@ export async function stopSession(sessionId: number) {
     return { session: updated, kwhUsed, amountUsed };
 }
 
-export async function getAvailableMeters() {
-    await getAuthPayload();
-    const meters = await prisma.meter.findMany({
-        where: { status: MeterStatus.ONLINE },
-        select: { id: true, deviceId: true, location: true, type: true },
-        orderBy: { id: "asc" },
-    });
-    return { meters };
-}
+// ─── Boats ────────────────────────────────────────────────────────────────────
 
 export async function getMyBoats() {
     const { userId } = await getAuthPayload();
+
     return prisma.boat.findMany({
         where: { userId },
         select: { kaldeNavn: true, skibModel: true, id: true },
     });
 }
 
-export async function createMeterSession(meterId: number, boatId: number) {
-    const { userId, email } = await getAuthPayload();
-
-    const meter = await prisma.meter.findUnique({
-        where: { id: meterId },
-        include: { sessions: { where: { isActive: true } } },
-    });
-    if (!meter) throw new Error("Måler ikke fundet");
-    if (meter.status !== MeterStatus.ONLINE) throw new Error("Måleren er ikke online");
-    if (meter.sessions.length > 0) throw new Error("Måleren er allerede i brug");
-
-    const boat = await prisma.boat.findFirst({ where: { id: boatId, userId } });
-    if (!boat) throw new Error("Båden tilhører ikke din konto");
-
-    const latestReading = await prisma.meterReading.findFirst({
-        where: { meterId },
-        orderBy: { date: "desc" },
-    });
-
-    const session = await prisma.meterSession.create({
-        data: {
-            meterId,
-            userId,
-            boatId,
-            type: meter.type,
-            startValue: latestReading?.value ?? 0,
-            isActive: true,
-        },
-    });
-
-    await prisma.invoice.updateMany({
-        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: null },
-        data: { meterSessionId: session.id },
-    });
-
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.CONNECTED_METER,
-            details: `Bruger startede session på måler ${meter.id} (Båd: ${boat.kaldeNavn})`,
-        },
-    });
-
-    const result = await createStripePaymentSession({
-        userId,
-        email,
-        amount: 20000,
-        description: `Reservation for måler ${meter.deviceId} (Båd: ${boat.kaldeNavn})`,
-        type: meter.type,
-    });
-
-    return { session, url: (result as { url: string }).url };
-}
+// ─── Manual Stripe checkout (top-up / direct payment) ────────────────────────
 
 export async function createStripeCheckout(amount: number, description: string, type: UtilityType) {
     const { userId, email } = await getAuthPayload();
@@ -233,6 +268,7 @@ export async function createStripeCheckout(amount: number, description: string, 
     const user = await GetUser.byEmail(email);
     if (!user) throw new Error("User not found.");
 
+    // Ensure the user has a Stripe customer record
     let customerId = user.stripeCustomerId;
     if (!customerId) {
         const stripeCustomer = await createStripeCustomer(user.email, user.name, user.phone);
@@ -262,7 +298,7 @@ export async function createStripeCheckout(amount: number, description: string, 
         data: {
             userId,
             amount,
-            type: type as UtilityType,
+            type,
             stripeSessionId: session.id,
             status: InvoiceStatus.PENDING,
             dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

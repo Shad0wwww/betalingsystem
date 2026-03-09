@@ -17,20 +17,6 @@ interface UpdateMeterRequest {
     found_ids: number[];
 }
 
-
-/* 
-model Meter {
-    id       Int         @id @default(autoincrement())
-    deviceId String         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
-    type     UtilityType
-    location String?
-    status   MeterStatus @default(OFFLINE)
-
-    sessions MeterSession[]
-    readings MeterReading[]
-}
- */
-
 export async function POST(
     req: NextRequest
 ) {

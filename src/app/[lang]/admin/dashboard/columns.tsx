@@ -65,7 +65,7 @@ export const columns: ColumnDef<AuditLog>[] = [
                 <span
                     className={`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium border-zinc-500/50 bg-zinc-500/10 text-zinc-400`}
                 >
-                    {amount.toLocaleString("da-DK")} kr.
+                    {amount.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr.
                 </span>
             )
         }

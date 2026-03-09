@@ -37,7 +37,17 @@ export default async function KvitteringPage({ params }: KvitteringPageProps) {
 
     if (!invoice) redirect(`/${lang}/dashboard`);
 
-    const file = await fetchInvoiceFile(kvitteringId);
+    let file;
+    try {
+        file = await fetchInvoiceFile(kvitteringId);
+    } catch {
+        // Fallback: older invoices were stored under the paymentIntentId
+        if (invoice.stripePaymentIntentId) {
+            file = await fetchInvoiceFile(invoice.stripePaymentIntentId);
+        } else {
+            throw new Error("Kvittering ikke fundet");
+        }
+    }
     const html = await (file.Body as any)?.transformToString("utf-8") ?? "";
 
     return (

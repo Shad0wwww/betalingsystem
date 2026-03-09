@@ -20,7 +20,7 @@ export async function takeMoneyUsed(
         throw new Error("Failed to capture payment");
     });
 
-    await Promise.all([
+    const [updatedInvoice] = await Promise.all([
         prisma.invoice.update({
             where: { stripePaymentIntentId: paymentIntentId },
             data: {
@@ -45,14 +45,15 @@ export async function takeMoneyUsed(
         prisma.transaction.create({
             data: {
                 userId,
-                amount: amountUsed,
+                amount: amountUsed / 100,
                 type: TransactionType.PAID,
                 stripeSessionId: paymentIntentId,
             },
         }),
     ]);
 
-    sendInvoiceNotification(userId, amountUsed, capturedIntent.id, type).catch((error) => {
+    const fileKey = updatedInvoice.InvoiceNumber ?? capturedIntent.id;
+    sendInvoiceNotification(userId, amountUsed / 100, capturedIntent.id, fileKey, type).catch((error) => {
         console.error("Failed to send invoice notification:", error);
     });
 
@@ -63,6 +64,7 @@ async function sendInvoiceNotification(
     userId: string,
     amount: number,
     paymentIntentId: string,
+    fileKey: string,
     type: UtilityType
 ): Promise<void> {
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -76,13 +78,13 @@ async function sendInvoiceNotification(
         type,
         user.email,
         new Date(),
-        paymentIntentId
+        fileKey
     );
 
     await Promise.all([
         sendEmail(user.email, "Reservation Confirmed", emailContent),
         uploadFile({
-            name: `invoices/${paymentIntentId}.html`,
+            name: `invoices/${fileKey}.html`,
             buffer: Buffer.from(emailContent, "utf-8"),
         }),
     ]);
