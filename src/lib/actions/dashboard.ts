@@ -90,12 +90,17 @@ export async function getActiveSession() {
     return { session: session ?? null };
 }
 
-const RATE_PER_HOUR = 20 / 24;
-
-function calculateAmountUsed(startTime: Date, endTime: Date): number {
-    const durationInHours = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
-    return Math.round(durationInHours * RATE_PER_HOUR * 100);
+export async function getLatestMeterReading(meterId: number) {
+    await getAuthPayload();
+    const reading = await prisma.meterReading.findFirst({
+        where: { meterId },
+        orderBy: { date: "desc" },
+        select: { value: true, date: true },
+    });
+    return { reading: reading ?? null };
 }
+
+const RATE_PER_KWH = 3.0; // DKK per kWh
 
 export async function stopSession(sessionId: number) {
     const { userId } = await getAuthPayload();
@@ -104,14 +109,23 @@ export async function stopSession(sessionId: number) {
     });
     if (!session) throw new Error("Aktiv session ikke fundet");
 
+    // Get the latest meter reading as the end value
+    const latestReading = await prisma.meterReading.findFirst({
+        where: { meterId: session.meterId },
+        orderBy: { date: "desc" },
+    });
+    const endValue = latestReading?.value ?? session.startValue;
+    const kwhUsed = Math.max(0, endValue - session.startValue);
+    const amountUsed = Math.round(kwhUsed * RATE_PER_KWH * 100); // øre
+
     const endTime = new Date();
     const [updated] = await Promise.all([
-        prisma.meterSession.update({ where: { id: sessionId }, data: { isActive: false, endTime } }),
+        prisma.meterSession.update({ where: { id: sessionId }, data: { isActive: false, endTime, endValue } }),
         prisma.auditLog.create({
             data: {
                 userId,
                 action: ActionType.DISCONNECTED_METER,
-                details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId})`,
+                details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId}). Forbrug: ${kwhUsed.toFixed(3)} kWh`,
             },
         }),
     ]);
@@ -125,12 +139,12 @@ export async function stopSession(sessionId: number) {
     await takeMoneyUsed(
         userId,
         pendingInvoice.stripePaymentIntentId,
-        calculateAmountUsed(session.startTime, endTime),
+        amountUsed,
         pendingInvoice.amount,
-        UtilityType.ELECTRICITY
+        session.type
     );
 
-    return { session: updated };
+    return { session: updated, kwhUsed, amountUsed };
 }
 
 export async function getAvailableMeters() {

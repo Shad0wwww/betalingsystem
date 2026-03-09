@@ -4,15 +4,19 @@ import { useEffect, useState } from "react";
 import BrugerRegisterMeterModal from "../modals/BrugerRegisterMeterModal";
 import { UtilityType } from "@prisma/client";
 import { Zap, Droplets, MapPin, Anchor } from "lucide-react";
-import { getActiveSession, stopSession } from "@/lib/actions/dashboard";
+import { getActiveSession, stopSession, getLatestMeterReading } from "@/lib/actions/dashboard";
 
 interface ActiveSession {
     id: number;
+    meterId: number;
     startTime: Date;
+    startValue: number;
     type: UtilityType;
     meter: { deviceId: string; location: string | null; type: UtilityType };
     boat: { kaldeNavn: string; skibModel: string };
 }
+
+const RATE_PER_KWH = 3.0; // DKK per kWh — skal matche server action
 
 const typeConfig: Record<UtilityType, { label: string; Icon: React.ElementType; color: string }> = {
     ELECTRICITY: { label: "Elektricitet", Icon: Zap, color: "#facc15" },
@@ -33,14 +37,33 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
     const [isStopping, setIsStopping] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [elapsed, setElapsed] = useState("");
+    const [currentKwh, setCurrentKwh] = useState<number | null>(null);
 
     const fetchSession = () => {
         setLoading(true);
         getActiveSession()
-            .then((data) => setSession(data.session ?? null))
+            .then((data) => {
+                setSession(data.session ?? null);
+                if (data.session) {
+                    setCurrentKwh(null);
+                }
+            })
             .catch(() => setSession(null))
             .finally(() => setLoading(false));
     };
+
+    // Fetch latest kWh reading periodically
+    useEffect(() => {
+        if (!session) return;
+        const load = () => {
+            getLatestMeterReading(session.meterId)
+                .then((data) => { if (data.reading) setCurrentKwh(data.reading.value); })
+                .catch(() => {});
+        };
+        load();
+        const interval = setInterval(load, 30_000);
+        return () => clearInterval(interval);
+    }, [session?.meterId]);
 
     useEffect(() => {
         fetchSession();
@@ -92,6 +115,8 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
     }
 
     const { label, Icon, color } = typeConfig[session.meter.type];
+    const kwhUsed = currentKwh !== null ? Math.max(0, currentKwh - session.startValue) : null;
+    const estimatedCost = kwhUsed !== null ? kwhUsed * RATE_PER_KWH : null;
 
     return (
         <div className="flex flex-col gap-4">
@@ -132,6 +157,43 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
                     <span className="text-zinc-400">Båd</span>
                     <span className="ml-auto text-white">{session.boat.kaldeNavn}</span>
                 </div>
+
+                {/* kWh section */}
+                <div className="pt-1 border-t border-[#292828] space-y-2.5">
+                    <div className="flex items-center gap-2.5 text-sm">
+                        <Zap className="w-4 h-4 shrink-0 text-zinc-600" />
+                        <span className="text-zinc-400">Start kWh</span>
+                        <span className="ml-auto text-white font-mono tabular-nums">
+                            {session.startValue.toFixed(3)} kWh
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-sm">
+                        <Zap className="w-4 h-4 shrink-0 text-zinc-600" />
+                        <span className="text-zinc-400">Nuværende kWh</span>
+                        <span className="ml-auto text-white font-mono tabular-nums">
+                            {currentKwh !== null ? `${currentKwh.toFixed(3)} kWh` : "–"}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-sm">
+                        <Zap className="w-4 h-4 shrink-0 text-yellow-600" />
+                        <span className="text-zinc-400">Forbrug</span>
+                        <span className="ml-auto text-yellow-400 font-mono font-semibold tabular-nums">
+                            {kwhUsed !== null ? `${kwhUsed.toFixed(3)} kWh` : "–"}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-sm">
+                        <Zap className="w-4 h-4 shrink-0 text-zinc-600" />
+                        <span className="text-zinc-400">Est. pris</span>
+                        <span className="ml-auto text-white font-semibold tabular-nums">
+                            {estimatedCost !== null
+                                ? estimatedCost.toLocaleString("da-DK", { style: "currency", currency: "DKK" })
+                                : "–"}
+                        </span>
+                    </div>
+                </div>
             </div>
 
             {error && <p className="text-red-400 text-xs">{error}</p>}
@@ -147,3 +209,4 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         </div>
     );
 }
+
