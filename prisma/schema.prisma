@@ -119,6 +119,7 @@ model MeterReading {
 
     type  UtilityType
     value Float
+    volttage Float?
     date  DateTime    @default(now())
 
     sessionId Int?

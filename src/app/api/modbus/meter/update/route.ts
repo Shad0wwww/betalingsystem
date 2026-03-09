@@ -2,6 +2,9 @@ import prisma from "@/lib/prisma";
 import { MeterStatus, UtilityType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
+
+import {getElPriser} from "@/lib/El/kWH/GetkWHPrices";
+
 interface UpdateMeterRequest {
     devices: {
         [id: string]: {
@@ -57,6 +60,8 @@ export async function POST(
             where: { deviceId: id },
         });
 
+
+
         if (!inDatabase) {
             console.warn(`Device with ID ${id} not found in database. Skipping update.`);
             continue;
@@ -65,6 +70,9 @@ export async function POST(
         const [datePart, timePart] = device.timestamp.split(" ");
         const [day, month, year] = datePart.split("-");
         const parsedDate = new Date(`${year}-${month}-${day}T${timePart}`);
+
+        const elpriser = await getElPriser();
+        console.log("Elpriser", elpriser);
 
         await prisma.meter.update({
             where: { deviceId: id },
