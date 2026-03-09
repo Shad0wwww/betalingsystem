@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { User, Wallet, TrendingUp, Mail } from "lucide-react";
+import { getMe, getAllTransactions } from "@/lib/actions/dashboard";
 
 type UserData = {
     name: string;
@@ -21,11 +22,11 @@ export default function AccountSummaryBox() {
 
     useEffect(() => {
         Promise.all([
-            fetch("/api/user/me").then((r) => r.json()),
-            fetch("/api/transaktioner/all?limit=100").then((r) => r.json()),
+            getMe(),
+            getAllTransactions(1, 100),
         ])
             .then(([userData, txData]) => {
-                setUser(userData);
+                setUser(userData as UserData);
 
                 const now = new Date();
                 const txs: InvoiceRow[] = Array.isArray(txData?.data) ? txData.data : [];

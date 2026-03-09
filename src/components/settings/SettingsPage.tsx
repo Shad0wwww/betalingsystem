@@ -6,6 +6,8 @@ import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
 import RegisterShipModal from "../modals/RegisterShipModal";
 import ChangeEmail from "../modals/ChangeEmailModal";
+import { getMe, getMyBoats } from "@/lib/actions/dashboard";
+import { updateName, sendEmailChangeOtp } from "@/lib/actions/settings";
 
 // --- Types ---
 interface Ship {
@@ -30,44 +32,6 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
 const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-// --- API helpers ---
-async function fetchUserData(): Promise<UserData> {
-    const res = await fetch(`/api/user/me`);
-    if (!res.ok) throw new Error("Kunne ikke hente brugerdata");
-    return res.json();
-}
-
-async function updateUserFullName(name: string) {
-    const res = await fetch(`/api/user/update-name`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-    });
-    if (!res.ok) throw new Error("Kunne ikke opdatere navnet");
-    return res.json();
-}
-
-async function fetchUserShips(): Promise<Ship[]> {
-    const res = await fetch(`/api/boat/myboats`);
-    if (!res.ok) throw new Error("Kunne ikke hente skibe");
-    const data = await res.json();
-    return data.map((ship: any) => ({
-        id: ship.id,
-        name: ship.kaldeNavn,
-        model: ship.skibModel,
-    }));
-}
-
-async function requestEmailChangeOtp(newEmail: string) {
-    const res = await fetch(`/api/user/update-email/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newEmail }),
-    });
-    if (!res.ok) throw new Error("Kunne ikke sende OTP koder");
-    return res.json();
-}
-
 // --- Main component ---
 export default function SettingsClient({ dict }: { dict: any }) {
     const [loading, setLoading] = useState(true);
@@ -83,14 +47,14 @@ export default function SettingsClient({ dict }: { dict: any }) {
             setLoading(true);
             try {
                 const [userData, shipData] = await Promise.all([
-                    fetchUserData(),
-                    fetchUserShips(),
+                    getMe(),
+                    getMyBoats(),
                 ]);
                 if (isMounted) {
                     setName(userData.name);
                     setOldEmail(userData.email);
                     setEmail(userData.email);
-                    setShips(shipData);
+                    setShips(shipData.map((s: any) => ({ id: s.id, name: s.kaldeNavn, model: s.skibModel })));
                 }
             } catch {
                 toast.error("Der opstod en fejl ved hentning af data.");
@@ -104,7 +68,7 @@ export default function SettingsClient({ dict }: { dict: any }) {
 
     const handleSaveName = async () => {
         try {
-            await updateUserFullName(name);
+            await updateName(name);
             toast.success(dict.dashboard.settings.fullnameUpdatedToast);
         } catch {
             toast.error("Der skete en fejl. Prøv igen.");
@@ -118,7 +82,7 @@ export default function SettingsClient({ dict }: { dict: any }) {
     const handleEmailRequest = async () => {
         setIsRequestingEmail(true);
         try {
-            await requestEmailChangeOtp(email);
+            await sendEmailChangeOtp(email);
             toast.success("Engangskoder er sendt til begge emails!");
         } catch {
             toast.error("Der skete en fejl. Kunne ikke sende koder.");

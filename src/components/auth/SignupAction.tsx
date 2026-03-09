@@ -1,7 +1,11 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import prisma from '@/lib/prisma';
+import DoesEmailExist from '@/lib/users/DoesEmailExist';
+import { validatePhone } from '@/lib/users/Phone';
 import { validateEmail } from '../../lib/utils/Email';
+import { createStripeCustomer } from '@/lib/stripe/CreateCustomer';
 
 export default async function SignupAction(
     currentState: any,
@@ -14,51 +18,36 @@ export default async function SignupAction(
     const phoneCountry = data.get('phoneCountry') as string;
 
     const emailLower = email.toLowerCase();
-    //const turnstileToken = data.get('cf-turnstile-response') as string;
-    // if (!turnstileToken) {
-    //     return { error: "Sikkerhedstjek mangler. Prøv igen." };
-    // }
 
-    // const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         secret: process.env.CLOUDFLARE_SECRET_KEY ?? '', 
-    //         response: turnstileToken,
-    //     }),
-    // });
-
-    // const verification = await verifyRes.json();
-
-    // if (!verification.success) {
-    //     return { error: "Sikkerhedstjek fejlede. Venligst bekræft at du ikke er en robot." };
-    // }
+    if (!fullName || !emailLower) {
+        return { error: "Name and email are required" };
+    }
 
     if (!(await validateEmail(emailLower))) {
         return { error: "Invalid email" };
     }
-    
-    const res = await fetch(`${process.env.URL_BASE}/api/auth/signup`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+
+    const doesEmailExist = await DoesEmailExist(emailLower);
+    if (doesEmailExist) {
+        return { error: "Email already exists" };
+    }
+
+    const doesPhoneExist = await validatePhone(phone, phoneCountry);
+    if (doesPhoneExist) {
+        return { error: "Phone already exists" };
+    }
+
+    const customer = await createStripeCustomer(emailLower, fullName, phone);
+
+    await prisma.user.create({
+        data: {
             name: fullName,
             email: emailLower,
             phone,
             phoneCountry,
-        }),
-    })
-
-    if (!res.ok) {
-        const errorData = await res.json();
-        return { error: errorData.error || "An error occurred" };
-    }
-
-    const user = await res.json();
+            stripeCustomerId: customer.id,
+        },
+    });
 
     redirect('/login?email=' + encodeURIComponent(emailLower));
 

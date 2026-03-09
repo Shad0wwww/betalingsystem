@@ -1,11 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
-
-async function fetchLatestTransactions() {
-    const res = await fetch(`/api/transaktioner/latest`);
-    return res.json();
-}
+import { getLatestTransactions } from "@/lib/actions/dashboard";
 
 type Props = { dict: any };
 
@@ -14,7 +10,7 @@ export default function LatestTrans({ dict }: Props) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchLatestTransactions()
+        getLatestTransactions()
             .then((data) => setTransactions(Array.isArray(data) ? data : []))
             .catch(() => setTransactions([]))
             .finally(() => setLoading(false));

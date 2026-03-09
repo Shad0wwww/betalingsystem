@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import "@/components/modals/styles.css";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { confirmEmailChange } from "@/lib/actions/settings";
 
 // Ændret 'label' typen til ReactNode, så vi kan sende HTML/spans med ind
 const Field = ({ label, error, children }: { label: React.ReactNode; error?: string; children: React.ReactNode }) => (
@@ -59,20 +60,7 @@ export default function ChangeEmail(
 
         setIsLoading(true);
         try {
-
-            await fetch(`/api/user/update-email/godkend`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    oldCode: otpOld,
-                    newCode: otpNew,
-                    newEmail: newEmail,
-                })
-            }).then(res => {
-                if (!res.ok) throw new Error("Fejl ved godkendelse af email ændring");
-                return res.json();
-            });
-
+            await confirmEmailChange(otpOld, otpNew, newEmail!);
             setOpen(false);
         } catch (err) {
             setError("Der skete en fejl ved opdatering af email.");

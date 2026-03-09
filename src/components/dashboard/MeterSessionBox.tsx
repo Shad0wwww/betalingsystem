@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import BrugerRegisterMeterModal from "../modals/BrugerRegisterMeterModal";
 import { UtilityType } from "@prisma/client";
 import { Zap, Droplets, MapPin, Anchor } from "lucide-react";
-import { refresh } from "next/cache";
+import { getActiveSession, stopSession } from "@/lib/actions/dashboard";
 
 interface ActiveSession {
     id: number;
@@ -36,8 +36,7 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
 
     const fetchSession = () => {
         setLoading(true);
-        fetch("/api/modbus/session/active")
-            .then((r) => r.json())
+        getActiveSession()
             .then((data) => setSession(data.session ?? null))
             .catch(() => setSession(null))
             .finally(() => setLoading(false));
@@ -62,14 +61,7 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         setIsStopping(true);
         setError(null);
         try {
-            const res = await fetch("/api/modbus/session/stop", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ sessionId: session.id }),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || "Kunne ikke afbryde session.");
-            refresh();
+            await stopSession(session.id);
             setSession(null);
         } catch (err: any) {
             setError(err.message);

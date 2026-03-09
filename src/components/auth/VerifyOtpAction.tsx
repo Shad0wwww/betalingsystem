@@ -1,6 +1,10 @@
 "use server";
 
+import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
+import prisma from "@/lib/prisma";
 import { validateEmail } from "@/lib/utils/Email";
+import { verifyOTPCode } from "@/lib/utils/OTP";
+import { ActionType } from "@prisma/client";
 import { cookies } from "next/headers";
 
 export default async function VerifyOtpAction(
@@ -17,35 +21,63 @@ export default async function VerifyOtpAction(
         return { error: "Invalid email" };
     }
 
-    const res = await fetch(`${process.env.URL_BASE}/api/auth/otp`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-            email: emailLower,
-            code: codeUPPER
-        }),
-    });
-
-    if (!res.ok) {
-
-        const errorText = await res.text();
-
-        const errorData = errorText ? JSON.parse(errorText) : null;
-
-        return { error: errorData?.error || "An error occurred" };
-
+    if (!code || code.length !== 6) {
+        return { error: "Invalid code" };
     }
 
-    const token = await res.json();
+    const storedToken = await prisma.verificationToken.findUnique({
+        where: { identifier: emailLower },
+        select: { token: true, expires: true },
+    });
+
+    if (!storedToken) {
+        return { error: "No OTP found for this email" };
+    }
+
+    if (isExpired(storedToken.expires)) {
+        return { error: "OTP code has expired" };
+    }
+
+    const isValid = await verifyOTPCode(codeUPPER, storedToken.token);
+
+    if (!isValid) {
+        return { error: "Invalid OTP code" };
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { email: emailLower },
+        select: { id: true, role: true },
+    });
+
+    const token = await generateJsonWebtoken(
+        user!.id.toString(),
+        emailLower,
+        user!.role
+    );
+
+    await prisma.verificationToken.deleteMany({
+        where: { identifier: emailLower },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId: user!.id,
+            action: ActionType.LOGIN_OTP_SENT_SUCCESS,
+            details: `User logged in with OTP`,
+        },
+    });
 
     const cookieStore = await cookies();
-    cookieStore.set("auth_token", token.token, {
+    cookieStore.set("auth_token", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 24 * 1, 
+        maxAge: 60 * 60 * 24 * 1,
     });
 
     return { success: true };
+}
+
+function isExpired(expires: Date): boolean {
+    const tenMinutes = 10 * 60 * 1000;
+    const now = new Date().getTime();
+    return (now - expires.getTime()) > tenMinutes;
 }

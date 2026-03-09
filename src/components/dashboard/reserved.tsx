@@ -1,13 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { skelelonText } from "../utils/SkeletonCard";
+import { getMe } from "@/lib/actions/dashboard";
 
 type Props = { dict: any };
-
-async function fetchBalance() {
-    const res = await fetch(`/api/user/me`);
-    return res.json();
-}
 
 export default function Reserved({ dict }: Props) {
     const [balance, setBalance] = useState<number>(0);
@@ -15,7 +11,7 @@ export default function Reserved({ dict }: Props) {
 
     useEffect(() => {
         let mounted = true;
-        fetchBalance()
+        getMe()
             .then((data) => {
                 if (!mounted) return;
                 const bal = Number(data?.reservedBalance ?? 0);

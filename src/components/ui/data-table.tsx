@@ -22,7 +22,8 @@ import React from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    fetchUrl: string
+    fetchUrl?: string
+    fetchAction?: (page: number, limit: number) => Promise<{ data: TData[]; total: number }>
     limit?: number
     searchColumn?: string
     searchPlaceholder?: string
@@ -33,6 +34,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
     columns,
     fetchUrl,
+    fetchAction,
     limit = 20,
     searchColumn,
     searchPlaceholder = "Søg...",
@@ -52,24 +54,31 @@ export function DataTable<TData, TValue>({
     React.useEffect(() => {
         setLoading(true)
         setError(null)
-        const url = new URL(fetchUrl, window.location.origin)
-        url.searchParams.set("page", String(page))
-        url.searchParams.set("limit", String(limit))
 
-        fetch(url.toString(), {
-            credentials: "include",
-        })
-            .then((r) => {
-                if (!r.ok) throw new Error(`API fejl: ${r.status} ${r.statusText}`)
-                return r.json()
-            })
-            .then((res) => {
+        const load = fetchAction
+            ? fetchAction(page, limit).then((res) => {
                 setData(res.data ?? [])
                 setTotal(res.total ?? 0)
             })
+            : (() => {
+                const url = new URL(fetchUrl!, window.location.origin)
+                url.searchParams.set("page", String(page))
+                url.searchParams.set("limit", String(limit))
+                return fetch(url.toString(), { credentials: "include" })
+                    .then((r) => {
+                        if (!r.ok) throw new Error(`API fejl: ${r.status} ${r.statusText}`)
+                        return r.json()
+                    })
+                    .then((res) => {
+                        setData(res.data ?? [])
+                        setTotal(res.total ?? 0)
+                    })
+            })()
+
+        load
             .catch((err) => setError(err.message))
             .finally(() => setLoading(false))
-    }, [page, limit, fetchUrl, refreshKey])
+    }, [page, limit, fetchUrl, fetchAction, refreshKey])
 
     const table = useReactTable({
         data,

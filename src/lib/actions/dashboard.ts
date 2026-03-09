@@ -1,0 +1,259 @@
+"use server";
+
+import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import prisma from "@/lib/prisma";
+import { takeMoneyUsed } from "@/lib/stripe/TakeMoneyUsed";
+import { createStripePaymentSession } from "@/lib/stripe/CreateReservation";
+import getStripe from "@/lib/stripe/Stripe";
+import { GetUser } from "@/lib/users/GetUser";
+import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
+import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
+import { cookies } from "next/headers";
+
+async function getAuthPayload(): Promise<{ userId: string; email: string }> {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+    if (!token) throw new Error("Unauthorized");
+    const payload = await verifyJsonWebtoken(token);
+    if (!payload || typeof payload === "string") throw new Error("Invalid token");
+    const userId = (payload as any).userId || (payload as any).id;
+    const email = (payload as any).email;
+    if (!userId || !email) throw new Error("Unauthorized");
+    return { userId, email };
+}
+
+export async function getMe() {
+    const { userId } = await getAuthPayload();
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, email: true, name: true, phone: true, reservedBalance: true },
+    });
+    if (!user) throw new Error("User not found");
+    return user;
+}
+
+export async function getLatestTransactions() {
+    const { userId } = await getAuthPayload();
+    return prisma.transaction.findMany({
+        where: {
+            userId,
+            type: { notIn: [TransactionType.RESERVED, TransactionType.RESERVATION_RELEASED] },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 2,
+    });
+}
+
+export async function getAllTransactions(page = 1, limit = 20) {
+    const { userId } = await getAuthPayload();
+    const offset = (page - 1) * limit;
+    const [totalResult, allTransactions] = await Promise.all([
+        prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) FROM "Invoice" WHERE "userId" = ${userId}
+        `,
+        prisma.$queryRaw`
+            SELECT
+                amount::float AS amount,
+                CASE
+                    WHEN status = 'PAID' THEN 'success'
+                    WHEN status IN ('FAILED', 'OVERDUE') THEN 'failed'
+                    ELSE 'pending'
+                END AS status,
+                COALESCE("InvoiceNumber", 'INV-' || id::text) AS "kvitteringId",
+                TO_CHAR(COALESCE("paidAt", "createdAt"), 'YYYY-MM-DD') AS dato,
+                'payment' AS transaktion
+            FROM "Invoice"
+            WHERE "userId" = ${userId}
+            ORDER BY COALESCE("paidAt", "createdAt") DESC
+            LIMIT ${limit} OFFSET ${offset}
+        `,
+    ]);
+    const total = Number(totalResult[0].count);
+    const data = JSON.parse(
+        JSON.stringify(allTransactions, (_, value) =>
+            typeof value === "bigint" ? value.toString() : value
+        )
+    );
+    return { data, total, page, limit };
+}
+
+export async function getActiveSession() {
+    const { userId } = await getAuthPayload();
+    const session = await prisma.meterSession.findFirst({
+        where: { userId, isActive: true },
+        include: {
+            meter: { select: { deviceId: true, location: true, type: true } },
+            boat: { select: { kaldeNavn: true, skibModel: true } },
+        },
+        orderBy: { startTime: "desc" },
+    });
+    return { session: session ?? null };
+}
+
+const RATE_PER_HOUR = 20 / 24;
+
+function calculateAmountUsed(startTime: Date, endTime: Date): number {
+    const durationInHours = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
+    return Math.round(durationInHours * RATE_PER_HOUR * 100);
+}
+
+export async function stopSession(sessionId: number) {
+    const { userId } = await getAuthPayload();
+    const session = await prisma.meterSession.findFirst({
+        where: { id: sessionId, userId, isActive: true },
+    });
+    if (!session) throw new Error("Aktiv session ikke fundet");
+
+    const endTime = new Date();
+    const [updated] = await Promise.all([
+        prisma.meterSession.update({ where: { id: sessionId }, data: { isActive: false, endTime } }),
+        prisma.auditLog.create({
+            data: {
+                userId,
+                action: ActionType.DISCONNECTED_METER,
+                details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId})`,
+            },
+        }),
+    ]);
+
+    const pendingInvoice = await prisma.invoice.findFirst({
+        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: sessionId },
+        orderBy: { createdAt: "desc" },
+    });
+    if (!pendingInvoice?.stripePaymentIntentId) throw new Error("Kunne ikke finde en aktiv betalingsreservation");
+
+    await takeMoneyUsed(
+        userId,
+        pendingInvoice.stripePaymentIntentId,
+        calculateAmountUsed(session.startTime, endTime),
+        pendingInvoice.amount,
+        UtilityType.ELECTRICITY
+    );
+
+    return { session: updated };
+}
+
+export async function getAvailableMeters() {
+    await getAuthPayload();
+    const meters = await prisma.meter.findMany({
+        where: { status: MeterStatus.ONLINE },
+        select: { id: true, deviceId: true, location: true, type: true },
+        orderBy: { id: "asc" },
+    });
+    return { meters };
+}
+
+export async function getMyBoats() {
+    const { userId } = await getAuthPayload();
+    return prisma.boat.findMany({
+        where: { userId },
+        select: { kaldeNavn: true, skibModel: true, id: true },
+    });
+}
+
+export async function createMeterSession(meterId: number, boatId: number) {
+    const { userId, email } = await getAuthPayload();
+
+    const meter = await prisma.meter.findUnique({
+        where: { id: meterId },
+        include: { sessions: { where: { isActive: true } } },
+    });
+    if (!meter) throw new Error("Måler ikke fundet");
+    if (meter.status !== MeterStatus.ONLINE) throw new Error("Måleren er ikke online");
+    if (meter.sessions.length > 0) throw new Error("Måleren er allerede i brug");
+
+    const boat = await prisma.boat.findFirst({ where: { id: boatId, userId } });
+    if (!boat) throw new Error("Båden tilhører ikke din konto");
+
+    const latestReading = await prisma.meterReading.findFirst({
+        where: { meterId },
+        orderBy: { date: "desc" },
+    });
+
+    const session = await prisma.meterSession.create({
+        data: {
+            meterId,
+            userId,
+            boatId,
+            type: meter.type,
+            startValue: latestReading?.value ?? 0,
+            isActive: true,
+        },
+    });
+
+    await prisma.invoice.updateMany({
+        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: null },
+        data: { meterSessionId: session.id },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.CONNECTED_METER,
+            details: `Bruger startede session på måler ${meter.id} (Båd: ${boat.kaldeNavn})`,
+        },
+    });
+
+    const result = await createStripePaymentSession({
+        userId,
+        email,
+        amount: 20000,
+        description: `Reservation for måler ${meter.deviceId} (Båd: ${boat.kaldeNavn})`,
+        type: meter.type,
+    });
+
+    return { session, url: (result as { url: string }).url };
+}
+
+export async function createStripeCheckout(amount: number, description: string, type: UtilityType) {
+    const { userId, email } = await getAuthPayload();
+
+    const user = await GetUser.byEmail(email);
+    if (!user) throw new Error("User not found.");
+
+    let customerId = user.stripeCustomerId;
+    if (!customerId) {
+        const stripeCustomer = await createStripeCustomer(user.email, user.name, user.phone);
+        customerId = stripeCustomer.id;
+        await prisma.user.update({ where: { id: user.id }, data: { stripeCustomerId: customerId } });
+    }
+
+    const session = await getStripe().checkout.sessions.create({
+        customer: customerId,
+        payment_method_types: ["card"],
+        mode: "payment",
+        payment_intent_data: { capture_method: "manual" },
+        line_items: [{
+            price_data: {
+                currency: "dkk",
+                unit_amount: amount,
+                product_data: { name: description },
+            },
+            quantity: 1,
+        }],
+        success_url: `${process.env.URL_BASE}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.URL_BASE}/api/stripe/cancel`,
+        metadata: { userId, type },
+    });
+
+    await prisma.invoice.create({
+        data: {
+            userId,
+            amount,
+            type: type as UtilityType,
+            stripeSessionId: session.id,
+            status: InvoiceStatus.PENDING,
+            dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.PAYMENT_LINK_CREATED,
+            details: `User created a payment link for ${description} with amount ${amount}`,
+        },
+    });
+
+    return { url: session.url };
+}

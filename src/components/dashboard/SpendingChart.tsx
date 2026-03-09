@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { getAllTransactions } from "@/lib/actions/dashboard";
 
 type MonthData = {
     key: string;   // YYYY-MM
@@ -36,8 +37,7 @@ export default function SpendingChart() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/api/transaktioner/all?limit=500")
-            .then((r) => r.json())
+        getAllTransactions(1, 500)
             .then((txData) => {
                 const txs: InvoiceRow[] = Array.isArray(txData?.data) ? txData.data : [];
                 const paid = txs.filter((t) => t.status === "success");

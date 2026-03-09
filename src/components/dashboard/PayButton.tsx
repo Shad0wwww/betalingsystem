@@ -2,14 +2,7 @@
 import { useState } from "react";
 import { UtilityType } from "@prisma/client";
 import { Loader2 } from "lucide-react";
-
-async function createPaymentLink(amount: number, description: string, type: UtilityType) {
-    return await fetch(`/api/stripe/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, description, type }),
-    });
-}
+import { createStripeCheckout } from "@/lib/actions/dashboard";
 
 export default function PayButton(
     { amount, description, type, dict }: { amount: number; description: string; type: UtilityType; dict: any }
@@ -19,9 +12,8 @@ export default function PayButton(
     const handleClick = async () => {
         setLoading(true);
         try {
-            const res = await createPaymentLink(amount * 100, description, type);
-            if (res.ok) {
-                const data = await res.json();
+            const data = await createStripeCheckout(amount * 100, description, type);
+            if (data?.url) {
                 window.location.href = data.url;
             }
         } finally {

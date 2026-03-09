@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import "@/components/modals/styles.css";
 import { UtilityType } from "@prisma/client";
+import { getAvailableMeters, getMyBoats, createMeterSession } from "@/lib/actions/dashboard";
 
 interface AvailableMeter {
     id: number;
@@ -65,13 +66,12 @@ export default function BrugerRegisterMeterModal({
 
         setIsFetching(true);
         Promise.all([
-            fetch("/api/modbus/meter/available").then((r) => r.json()),
-            fetch("/api/boat/myboats").then((r) => r.json()),
+            getAvailableMeters(),
+            getMyBoats(),
         ])
             .then(([meterRes, boatRes]) => {
                 setMeters(meterRes.meters ?? []);
-                // myboats returns an array directly
-                setBoats(Array.isArray(boatRes) ? boatRes : (boatRes.boats ?? []));
+                setBoats(Array.isArray(boatRes) ? boatRes : []);
             })
             .catch(() => setError("Kunne ikke hente data. Prøv igen."))
             .finally(() => setIsFetching(false));
@@ -88,24 +88,14 @@ export default function BrugerRegisterMeterModal({
 
         setIsLoading(true);
         try {
-            const res = await fetch("/api/modbus/session/create", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    meterId: Number(selectedMeter),
-                    boatId: Number(selectedBoat),
-                }),
-            });
+            const data = await createMeterSession(
+                Number(selectedMeter),
+                Number(selectedBoat),
+            );
 
-            const data = await res.json();
-            if (!res.ok) {
-                throw new Error(data.error || "Der skete en fejl.");
-            }
-
-            
             onSuccess?.();
             setOpen(false);
-            window.location.href = data.url; 
+            if (data.url) window.location.href = data.url;
         } catch (err: any) {
             setError(err.message || "Der skete en fejl. Prøv igen.");
         } finally {
