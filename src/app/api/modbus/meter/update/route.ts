@@ -1,0 +1,86 @@
+import prisma from "@/lib/prisma";
+import { MeterStatus, UtilityType } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+
+interface UpdateMeterRequest {
+    devices: {
+        [id: string]: {
+            V: number;
+            kWH: number;
+            Type: UtilityType;
+            timestamp: string;
+        };
+    };
+    found_ids: number[];
+}
+
+
+/* 
+model Meter {
+    id       Int         @id @default(autoincrement())
+    deviceId String         @unique // Modbus ID (Kan nu ændres uden at smadre historik!)
+    type     UtilityType
+    location String?
+    status   MeterStatus @default(OFFLINE)
+
+    sessions MeterSession[]
+    readings MeterReading[]
+}
+ */
+
+export async function POST(
+    req: NextRequest
+) {
+    
+    const apiKey = req.headers.get("Authorization")?.replace("Bearer ", "");
+
+    if (!apiKey) {
+        return NextResponse.json({ error: "Missing API key" }, { status: 401 });
+    }
+
+    const data = (await req.json()) as UpdateMeterRequest;
+
+    if (!data || !data.devices || typeof data.devices !== "object") {
+        console.error("Invalid request body:", data);
+        return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    }
+
+    for (const [id, device] of Object.entries(data.devices)) {
+        console.log(`Updating device ${id} with data:`, device);
+
+        if (!device.V || !device.kWH || !device.Type || !device.timestamp) {
+            console.error(`Missing fields for device ${id}:`, device);
+            continue;
+        }
+
+        const inDatabase = await prisma.meter.findUnique({
+            where: { deviceId: id },
+        });
+
+        if (!inDatabase) {
+            console.warn(`Device with ID ${id} not found in database. Skipping update.`);
+            continue;
+        }
+
+        const [datePart, timePart] = device.timestamp.split(" ");
+        const [day, month, year] = datePart.split("-");
+        const parsedDate = new Date(`${year}-${month}-${day}T${timePart}`);
+
+        await prisma.meter.update({
+            where: { deviceId: id },
+            data: {
+                status: MeterStatus.ONLINE,
+                readings: {
+                    create: {
+                        type: device.Type,
+                        value: device.kWH,
+                        date: parsedDate,
+                    },
+                },
+            },
+        });
+    }
+
+
+    return NextResponse.json({ message: "Meter updated successfully" }, { status: 200 });
+}
