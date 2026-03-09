@@ -71,8 +71,14 @@ export async function POST(
         const [day, month, year] = datePart.split("-");
         const parsedDate = new Date(`${year}-${month}-${day}T${timePart}`);
 
-        const elpriser = await getElPriser();
-        console.log("Elpriser", elpriser);
+        let spotPris: number | undefined = undefined;
+        try {
+            const elpriser = await getElPriser();
+            spotPris = elpriser.prisLigenu.pris;
+            console.log("Elpriser", elpriser);
+        } catch (err) {
+            console.warn("Could not fetch electricity prices (non-critical):", err);
+        }
 
         await prisma.meter.update({
             where: { deviceId: id },
@@ -82,6 +88,8 @@ export async function POST(
                     create: {
                         type: device.Type,
                         value: device.kWH,
+                        volttage: device.V,
+                        spotPris: spotPris,
                         date: parsedDate,
                     },
                 },

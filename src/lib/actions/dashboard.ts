@@ -95,7 +95,7 @@ export async function getLatestMeterReading(meterId: number) {
     const reading = await prisma.meterReading.findFirst({
         where: { meterId },
         orderBy: { date: "desc" },
-        select: { value: true, date: true },
+        select: { value: true, date: true, spotPris: true },
     });
     return { reading: reading ?? null };
 }
@@ -104,20 +104,42 @@ const RATE_PER_KWH = 3.0; // DKK per kWh
 
 export async function stopSession(sessionId: number) {
     const { userId } = await getAuthPayload();
+
+    // 1. Verify the session is still active — do NOT touch isActive yet
     const session = await prisma.meterSession.findFirst({
         where: { id: sessionId, userId, isActive: true },
     });
     if (!session) throw new Error("Aktiv session ikke fundet");
 
-    // Get the latest meter reading as the end value
+    // 2. Check that a pending invoice with a captured payment intent exists
+    //    BEFORE making any changes, so the session stays active on any error
+    const pendingInvoice = await prisma.invoice.findFirst({
+        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: sessionId },
+        orderBy: { createdAt: "desc" },
+    });
+    if (!pendingInvoice?.stripePaymentIntentId) throw new Error("Kunne ikke finde en aktiv betalingsreservation");
+
+    // 3. Get the latest meter reading as the end value
     const latestReading = await prisma.meterReading.findFirst({
         where: { meterId: session.meterId },
         orderBy: { date: "desc" },
+        select: { value: true, spotPris: true },
     });
     const endValue = latestReading?.value ?? session.startValue;
     const kwhUsed = Math.max(0, endValue - session.startValue);
-    const amountUsed = Math.round(kwhUsed * RATE_PER_KWH * 100); // øre
+    const rate = latestReading?.spotPris ?? RATE_PER_KWH;
+    const amountUsed = Math.round(kwhUsed * rate * 100); // øre
 
+    // 4. Capture the Stripe payment — still no DB changes if this fails
+    await takeMoneyUsed(
+        userId,
+        pendingInvoice.stripePaymentIntentId,
+        amountUsed,
+        pendingInvoice.amount,
+        session.type
+    );
+
+    // 5. Payment succeeded — now safely deactivate the session
     const endTime = new Date();
     const [updated] = await Promise.all([
         prisma.meterSession.update({ where: { id: sessionId }, data: { isActive: false, endTime, endValue } }),
@@ -129,20 +151,6 @@ export async function stopSession(sessionId: number) {
             },
         }),
     ]);
-
-    const pendingInvoice = await prisma.invoice.findFirst({
-        where: { userId, status: InvoiceStatus.PENDING, meterSessionId: sessionId },
-        orderBy: { createdAt: "desc" },
-    });
-    if (!pendingInvoice?.stripePaymentIntentId) throw new Error("Kunne ikke finde en aktiv betalingsreservation");
-
-    await takeMoneyUsed(
-        userId,
-        pendingInvoice.stripePaymentIntentId,
-        amountUsed,
-        pendingInvoice.amount,
-        session.type
-    );
 
     return { session: updated, kwhUsed, amountUsed };
 }

@@ -117,10 +117,11 @@ model MeterReading {
     meterId Int
     meter   Meter @relation(fields: [meterId], references: [id])
 
-    type  UtilityType
-    value Float
+    type     UtilityType
+    value    Float
     volttage Float?
-    date  DateTime    @default(now())
+    spotPris Float?      // DKK/kWh inkl. moms på tidspunktet for aflæsningen
+    date     DateTime   @default(now())
 
     sessionId Int?
     session   MeterSession? @relation(fields: [sessionId], references: [id])

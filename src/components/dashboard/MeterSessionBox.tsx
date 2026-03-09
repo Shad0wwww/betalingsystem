@@ -16,7 +16,7 @@ interface ActiveSession {
     boat: { kaldeNavn: string; skibModel: string };
 }
 
-const RATE_PER_KWH = 3.0; // DKK per kWh — skal matche server action
+const FALLBACK_RATE_PER_KWH = 3.0; // DKK per kWh — bruges hvis spotpris ikke er tilgængeligt
 
 const typeConfig: Record<UtilityType, { label: string; Icon: React.ElementType; color: string }> = {
     ELECTRICITY: { label: "Elektricitet", Icon: Zap, color: "#facc15" },
@@ -38,6 +38,7 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
     const [error, setError] = useState<string | null>(null);
     const [elapsed, setElapsed] = useState("");
     const [currentKwh, setCurrentKwh] = useState<number | null>(null);
+    const [spotPris, setSpotPris] = useState<number | null>(null);
 
     const fetchSession = () => {
         setLoading(true);
@@ -57,7 +58,12 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         if (!session) return;
         const load = () => {
             getLatestMeterReading(session.meterId)
-                .then((data) => { if (data.reading) setCurrentKwh(data.reading.value); })
+                .then((data) => {
+                    if (data.reading) {
+                        setCurrentKwh(data.reading.value);
+                        if (data.reading.spotPris != null) setSpotPris(data.reading.spotPris);
+                    }
+                })
                 .catch(() => {});
         };
         load();
@@ -116,7 +122,8 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
 
     const { label, Icon, color } = typeConfig[session.meter.type];
     const kwhUsed = currentKwh !== null ? Math.max(0, currentKwh - session.startValue) : null;
-    const estimatedCost = kwhUsed !== null ? kwhUsed * RATE_PER_KWH : null;
+    const rate = spotPris ?? FALLBACK_RATE_PER_KWH;
+    const estimatedCost = kwhUsed !== null ? kwhUsed * rate : null;
 
     return (
         <div className="flex flex-col gap-4">
@@ -181,6 +188,16 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
                         <span className="text-zinc-400">Forbrug</span>
                         <span className="ml-auto text-yellow-400 font-mono font-semibold tabular-nums">
                             {kwhUsed !== null ? `${kwhUsed.toFixed(3)} kWh` : "–"}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-sm">
+                        <Zap className="w-4 h-4 shrink-0 text-zinc-600" />
+                        <span className="text-zinc-400">Spotpris</span>
+                        <span className="ml-auto font-mono tabular-nums text-xs">
+                            {spotPris !== null
+                                ? <span className="text-yellow-400">{spotPris.toFixed(2)} kr/kWh</span>
+                                : <span className="text-zinc-500">{FALLBACK_RATE_PER_KWH.toFixed(2)} kr/kWh (fast)</span>}
                         </span>
                     </div>
 
