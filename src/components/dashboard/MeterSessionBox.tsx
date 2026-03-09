@@ -8,7 +8,7 @@ import { getActiveSession, stopSession } from "@/lib/actions/dashboard";
 
 interface ActiveSession {
     id: number;
-    startTime: string;
+    startTime: Date;
     type: UtilityType;
     meter: { deviceId: string; location: string | null; type: UtilityType };
     boat: { kaldeNavn: string; skibModel: string };
@@ -19,7 +19,7 @@ const typeConfig: Record<UtilityType, { label: string; Icon: React.ElementType; 
     WATER: { label: "Vand", Icon: Droplets, color: "#60a5fa" },
 };
 
-function formatDuration(startTime: string) {
+function formatDuration(startTime: Date) {
     const diff = Math.floor((Date.now() - new Date(startTime).getTime()) / 1000);
     const h = Math.floor(diff / 3600);
     const m = Math.floor((diff % 3600) / 60);
