@@ -13,8 +13,11 @@ export async function takeMoneyUsed(
     type: UtilityType
 ): Promise<{ success: true; capturedAmount: number }> {
 
+    const amountUsedWithMoms = amountUsed * 1.25;
+    const roundedAmountUsedWithMoms = Math.ceil(amountUsedWithMoms);
+    console.log(amountUsed, originalReservedAmount, amountUsedWithMoms, roundedAmountUsedWithMoms);
     const capturedIntent = await getStripe().paymentIntents.capture(paymentIntentId, {
-        amount_to_capture: amountUsed,
+        amount_to_capture: roundedAmountUsedWithMoms,
     }).catch((error) => {
         console.error("Failed to capture Stripe payment intent:", error);
         throw new Error("Failed to capture payment");
@@ -25,7 +28,7 @@ export async function takeMoneyUsed(
             where: { stripePaymentIntentId: paymentIntentId },
             data: {
                 status: InvoiceStatus.PAID,
-                amount: amountUsed,
+                amount: roundedAmountUsedWithMoms,
                 paidAt: new Date(),
             },
         }),
@@ -39,13 +42,13 @@ export async function takeMoneyUsed(
             data: {
                 userId,
                 action: ActionType.PAYMENT_MADE,
-                details: `Captured ${amountUsed} DKK (reserved ${originalReservedAmount} DKK) for PaymentIntent ${paymentIntentId}`,
+                details: `Captured ${roundedAmountUsedWithMoms} DKK (reserved ${originalReservedAmount} DKK) for PaymentIntent ${paymentIntentId}`,
             },
         }),
         prisma.transaction.create({
             data: {
                 userId,
-                amount: amountUsed / 100,
+                amount: roundedAmountUsedWithMoms / 100,
                 type: TransactionType.PAID,
                 stripeSessionId: paymentIntentId,
             },
@@ -53,11 +56,11 @@ export async function takeMoneyUsed(
     ]);
 
     const fileKey = updatedInvoice.InvoiceNumber ?? capturedIntent.id;
-    sendInvoiceNotification(userId, amountUsed / 100, capturedIntent.id, fileKey, type).catch((error) => {
+    sendInvoiceNotification(userId, roundedAmountUsedWithMoms / 100, capturedIntent.id, fileKey, type).catch((error) => {
         console.error("Failed to send invoice notification:", error);
     });
 
-    return { success: true, capturedAmount: amountUsed };
+    return { success: true, capturedAmount: roundedAmountUsedWithMoms };
 }
 
 async function sendInvoiceNotification(
