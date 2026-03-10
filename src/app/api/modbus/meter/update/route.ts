@@ -27,6 +27,10 @@ export async function POST(
         return NextResponse.json({ error: "Missing API key" }, { status: 401 });
     }
 
+    if (apiKey !== process.env.APIKEY) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
     const data = (await req.json()) as UpdateMeterRequest;
 
     if (!data || !data.devices || typeof data.devices !== "object") {
@@ -35,7 +39,6 @@ export async function POST(
     }
 
     for (const [id, device] of Object.entries(data.devices)) {
-        console.log(`Updating device ${id} with data:`, device);
 
         if (!device.V || !device.kWH || !device.Type || !device.timestamp) {
             console.error(`Missing fields for device ${id}:`, device);
@@ -61,7 +64,6 @@ export async function POST(
         try {
             const elpriser = await getElPriser();
             spotPris = elpriser.prisLigenu.pris;
-            console.log("Elpriser", elpriser);
         } catch (err) {
             console.warn("Could not fetch electricity prices (non-critical):", err);
         }
