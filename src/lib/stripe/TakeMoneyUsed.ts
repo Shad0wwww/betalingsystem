@@ -15,7 +15,6 @@ export async function takeMoneyUsed(
 
     const amountUsedWithMoms = amountUsed * 1.25;
     const roundedAmountUsedWithMoms = Math.ceil(amountUsedWithMoms);
-    console.log(amountUsed, originalReservedAmount, amountUsedWithMoms, roundedAmountUsedWithMoms);
     const capturedIntent = await getStripe().paymentIntents.capture(paymentIntentId, {
         amount_to_capture: roundedAmountUsedWithMoms,
     }).catch((error) => {
