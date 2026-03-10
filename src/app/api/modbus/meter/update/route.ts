@@ -27,6 +27,10 @@ export async function POST(
         return NextResponse.json({ error: "Missing API key" }, { status: 401 });
     }
 
+    if (apiKey !== process.env.APIKEY) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
     const data = (await req.json()) as UpdateMeterRequest;
 
     if (!data || !data.devices || typeof data.devices !== "object") {
