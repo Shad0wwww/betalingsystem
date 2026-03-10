@@ -1,6 +1,6 @@
 {
     "landingpage": {
-        "badge": "Offizielles Zahlungssystem",
+        "badge": "Offizielles Zahlungsportal",
         "undertitel": "Kammerslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen erleichtert, die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert auch der Schleuse, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht.",
         "learnmore": "Mehr erfahren",
         "signup": "Registrieren",
@@ -11,6 +11,20 @@
         "section1Content": "Kammerslusen Ribe ist ein Zahlungssystem für die Schiffe in Ribe. Es ist ein System, das es den Schiffen erleichtert, die Durchfahrt durch die Schleuse zu bezahlen, und es erleichtert auch der Schleuse, den Überblick zu behalten, welche Schiffe bezahlt haben und welche nicht."
     },
     "dashboard": {
+        "kvittering": {
+            "title": "Quittung",
+            "seller": "Verkäufer",
+            "invoiceNumber": "Rechnungsnummer",
+            "date": "Datum",
+            "customer": "Kunde",
+            "description": "Beschreibung",
+            "price": "Preis",
+            "vatLabel": "Davon MwSt. (25%)",
+            "totalLabel": "Gesamt inkl. MwSt.",
+            "electricity": "Stromverbrauch",
+            "water": "Wasserverbrauch",
+            "balanceDeposit": "Einzahlung auf Guthaben"
+        },
         "oversigt": {
             "latestTransactions": "Letzte Transaktionen",
             "noTransactionsYet": "Du hast noch keine Transaktionen.",
@@ -75,9 +89,11 @@
         "emailPlaceholder": "beispiel@gmail.com",
         "phoneLabel": "Telefonnummer",
         "phonePlaceholder": "12345678",
-        "tosLabel": "Nutzungsbedingungen",
+        "tosLabel": "Nutzungsbedingungen & Datenschutzrichtlinie",
         "tosPrefix": "Ich akzeptiere",
         "tosLink": "Nutzungsbedingungen",
+        "tosAnd": " und ",
+        "privacyLink": "Datenschutzrichtlinie",
         "submit": "Konto erstellen",
         "submitLoading": "Konto wird erstellt...",
         "haveAccount": "Hast du bereits ein Konto?",
@@ -215,39 +231,39 @@
                 "description": "Wir nutzen Stripe, einen der weltweit zuverlässigsten Zahlungsanbieter, um sicherzustellen, dass deine Daten während des gesamten Prozesses geschützt sind."
             },
             "step3": {
-                "title": "Genie\u00dfe die Fahrt",
-                "description": "Nach der Fahrt rechnen wir deinen tats\u00e4chlichen Verbrauch automatisch ab. Solltest du zu viel reserviert haben, erstatten wir den \u00dcberschuss sofort zur\u00fcck."
+                "title": "Genieße die Fahrt",
+                "description": "Nach der Fahrt rechnen wir deinen tatsächlichen Verbrauch automatisch ab. Solltest du zu viel reserviert haben, erstatten wir den Überschuss sofort zurück."
             }
         }
     },
     "email": {
         "otp": {
-            "title": "Ihr Einmalcode",
-            "subtitle": "Geben Sie diesen Code ein, um sich anzumelden",
-            "validFor": "Der Code ist 10 Minuten g\u00fcltig",
-            "warning": "Teilen Sie diesen Code niemals mit anderen \u2013 auch nicht mit uns!"
+            "title": "Dein Einmalcode",
+            "subtitle": "Gib diesen Code ein, um dich anzumelden",
+            "validFor": "Der Code ist 10 Minuten gültig",
+            "warning": "Teile diesen Code niemals mit anderen – auch nicht mit uns!"
         },
         "invoice": {
             "title": "Rechnung",
-            "seller": "Verk\u00e4ufer",
+            "seller": "Verkäufer",
             "invoiceNumber": "Rechnungsnummer",
             "date": "Datum",
             "customer": "Kunde",
             "description": "Beschreibung",
             "price": "Preis",
-            "vatLabel": "MwSt. (25%)",
+            "vatLabel": "Davon MwSt. (25%)",
             "totalLabel": "Gesamt inkl. MwSt.",
             "electricity": "Stromverbrauch",
             "water": "Wasserverbrauch",
-            "balanceDeposit": "Guthabenaufladung",
+            "balanceDeposit": "Einzahlung auf Guthaben",
             "infoTitle": "Wichtig",
-            "infoText": "Dies ist Ihr Kaufbeleg. Bewahren Sie diese E-Mail mindestens 2 Jahre als Nachweis f\u00fcr Ihr Reklamationsrecht auf.",
+            "infoText": "Dies ist deine Dokumentation für den Kauf. Speichere diese E-Mail mindestens 2 Jahre lang als Nachweis für dein Reklamationsrecht.",
             "withdrawalTitle": "Widerrufsrecht",
-            "withdrawalText": "Da es sich um eine sofortige Lieferung von Energie handelt, erlischt das Widerrufsrecht bei Inanspruchnahme der Leistung."
+            "withdrawalText": "Da es sich um die sofortige Lieferung von Energie auf dein Guthaben handelt, akzeptierst du mit dem Kauf, dass das Widerrufsrecht erlischt, sobald die Leistung in Anspruch genommen wird."
         },
         "reservation": {
-            "title": "Reservierungsbest\u00e4tigung",
-            "intro": "Wir haben einen Betrag auf Ihrer Zahlungskarte reserviert.",
+            "title": "Reservierungsbestätigung",
+            "intro": "Wir haben einen Betrag auf deiner Zahlungskarte reserviert.",
             "notCharged": "Das Geld wurde noch nicht abgebucht.",
             "provider": "Anbieter",
             "reservationNumber": "Reservierungsnummer",
@@ -257,11 +273,11 @@
             "reserved": "Reserviert",
             "electricity": "Stromverbrauch",
             "water": "Wasserverbrauch",
-            "maxAmount": "Max. Abbuchungsbetrag",
-            "howTitle": "Wie funktioniert es?",
-            "howText": "Der Betrag ist auf Ihrem Bankkonto reserviert. Nach Ihrem Verbrauch buchen wir genau das Verbrauchte ab und geben den Rest frei.",
+            "maxAmount": "Max. Betrag zur Abbuchung",
+            "howTitle": "Wie funktioniert das?",
+            "howText": "Der Betrag ist auf deinem Bankkonto reserviert. Sobald du den Verbrauch abschließt, buchen wir genau den verbrauchten Betrag ab und geben den Rest frei.",
             "invoiceTitle": "Rechnung",
-            "invoiceText": "Ihre endg\u00fcltige Rechnung wird nach Abschluss des Verbrauchs gesendet."
+            "invoiceText": "Deine endgültige Rechnung wird gesendet, sobald der Verbrauch abgeschlossen ist."
         }
     }
 }
