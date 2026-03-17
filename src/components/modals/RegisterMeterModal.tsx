@@ -132,6 +132,7 @@ export default function RegisterMeterModal({
                                 <option value={MeterStatus.ONLINE}>Online</option>
                                 <option value={MeterStatus.OFFLINE}>Offline</option>
                                 <option value={MeterStatus.MAINTENANCE}>Vedligeholdelse</option>
+                                <option value={MeterStatus.INUSE}>I brug</option>
                             </Select>
                         </Field>
 
