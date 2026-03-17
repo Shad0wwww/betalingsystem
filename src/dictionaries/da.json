@@ -1,14 +1,14 @@
 {
     "landingpage": {
-        "badge": "Officiel betalingsportal",
-        "undertitel": "Kammarslusen Ribe et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har.",
+        "badge": "Uofficiel betalingsportal",
+        "undertitel": "Kammarslusen Ribe er et betalingssystem for skibe, der passerer slusen i Ribe. Det gør det nemt for bådejere at betale for gennemsejlingen, og giver slusepersonalet et klart overblik over, hvilke skibe der har betalt, og hvilke der ikke har.",
         "learnmore": "Lær mere",
         "signup": "Tilmeld dig",
-        "stats1": "Skibe gennem slusen",
-        "stats2": "Betalinger registreret",
+        "stats1": "Ledige pladser",
+        "stats2": "El-pris kr/kWh",
         "stats3": "Aktive kontoer",
         "section1Title": "Hvad er Kammarslusen Ribe?",
-        "section1Content": "Kammarslusen Ribe er et betalingsystem for skibene i Ribe. Det er et system, der gør det nemt for skibene at betale for at komme igennem slusen, og det gør det også nemt for slusen at holde styr på, hvilke skibe der har betalt, og hvilke der ikke har."
+        "section1Content": "Kammarslusen Ribe er et betalingssystem for skibe, der passerer slusen i Ribe. Det gør det nemt for bådejere at betale for gennemsejlingen, og giver slusepersonalet et klart overblik over, hvilke skibe der har betalt, og hvilke der ikke har."
     },
     "dashboard": {
         "kvittering": {
@@ -22,7 +22,7 @@
             "vatLabel": "Heraf moms (25%)",
             "totalLabel": "Total inkl. moms",
             "electricity": "El-forbrug",
-            "water": "Vand-forbrug",
+            "water": "Vandforbrug",
             "balanceDeposit": "Indbetaling til balance"
         },
         "oversigt": {
@@ -40,10 +40,10 @@
         },
         "historik": {},
         "settings": {
-            "fullname": "Ændre dit fulde navn",
+            "fullname": "Skift dit fulde navn",
             "fullnameDescription": "Opdatér dit fulde navn, som vises på din profil og i dine transaktioner.",
             "saveChanges": "Gem ændringer",
-            "email": "Ændre din e-mailadresse",
+            "email": "Skift din e-mailadresse",
             "emailDescription": "Opdatér din e-mailadresse, som bruges til at logge ind på din konto og modtage vigtige meddelelser.",
             "deleteAccount": "Slet konto",
             "deleteAccountDescription": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes.",
@@ -51,7 +51,7 @@
             "fullnamePlaceholder": "Dit fulde navn",
             "emailPlaceholder": "Din e-mailadresse",
             "registerBoat": "Registrér et nyt skib",
-            "registerBoatDescription": "Register et nyt skib, så vi kan holde styr på det i vores skib, og så vi sikre at du er den rigtige der benytter sig af strømmen.",
+            "registerBoatDescription": "Registrér et nyt skib, så vi kan holde styr på det i vores system og sikre, at det er den rette person, der benytter strømstikket.",
             "registerBoatButton": "Registrér skib",
             "fullnameUpdatedToast": "Dit fulde navn er blevet opdateret!",
             "emailUpdatedToast": "Din e-mailadresse er blevet opdateret!",
@@ -65,8 +65,8 @@
     },
     "login": {
         "title": "Log ind",
-        "subtitle": "Indtast din email for at modtage en engangskode",
-        "emailLabel": "Email",
+        "subtitle": "Indtast din e-mail for at modtage en engangskode",
+        "emailLabel": "E-mail",
         "emailPlaceholder": "navn@domæne.dk",
         "sendOtpButton": "Send engangskode",
         "sendOtpButtonLoading": "Sender kode...",
@@ -78,18 +78,18 @@
         "otpPlaceholder": "123456",
         "loginButton": "Log ind",
         "loginButtonLoading": "Logger ind...",
-        "backToEmail": "Tilbage til email"
+        "backToEmail": "Tilbage til e-mail"
     },
     "signup": {
         "title": "Opret konto",
-        "subtitle": "Indtast dine oplysninger herunder for at oprette din konto",
+        "subtitle": "Udfyld dine oplysninger herunder for at oprette din konto",
         "fullNameLabel": "Fulde navn",
         "fullNamePlaceholder": "John Doe",
-        "emailLabel": "Email",
+        "emailLabel": "E-mail",
         "emailPlaceholder": "eksempel@gmail.com",
         "phoneLabel": "Telefonnummer",
         "phonePlaceholder": "12345678",
-        "tosLabel": "Vilkår & Privatlivspolitik",
+        "tosLabel": "Vilkår og privatlivspolitik",
         "tosPrefix": "Jeg accepterer",
         "tosLink": "Servicevilkår",
         "tosAnd": " og ",
@@ -109,56 +109,56 @@
         "information": "Information",
         "termsLink": "Servicevilkår",
         "privacyLink": "Privatlivspolitik",
-        "disclaimer": "Disclaimer: Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration."
+        "disclaimer": "Disclaimer: Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og udelukkende til demonstration."
     },
     "termsofservice": {
         "title": "Servicevilkår",
         "undertitle": "Introduktion",
-        "introduction": "Velkommen til Ribe Sejlklubs betalingssystem. Ved at bruge vores tjenester accepterer du at overholde disse servicevilkår. Læs venligst disse vilkår omhyggeligt, da de indeholder vigtige oplysninger om dine rettigheder og forpligtelser.",
+        "introduction": "Velkommen til Ribe Sejlklubs betalingssystem. Ved at bruge vores tjenester accepterer du at overholde disse servicevilkår. Læs venligst vilkårene omhyggeligt, da de indeholder vigtige oplysninger om dine rettigheder og forpligtelser.",
         "publisher": {
             "title": "Udgiver",
-            "name": "Skoleprojekt - Gruppe [Indsæt Nummer/Navn]"
+            "name": "Skoleprojekt – Gruppe Magnus og Kasper"
         },
         "section1": {
             "title": "§1 Levering",
-            "content": "Når du foretager et køb gennem vores betalingssystem, vil vi bestræbe os på at levere den købte service så hurtigt som muligt. I de fleste tilfælde vil leveringen ske inden for få minutter efter købet."
+            "content": "Når du foretager et køb gennem vores betalingssystem, bestræber vi os på at levere den købte ydelse så hurtigt som muligt. I de fleste tilfælde vil leveringen ske inden for få minutter efter købet."
         },
         "section2": {
-            "title": "§2 Fortrydelsesret og Refusioner",
-            "content": "Da der er tale om levering af digitalt indhold, som ikke leveres på et fysisk medium, accepterer du ved købets gennemførelse, at fortrydelsesretten bortfalder, så snart tjenesten påbegyndes. Alle salg er som udgangspunkt endelige, men kontakt support@pins.dk ved tekniske fejl."
+            "title": "§2 Fortrydelsesret og refusioner",
+            "content": "Da der er tale om levering af digitalt indhold, som ikke leveres på et fysisk medium, accepterer du ved købets gennemførelse, at fortrydelsesretten bortfalder, så snart ydelsen påbegyndes. Alle salg er som udgangspunkt endelige, men kontakt support@pins.dk ved tekniske fejl."
         },
         "section3": {
             "title": "§3 Ansvarsfraskrivelse",
-            "content": "Ribe Sejlklub og dets betalingssystem leveres 'som det er' uden nogen form for garanti. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
+            "content": "Ribe Sejlklubs betalingssystem leveres \"som beset\" uden nogen form for garanti. Vi fraskriver os ethvert ansvar for eventuelle skader eller tab, der måtte opstå som følge af brugen af vores tjenester."
         },
         "section4": {
-            "title": "§4 Skoleprojekt Disclaimer",
-            "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og kun til demonstration. Brug af systemet sker på eget ansvar."
+            "title": "§4 Skoleprojekt-disclaimer",
+            "content": "Dette er et skoleprojekt og ikke et officielt produkt fra Ribe Sejlklub. Alle oplysninger og funktioner er fiktive og udelukkende til demonstration. Brug af systemet sker på eget ansvar."
         },
         "section5": {
             "title": "§5 Ændringer af vilkår",
             "content": "Vi forbeholder os retten til at ændre disse vilkår. Eventuelle ændringer vil blive offentliggjort på hjemmesiden, og det er dit ansvar at holde dig opdateret."
         },
         "section6": {
-            "title": "§6 Lovvalg og jurisdiktion",
+            "title": "§6 Lovvalg og værneting",
             "content": "Disse servicevilkår er underlagt dansk lovgivning. Enhver tvist skal indbringes for de danske domstole."
         },
         "section7": {
-            "title": "§7 Kontaktinformation",
-            "content": "Har du spørgsmål til disse vilkår, kan du kontakte os på support@pins.dk."
+            "title": "§7 Kontaktoplysninger",
+            "content": "Har du spørgsmål til disse vilkår, er du velkommen til at kontakte os på support@pins.dk."
         }
     },
     "privacypolicy": {
-        "title": "Privatlivspolitik (Privacy Policy)",
+        "title": "Privatlivspolitik",
         "undertitle": "Introduktion til databehandling",
-        "introduction": "Denne privatlivspolitik beskriver, hvordan Ribe Sejlklub indsamler, bruger og beskytter dine personoplysninger, når du benytter vores betalingssystem. Vi tager din data-sikkerhed alvorligt og overholder gældende lovgivning, herunder GDPR.",
+        "introduction": "Denne privatlivspolitik beskriver, hvordan Ribe Sejlklub indsamler, bruger og beskytter dine personoplysninger, når du benytter vores betalingssystem. Vi tager din datasikkerhed alvorligt og overholder gældende lovgivning, herunder GDPR.",
         "publisher": {
             "title": "Dataansvarlig",
-            "name": "Skoleprojekt - Gruppe [Indsæt Nummer/Navn]"
+            "name": "Skoleprojekt – Gruppe Magnus og Kasper"
         },
         "section1": {
             "title": "§1 Hvilke data indsamler vi?",
-            "content": "Når du opretter en konto og foretager et køb, indsamler vi de nødvendige oplysninger for at kunne levere tjenesten. Dette inkluderer typisk dit navn, din e-mailadresse, tekniske netværksdata (såsom IP-adresse af sikkerhedshensyn) og din købshistorik."
+            "content": "Når du opretter en konto og foretager et køb, indsamler vi de nødvendige oplysninger for at kunne levere ydelsen. Dette inkluderer typisk dit navn, din e-mailadresse, tekniske netværksdata (såsom IP-adresse af sikkerhedshensyn) og din købshistorik."
         },
         "section2": {
             "title": "§2 Tredjeparter og datadeling",
@@ -166,36 +166,36 @@
         },
         "section3": {
             "title": "§3 Cookies og sporing",
-            "content": "Vores hjemmeside bruger udelukkende nødvendige cookies (tekniske cookies) til at håndtere dit login og sikre, at betalingssystemet fungerer korrekt. Vi anvender ikke markedsførings- eller sporing-cookies fra tredjepart."
+            "content": "Vores hjemmeside bruger udelukkende nødvendige cookies (tekniske cookies) til at håndtere dit login og sikre, at betalingssystemet fungerer korrekt. Vi anvender ikke markedsførings- eller sporings-cookies fra tredjepart."
         },
         "section4": {
             "title": "§4 Sikkerhedsforanstaltninger",
-            "content": "For at sikre den højest mulige beskyttelse af dine data og forhindre uautoriseret adgang, krypteres al datatrafik. Det er desuden et internt krav, at alle vores administratorer og udviklere anvender to-faktor-godkendelse (2FA) for adgang til kritiske systemer."
+            "content": "For at sikre den bedst mulige beskyttelse af dine data og forhindre uautoriseret adgang krypteres al datatrafik. Det er desuden et internt krav, at alle vores administratorer og udviklere anvender to-faktor-godkendelse (2FA) ved adgang til kritiske systemer."
         },
         "section5": {
-            "title": "§5 Opbevaring af kvitteringer (Bogføringsloven)",
+            "title": "§5 Opbevaring af kvitteringer (bogføringsloven)",
             "content": "Selvom du sletter din konto, er vi i henhold til den danske bogføringslov forpligtet til at opbevare kvitteringer og tilhørende transaktionsdata (herunder din e-mailadresse knyttet til købet) i 5 år fra udgangen af det pågældende regnskabsår. Disse data opbevares udelukkende til regnskabsmæssige formål."
         },
         "section6": {
             "title": "§6 Dine rettigheder og sletning af data",
-            "content": "Du har til enhver tid ret til at få indsigt i, hvilke data vi har registreret om dig. Du kan slette din konto under 'Indstillinger'. Ved sletning fjernes dine personlige oplysninger permanent fra vores aktive databaser, dog med undtagelse af de data, der er omfattet af bogføringsloven (se §5)."
+            "content": "Du har til enhver tid ret til indsigt i de data, vi har registreret om dig. Du kan slette din konto under \"Indstillinger\". Ved sletning fjernes dine personoplysninger permanent fra vores aktive databaser, dog med undtagelse af de data, der er omfattet af bogføringsloven (se §5)."
         },
         "section7": {
-            "title": "§7 Skoleprojekt Disclaimer",
+            "title": "§7 Skoleprojekt-disclaimer",
             "content": "Dette system og denne privatlivspolitik er udviklet som et skoleprojekt og udgør ikke et officielt eller juridisk bindende dokument for Ribe Sejlklub. Alle oplysninger, datahåndteringer og funktioner er fiktive og udelukkende til demonstration."
         },
         "section8": {
-            "title": "§8 Kontaktinformation",
-            "content": "Har du spørgsmål til vores behandling af dine data, eller ønsker du at gøre brug af dine rettigheder, kan du kontakte os på support@pins.dk."
+            "title": "§8 Kontaktoplysninger",
+            "content": "Har du spørgsmål til vores behandling af dine data, eller ønsker du at gøre brug af dine rettigheder, er du velkommen til at kontakte os på support@pins.dk."
         }
     },
     "faq": {
         "title": "Har du spørgsmål?",
-        "undertitle": "Her er nogle af de mest almindelige spørgsmål, vi får fra vores brugere. Hvis du ikke finder svar på dit spørgsmål her, er du velkommen til at kontakte os direkte.",
+        "undertitle": "Her er nogle af de mest almindelige spørgsmål, vi modtager fra vores brugere. Finder du ikke svar på dit spørgsmål her, er du velkommen til at kontakte os direkte.",
         "questions": [
             {
                 "question": "Hvordan opretter jeg en konto?",
-                "answer": "Du kan oprette en konto ved at klikke på 'Tilmeld dig' knappen på forsiden og udfylde registreringsformularen med dine oplysninger."
+                "answer": "Du kan oprette en konto ved at klikke på knappen \"Tilmeld dig\" på forsiden og udfylde registreringsformularen med dine oplysninger."
             },
             {
                 "question": "Hvordan betaler jeg for at komme igennem slusen?",
@@ -207,24 +207,24 @@
             },
             {
                 "question": "Hvordan kan jeg se min betalingshistorik?",
-                "answer": "Du kan se din betalingshistorik ved at logge ind på din konto og navigere til 'Historik' sektionen."
+                "answer": "Du kan se din betalingshistorik ved at logge ind på din konto og navigere til sektionen \"Historik\"."
             },
             {
                 "question": "Hvordan kan jeg ændre mine kontooplysninger?",
-                "answer": "Du kan ændre dine kontooplysninger ved at logge ind på din konto og gå til 'Indstillinger' sektionen, hvor du kan opdatere dine oplysninger."
+                "answer": "Du kan ændre dine kontooplysninger ved at logge ind på din konto og gå til sektionen \"Indstillinger\", hvor du kan opdatere dine oplysninger."
             }
         ]
     },
     "HowToPay": {
         "title": "Betalingsprocessen",
-        "subtitle": "Nemt og sikkert - El betaling gjort enkelt",
+        "subtitle": "Nemt og sikkert – elbetaling gjort enkelt",
         "description": "Vi bruger Stripe til at håndtere alle transaktioner, så du kan fokusere på sejladsen.",
         "footer": "Betalingen sikres af",
-        "footer1": "Bank-grade sikkerhed • Krypteret forbindelse",
+        "footer1": "Banksikkerhed • Krypteret forbindelse",
         "steps": {
             "step1": {
-                "title": "Reserver beløb",
-                "description": "Når du reserverer en sluse, reserverer vi et beløb på dit kort for at sikre, at du har dækning til sejladsen. Dette beløb refunderes automatisk efter sejladsen."
+                "title": "Reservér beløb",
+                "description": "Når du reserverer en sluse, reserverer vi et beløb på dit kort for at sikre, at du har dækning til sejladsen. Beløbet frigives automatisk efter gennemsejlingen."
             },
             "step2": {
                 "title": "Gennemfør betaling",
@@ -232,20 +232,20 @@
             },
             "step3": {
                 "title": "Nyd sejladsen",
-                "description": "Efter sejladsen afregner vi automatisk dit faktiske forbrug. Hvis du har reserveret for meget, refunderer vi det overskydende beløb med det samme."
+                "description": "Efter sejladsen afregner vi automatisk dit faktiske forbrug. Hvis det reserverede beløb overstiger det faktiske forbrug, refunderer vi differencen med det samme."
             }
         }
     },
     "email": {
         "otp": {
-            "title": "Din Engangskode",
+            "title": "Din engangskode",
             "subtitle": "Indtast denne kode for at logge ind",
             "validFor": "Koden er gyldig i 10 minutter",
-            "warning": "Del aldrig denne kode med andre \u2013 heller ikke med os!"
+            "warning": "Del aldrig denne kode med andre – heller ikke med os!"
         },
         "invoice": {
             "title": "Faktura",
-            "seller": "S\u00e6lger",
+            "seller": "Sælger",
             "invoiceNumber": "Fakturanummer",
             "date": "Dato",
             "customer": "Kunde",
@@ -254,17 +254,17 @@
             "vatLabel": "Heraf moms (25%)",
             "totalLabel": "Total inkl. moms",
             "electricity": "El-forbrug",
-            "water": "Vand-forbrug",
+            "water": "Vandforbrug",
             "balanceDeposit": "Indbetaling til balance",
             "infoTitle": "Vigtigt",
-            "infoText": "Dette er din dokumentation for k\u00f8bet. Gem denne e-mail i mindst 2 \u00e5r som dokumentation for din reklamationsret.",
+            "infoText": "Dette er din dokumentation for købet. Gem denne e-mail i mindst 2 år som dokumentation for din reklamationsret.",
             "withdrawalTitle": "Fortrydelsesret",
-            "withdrawalText": "Da der er tale om \u00f8jeblikkelig levering af energi til din balance, accepterer du ved k\u00f8bet, at fortrydelsesretten bortfalder, n\u00e5r ydelsen tages i brug."
+            "withdrawalText": "Da der er tale om øjeblikkelig levering af energi til din balance, accepterer du ved købet, at fortrydelsesretten bortfalder, når ydelsen tages i brug."
         },
         "reservation": {
-            "title": "Reservationsbek\u00e6ftelse",
-            "intro": "Vi har reserveret et bel\u00f8b p\u00e5 dit betalingskort.",
-            "notCharged": "Pengene er endnu ikke trukket.",
+            "title": "Reservationsbekræftelse",
+            "intro": "Vi har reserveret et beløb på dit betalingskort.",
+            "notCharged": "Beløbet er endnu ikke trukket.",
             "provider": "Udbyder",
             "reservationNumber": "Reservationsnummer",
             "date": "Dato",
@@ -272,12 +272,12 @@
             "description": "Beskrivelse",
             "reserved": "Reserveret",
             "electricity": "El-forbrug",
-            "water": "Vand-forbrug",
-            "maxAmount": "Maks. bel\u00f8b til tr\u00e6kning",
+            "water": "Vandforbrug",
+            "maxAmount": "Maks. beløb til trækning",
             "howTitle": "Hvordan fungerer det?",
-            "howText": "Bel\u00f8bet er reserveret p\u00e5 din bankkonto. N\u00e5r du afslutter forbruget, tr\u00e6kker vi pr\u00e6cis det forbrugte bel\u00f8b og frigiver resten.",
+            "howText": "Beløbet er reserveret på din bankkonto. Når du afslutter forbruget, trækker vi præcis det forbrugte beløb og frigiver resten.",
             "invoiceTitle": "Faktura",
-            "invoiceText": "Din endelige faktura sendes, n\u00e5r forbruget er afsluttet."
+            "invoiceText": "Din endelige faktura sendes, når forbruget er afsluttet."
         }
     }
 }

@@ -1,14 +1,14 @@
 {
     "landingpage": {
-        "badge": "Official payment portal",
-        "undertitel": "Kammerslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not.",
+        "badge": "Unofficial Payment Portal",
+        "undertitel": "Kammarslusen Ribe is a payment system for vessels passing through the Ribe lock. It makes it easy for boat owners to pay for passage and allows the lock operators to keep track of which vessels have paid and which have not.",
         "learnmore": "Learn more",
         "signup": "Sign up",
-        "stats1": "Ships through the lock",
-        "stats2": "Payments registered",
+        "stats1": "Available berths",
+        "stats2": "Electricity price DKK/kWh",
         "stats3": "Active accounts",
-        "section1Title": "What is Kammerslusen Ribe?",
-        "section1Content": "Kammerslusen Ribe is a payment system for the ships in Ribe. It is a system that makes it easy for the ships to pay to pass through the lock, and it also makes it easy for the lock to keep track of which ships have paid and which have not."
+        "section1Title": "What is Kammarslusen Ribe?",
+        "section1Content": "Kammarslusen Ribe is a payment system for vessels passing through the Ribe lock. It makes it easy for boat owners to pay for passage and allows the lock operators to keep track of which vessels have paid and which have not."
     },
     "dashboard": {
         "kvittering": {
@@ -21,16 +21,16 @@
             "price": "Price",
             "vatLabel": "Of which VAT (25%)",
             "totalLabel": "Total incl. VAT",
-            "electricity": "Electricity usage",
-            "water": "Water usage",
+            "electricity": "Electricity consumption",
+            "water": "Water consumption",
             "balanceDeposit": "Deposit to balance"
         },
         "oversigt": {
             "latestTransactions": "Latest transactions",
             "noTransactionsYet": "You have no transactions yet.",
-            "balance": "Amount",
+            "balance": "Balance",
             "payButton": "Pay now",
-            "payoutbutton": "Payout"
+            "payoutbutton": "Withdraw"
         },
         "navbar": {
             "oversigt": "Overview",
@@ -41,25 +41,25 @@
         "historik": {},
         "settings": {
             "fullname": "Change your full name",
-            "fullnameDescription": "Update your full name, which is displayed on your profile and in your transactions.",
+            "fullnameDescription": "Update your full name as it appears on your profile and in your transactions.",
             "saveChanges": "Save changes",
             "email": "Change your email address",
-            "emailDescription": "Update your email address, which is used to log in to your account and receive important notifications.",
+            "emailDescription": "Update your email address used to log in to your account and receive important notifications.",
             "deleteAccount": "Delete account",
             "deleteAccountDescription": "Are you sure you want to delete your account? This action cannot be undone.",
             "deleteAccountButton": "Delete account",
             "fullnamePlaceholder": "Your full name",
             "emailPlaceholder": "Your email address",
-            "registerBoat": "Register a new boat",
-            "registerBoatDescription": "Register a new boat so we can keep track of it in our system, and to ensure that you are the right person using the lock.",
-            "registerBoatButton": "Register boat",
+            "registerBoat": "Register a new vessel",
+            "registerBoatDescription": "Register a new vessel so we can keep track of it in our system and ensure that the right person is using the electricity.",
+            "registerBoatButton": "Register vessel",
             "fullnameUpdatedToast": "Your full name has been updated!",
             "emailUpdatedToast": "Your email address has been updated!",
-            "accountDeletedToast": "Your account has been deleted. We hope to see you again one day!",
-            "noShipsRegistered": "You have no registered ships yet.",
+            "accountDeletedToast": "Your account has been deleted. We hope to see you again someday!",
+            "noShipsRegistered": "You have no registered vessels yet.",
             "shipName": "Name",
             "shipModel": "Model",
-            "shipLimitReached": "You have reached the limit of 2 ships.",
+            "shipLimitReached": "You have reached the limit of 2 vessels.",
             "sendemail": "Send email"
         }
     },
@@ -67,7 +67,7 @@
         "title": "Log in",
         "subtitle": "Enter your email to receive a one-time code",
         "emailLabel": "Email",
-        "emailPlaceholder": "name@domain.dk",
+        "emailPlaceholder": "name@domain.com",
         "sendOtpButton": "Send one-time code",
         "sendOtpButtonLoading": "Sending code...",
         "noAccount": "Don't have an account?",
@@ -82,7 +82,7 @@
     },
     "signup": {
         "title": "Create account",
-        "subtitle": "Enter your information below to create your account",
+        "subtitle": "Enter your details below to create your account",
         "fullNameLabel": "Full name",
         "fullNamePlaceholder": "John Doe",
         "emailLabel": "Email",
@@ -90,8 +90,8 @@
         "phoneLabel": "Phone number",
         "phonePlaceholder": "12345678",
         "tosLabel": "Terms & Privacy Policy",
-        "tosPrefix": "I accept",
-        "tosLink": "Terms of service",
+        "tosPrefix": "I accept the",
+        "tosLink": "Terms of Service",
         "tosAnd": " and ",
         "privacyLink": "Privacy Policy",
         "submit": "Create account",
@@ -107,132 +107,132 @@
         "address1": "Erik Menvedsvej 20,",
         "address2": "6760 Ribe",
         "information": "Information",
-        "termsLink": "Terms of service",
+        "termsLink": "Terms of Service",
         "privacyLink": "Privacy Policy",
-        "disclaimer": "Disclaimer: This is a school project and not an official product from Ribe Sejlklub. All information and functions are fictional and only for demonstration."
+        "disclaimer": "Disclaimer: This is a school project and not an official product of Ribe Sejlklub. All information and features are fictional and for demonstration purposes only."
     },
     "termsofservice": {
-        "title": "Terms of service",
+        "title": "Terms of Service",
         "undertitle": "Introduction",
-        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully, as they contain important information about your rights and obligations.",
+        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully as they contain important information about your rights and obligations.",
         "publisher": {
             "title": "Publisher",
-            "name": "School Project - Group [Insert Number/Name]"
+            "name": "School project – Group Magnus and Kasper"
         },
         "section1": {
             "title": "§1 Delivery",
-            "content": "When you make a purchase through our payment system, we will endeavor to deliver the purchased service as quickly as possible. In most cases, delivery will occur within a few minutes after the purchase."
+            "content": "When you make a purchase through our payment system, we will endeavour to deliver the purchased service as quickly as possible. In most cases, delivery will occur within minutes of the purchase."
         },
         "section2": {
-            "title": "§2 Right of withdrawal and refunds",
-            "content": "Since this involves the delivery of digital content that is not provided on a physical medium, you accept by completing the purchase that the right of withdrawal expires as soon as the service begins. All sales are final as a general rule, but contact support@pins.dk in case of technical errors."
+            "title": "§2 Right of Withdrawal and Refunds",
+            "content": "As this involves the delivery of digital content not supplied on a physical medium, you acknowledge upon completing the purchase that the right of withdrawal lapses once the service has commenced. All sales are final as a general rule, but please contact support@pins.dk in the event of technical errors."
         },
         "section3": {
-            "title": "§3 Disclaimer",
-            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any form of warranty. We disclaim any liability for any damages or losses that may arise from the use of our services."
+            "title": "§3 Disclaimer of Liability",
+            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any form of warranty. We disclaim all liability for any damage or loss that may arise from the use of our services."
         },
         "section4": {
-            "title": "§4 School project disclaimer",
-            "content": "This is a school project and not an official product from Ribe Sejlklub. All information and features are fictional and for demonstration only. Use of the system is at your own risk."
+            "title": "§4 School Project Disclaimer",
+            "content": "This is a school project and not an official product of Ribe Sejlklub. All information and features are fictional and for demonstration purposes only. Use of the system is at your own risk."
         },
         "section5": {
-            "title": "§5 Changes to the terms",
-            "content": "We reserve the right to change these terms. Any changes will be published on the website, and it is your responsibility to keep yourself updated."
+            "title": "§5 Changes to Terms",
+            "content": "We reserve the right to amend these terms. Any changes will be published on the website and it is your responsibility to stay informed."
         },
         "section6": {
-            "title": "§6 Choice of law and jurisdiction",
+            "title": "§6 Governing Law and Jurisdiction",
             "content": "These terms of service are governed by Danish law. Any dispute shall be brought before the Danish courts."
         },
         "section7": {
-            "title": "§7 Contact information",
+            "title": "§7 Contact Information",
             "content": "If you have questions about these terms, you can contact us at support@pins.dk."
         }
     },
     "privacypolicy": {
         "title": "Privacy Policy",
         "undertitle": "Introduction to data processing",
-        "introduction": "This privacy policy describes how Ribe Sejlklub collects, uses and protects your personal data when you use our payment system. We take your data security seriously and comply with applicable legislation, including GDPR.",
+        "introduction": "This privacy policy describes how Ribe Sejlklub collects, uses and protects your personal data when you use our payment system. We take your data security seriously and comply with applicable legislation, including the GDPR.",
         "publisher": {
-            "title": "Data controller",
-            "name": "School Project - Group [Insert Number/Name]"
+            "title": "Data Controller",
+            "name": "School project – Group Magnus and Kasper"
         },
         "section1": {
             "title": "§1 What data do we collect?",
-            "content": "When you create an account and make a purchase, we collect the necessary information to provide the service. This typically includes your name, email address, technical network data (such as IP address for security reasons) and your purchase history."
+            "content": "When you create an account and make a purchase, we collect the information necessary to deliver the service. This typically includes your name, your email address, technical network data (such as IP address for security purposes) and your purchase history."
         },
         "section2": {
             "title": "§2 Third parties and data sharing",
-            "content": "We never sell your personal data. To operate the platform, we share necessary data with trusted subcontractors (data processors). Your payment information is handled exclusively by our payment gateway, Stripe, and we never have direct access to your full card details. Our infrastructure and security are provided by Cloudflare."
+            "content": "We never sell your personal data. In order to operate the platform, we share necessary data with trusted subcontractors (data processors). Your payment details are handled exclusively by our payment gateway, Stripe, and we never have direct access to your full card details. Our infrastructure and security are provided by Cloudflare."
         },
         "section3": {
             "title": "§3 Cookies and tracking",
-            "content": "Our website uses only necessary cookies (technical cookies) to manage your login and ensure the payment system works correctly. We do not use marketing or tracking cookies from third parties."
+            "content": "Our website uses only necessary cookies (technical cookies) to manage your login and ensure the payment system functions correctly. We do not use third-party marketing or tracking cookies."
         },
         "section4": {
             "title": "§4 Security measures",
-            "content": "To ensure the highest possible protection of your data and prevent unauthorized access, all data traffic is encrypted. In addition, it is an internal requirement that all our administrators and developers use two-factor authentication (2FA) for access to critical systems."
+            "content": "To ensure the highest possible protection of your data and prevent unauthorised access, all data traffic is encrypted. It is furthermore an internal requirement that all our administrators and developers use two-factor authentication (2FA) for access to critical systems."
         },
         "section5": {
-            "title": "§5 Storage of receipts (Bookkeeping Act)",
-            "content": "Even if you delete your account, we are required under the Danish Bookkeeping Act to retain receipts and associated transaction data (including your email address linked to the purchase) for 5 years from the end of the relevant financial year. These data are stored solely for accounting purposes."
+            "title": "§5 Retention of receipts (Danish Bookkeeping Act)",
+            "content": "Even if you delete your account, we are obliged under the Danish Bookkeeping Act to retain receipts and associated transaction data (including your email address linked to the purchase) for 5 years from the end of the relevant financial year. This data is retained solely for accounting purposes."
         },
         "section6": {
-            "title": "§6 Your rights and data deletion",
-            "content": "You have the right at any time to access the data we have registered about you. You can delete your account under 'Settings'. Upon deletion, your personal data is permanently removed from our active databases, with the exception of data covered by the Bookkeeping Act (see §5)."
+            "title": "§6 Your rights and deletion of data",
+            "content": "You have the right at any time to access the data we hold about you. You can delete your account under 'Settings'. Upon deletion, your personal information is permanently removed from our active databases, with the exception of data covered by the Bookkeeping Act (see §5)."
         },
         "section7": {
-            "title": "§7 School project disclaimer",
-            "content": "This system and this privacy policy have been developed as a school project and do not constitute an official or legally binding document for Ribe Sejlklub. All information, data handling and features are fictional and solely for demonstration."
+            "title": "§7 School Project Disclaimer",
+            "content": "This system and this privacy policy have been developed as a school project and do not constitute an official or legally binding document for Ribe Sejlklub. All information, data handling and features are fictional and for demonstration purposes only."
         },
         "section8": {
-            "title": "§8 Contact information",
-            "content": "If you have questions about our processing of your data or wish to exercise your rights, you can contact us at support@pins.dk."
+            "title": "§8 Contact Information",
+            "content": "If you have questions about our processing of your data, or wish to exercise your rights, you can contact us at support@pins.dk."
         }
     },
     "faq": {
         "title": "Do you have questions?",
-        "undertitle": "Here are some of the most common questions we get from our users. If you do not find the answer to your question here, you are welcome to contact us directly.",
+        "undertitle": "Here are some of the most common questions we receive from our users. If you cannot find the answer to your question here, please feel free to contact us directly.",
         "questions": [
             {
                 "question": "How do I create an account?",
-                "answer": "You can create an account by clicking the 'Sign up' button on the front page and filling out the registration form with your information."
+                "answer": "You can create an account by clicking the 'Sign up' button on the front page and filling in the registration form with your details."
             },
             {
                 "question": "How do I pay to pass through the lock?",
-                "answer": "You can pay by logging into your account and following the instructions to complete the payment."
+                "answer": "You can pay by logging in to your account and following the instructions to complete the payment."
             },
             {
-                "question": "What do I do if I have problems with the payment?",
-                "answer": "If you experience problems with the payment, please contact our support team at support@pins.dk."
+                "question": "What do I do if I have problems with payment?",
+                "answer": "If you experience problems with payment, please contact our support team at support@pins.dk."
             },
             {
-                "question": "How can I see my payment history?",
-                "answer": "You can see your payment history by logging into your account and navigating to the 'History' section."
+                "question": "How can I view my payment history?",
+                "answer": "You can view your payment history by logging in to your account and navigating to the 'History' section."
             },
             {
-                "question": "How can I change my account information?",
-                "answer": "You can change your account information by logging into your account and going to the 'Settings' section, where you can update your information."
+                "question": "How can I change my account details?",
+                "answer": "You can change your account details by logging in to your account and going to the 'Settings' section, where you can update your information."
             }
         ]
     },
     "HowToPay": {
-        "title": "Payment process",
-        "subtitle": "Easy and secure – E-payment made simple",
+        "title": "The Payment Process",
+        "subtitle": "Easy and secure – electricity payment made simple",
         "description": "We use Stripe to handle all transactions, so you can focus on sailing.",
         "footer": "Payment secured by",
         "footer1": "Bank-grade security • Encrypted connection",
         "steps": {
             "step1": {
                 "title": "Reserve amount",
-                "description": "When you reserve a lock passage, we reserve an amount on your card to ensure you have coverage for the sailing. This amount is automatically refunded after the sailing."
+                "description": "When you reserve a lock passage, we place a hold on your card to ensure you have sufficient funds for the trip. This amount is automatically released after the passage."
             },
             "step2": {
                 "title": "Complete payment",
-                "description": "We use Stripe, one of the world's most reliable payment providers, to ensure your information is protected throughout the process."
+                "description": "We use Stripe, one of the world's most trusted payment providers, to ensure your details are protected throughout the entire process."
             },
             "step3": {
-                "title": "Enjoy the sailing",
-                "description": "After the sailing, we automatically settle your actual usage. If you reserved too much, we refund the excess amount immediately."
+                "title": "Enjoy the voyage",
+                "description": "After the passage, we automatically settle your actual consumption. If the reserved amount exceeds what was used, we refund the difference immediately."
             }
         }
     },
@@ -241,7 +241,7 @@
             "title": "Your One-Time Code",
             "subtitle": "Enter this code to log in",
             "validFor": "The code is valid for 10 minutes",
-            "warning": "Never share this code with others – not even with us!"
+            "warning": "Never share this code with anyone – not even with us!"
         },
         "invoice": {
             "title": "Invoice",
@@ -253,31 +253,31 @@
             "price": "Price",
             "vatLabel": "Of which VAT (25%)",
             "totalLabel": "Total incl. VAT",
-            "electricity": "Electricity usage",
-            "water": "Water usage",
+            "electricity": "Electricity consumption",
+            "water": "Water consumption",
             "balanceDeposit": "Deposit to balance",
             "infoTitle": "Important",
-            "infoText": "This is your documentation for the purchase. Save this email for at least 2 years as proof of your right of complaint.",
-            "withdrawalTitle": "Right of withdrawal",
-            "withdrawalText": "Since this is immediate delivery of energy to your balance, by making the purchase you accept that the right of withdrawal expires when the service is used."
+            "infoText": "This is your proof of purchase. Please keep this email for at least 2 years as documentation for your right of complaint.",
+            "withdrawalTitle": "Right of Withdrawal",
+            "withdrawalText": "As this involves the immediate delivery of energy to your balance, you acknowledge upon purchase that the right of withdrawal lapses once the service is taken into use."
         },
         "reservation": {
             "title": "Reservation Confirmation",
-            "intro": "We have reserved an amount on your payment card.",
-            "notCharged": "The money has not been withdrawn yet.",
+            "intro": "We have placed a hold on your payment card.",
+            "notCharged": "The funds have not yet been charged.",
             "provider": "Provider",
             "reservationNumber": "Reservation number",
             "date": "Date",
             "customer": "Customer",
             "description": "Description",
             "reserved": "Reserved",
-            "electricity": "Electricity usage",
-            "water": "Water usage",
-            "maxAmount": "Max. amount for withdrawal",
+            "electricity": "Electricity consumption",
+            "water": "Water consumption",
+            "maxAmount": "Maximum amount to be charged",
             "howTitle": "How does it work?",
-            "howText": "The amount is reserved on your bank account. When you finish consumption, we withdraw exactly the consumed amount and release the rest.",
+            "howText": "The amount is held on your bank account. When you end your consumption, we charge exactly the amount used and release the remainder.",
             "invoiceTitle": "Invoice",
-            "invoiceText": "Your final invoice will be sent when consumption is completed."
+            "invoiceText": "Your final invoice will be sent once consumption has ended."
         }
     }
 }

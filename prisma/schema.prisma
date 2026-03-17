@@ -228,5 +228,6 @@ enum ActionType {
 enum MeterStatus {
     ONLINE
     OFFLINE
+    INUSE
     MAINTENANCE
 }

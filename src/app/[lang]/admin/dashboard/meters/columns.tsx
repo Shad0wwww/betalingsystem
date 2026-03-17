@@ -24,12 +24,14 @@ export type Meter = {
 const statusColors: Record<MeterStatus, string> = {
     ONLINE: "border-green-500/50 bg-green-500/10 text-green-400",
     OFFLINE: "border-zinc-500/50 bg-zinc-500/10 text-zinc-400",
+    INUSE: "border-blue-500/50 bg-blue-500/10 text-blue-400",
     MAINTENANCE: "border-yellow-500/50 bg-yellow-500/10 text-yellow-400",
 }
 
 const statusLabels: Record<MeterStatus, string> = {
     ONLINE: "Online",
     OFFLINE: "Offline",
+    INUSE: "I brug",
     MAINTENANCE: "Vedligeholdelse",
 }
 

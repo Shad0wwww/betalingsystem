@@ -1,23 +1,26 @@
+
 import Link from 'next/link';
 import { Anchor } from 'lucide-react';
 import StatsSection from '../stats/StatsSection';
 import ScrollButton from './ScroollButton';
 import FAQ from './FAQ';
 import HowToPay from './HowToPay';
+import { getStats } from './stats';
 
 import './landing.css';
 
-export default function LandingPage(
+export default async function LandingPage(
     { dict }: { dict: any }
 ) {
+    const stats = await getStats();
     return (
         <main>
             {/* ── Hero ─────────────────────────────────────────────── */}
             <section className="hero-section relative overflow-hidden">
-                {/* Background grid */}
+       
                 <div className="hero-grid" aria-hidden="true" />
 
-                {/* Atmospheric blobs */}
+    
                 <div className="blurBlob blurBlob--center" aria-hidden="true" />
                 <div className="blurBlob blurBlob--left"   aria-hidden="true" />
                 <div className="blurBlob blurBlob--right"  aria-hidden="true" />
@@ -25,7 +28,7 @@ export default function LandingPage(
                 <div className="relative z-10 mx-auto max-w-screen-xl sm:px-10 px-5 py-10 pt-24 sm:pt-40 mb-16 sm:mb-40">
                     <div className="flex flex-col justify-center items-center">
 
-                        {/* Badge */}
+                
                         <div className="hero-badge mb-8">
                             <span className="hero-badge__dot" />
                             <Anchor className="w-3 h-3 opacity-70" />
@@ -52,9 +55,9 @@ export default function LandingPage(
                         </div>
 
                         <StatsSection stats={[
-                            { value: "100+", label: dict.landingpage.stats1 },
-                            { value: "50+",  label: dict.landingpage.stats2 },
-                            { value: "20+",  label: dict.landingpage.stats3 },
+                            { value: stats.emptySpaces.toString(), label: dict.landingpage.stats1 },
+                            { value: `${stats.elPrices.prisLigenu.pris.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, label: dict.landingpage.stats2 },
+                            { value: stats.users.toString(), label: dict.landingpage.stats3 },
                         ]} />
 
                     </div>

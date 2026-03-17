@@ -1,8 +1,45 @@
-import DashboardNavbar from "@/components/navbar/dashboard/DashboardNavbar";
+
 import DashboardNavbarWrapper from "@/components/navbar/dashboard/DashboardNavbarWrapper";
 import { Inter } from "next/font/google";
 import { getDictionary } from "../dictionaries";
+import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+import Logo from "@/../public/Logo.svg";
 const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+    title: {
+        default: "Ribe Sejlklub — Dashboard",
+        template: "%s | Ribe Sejlklub",
+    },
+    description: "Ribe Sejlklubs skole projekt betalingsportal til Kammerslusen. Book, betal og administrér din bådplads hurtigt og sikkert. (VIGTIGT IKKE DEN RIGTIGE HJEMMESIDE SKOLE PROJEKT)",
+    keywords: [
+        "Ribe Sejlklub", "Kammerslusen Ribe", "bådplads betaling",
+        "sejlklub portal", "Ribe havn", "el til båd", "marina Ribe",
+    ],
+    authors: [{ name: "Ribe Sejlklub", url: "https://pins.dk" }],
+    creator: "Ribe Sejlklub",
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true },
+    },
+    openGraph: {
+        title: "Ribe Sejlklub — Dashboard",
+        description: "Ribe Sejlklubs skole projekt betalingsportal til Kammerslusen. Book, betal og administrér din bådplads hurtigt og sikkert. (VIGTIGT IKKE DEN RIGTIGE HJEMMESIDE SKOLE PROJEKT)",
+        url: "https://pins.dk",
+        siteName: "Ribe Sejlklub",
+        images: [
+            {
+                url: Logo.src,
+                width: 1200,
+                height: 630,
+                alt: "Ribe Sejlklub — Dashboard",
+            },
+        ],
+        locale: "da_DK",
+        type: "website",
+    },
+};
 
 type LayoutProps = Readonly<{
     children: React.ReactNode;

@@ -1,17 +1,16 @@
 'use client';
 
+import { useCallback } from 'react';
+
 export default function ScrollButton(
     { label }: { label: string }
 ) {
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         const el = document.getElementById('more');
         if (el) {
-            window.scrollTo({
-                top: el.offsetTop - 50,
-                behavior: 'smooth'
-            });
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    };
+    }, []);
 
     return (
         <button

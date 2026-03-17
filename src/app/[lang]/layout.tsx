@@ -25,6 +25,10 @@ export const metadata: Metadata = {
 		default: "Ribe Sejlklub — Betalingsportal",
 		template: "%s | Ribe Sejlklub",
 	},
+	
+	appleWebApp: {
+		title: "Ribe Sejlklub — Betalingsportal",
+	},
 	description: "Ribe Sejlklubs skole projekt betalingsportal til Kammerslusen. Book, betal og administrér din bådplads hurtigt og sikkert. (VIGTIGT IKKE DEN RIGTIGE HJEMMESIDE SKOLE PROJEKT)",
 	keywords: [
 		"Ribe Sejlklub", "Kammerslusen Ribe", "bådplads betaling",

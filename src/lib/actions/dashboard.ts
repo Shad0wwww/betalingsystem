@@ -172,8 +172,12 @@ export async function createMeterSession(meterId: number, boatId: number) {
             type: meter.type,
             startValue: latestReading?.value ?? 0,
             isActive: true,
+
         },
+        
     });
+
+    await prisma.meter.update({ where: { id: meterId }, data: { status: MeterStatus.INUSE } });
 
     await prisma.auditLog.create({
         data: {
@@ -222,6 +226,9 @@ export async function stopSession(sessionId: number) {
         orderBy: { date: "desc" },
         select: { value: true, spotPris: true },
     });
+
+    await prisma.meter.update({ where: { id: session.meterId }, data: { status: MeterStatus.ONLINE } });
+
     const endValue   = latestReading?.value ?? session.startValue;
     const kwhUsed    = Math.max(0, endValue - session.startValue);
     const rate       = latestReading?.spotPris ?? FALLBACK_RATE_PER_KWH;
