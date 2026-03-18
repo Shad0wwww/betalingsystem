@@ -1,6 +1,5 @@
 import { getDictionary } from "../../dictionaries";
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
+import { HistorikClient } from "./HistorikClient";
 import { History } from "lucide-react"
 
 
@@ -39,7 +38,7 @@ export default async function Page(
                         </div>
                         <div className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_6px_2px_rgba(96,165,250,0.5)]" />
                     </div>
-                    <DataTable columns={columns(dict)} dict={dict} />
+                    <HistorikClient dict={dict} />
                 </div>
             </div>
         </div>
