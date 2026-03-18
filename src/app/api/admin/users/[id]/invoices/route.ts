@@ -1,27 +1,13 @@
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { validateAdminSession } from "@/lib/session/validateRequest";
 import prisma from "@/lib/prisma";
-import { GetUser } from "@/lib/users/GetUser";
-import { Role } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-async function requireAdmin(req: NextRequest) {
-    const authToken =
-        req.headers.get("authorization")?.replace("Bearer ", "") ??
-        req.cookies.get("auth_token")?.value;
-    if (!authToken) return null;
-    const payload = await verifyJsonWebtoken(authToken);
-    if (!payload || typeof payload === "string") return null;
-    if (!GetUser.doesUserExistByEmail(payload.email)) return null;
-    if ((payload as any).role !== Role.ADMIN) return null;
-    return payload;
-}
 
 export async function GET(
     req: NextRequest,
     { params }: { params: Promise<{ id: string }> },
 ) {
-    const payload = await requireAdmin(req);
-    if (!payload) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const result = await validateAdminSession(req);
+    if ("error" in result) return result.error;
 
     const { id } = await params;
     const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") ?? "1"));

@@ -1,6 +1,6 @@
 "use server";
 
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { getCurrentUser, getUserSessions, deleteAllUserSessions, SESSION_COOKIE_NAME } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { sendEmail } from "@/lib/emailer/Mail";
 import { generateHtmlOTP } from "@/lib/emailer/MailCreator";
@@ -11,15 +11,9 @@ import { ActionType } from "@prisma/client";
 import { cookies } from "next/headers";
 
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth_token")?.value;
-    if (!token) throw new Error("Unauthorized");
-    const payload = await verifyJsonWebtoken(token);
-    if (!payload || typeof payload === "string") throw new Error("Invalid token");
-    const userId = (payload as any).userId || (payload as any).id;
-    const email = (payload as any).email;
-    if (!userId || !email) throw new Error("Unauthorized");
-    return { userId, email };
+    const user = await getCurrentUser();
+    if (!user) throw new Error("Unauthorized");
+    return { userId: user.userId, email: user.email };
 }
 
 export async function updateName(name: string) {
@@ -115,4 +109,114 @@ export async function confirmEmailChange(oldCode: string, newCode: string, newEm
     });
 
     return { message: "Email successfully updated" };
+}
+
+// ─── Session Management ─────────────────────────────────────────────────────
+
+export interface SessionInfo {
+    id: string;
+    userAgent: string | null;
+    ipAddress: string | null;
+    createdAt: Date;
+    isCurrentSession: boolean;
+}
+
+function parseUserAgent(ua: string | null): string {
+    if (!ua) return "Unknown";
+
+    // Detect browser
+    let browser = "Unknown Browser";
+    if (ua.includes("Firefox")) browser = "Firefox";
+    else if (ua.includes("Edg/")) browser = "Edge";
+    else if (ua.includes("Chrome")) browser = "Chrome";
+    else if (ua.includes("Safari")) browser = "Safari";
+    else if (ua.includes("Opera") || ua.includes("OPR")) browser = "Opera";
+
+    // Detect OS
+    let os = "Unknown OS";
+    if (ua.includes("Windows")) os = "Windows";
+    else if (ua.includes("Mac OS")) os = "macOS";
+    else if (ua.includes("Linux")) os = "Linux";
+    else if (ua.includes("Android")) os = "Android";
+    else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+
+    return `${browser} on ${os}`;
+}
+
+export async function getMySessions(): Promise<SessionInfo[]> {
+    const { userId } = await getAuthPayload();
+
+    const cookieStore = await cookies();
+    const currentSessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+
+    const sessions = await getUserSessions(userId);
+
+    // Hent også current session token for at markere den
+    const currentSession = currentSessionToken
+        ? await prisma.session.findUnique({
+              where: { sessionToken: currentSessionToken },
+              select: { id: true },
+          })
+        : null;
+
+    return sessions.map((session) => ({
+        id: session.id,
+        userAgent: parseUserAgent(session.userAgent),
+        ipAddress: session.ipAddress,
+        createdAt: session.createdAt,
+        isCurrentSession: currentSession?.id === session.id,
+    }));
+}
+
+export async function logoutSession(sessionId: string) {
+    const { userId } = await getAuthPayload();
+
+    const cookieStore = await cookies();
+    const currentSessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+
+    // Verificer at session tilhører brugeren
+    const session = await prisma.session.findFirst({
+        where: { id: sessionId, userId },
+    });
+
+    if (!session) throw new Error("Session not found");
+
+    // Tjek om det er den nuværende session
+    if (currentSessionToken) {
+        const currentSession = await prisma.session.findUnique({
+            where: { sessionToken: currentSessionToken },
+        });
+        if (currentSession?.id === sessionId) {
+            throw new Error("Cannot logout current session");
+        }
+    }
+
+    await prisma.session.delete({ where: { id: sessionId } });
+
+    return { success: true };
+}
+
+export async function logoutAllOtherSessions() {
+    const { userId } = await getAuthPayload();
+
+    const cookieStore = await cookies();
+    const currentSessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+
+    // Slet alle sessions undtagen den nuværende
+    await prisma.session.deleteMany({
+        where: {
+            userId,
+            sessionToken: { not: currentSessionToken ?? "" },
+        },
+    });
+
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.LOGOUT_ALL_DEVICES,
+            details: "User logged out of all other devices",
+        },
+    });
+
+    return { success: true };
 }

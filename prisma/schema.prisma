@@ -23,11 +23,26 @@ model User {
 
     //Relationer
     verificationTokens VerificationToken[]
+    sessions           Session[]
     invoices           Invoice[]
     boats              Boat[]
     transactions       Transaction[]
     auditLogs          AuditLog[]
     meterSessions      MeterSession[]
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    expires      DateTime
+    userAgent    String?
+    ipAddress    String?
+    createdAt    DateTime @default(now())
+
+    @@index([userId])
+    @@index([expires])
 }
 
 model AuditLog {
@@ -183,6 +198,7 @@ enum ActionType {
     ACCOUNT_DELETED
     LOGIN
     LOGOUT
+    LOGOUT_ALL_DEVICES
     LOGIN_OTP_SENT
     LOGIN_OTP_SENT_SUCCESS
     EMAIL_SEND_OTP_SUCCESS

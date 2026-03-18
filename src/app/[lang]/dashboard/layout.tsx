@@ -4,6 +4,9 @@ import { Inter } from "next/font/google";
 import { getDictionary } from "../dictionaries";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import Logo from "@/../public/Logo.svg";
+import { redirect } from "next/dist/client/components/navigation";
+import { getCurrentUser } from "@/lib/session/Session";
+import { GetUser } from "@/lib/users/GetUser";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -46,16 +49,21 @@ type LayoutProps = Readonly<{
     params: Promise<{ lang: string }>;
 }>;
 
-export default async function DashboardLayout({
-    children,
-    params,
-}: LayoutProps) {
+export default async function DashboardLayout(
+    { children, params }: LayoutProps
+) {
     const { lang } = await params;
+
+    const user = await getCurrentUser();
+    if (!user) redirect(`/${lang}/login`);
+
+    const userExists = await GetUser.doesUserExistById(user.userId);
+    if (!userExists) redirect(`/${lang}/login`);
+
     const dict = await getDictionary(lang);
 
     return (
         <section className={`${inter.className} relative min-h-screen bg-[#0d0d0d]`}>
-            {/* Subtle grid — matches landing page */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none fixed inset-0 z-0"

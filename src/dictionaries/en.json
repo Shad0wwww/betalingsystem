@@ -60,7 +60,25 @@
             "shipName": "Name",
             "shipModel": "Model",
             "shipLimitReached": "You have reached the limit of 2 vessels.",
-            "sendemail": "Send email"
+            "sendemail": "Send email",
+            "sessions": {
+                "title": "Active sessions",
+                "description": "See all devices logged into your account. You can log out of individual sessions or all at once.",
+                "currentSession": "Current session",
+                "device": "Device",
+                "location": "Location",
+                "lastActive": "Last active",
+                "loggedInAt": "Logged in",
+                "logoutSession": "Log out",
+                "logoutAllSessions": "Log out of all devices",
+                "logoutAllDescription": "This will log you out of all devices except this one.",
+                "noOtherSessions": "You are not logged in on other devices.",
+                "unknownDevice": "Unknown device",
+                "unknownLocation": "Unknown location",
+                "sessionLoggedOut": "Session has been logged out.",
+                "allSessionsLoggedOut": "All other sessions have been logged out.",
+                "thisDevice": "This device"
+            }
         }
     },
     "login": {

@@ -1,6 +1,5 @@
 import { Role } from "@prisma/client";
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
-import { cookies } from "next/headers";
+import { getCurrentUser } from "@/lib/session/Session";
 import NavLinks from "../utils/NavLinks";
 
 type Props = {
@@ -8,12 +7,8 @@ type Props = {
 };
 
 export default async function DashboardNavbarAdmin({ params }: Props) {
-    const cookieStore = cookies();
-    const token = (await cookieStore).get("auth_token")?.value;
-    if (!token) return null;
-
-    const user = await getCurrentUserIdFromToken(token);
-    if (user?.role !== Role.ADMIN) return null;
+    const user = await getCurrentUser();
+    if (!user || user.role !== Role.ADMIN) return null;
 
     const links = [
         { href: `/${params.lang}/admin/dashboard`, label: "Oversigt" },

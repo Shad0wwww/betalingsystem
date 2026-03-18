@@ -60,7 +60,25 @@
             "shipName": "Navn",
             "shipModel": "Model",
             "shipLimitReached": "Du har nået grænsen på 2 skibe.",
-            "sendemail": "Send e-mail"
+            "sendemail": "Send e-mail",
+            "sessions": {
+                "title": "Aktive sessioner",
+                "description": "Se alle enheder, der er logget ind på din konto. Du kan logge ud af individuelle sessioner eller alle på én gang.",
+                "currentSession": "Nuværende session",
+                "device": "Enhed",
+                "location": "Placering",
+                "lastActive": "Sidst aktiv",
+                "loggedInAt": "Logget ind",
+                "logoutSession": "Log ud",
+                "logoutAllSessions": "Log ud af alle enheder",
+                "logoutAllDescription": "Dette logger dig ud af alle enheder undtagen denne.",
+                "noOtherSessions": "Du er ikke logget ind på andre enheder.",
+                "unknownDevice": "Ukendt enhed",
+                "unknownLocation": "Ukendt placering",
+                "sessionLoggedOut": "Sessionen er blevet logget ud.",
+                "allSessionsLoggedOut": "Alle andre sessioner er blevet logget ud.",
+                "thisDevice": "Denne enhed"
+            }
         }
     },
     "login": {

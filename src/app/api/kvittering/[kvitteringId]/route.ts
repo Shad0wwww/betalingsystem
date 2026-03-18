@@ -1,16 +1,15 @@
 import { fetchInvoiceFile } from "@/lib/cloudflare/FetchInvoice";
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { validateSession, SESSION_COOKIE_NAME } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { Role } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(req: NextRequest, { params }: { params: Promise<{ kvitteringId: string }> }) {
     const { kvitteringId } = await params;
 
-    const cookie = req.cookies.get("auth_token")?.value;
+    const sessionToken = req.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-    if (!cookie) {
+    if (!sessionToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -18,20 +17,14 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ kvit
         return NextResponse.json({ error: "Kvittering ID is required" }, { status: 400 });
     }
 
-    const payload = await verifyJsonWebtoken(cookie);
-    if (!payload || typeof payload === "string") {
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    const user = await validateSession(sessionToken);
+    if (!user) {
+        return NextResponse.json({ error: "Invalid session" }, { status: 401 });
     }
 
-    const userId = (payload as any).userId || (payload as any).id;
+    const hasAccess = await isKvitteringAccessibleByUser(kvitteringId, user.userId);
 
-    if (!userId) {
-        return NextResponse.json({ error: "Invalid token payload" }, { status: 401 });
-    }
-
-    const hasAccess = await isKvitteringAccessibleByUser(kvitteringId, userId);
-
-    if (!hasAccess && payload.role !== Role.ADMIN) {
+    if (!hasAccess && user.role !== Role.ADMIN) {
         return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -65,7 +58,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ kvit
             "Content-Disposition": `attachment; filename="${kvitteringId}.html"`,
         },
     });
-
 }
 
 async function isKvitteringAccessibleByUser(

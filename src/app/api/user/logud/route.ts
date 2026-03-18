@@ -1,43 +1,36 @@
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { validateSession, deleteSession, SESSION_COOKIE_NAME } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-    req: NextRequest
-) {
-    const cookie = req.cookies.get("auth_token")?.value;
+export async function GET(req: NextRequest) {
+    const sessionToken = req.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-
-    if (!cookie) {
+    if (!sessionToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const payload = await verifyJsonWebtoken(cookie);
+    const user = await validateSession(sessionToken);
 
-    if (!payload || typeof payload === "string") {
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    if (!user) {
+        const response = NextResponse.json({ error: "Invalid session" }, { status: 401 });
+        response.cookies.delete(SESSION_COOKIE_NAME);
+        return response;
     }
+
+    // Slet session fra database
+    await deleteSession(sessionToken);
 
     await prisma.auditLog.create({
         data: {
-            userId: (payload as any).userId || (payload as any).id,
+            userId: user.userId,
             action: ActionType.LOGOUT,
-            details: "User logged out"
-        }
+            details: "User logged out",
+        },
     });
 
     const response = NextResponse.json({ message: "Logged out successfully" });
-    response.cookies.set("auth_token", "", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-    });
+    response.cookies.delete(SESSION_COOKIE_NAME);
 
-    
-
-
-
-    
     return response;
 }

@@ -1,34 +1,29 @@
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { validateSession, SESSION_COOKIE_NAME } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { GetUser } from "@/lib/users/GetUser";
 import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
-export async function POST(
-    req: NextRequest
-) {
-
+export async function POST(req: NextRequest) {
     const { name, model } = await req.json();
 
     if (!name || !model) {
         return NextResponse.json({ message: "Name and model are required." }, { status: 400 });
     }
 
-    const cookie = req.cookies.get("auth_token")?.value;
+    const sessionToken = req.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-    if (!cookie) {
+    if (!sessionToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const payload = await verifyJsonWebtoken(cookie);
+    const user = await validateSession(sessionToken);
 
-    if (!payload || typeof payload === "string") {
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    if (!user) {
+        return NextResponse.json({ error: "Invalid session" }, { status: 401 });
     }
 
-    if (!GetUser.doesUserExistByEmail(payload.email)) {
+    if (!(await GetUser.doesUserExistByEmail(user.email))) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
@@ -36,12 +31,8 @@ export async function POST(
         return NextResponse.json({ message: "Name and model must be less than 50 characters." }, { status: 400 });
     }
 
-    const userId = (payload as any).userId || (payload as any).id;
-
     const existingBoats = await prisma.boat.count({
-        where: {
-            userId: userId
-        }
+        where: { userId: user.userId },
     });
 
     if (existingBoats >= 2) {
@@ -52,16 +43,16 @@ export async function POST(
         data: {
             kaldeNavn: name,
             skibModel: model,
-            userId: userId
+            userId: user.userId,
         },
-    })
+    });
 
     await prisma.auditLog.create({
         data: {
-            userId: userId,
+            userId: user.userId,
             action: ActionType.BOAT_ADDED,
-            details: `User registered a boat named ${name} with model ${model}`
-        }
+            details: `User registered a boat named ${name} with model ${model}`,
+        },
     });
 
     return NextResponse.json({ message: "Boat registered successfully!", status: 200 });

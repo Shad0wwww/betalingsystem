@@ -1,23 +1,14 @@
-import { cookies } from "next/headers";
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
+import { getCurrentUser } from "@/lib/session/Session";
 import NavLinks from "../utils/NavLinks";
 import { Role } from "@prisma/client";
 
 type Props = {
-    params: { lang: string, dict: any };
+    params: { lang: string; dict: any };
 };
 
-export default async function DashboardNavbar(
-    { params }: Props
-) {
-    const cookieStore = cookies();
-    const token = (await cookieStore).get("auth_token")?.value;
-
-    const user = await getCurrentUserIdFromToken(token);
-
+export default async function DashboardNavbar({ params }: Props) {
+    const user = await getCurrentUser();
     const isAdmin = user?.role === Role.ADMIN;
-
-    
 
     const links = [
         { href: `/${params.lang}/dashboard`, label: params.dict.dashboard.navbar.oversigt },

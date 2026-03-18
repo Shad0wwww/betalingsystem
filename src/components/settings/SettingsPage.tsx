@@ -6,6 +6,7 @@ import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
 import RegisterShipModal from "../modals/RegisterShipModal";
 import ChangeEmail from "../modals/ChangeEmailModal";
+import ActiveSessionsCard from "./ActiveSessionsCard";
 import { getMe, getMyBoats } from "@/lib/actions/dashboard";
 import { updateName, sendEmailChangeOtp } from "@/lib/actions/settings";
 
@@ -190,6 +191,9 @@ export default function SettingsClient({ dict }: { dict: any }) {
                         className={!isValidEmail(email) && email.length > 0 ? "border-red-500/50 focus:ring-red-500/50" : ""}
                     />
                 </SettingsCard>
+
+                {/* Active sessions */}
+                <ActiveSessionsCard dict={dict} />
 
                 {/* Delete account */}
                 <SettingsCard

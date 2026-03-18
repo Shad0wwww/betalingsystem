@@ -1,6 +1,6 @@
 "use server";
 
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { getCurrentUser } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { takeMoneyUsed } from "@/lib/stripe/TakeMoneyUsed";
 import { createStripePaymentSession } from "@/lib/stripe/CreateReservation";
@@ -8,7 +8,6 @@ import getStripe from "@/lib/stripe/Stripe";
 import { GetUser } from "@/lib/users/GetUser";
 import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
 import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
-import { cookies } from "next/headers";
 
 // Reservation amount in øre (200 kr)
 const RESERVATION_AMOUNT = 20000;
@@ -18,18 +17,9 @@ const FALLBACK_RATE_PER_KWH = 3.0; // DKK per kWh
 // ─── Auth ────────────────────────────────────────────────────────────────────
 
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth_token")?.value;
-    if (!token) throw new Error("Unauthorized");
-
-    const payload = await verifyJsonWebtoken(token);
-    if (!payload || typeof payload === "string") throw new Error("Invalid token");
-
-    const userId = (payload as any).userId || (payload as any).id;
-    const email = (payload as any).email;
-    if (!userId || !email) throw new Error("Unauthorized");
-
-    return { userId, email };
+    const user = await getCurrentUser();
+    if (!user) throw new Error("Unauthorized");
+    return { userId: user.userId, email: user.email };
 }
 
 // ─── User ────────────────────────────────────────────────────────────────────

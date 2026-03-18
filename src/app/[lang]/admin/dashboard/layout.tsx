@@ -1,7 +1,6 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Role } from "@prisma/client";
-import { getCurrentUserIdFromToken } from "@/lib/jwt/Session";
+import { getCurrentUser } from "@/lib/session/Session";
 import DashboardNavbarWrapperAdmin from "@/components/navbar/admin/DashboardNavbarAdminWrapper";
 
 
@@ -13,13 +12,10 @@ export default async function AdminLayout({
     params: Promise<{ lang: string }>;
 }) {
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth_token")?.value;
     const { lang } = await params;
-    if (!token) redirect(`/${lang}/login`);
 
-    const user = await getCurrentUserIdFromToken(token);
-    if (user?.role !== Role.ADMIN) redirect(`/${lang}/login`);
+    const user = await getCurrentUser();
+    if (!user || user.role !== Role.ADMIN) redirect(`/${lang}/login`);
 
     return (
         <div className="relative min-h-screen bg-[#0d0d0d]">

@@ -1,11 +1,11 @@
 "use server";
 
-import { generateJsonWebtoken } from "@/lib/jwt/Jwt";
+import { createSession, setSessionCookie } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { validateEmail } from "@/lib/utils/Email";
 import { verifyOTPCode } from "@/lib/utils/OTP";
 import { ActionType } from "@prisma/client";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 
 export default async function VerifyOtpAction(
     currentState: any,
@@ -49,11 +49,19 @@ export default async function VerifyOtpAction(
         select: { id: true, role: true },
     });
 
-    const token = await generateJsonWebtoken(
-        user!.id.toString(),
-        emailLower,
-        user!.role
-    );
+    if (!user) {
+        return { error: "User not found" };
+    }
+
+    // Hent user agent og IP til session tracking
+    const headersList = await headers();
+    const userAgent = headersList.get("user-agent") || undefined;
+    const ipAddress = headersList.get("x-forwarded-for")?.split(",")[0] ||
+                      headersList.get("x-real-ip") ||
+                      undefined;
+
+    // Opret database session
+    const sessionToken = await createSession(user.id, userAgent, ipAddress);
 
     await prisma.verificationToken.deleteMany({
         where: { identifier: emailLower },
@@ -61,17 +69,14 @@ export default async function VerifyOtpAction(
 
     await prisma.auditLog.create({
         data: {
-            userId: user!.id,
-            action: ActionType.LOGIN_OTP_SENT_SUCCESS,
+            userId: user.id,
+            action: ActionType.LOGIN,
             details: `User logged in with OTP`,
         },
     });
 
-    const cookieStore = await cookies();
-    cookieStore.set("auth_token", token, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 1,
-    });
+    // Sæt session cookie
+    await setSessionCookie(sessionToken);
 
     return { success: true };
 }

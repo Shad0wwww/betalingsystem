@@ -1,44 +1,18 @@
-import { GetUser } from "@/lib/users/GetUser";
+import { validateSession, SESSION_COOKIE_NAME } from "@/lib/session/Session";
+import { NextRequest, NextResponse } from "next/server";
 
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
-import { NextRequest, NextResponse } from 'next/server';
-import prisma from "@/lib/prisma";
+export async function GET(req: NextRequest) {
+    const sessionToken = req.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-export async function GET(
-    req: NextRequest
-) {
-
-
-    const cookie = req.cookies.get("auth_token")?.value;
-
-    if (!cookie) {
+    if (!sessionToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    try {
-        const {
-            userId,
-        } = await verifyJsonWebtoken(cookie) as unknown as {
-            userId: string
-        };
 
-        if (!userId) {
-            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-        }
+    const user = await validateSession(sessionToken);
 
-        const userRole = await prisma.user.findUnique({
-            where: { id: userId },
-            select: {
-                role: true,
-            }
-        });
-        return NextResponse.json(userRole);
-        
-    } catch (error) {
-        console.error("Error verifying token:", error);
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!user) {
+        return NextResponse.json({ error: "Invalid session" }, { status: 401 });
     }
-    
 
-   
-    
+    return NextResponse.json({ role: user.role });
 }

@@ -60,7 +60,25 @@
             "shipName": "Name",
             "shipModel": "Modell",
             "shipLimitReached": "Sie haben das Limit von 2 Schiffen erreicht.",
-            "sendemail": "E-Mail senden"
+            "sendemail": "E-Mail senden",
+            "sessions": {
+                "title": "Aktive Sitzungen",
+                "description": "Sehen Sie alle Geräte, die in Ihrem Konto angemeldet sind. Sie können einzelne Sitzungen oder alle auf einmal abmelden.",
+                "currentSession": "Aktuelle Sitzung",
+                "device": "Gerät",
+                "location": "Standort",
+                "lastActive": "Zuletzt aktiv",
+                "loggedInAt": "Angemeldet",
+                "logoutSession": "Abmelden",
+                "logoutAllSessions": "Von allen Geräten abmelden",
+                "logoutAllDescription": "Dadurch werden Sie von allen Geräten außer diesem abgemeldet.",
+                "noOtherSessions": "Sie sind auf keinen anderen Geräten angemeldet.",
+                "unknownDevice": "Unbekanntes Gerät",
+                "unknownLocation": "Unbekannter Standort",
+                "sessionLoggedOut": "Die Sitzung wurde abgemeldet.",
+                "allSessionsLoggedOut": "Alle anderen Sitzungen wurden abgemeldet.",
+                "thisDevice": "Dieses Gerät"
+            }
         }
     },
     "login": {

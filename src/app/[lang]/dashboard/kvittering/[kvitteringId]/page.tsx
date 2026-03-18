@@ -1,5 +1,4 @@
-import { cookies } from "next/headers";
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { getCurrentUser } from "@/lib/session/Session";
 import { fetchInvoiceFile } from "@/lib/cloudflare/FetchInvoice";
 import prisma from "@/lib/prisma";
 import { Role } from "@prisma/client";
@@ -18,20 +17,13 @@ interface KvitteringPageProps {
 export default async function KvitteringPage({ params }: KvitteringPageProps) {
     const { kvitteringId, lang } = await params;
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth_token")?.value;
-
-    if (!token) redirect(`/${lang}/login`);
-
-    const payload = await verifyJsonWebtoken(token);
-    if (!payload || typeof payload === "string") redirect(`/${lang}/login`);
-
-    const userId = (payload as any).userId || (payload as any).id;
+    const user = await getCurrentUser();
+    if (!user) redirect(`/${lang}/login`);
 
     const invoice = await prisma.invoice.findFirst({
         where: {
             InvoiceNumber: kvitteringId,
-            ...(payload.role !== Role.ADMIN && { userId }),
+            ...(user.role !== Role.ADMIN && { userId: user.userId }),
         },
     });
 

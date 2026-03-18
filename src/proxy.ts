@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-import { GetUser } from "./lib/users/GetUser";
-import { checkAuthentication } from "./lib/jwt/Session";
+import { checkAuthentication, SESSION_COOKIE_NAME } from "./lib/session/Session";
 
 const locales = ["en-US", "da-DK", "de-DE"];
 const defaultLocale = "da-DK";
@@ -16,7 +15,7 @@ function getLocale(request: NextRequest) {
 }
 
 export default async function middleware(request: NextRequest) {
-    const { pathname, search } = request.nextUrl;   
+    const { pathname, search } = request.nextUrl;
 
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
@@ -24,37 +23,29 @@ export default async function middleware(request: NextRequest) {
 
     if (!pathnameHasLocale) {
         const locale = getLocale(request);
-        // Tilføj ${search} til sidst i URL'en
         return NextResponse.redirect(
-            new URL(`/${locale}${pathname === "/" ? "" : pathname}${search}`, request.url),
+            new URL(
+                `/${locale}${pathname === "/" ? "" : pathname}${search}`,
+                request.url,
+            ),
         );
     }
 
-
-    const token = request.cookies.get("auth_token")?.value;
-    const isAuthenticated = token ? await checkAuthentication(token) : false;
-
+    const sessionToken = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+    const isAuthenticated = sessionToken ? await checkAuthentication(sessionToken) : false;
     const isLoginOrSignup = pathname.match(/\/(login|signup)$/);
     const isDashboard = pathname.includes("/dashboard");
 
-    
-    const user = token ? await GetUser.getUserFromJsonWebToken(token) : null;
-    const userExist = await GetUser.doesUserExistByEmail(user?.email || "");
-
-    if (isDashboard && (!isAuthenticated || !userExist)) {
+    if (isDashboard && !isAuthenticated) {
         const redirectUrl = new URL("/login", request.url);
         const response = NextResponse.redirect(redirectUrl);
-        if (token) {
-            response.cookies.delete("auth_token");
-        }
+        if (sessionToken) response.cookies.delete(SESSION_COOKIE_NAME);
         return response;
     }
 
-    if (isAuthenticated && isLoginOrSignup && userExist) {
+    if (isAuthenticated && isLoginOrSignup) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
     }
-
-
 
     return NextResponse.next();
 }

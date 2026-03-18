@@ -1,30 +1,14 @@
-import { verifyJsonWebtoken } from "@/lib/jwt/Jwt";
+import { validateAdminSession } from "@/lib/session/validateRequest";
 import prisma from "@/lib/prisma";
-import { GetUser } from "@/lib/users/GetUser";
-import { ActionType, Role } from "@prisma/client";
+import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-async function requireAdmin(req: NextRequest) {
-    const authToken =
-        req.headers.get("authorization")?.replace("Bearer ", "") ??
-        req.cookies.get("auth_token")?.value;
-
-    if (!authToken) return null;
-
-    const payload = await verifyJsonWebtoken(authToken);
-    if (!payload || typeof payload === "string") return null;
-    if (!GetUser.doesUserExistByEmail(payload.email)) return null;
-    if ((payload as any).role !== Role.ADMIN) return null;
-
-    return payload;
-}
 
 export async function GET(
     req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const payload = await requireAdmin(req);
-    if (!payload) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const result = await validateAdminSession(req);
+    if ("error" in result) return result.error;
 
     const { id } = await params;
 
@@ -62,8 +46,8 @@ export async function PATCH(
     req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const payload = await requireAdmin(req);
-    if (!payload) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const result = await validateAdminSession(req);
+    if ("error" in result) return result.error;
 
     const { id } = await params;
 
@@ -76,7 +60,6 @@ export async function PATCH(
     const existing = await prisma.user.findUnique({ where: { id } });
     if (!existing) return NextResponse.json({ error: "Bruger ikke fundet" }, { status: 404 });
 
-    // Check for email/phone conflicts on other users
     if (email !== existing.email) {
         const conflict = await prisma.user.findUnique({ where: { email } });
         if (conflict) return NextResponse.json({ error: "Email er allerede i brug" }, { status: 400 });
@@ -99,7 +82,7 @@ export async function PATCH(
 
     await prisma.auditLog.create({
         data: {
-            userId: payload.userId,
+            userId: result.user.userId,
             action: ActionType.ROLE_CHANGED,
             details: `Admin opdaterede bruger ${id}: name=${name}, email=${email}, phone=${phone}, role=${role}`,
         },
