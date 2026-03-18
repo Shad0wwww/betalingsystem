@@ -23,7 +23,10 @@
             "totalLabel": "Total inkl. moms",
             "electricity": "El-forbrug",
             "water": "Vandforbrug",
-            "balanceDeposit": "Indbetaling til balance"
+            "balanceDeposit": "Indbetaling til balance",
+            "tilbage": "Tilbage",
+            "download": "Download",
+            "page": "Kvittering"
         },
         "oversigt": {
             "latestTransactions": "Seneste transaktioner",
@@ -38,7 +41,30 @@
             "settings": "Indstillinger",
             "admin": "Admin"
         },
-        "historik": {},
+        "historik": {
+            "title": "Historik",
+            "subtitle": "Dine tidligere transaktioner og sessioner.",
+            "transaktioner": "Transaktioner",
+            "caption": "Alle dine betalinger og forbrug",
+            "dato": "Dato",
+            "kvitteringId": "Kvittering ID",
+            "status": "Status",
+            "transaktion": "Transaktion",
+            "amount": "Beløb",
+            "actions": "Handlinger",
+            "betalingsdetaljer": "Betalingsdetaljer",
+            "kopierID": "Kopier ID",
+            "seKvittering": "Se kvittering",
+            "søgPlaceholder": "Søg efter kvitteringer...",
+            "ingenKvitteringer": "Ingen kvitteringer fundet.",
+            "side": "Side",
+            "af": "af",
+            "rækker": "rækker",
+            "gåTilFørsteSide": "Gå til første side",
+            "forrigeSide": "Forrige side",
+            "næsteSide": "Næste side",
+            "gåTilSidsteSide": "Gå til sidste side"
+        },
         "settings": {
             "fullname": "Skift dit fulde navn",
             "fullnameDescription": "Opdatér dit fulde navn, som vises på din profil og i dine transaktioner.",
@@ -48,6 +74,16 @@
             "deleteAccount": "Slet konto",
             "deleteAccountDescription": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes.",
             "deleteAccountButton": "Slet konto",
+            "deleteAccountConfirmTitle": "Bekræft kontobestemmelse",
+            "deleteAccountConfirmWarning1": "⚠️ ADVARSEL: Du er ved at slette din konto PERMANENT",
+            "deleteAccountConfirmWarning2": "• Alle dine personlige oplysninger vil blive slettet",
+            "deleteAccountConfirmWarning3": "• Alle dine betalinger og transaktionshistorik vil blive slettet",
+            "deleteAccountConfirmWarning4": "• Du vil blive logget ud af alle enheder",
+            "deleteAccountConfirmWarning5": "• Denne handling KAN IKKE fortrydes",
+            "deleteAccountConfirmQuestion": "Skriv 'SLET MIN KONTO' for at bekræfte:",
+            "deleteAccountCancel": "Annuller",
+            "deleteAccountConfirm": "Slet permanent",
+            "deleteAccountErrorMismatch": "Du skrev ikke det rigtige. Kontoen blev ikke slettet.",
             "fullnamePlaceholder": "Dit fulde navn",
             "emailPlaceholder": "Din e-mailadresse",
             "registerBoat": "Registrér et nyt skib",
@@ -253,6 +289,12 @@
                 "description": "Efter sejladsen afregner vi automatisk dit faktiske forbrug. Hvis det reserverede beløb overstiger det faktiske forbrug, refunderer vi differencen med det samme."
             }
         }
+    },
+    "notFound": {
+        "badge": "Siden blev ikke fundet",
+        "title": "404",
+        "description": "Ups! Den side, du leder efter, findes ikke eller er blevet flyttet til en anden adresse.",
+        "button": "Gå til forsiden"
     },
     "email": {
         "otp": {

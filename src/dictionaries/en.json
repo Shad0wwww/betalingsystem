@@ -23,7 +23,10 @@
             "totalLabel": "Total incl. VAT",
             "electricity": "Electricity consumption",
             "water": "Water consumption",
-            "balanceDeposit": "Deposit to balance"
+            "balanceDeposit": "Deposit to balance",
+            "tilbage": "Back",
+            "download": "Download",
+            "page": "Receipt"
         },
         "oversigt": {
             "latestTransactions": "Latest transactions",
@@ -38,7 +41,30 @@
             "settings": "Settings",
             "admin": "Admin"
         },
-        "historik": {},
+        "historik": {
+            "title": "History",
+            "subtitle": "Your previous transactions and sessions.",
+            "transaktioner": "Transactions",
+            "caption": "All your payments and consumption",
+            "dato": "Date",
+            "kvitteringId": "Receipt ID",
+            "status": "Status",
+            "transaktion": "Transaction",
+            "amount": "Amount",
+            "actions": "Actions",
+            "betalingsdetaljer": "Payment Details",
+            "kopierID": "Copy ID",
+            "seKvittering": "View Receipt",
+            "søgPlaceholder": "Search receipts...",
+            "ingenKvitteringer": "No receipts found.",
+            "side": "Page",
+            "af": "of",
+            "rækker": "rows",
+            "gåTilFørsteSide": "Go to first page",
+            "forrigeSide": "Previous page",
+            "næsteSide": "Next page",
+            "gåTilSidsteSide": "Go to last page"
+        },
         "settings": {
             "fullname": "Change your full name",
             "fullnameDescription": "Update your full name as it appears on your profile and in your transactions.",
@@ -48,6 +74,16 @@
             "deleteAccount": "Delete account",
             "deleteAccountDescription": "Are you sure you want to delete your account? This action cannot be undone.",
             "deleteAccountButton": "Delete account",
+            "deleteAccountConfirmTitle": "Confirm account deletion",
+            "deleteAccountConfirmWarning1": "⚠️ WARNING: You are about to delete your account PERMANENTLY",
+            "deleteAccountConfirmWarning2": "• All your personal information will be deleted",
+            "deleteAccountConfirmWarning3": "• All your payments and transaction history will be deleted",
+            "deleteAccountConfirmWarning4": "• You will be logged out of all devices",
+            "deleteAccountConfirmWarning5": "• This action CANNOT be undone",
+            "deleteAccountConfirmQuestion": "Type 'DELETE MY ACCOUNT' to confirm:",
+            "deleteAccountCancel": "Cancel",
+            "deleteAccountConfirm": "Delete permanently",
+            "deleteAccountErrorMismatch": "You did not type the correct text. Account was not deleted.",
             "fullnamePlaceholder": "Your full name",
             "emailPlaceholder": "Your email address",
             "registerBoat": "Register a new vessel",
@@ -253,6 +289,12 @@
                 "description": "After the passage, we automatically settle your actual consumption. If the reserved amount exceeds what was used, we refund the difference immediately."
             }
         }
+    },
+    "notFound": {
+        "badge": "Page not found",
+        "title": "404",
+        "description": "Oops! The page you're looking for doesn't exist or has been moved to another address.",
+        "button": "Go to homepage"
     },
     "email": {
         "otp": {

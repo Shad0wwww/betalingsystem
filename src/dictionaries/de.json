@@ -23,7 +23,10 @@
             "totalLabel": "Gesamt inkl. MwSt.",
             "electricity": "Stromverbrauch",
             "water": "Wasserverbrauch",
-            "balanceDeposit": "Einzahlung auf Guthaben"
+            "balanceDeposit": "Einzahlung auf Guthaben",
+            "tilbage": "Zurück",
+            "download": "Herunterladen",
+            "page": "Quittung"
         },
         "oversigt": {
             "latestTransactions": "Neueste Transaktionen",
@@ -38,7 +41,30 @@
             "settings": "Einstellungen",
             "admin": "Admin"
         },
-        "historik": {},
+        "historik": {
+            "title": "Verlauf",
+            "subtitle": "Ihre bisherigen Transaktionen und Sitzungen.",
+            "transaktioner": "Transaktionen",
+            "caption": "Alle Ihre Zahlungen und Verbrauch",
+            "dato": "Datum",
+            "kvitteringId": "Quittungs-ID",
+            "status": "Status",
+            "transaktion": "Transaktion",
+            "amount": "Betrag",
+            "actions": "Aktionen",
+            "betalingsdetaljer": "Zahlungsdetails",
+            "kopierID": "ID kopieren",
+            "seKvittering": "Quittung anzeigen",
+            "søgPlaceholder": "Nach Quittungen suchen...",
+            "ingenKvitteringer": "Keine Quittungen gefunden.",
+            "side": "Seite",
+            "af": "von",
+            "rækker": "Zeilen",
+            "gåTilFørsteSide": "Zur ersten Seite",
+            "forrigeSide": "Vorherige Seite",
+            "næsteSide": "Nächste Seite",
+            "gåTilSidsteSide": "Zur letzten Seite"
+        },
         "settings": {
             "fullname": "Vollständigen Namen ändern",
             "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, wie er in Ihrem Profil und in Ihren Transaktionen angezeigt wird.",
@@ -48,6 +74,16 @@
             "deleteAccount": "Konto löschen",
             "deleteAccountDescription": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
             "deleteAccountButton": "Konto löschen",
+            "deleteAccountConfirmTitle": "Kontolöschung bestätigen",
+            "deleteAccountConfirmWarning1": "⚠️ WARNUNG: Sie löschen Ihr Konto DAUERHAFT",
+            "deleteAccountConfirmWarning2": "• Alle Ihre persönlichen Daten werden gelöscht",
+            "deleteAccountConfirmWarning3": "• Alle Ihre Zahlungen und Transaktionsverlauf werden gelöscht",
+            "deleteAccountConfirmWarning4": "• Sie werden von allen Geräten abgemeldet",
+            "deleteAccountConfirmWarning5": "• Diese Aktion KANN NICHT rückgängig gemacht werden",
+            "deleteAccountConfirmQuestion": "Geben Sie 'KONTO LÖSCHEN' ein um zu bestätigen:",
+            "deleteAccountCancel": "Abbrechen",
+            "deleteAccountConfirm": "Dauerhaft löschen",
+            "deleteAccountErrorMismatch": "Sie haben den falschen Text eingegeben. Konto wurde nicht gelöscht.",
             "fullnamePlaceholder": "Ihr vollständiger Name",
             "emailPlaceholder": "Ihre E-Mail-Adresse",
             "registerBoat": "Ein neues Schiff registrieren",
@@ -253,6 +289,12 @@
                 "description": "Nach der Durchfahrt rechnen wir automatisch Ihren tatsächlichen Verbrauch ab. Falls der reservierte Betrag den tatsächlichen Verbrauch übersteigt, erstatten wir den Differenzbetrag sofort."
             }
         }
+    },
+    "notFound": {
+        "badge": "Seite nicht gefunden",
+        "title": "404",
+        "description": "Ups! Die gesuchte Seite existiert nicht oder wurde an eine andere Adresse verschoben.",
+        "button": "Zur Startseite"
     },
     "email": {
         "otp": {

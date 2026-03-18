@@ -22,7 +22,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns = (dict: any): ColumnDef<Payment>[] => [
     {
         accessorKey: "dato",
         header: ({ column }) => {
@@ -31,7 +31,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Dato
+                    {dict.dashboard.historik.dato}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -39,7 +39,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "kvitteringId",
-        header: "Kvittering ID",
+        header: dict.dashboard.historik.kvitteringId,
         cell: ({ row }) => {
             const kvitteringId = row.getValue("kvitteringId") as string
             return (
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "status",
-        header: "Status",
+        header: dict.dashboard.historik.status,
         cell: ({ row }) => {
             const status = row.getValue("status") as string
 
@@ -66,7 +66,6 @@ export const columns: ColumnDef<Payment>[] = [
                 <span
                     className={`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium ${currentStyle}`}
                 >
-                    {/* Gør første bogstav stort, f.eks. "success" -> "Success" */}
                     {status.charAt(0).toUpperCase() + status.slice(1)}
                 </span>
             )
@@ -74,7 +73,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "transaktion",
-        header: "Transaktion",
+        header: dict.dashboard.historik.transaktion,
         cell: ({ row }) => {
             const transaktion = row.getValue("transaktion") as string
             const transaktionStyles: Record<string, string> = {
@@ -95,7 +94,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
+        header: () => <div className="text-right">{dict.dashboard.historik.amount}</div>,
         cell: ({ row }) => {
             const amount = parseFloat(row.getValue("amount"))
             const formatted = new Intl.NumberFormat("da-DK", {
@@ -120,7 +119,7 @@ export const columns: ColumnDef<Payment>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-[200px] bg-[#0c0c0e] border-zinc-800 text-zinc-200">
                         <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-zinc-500 py-2">
-                            Betalingsdetaljer
+                            {dict.dashboard.historik.betalingsdetaljer}
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator className="bg-zinc-800" />
                         <DropdownMenuItem
@@ -128,11 +127,11 @@ export const columns: ColumnDef<Payment>[] = [
                             onClick={() => navigator.clipboard.writeText(payment.kvitteringId)}
                         >
                             <Copy className="h-3.5 w-3.5 text-zinc-500" />
-                            Kopier ID
+                            {dict.dashboard.historik.kopierID}
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-white" onClick={() => window.open(`/dashboard/kvittering/${payment.kvitteringId}`, "_blank")}>
                             <ReceiptText className="h-3.5 w-3.5 text-zinc-500" />
-                            Se kvittering
+                            {dict.dashboard.historik.seKvittering}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

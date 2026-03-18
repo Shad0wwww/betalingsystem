@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Download, Receipt } from "lucide-react";
 import InvoiceFrame from "./InvoiceFrame";
+import { getDictionary } from "@/app/[lang]/dictionaries";
 
 interface KvitteringPageProps {
     params: Promise<{
@@ -16,6 +17,7 @@ interface KvitteringPageProps {
 
 export default async function KvitteringPage({ params }: KvitteringPageProps) {
     const { kvitteringId, lang } = await params;
+    const dict = await getDictionary(lang);
 
     const user = await getCurrentUser();
     if (!user) redirect(`/${lang}/login`);
@@ -73,7 +75,7 @@ export default async function KvitteringPage({ params }: KvitteringPageProps) {
                         className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm font-medium transition-colors duration-150"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        Tilbage
+                        {dict.dashboard.kvittering.tilbage}
                     </Link>
                     <a
                         href={`/api/kvittering/${kvitteringId}`}
@@ -81,7 +83,7 @@ export default async function KvitteringPage({ params }: KvitteringPageProps) {
                         className="inline-flex items-center gap-2 text-sm font-medium bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-150 shadow-[0_0_16px_rgba(59,130,246,0.25)]"
                     >
                         <Download className="w-4 h-4" />
-                        Download
+                        {dict.dashboard.kvittering.download}
                     </a>
                 </div>
 
@@ -89,7 +91,7 @@ export default async function KvitteringPage({ params }: KvitteringPageProps) {
                 <div className="flex flex-col items-center text-center mb-8">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-300 text-xs font-semibold uppercase tracking-widest mb-4">
                         <Receipt className="w-3.5 h-3.5" />
-                        Kvittering
+                        {dict.dashboard.kvittering.page}
                     </div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                         {kvitteringId}

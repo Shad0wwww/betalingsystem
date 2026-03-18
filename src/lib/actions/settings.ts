@@ -220,3 +220,34 @@ export async function logoutAllOtherSessions() {
 
     return { success: true };
 }
+
+// ─── Account Deletion ───────────────────────────────────────────────────────
+
+export async function deleteAccount() {
+    const { userId } = await getAuthPayload();
+
+    // Log the deletion action before deleting
+    await prisma.auditLog.create({
+        data: {
+            userId,
+            action: ActionType.ACCOUNT_DELETED,
+            details: "User deleted their account",
+        },
+    });
+
+    // Delete all sessions for this user (logs them out everywhere)
+    await prisma.session.deleteMany({
+        where: { userId },
+    });
+
+    // Delete all user data (cascading deletes should handle relations)
+    await prisma.user.delete({
+        where: { id: userId },
+    });
+
+    // Clear the auth cookie
+    const cookieStore = await cookies();
+    cookieStore.delete(SESSION_COOKIE_NAME);
+
+    return { success: true };
+}

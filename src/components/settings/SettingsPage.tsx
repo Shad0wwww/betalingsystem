@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
@@ -8,7 +9,7 @@ import RegisterShipModal from "../modals/RegisterShipModal";
 import ChangeEmail from "../modals/ChangeEmailModal";
 import ActiveSessionsCard from "./ActiveSessionsCard";
 import { getMe, getMyBoats } from "@/lib/actions/dashboard";
-import { updateName, sendEmailChangeOtp } from "@/lib/actions/settings";
+import { updateName, sendEmailChangeOtp, deleteAccount } from "@/lib/actions/settings";
 
 // --- Types ---
 interface Ship {
@@ -35,11 +36,15 @@ const isValidEmail = (email: string) =>
 
 // --- Main component ---
 export default function SettingsClient({ dict }: { dict: any }) {
+    const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [name, setName] = useState("");
     const [oldEmail, setOldEmail] = useState("");
     const [email, setEmail] = useState("");
     const [isRequestingEmail, setIsRequestingEmail] = useState(false);
+    const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [deleteConfirmText, setDeleteConfirmText] = useState("");
     const [ships, setShips] = useState<Ship[]>([]);
 
     useEffect(() => {
@@ -90,6 +95,39 @@ export default function SettingsClient({ dict }: { dict: any }) {
             throw new Error("OTP send failed");
         } finally {
             setIsRequestingEmail(false);
+        }
+    };
+
+    const handleDeleteAccountClick = () => {
+        setShowDeleteConfirm(true);
+        setDeleteConfirmText("");
+    };
+
+    const handleDeleteAccountConfirm = async () => {
+        const expectedText = dict.dashboard.settings.deleteAccount === "Slet konto" 
+            ? "SLET MIN KONTO" 
+            : dict.dashboard.settings.deleteAccount === "Delete account"
+            ? "DELETE MY ACCOUNT"
+            : "KONTO LÖSCHEN";
+
+        if (deleteConfirmText.trim() !== expectedText) {
+            toast.error(dict.dashboard.settings.deleteAccountErrorMismatch);
+            return;
+        }
+
+        setIsDeletingAccount(true);
+        try {
+            await deleteAccount();
+            toast.success(dict.dashboard.settings.accountDeletedToast);
+            // Redirect to home page after successful deletion
+            setTimeout(() => {
+                router.push("/");
+            }, 1000);
+        } catch (error) {
+            toast.error("Der skete en fejl ved sletning af konto. Prøv igen.");
+        } finally {
+            setIsDeletingAccount(false);
+            setShowDeleteConfirm(false);
         }
     };
 
@@ -200,11 +238,66 @@ export default function SettingsClient({ dict }: { dict: any }) {
                     title={dict.dashboard.settings.deleteAccount}
                     description={dict.dashboard.settings.deleteAccountDescription}
                     buttonText={dict.dashboard.settings.deleteAccountButton}
-                    onAction={() => console.log("Deleting account...")}
+                    onAction={handleDeleteAccountClick}
+                    disabled={isDeletingAccount}
                     variant="danger"
                 />
                 <div className="mb-6" />
             </div>
-        </div>
+
+            {/* Delete Account Confirmation Modal */}
+            {showDeleteConfirm && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <div className="bg-[#0a0a0a] border border-white/[0.08] rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+                        {/* Title */}
+                        <h2 className="text-xl font-bold text-white mb-4">
+                            {dict.dashboard.settings.deleteAccountConfirmTitle}
+                        </h2>
+
+                        {/* Warnings */}
+                        <div className="space-y-2 mb-6 text-sm text-red-300 border border-red-500/20 bg-red-500/5 rounded-lg p-4">
+                            <p className="font-semibold">{dict.dashboard.settings.deleteAccountConfirmWarning1}</p>
+                            <p>{dict.dashboard.settings.deleteAccountConfirmWarning2}</p>
+                            <p>{dict.dashboard.settings.deleteAccountConfirmWarning3}</p>
+                            <p>{dict.dashboard.settings.deleteAccountConfirmWarning4}</p>
+                            <p>{dict.dashboard.settings.deleteAccountConfirmWarning5}</p>
+                        </div>
+
+                        {/* Confirmation Input */}
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium text-white mb-2">
+                                {dict.dashboard.settings.deleteAccountConfirmQuestion}
+                            </label>
+                            <Input
+                                type="text"
+                                value={deleteConfirmText}
+                                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                                placeholder="SLET MIN KONTO"
+                                className="uppercase"
+                            />
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => setShowDeleteConfirm(false)}
+                                disabled={isDeletingAccount}
+                                className="flex-1 px-4 py-2 rounded-lg border border-white/[0.08] text-white hover:bg-white/[0.05] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {dict.dashboard.settings.deleteAccountCancel}
+                            </button>
+                            <button
+                                onClick={handleDeleteAccountConfirm}
+                                disabled={isDeletingAccount || deleteConfirmText.trim() === ""}
+                                className="flex-1 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isDeletingAccount ? "Sletter..." : dict.dashboard.settings.deleteAccountConfirm}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            </div>
+        
     );
 }

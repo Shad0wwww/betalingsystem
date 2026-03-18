@@ -2,6 +2,8 @@
 import { notFound } from "next/navigation";
 import { getDictionary } from "../../dictionaries";
 import SettingsClient from "@/components/settings/SettingsPage";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/utils/LoadingScreen";
 
 type PageParams = Promise<{ lang: string }>;
 
@@ -14,5 +16,9 @@ export default async function Page(
 
     if (!dict) notFound();
 
-    return <SettingsClient dict={dict} />;
+    return (
+        <Suspense fallback={<LoadingScreen />}>
+            <SettingsClient dict={dict} />
+        </Suspense>
+    );
 }

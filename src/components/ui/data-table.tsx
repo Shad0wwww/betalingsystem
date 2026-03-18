@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue> {
     searchPlaceholder?: string
     emptyMessage?: string
     refreshKey?: number
+    dict?: any
 }
 
 export function DataTable<TData, TValue>({
@@ -40,6 +41,7 @@ export function DataTable<TData, TValue>({
     searchPlaceholder = "Søg...",
     emptyMessage = "Ingen data at vise.",
     refreshKey = 0,
+    dict,
 }: DataTableProps<TData, TValue>) {
     const [data, setData] = React.useState<TData[]>([])
     const [total, setTotal] = React.useState(0)
@@ -176,12 +178,12 @@ export function DataTable<TData, TValue>({
 
             <div className="flex items-center justify-between px-2">
                 <p className="text-sm" style={{ color: "var(--sub-headline)" }}>
-                    {total} rækker i alt
+                    {total} {dict?.dashboard?.historik?.rækker ?? "rækker"} i alt
                 </p>
                 <div className="flex items-center space-x-2">
                     {[
-                        { icon: ChevronsLeft, label: "Første side", onClick: () => setPage(1), disabled: page === 1, hidden: true },
-                        { icon: ChevronLeft, label: "Forrige side", onClick: () => setPage((p) => Math.max(1, p - 1)), disabled: page === 1, hidden: false },
+                        { icon: ChevronsLeft, label: dict?.dashboard?.historik?.gåTilFørsteSide ?? "Første side", onClick: () => setPage(1), disabled: page === 1, hidden: true },
+                        { icon: ChevronLeft, label: dict?.dashboard?.historik?.forrigeSide ?? "Forrige side", onClick: () => setPage((p) => Math.max(1, p - 1)), disabled: page === 1, hidden: false },
                     ].map(({ icon: Icon, label, onClick, disabled, hidden }, i) => (
                         <button
                             key={i}
@@ -206,11 +208,11 @@ export function DataTable<TData, TValue>({
                         </button>
                     ))}
                     <span className="text-sm w-24 text-center" style={{ color: "var(--headline-color)" }}>
-                        Side {page} af {pageCount}
+                        {dict?.dashboard?.historik?.side ?? "Side"} {page} {dict?.dashboard?.historik?.af ?? "af"} {pageCount}
                     </span>
                     {[
-                        { icon: ChevronRight, label: "Næste side", onClick: () => setPage((p) => Math.min(pageCount, p + 1)), disabled: page === pageCount, hidden: false },
-                        { icon: ChevronsRight, label: "Sidste side", onClick: () => setPage(pageCount), disabled: page === pageCount, hidden: true },
+                        { icon: ChevronRight, label: dict?.dashboard?.historik?.næsteSide ?? "Næste side", onClick: () => setPage((p) => Math.min(pageCount, p + 1)), disabled: page === pageCount, hidden: false },
+                        { icon: ChevronsRight, label: dict?.dashboard?.historik?.gåTilSidsteSide ?? "Sidste side", onClick: () => setPage(pageCount), disabled: page === pageCount, hidden: true },
                     ].map(({ icon: Icon, label, onClick, disabled, hidden }, i) => (
                         <button
                             key={i}
