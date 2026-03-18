@@ -12,138 +12,148 @@
 export type PriceArea = "DK1" | "DK2";
 
 export interface ElOverblik {
-  date: string;
-  hoejestePris: number;
-  hoejesteTid: string;
-  lavestesPris: number;
-  lavestesTid: string;
-  gennemsnit: number;
+	date: string;
+	hoejestePris: number;
+	hoejesteTid: string;
+	lavestesPris: number;
+	lavestesTid: string;
+	gennemsnit: number;
 }
 
 export interface ElPrisLigenu {
-  date: string;
-  pris: number;
-  tid: string;
-  underDagensGns: number;
+	date: string;
+	pris: number;
+	tid: string;
+	underDagensGns: number;
 }
 
 export interface ElPriserResult {
-  overblik: ElOverblik;
-  prisLigenu: ElPrisLigenu;
+	overblik: ElOverblik;
+	prisLigenu: ElPrisLigenu;
 }
 
 interface EnerginetRecord {
-  TimeDK: string;         // Danish local time, e.g. "2026-03-10T13:15:00" (15-min intervals)
-  PriceArea: string;
-  DayAheadPriceDKK: number; // DKK per MWh — divide by 1000 for DKK/kWh
+	TimeDK: string;         // Danish local time, e.g. "2026-03-10T13:15:00" (15-min intervals)
+	PriceArea: string;
+	DayAheadPriceDKK: number; // DKK per MWh — divide by 1000 for DKK/kWh
 }
 
 interface EnerginetResponse {
-  records?: EnerginetRecord[];
+	records?: EnerginetRecord[];
 }
 
 const MAX_RETRIES = 3;
 
 async function fetchWithRetry(url: string): Promise<Response> {
-  for (let i = 0; i < MAX_RETRIES; i++) {
-    const res = await fetch(url);
+	for (let i = 0; i < MAX_RETRIES; i++) {
+		const res = await fetch(url);
 
-    if (res.ok) return res;
+		if (res.ok) return res;
 
-    if (res.status < 500) {
-      throw new Error(`Energinet API error: ${res.status} ${res.statusText}`);
-    }
+		if (res.status < 500) {
+			throw new Error(`Energinet API error: ${res.status} ${res.statusText}`);
+		}
 
-    await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
-  }
+		await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
+	}
 
-  throw new Error("Energinet API failed after retries");
+	throw new Error("Energinet API failed after retries");
 }
 
 function formatHourSlot(hourDK: string) {
-  const start = parseInt(hourDK.slice(11, 13));
-  const end = (start + 1) % 24;
+	const start = parseInt(hourDK.slice(11, 13));
+	const end = (start + 1) % 24;
 
-  return `${String(start).padStart(2, "0")}:00-${String(end).padStart(2, "0")}:00`;
+	return `${String(start).padStart(2, "0")}:00-${String(end).padStart(2, "0")}:00`;
 }
 
 function getTodayDK() {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Copenhagen",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(new Date());
+	const parts = new Intl.DateTimeFormat("en-CA", {
+		timeZone: "Europe/Copenhagen",
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	}).formatToParts(new Date());
 
-  const obj: any = {};
-  parts.forEach((p) => (obj[p.type] = p.value));
+	const obj: any = {};
+	parts.forEach((p) => (obj[p.type] = p.value));
 
-  return `${obj.year}-${obj.month}-${obj.day}`;
+	return `${obj.year}-${obj.month}-${obj.day}`;
 }
 
 export async function getElPriser(
-  priceArea: PriceArea = "DK1"
+	priceArea: PriceArea = "DK1"
 ): Promise<ElPriserResult> {
 
-  const today = getTodayDK();
+	const today = getTodayDK();
 
-  // Dataset: DayAheadPrices — current hourly spot prices for DK1/DK2.
-  // Elspotprices is stale (last updated 2025-09-30); DayAheadPrices is live.
-  // No filter/sort/start/end params — DayAheadPrices rejects unknown sort keys;
-  // filtering and sorting happen in code.
-  const url = "https://api.energidataservice.dk/dataset/DayAheadPrices?limit=120";
+	// Dataset: DayAheadPrices — current hourly spot prices for DK1/DK2.
+	// Elspotprices is stale (last updated 2025-09-30); DayAheadPrices is live.
+	// No filter/sort/start/end params — DayAheadPrices rejects unknown sort keys;
+	// filtering and sorting happen in code.
+	const url = "https://api.energidataservice.dk/dataset/DayAheadPrices?limit=120";
 
-  const res = await fetchWithRetry(url);
-  const body = (await res.json()) as EnerginetResponse;
+	const res = await fetchWithRetry(url);
+	const body = (await res.json()) as EnerginetResponse;
 
-  // Filter to today + requested area, then sort ascending by HourDK.
-  const records = (body.records ?? [])
-    .filter((r) => r.PriceArea === priceArea)
-    .filter((r) => r.TimeDK.startsWith(today))
-    .sort((a, b) => a.TimeDK.localeCompare(b.TimeDK));
+	// Filter to today + requested area, then sort ascending by HourDK.
+	const records = (body.records ?? [])
+		.filter((r) => r.PriceArea === priceArea)
+		.filter((r) => r.TimeDK.startsWith(today))
+		.sort((a, b) => a.TimeDK.localeCompare(b.TimeDK));
 
-  if (records.length === 0) {
-    throw new Error("No prices returned for today");
-  }
+	if (records.length === 0) {
+		throw new Error("No prices returned for today");
+	}
 
-  const prices = records.map((r) => r.DayAheadPriceDKK / 1000);
+	const prices = records.map((r) => r.DayAheadPriceDKK / 1000);
 
-  const max = Math.max(...prices);
-  const min = Math.min(...prices);
-  const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
+	const max = Math.max(...prices);
+	const min = Math.min(...prices);
+	const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
 
-  const maxIndex = prices.indexOf(max);
-  const minIndex = prices.indexOf(min);
+	const maxIndex = prices.indexOf(max);
+	const minIndex = prices.indexOf(min);
 
-  const overblik: ElOverblik = {
-    date: today,
-    hoejestePris: Number(max.toFixed(4)),
-    hoejesteTid: formatHourSlot(records[maxIndex].TimeDK),
-    lavestesPris: Number(min.toFixed(4)),
-    lavestesTid: formatHourSlot(records[minIndex].TimeDK),
-    gennemsnit: Number(avg.toFixed(4)),
-  };
+	const overblik: ElOverblik = {
+		date: today,
+		hoejestePris: Number(max.toFixed(4)),
+		hoejesteTid: formatHourSlot(records[maxIndex].TimeDK),
+		lavestesPris: Number(min.toFixed(4)),
+		lavestesTid: formatHourSlot(records[minIndex].TimeDK),
+		gennemsnit: Number(avg.toFixed(4)),
+	};
 
-  const currentHour = new Date().getHours();
+	// Get current hour in Copenhagen timezone (not UTC!)
+	const currentHourDK = parseInt(
+		new Intl.DateTimeFormat("en-GB", {
+			timeZone: "Europe/Copenhagen",
+			hour: "2-digit",
+			hour12: false,
+		}).format(new Date()),
+		10
+	);
 
-  const current =
-    records.find(
-      (r) => parseInt(r.TimeDK.slice(11, 13)) === currentHour
-    ) || records[0];
+	const current =
+		records.find(
+			(r) => parseInt(r.TimeDK.slice(11, 13)) === currentHourDK
+		) || records[0];
 
-  const currentPrice = current.DayAheadPriceDKK / 1000;
+	const currentPrice = current.DayAheadPriceDKK / 1000;
 
-  const prisLigenu: ElPrisLigenu = {
-    date: today,
-    pris: Number(currentPrice.toFixed(4)) + 0.1, // Add tiny amount to avoid zero price (for free sessions)
-    tid: formatHourSlot(current.TimeDK),
-    underDagensGns: Math.round(((avg - currentPrice) / avg) * 100),
-  };
+	const prisLigenu: ElPrisLigenu = {
+		date: today,
+		pris: Number(currentPrice.toFixed(4)) + 0.1, // Add tiny amount to avoid zero price (for free sessions)
+		tid: formatHourSlot(current.TimeDK),
+		underDagensGns: Math.round(((avg - currentPrice) / avg) * 100),
+	};
 
-  return {
-    overblik,
-    prisLigenu,
-  };
+	console.log("Fetched electricity prices:", { overblik, prisLigenu });
+
+	return {
+		overblik,
+		prisLigenu,
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -152,25 +162,25 @@ export async function getElPriser(
 
 /** Return type for getLiveElectricityPrice */
 export interface LiveElectricityPrice {
-  /** DKK/kWh spot price (SpotPriceDKK / 1000) */
-  price: number;
-  /** e.g. "13:00-14:00" */
-  timeSlot: string;
-  /** e.g. "2026-03-10" (Copenhagen date) */
-  date: string;
+	/** DKK/kWh spot price (SpotPriceDKK / 1000) */
+	price: number;
+	/** e.g. "13:00-14:00" */
+	timeSlot: string;
+	/** e.g. "2026-03-10" (Copenhagen date) */
+	date: string;
 }
 
 /** Raw record shape from the DayAheadPrices dataset */
 interface DayAheadRecord {
-  /** Danish local time, 15-min intervals: "2026-03-10T13:15:00" */
-  TimeDK: string;
-  PriceArea: string;
-  /** Day-ahead price in DKK per MWh — divide by 1000 for DKK/kWh */
-  DayAheadPriceDKK: number;
+	/** Danish local time, 15-min intervals: "2026-03-10T13:15:00" */
+	TimeDK: string;
+	PriceArea: string;
+	/** Day-ahead price in DKK per MWh — divide by 1000 for DKK/kWh */
+	DayAheadPriceDKK: number;
 }
 
 interface DayAheadResponse {
-  records?: DayAheadRecord[];
+	records?: DayAheadRecord[];
 }
 
 /**
@@ -186,91 +196,91 @@ interface DayAheadResponse {
  * @param priceArea  "DK1" (West Denmark) | "DK2" (East Denmark). Default DK1.
  */
 export async function getLiveElectricityPrice(
-  priceArea: PriceArea = "DK1"
+	priceArea: PriceArea = "DK1"
 ): Promise<LiveElectricityPrice> {
-  // --- 1. Build today's date string in the Copenhagen timezone ---
-  // Intl.DateTimeFormat with en-CA gives us "yyyy-MM-dd" directly.
-  const todayDK = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Copenhagen",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
+	// --- 1. Build today's date string in the Copenhagen timezone ---
+	// Intl.DateTimeFormat with en-CA gives us "yyyy-MM-dd" directly.
+	const todayDK = new Intl.DateTimeFormat("en-CA", {
+		timeZone: "Europe/Copenhagen",
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	}).format(new Date());
 
-  // Current hour in Copenhagen (0-23).
-  const currentHourDK = parseInt(
-    new Intl.DateTimeFormat("en-GB", {
-      timeZone: "Europe/Copenhagen",
-      hour: "2-digit",
-      hour12: false,
-    }).format(new Date()),
-    10
-  );
+	// Current hour in Copenhagen (0-23).
+	const currentHourDK = parseInt(
+		new Intl.DateTimeFormat("en-GB", {
+			timeZone: "Europe/Copenhagen",
+			hour: "2-digit",
+			hour12: false,
+		}).format(new Date()),
+		10
+	);
 
-  // --- 2. Fetch from Energinet (no filter/sort/start/end to avoid 400s) ---
-  // DayAheadPrices rejects unknown sort keys; we sort in code after filtering.
-  const API_URL = "https://api.energidataservice.dk/dataset/DayAheadPrices?limit=120";
+	// --- 2. Fetch from Energinet (no filter/sort/start/end to avoid 400s) ---
+	// DayAheadPrices rejects unknown sort keys; we sort in code after filtering.
+	const API_URL = "https://api.energidataservice.dk/dataset/DayAheadPrices?limit=120";
 
-  let lastError: unknown;
+	let lastError: unknown;
 
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      const res = await fetch(API_URL, { headers: { Accept: "application/json" } });
+	for (let attempt = 1; attempt <= 3; attempt++) {
+		try {
+			const res = await fetch(API_URL, { headers: { Accept: "application/json" } });
 
-      if (!res.ok) {
-        // 4xx errors are not transient — throw immediately.
-        if (res.status < 500) {
-          throw new Error(`Energinet DayAheadPrices API error: ${res.status} ${res.statusText}`);
-        }
-        // 5xx — retry with exponential back-off.
-        throw new Error(`Energinet server error: ${res.status}`);
-      }
+			if (!res.ok) {
+				// 4xx errors are not transient — throw immediately.
+				if (res.status < 500) {
+					throw new Error(`Energinet DayAheadPrices API error: ${res.status} ${res.statusText}`);
+				}
+				// 5xx — retry with exponential back-off.
+				throw new Error(`Energinet server error: ${res.status}`);
+			}
 
-      const body = (await res.json()) as DayAheadResponse;
+			const body = (await res.json()) as DayAheadResponse;
 
-      // --- 3. Filter in code: today's records for the requested area ---
-      // Sort descending so todayRecords[0] is the most recent record (fallback).
-      const todayRecords = (body.records ?? [])
-        .filter((r) => r.PriceArea === priceArea)
-        .filter((r) => r.TimeDK.startsWith(todayDK))
-        .sort((a, b) => b.TimeDK.localeCompare(a.TimeDK));
+			// --- 3. Filter in code: today's records for the requested area ---
+			// Sort descending so todayRecords[0] is the most recent record (fallback).
+			const todayRecords = (body.records ?? [])
+				.filter((r) => r.PriceArea === priceArea)
+				.filter((r) => r.TimeDK.startsWith(todayDK))
+				.sort((a, b) => b.TimeDK.localeCompare(a.TimeDK));
 
-      if (todayRecords.length === 0) {
-        throw new Error(
-          `No DayAheadPrices records found for ${todayDK} (${priceArea}). ` +
-          "Prices may not yet be published for today."
-        );
-      }
+			if (todayRecords.length === 0) {
+				throw new Error(
+					`No DayAheadPrices records found for ${todayDK} (${priceArea}). ` +
+					"Prices may not yet be published for today."
+				);
+			}
 
-      // --- 4. Find the record for the current Copenhagen hour ---
-      // Records are 15-min intervals; match on the hour component of TimeDK.
-      const current =
-        todayRecords.find(
-          (r) => parseInt(r.TimeDK.slice(11, 13), 10) === currentHourDK
-        ) ??
-        // Fall back to the most recent available record for today.
-        todayRecords[0];
+			// --- 4. Find the record for the current Copenhagen hour ---
+			// Records are 15-min intervals; match on the hour component of TimeDK.
+			const current =
+				todayRecords.find(
+					(r) => parseInt(r.TimeDK.slice(11, 13), 10) === currentHourDK
+				) ??
+				// Fall back to the most recent available record for today.
+				todayRecords[0];
 
-      // DayAheadPriceDKK is DKK/MWh → divide by 1000 for DKK/kWh.
-      const price = Number((current.DayAheadPriceDKK / 1000).toFixed(4));
-      const timeSlot = formatHourSlot(current.TimeDK);
+			// DayAheadPriceDKK is DKK/MWh → divide by 1000 for DKK/kWh.
+			const price = Number((current.DayAheadPriceDKK / 1000).toFixed(4));
+			const timeSlot = formatHourSlot(current.TimeDK);
 
-      return { price, timeSlot, date: todayDK };
-    } catch (err) {
-      lastError = err;
-      // Only retry on 5xx / network errors; 4xx and data errors are final.
-      if (
-        err instanceof Error &&
-        (err.message.includes("server error") || err.message.includes("fetch"))
-      ) {
-        if (attempt < 3) {
-          await new Promise((r) => setTimeout(r, 1000 * attempt));
-          continue;
-        }
-      }
-      throw err;
-    }
-  }
+			return { price, timeSlot, date: todayDK };
+		} catch (err) {
+			lastError = err;
+			// Only retry on 5xx / network errors; 4xx and data errors are final.
+			if (
+				err instanceof Error &&
+				(err.message.includes("server error") || err.message.includes("fetch"))
+			) {
+				if (attempt < 3) {
+					await new Promise((r) => setTimeout(r, 1000 * attempt));
+					continue;
+				}
+			}
+			throw err;
+		}
+	}
 
-  throw lastError ?? new Error("getLiveElectricityPrice failed after retries");
+	throw lastError ?? new Error("getLiveElectricityPrice failed after retries");
 }
