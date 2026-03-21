@@ -167,39 +167,39 @@
     },
     "termsofservice": {
         "title": "Nutzungsbedingungen",
-        "undertitle": "Einleitung",
-        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste stimmen Sie zu, diese Nutzungsbedingungen einzuhalten. Bitte lesen Sie diese Bedingungen sorgfältig durch, da sie wichtige Informationen über Ihre Rechte und Pflichten enthalten.",
+        "undertitle": "Einführung",
+        "introduction": "Willkommen beim Zahlungssystem des Ribe Sejlklub. Durch die Nutzung unserer Dienste erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Bitte lesen Sie die Bedingungen sorgfältig durch, da sie wichtige Informationen über Ihre Rechte und Pflichten enthalten.",
         "publisher": {
             "title": "Herausgeber",
             "name": "Schulprojekt – Gruppe Magnus und Kasper"
         },
         "section1": {
             "title": "§1 Lieferung",
-            "content": "Wenn Sie über unser Zahlungssystem einen Kauf tätigen, werden wir uns bemühen, den erworbenen Dienst so schnell wie möglich bereitzustellen. In den meisten Fällen erfolgt die Bereitstellung innerhalb weniger Minuten nach dem Kauf."
+            "content": "Wenn Sie über unser Zahlungssystem einen Kauf tätigen, wird der Zugang zum Strom über die angeschlossenen Modbus-Einheiten aktiviert. Wir bemühen uns sicherzustellen, dass die Lieferung unmittelbar nach der genehmigten Autorisierung erfolgt."
         },
         "section2": {
-            "title": "§2 Widerrufsrecht und Rückerstattungen",
-            "content": "Da es sich um die Lieferung digitaler Inhalte handelt, die nicht auf einem physischen Datenträger bereitgestellt werden, erkennen Sie mit Abschluss des Kaufs an, dass das Widerrufsrecht erlischt, sobald der Dienst in Anspruch genommen wird. Alle Verkäufe sind grundsätzlich endgültig. Bitte kontaktieren Sie support@pins.dk bei technischen Fehlern."
+            "title": "§2 Widerrufsrecht",
+            "content": "Mit Beginn des Stromverbrauchs erklären Sie sich ausdrücklich damit einverstanden, dass die Lieferung beginnt und das gesetzliche 14-tägige Widerrufsrecht für Online-Käufe erlischt, da die Leistung (der Strom) zum Zeitpunkt der Lieferung verbraucht wird."
         },
         "section3": {
-            "title": "§3 Haftungsausschluss",
-            "content": "Ribe Sejlklub und sein Zahlungssystem werden „wie besehen“ ohne jegliche Gewährleistung bereitgestellt. Wir schließen jede Haftung für Schäden oder Verluste aus, die durch die Nutzung unserer Dienste entstehen könnten."
+            "title": "§3 Zahlung und Reservierung",
+            "content": "Wir nutzen ein Reservierungsmodell über Stripe. Zu Beginn der Leistung wird ein festgelegter Betrag auf Ihrer Zahlungskarte reserviert. Nach Beendigung des Verbrauchs wird nur der tatsächliche Betrag für den gelieferten Strom abgebucht und der restliche Teil der Reservierung freigegeben. Abhängig von Ihrer Bank kann es einige Werktage dauern, bis die Reservierung in Ihrem Kontoauszug als aufgehoben angezeigt wird."
         },
         "section4": {
-            "title": "§4 Schulprojekt-Haftungsausschluss",
-            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Angaben und Funktionen sind fiktiv und dienen nur zu Demonstrationszwecken. Die Nutzung des Systems erfolgt auf eigene Verantwortung."
+            "title": "§4 Haftungsausschluss",
+            "content": "Das Zahlungssystem des Ribe Sejlklub wird ohne Mängelgewähr bereitgestellt. Wir übernehmen keine Verantwortung für Schäden an der Bootsausrüstung oder Verluste, die durch Systemfehler oder Stromausfälle entstehen könnten."
         },
         "section5": {
-            "title": "§5 Änderungen der Bedingungen",
-            "content": "Wir behalten uns das Recht vor, diese Bedingungen zu ändern. Etwaige Änderungen werden auf der Website veröffentlicht, und es liegt in Ihrer Verantwortung, sich auf dem Laufenden zu halten."
+            "title": "§5 Schulprojekt-Disclaimer",
+            "content": "Dies ist ein Schulprojekt und kein offizielles Produkt des Ribe Sejlklub. Alle Informationen, Preise und Funktionen sind fiktiv und dienen ausschließlich Demonstrationszwecken. Die Nutzung des Systems erfolgt auf eigene Gefahr."
         },
         "section6": {
             "title": "§6 Anwendbares Recht und Gerichtsstand",
-            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht. Etwaige Streitigkeiten sind vor dänischen Gerichten zu klären."
+            "content": "Diese Nutzungsbedingungen unterliegen dänischem Recht. Jegliche Streitigkeiten sind vor dänischen Gerichten auszutragen."
         },
         "section7": {
             "title": "§7 Kontaktinformationen",
-            "content": "Bei Fragen zu diesen Bedingungen können Sie uns unter support@pins.dk erreichen."
+            "content": "Bei Fragen zu diesen Bedingungen können Sie uns gerne unter support@pins.dk kontaktieren."
         }
     },
     "privacypolicy": {

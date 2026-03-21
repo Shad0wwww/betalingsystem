@@ -168,30 +168,30 @@
     "termsofservice": {
         "title": "Terms of Service",
         "undertitle": "Introduction",
-        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read these terms carefully as they contain important information about your rights and obligations.",
+        "introduction": "Welcome to Ribe Sejlklub's payment system. By using our services, you agree to comply with these terms of service. Please read the terms carefully, as they contain important information about your rights and obligations.",
         "publisher": {
             "title": "Publisher",
-            "name": "School project – Group Magnus and Kasper"
+            "name": "School Project – Group Magnus and Kasper"
         },
         "section1": {
             "title": "§1 Delivery",
-            "content": "When you make a purchase through our payment system, we will endeavour to deliver the purchased service as quickly as possible. In most cases, delivery will occur within minutes of the purchase."
+            "content": "When you make a purchase through our payment system, access to electricity is activated via the connected Modbus units. We strive to ensure that delivery occurs immediately after approved authorization."
         },
         "section2": {
-            "title": "§2 Right of Withdrawal and Refunds",
-            "content": "As this involves the delivery of digital content not supplied on a physical medium, you acknowledge upon completing the purchase that the right of withdrawal lapses once the service has commenced. All sales are final as a general rule, but please contact support@pins.dk in the event of technical errors."
+            "title": "§2 Right of Withdrawal",
+            "content": "By starting the consumption of electricity, you provide your express consent that the delivery begins and that the statutory 14-day right of withdrawal for online purchases is waived, as the service (electricity) is consumed at the moment of delivery."
         },
         "section3": {
-            "title": "§3 Disclaimer of Liability",
-            "content": "Ribe Sejlklub and its payment system are provided 'as is' without any form of warranty. We disclaim all liability for any damage or loss that may arise from the use of our services."
+            "title": "§3 Payment and Reservation",
+            "content": "We use a reservation model via Stripe. When the service starts, a fixed amount is reserved on your payment card. When consumption ends, only the actual amount for the delivered electricity is charged, and the remaining part of the reservation is released. Depending on your bank, it may take a few business days before the reservation is shown as canceled in your bank statement."
         },
         "section4": {
-            "title": "§4 School Project Disclaimer",
-            "content": "This is a school project and not an official product of Ribe Sejlklub. All information and features are fictional and for demonstration purposes only. Use of the system is at your own risk."
+            "title": "§4 Disclaimer",
+            "content": "Ribe Sejlklub's payment system is provided 'as is' without any form of warranty. We disclaim any responsibility for any damage to boat equipment or losses that may arise as a result of system errors or power outages."
         },
         "section5": {
-            "title": "§5 Changes to Terms",
-            "content": "We reserve the right to amend these terms. Any changes will be published on the website and it is your responsibility to stay informed."
+            "title": "§5 School Project Disclaimer",
+            "content": "This is a school project and not an official product of Ribe Sejlklub. All information, prices, and functions are fictional and solely for demonstration purposes. Use of the system is at your own risk."
         },
         "section6": {
             "title": "§6 Governing Law and Jurisdiction",
@@ -199,7 +199,7 @@
         },
         "section7": {
             "title": "§7 Contact Information",
-            "content": "If you have questions about these terms, you can contact us at support@pins.dk."
+            "content": "If you have questions regarding these terms, you are welcome to contact us at support@pins.dk."
         }
     },
     "privacypolicy": {
