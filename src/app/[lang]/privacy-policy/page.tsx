@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { getDictionary } from "../dictionaries";
+import LoadingScreen from "@/components/utils/LoadingScreen";
 
 type PageParams = Promise<{ lang: string }>;
 
@@ -97,14 +99,17 @@ async function PrivacyPolicyPage({ params }: { params: PageParams }) {
 
                     {/* Sections */}
                     <div className="space-y-10">
-                        {sections.map((section, index) => (
-                            <PolicySection
-                                key={index}
-                                index={index}
-                                title={section.title}
-                                content={section.content}
-                            />
-                        ))}
+                        <Suspense fallback={<LoadingScreen />}>
+                            {sections.map((section, index) => (
+                                <PolicySection
+                                    key={index}
+                                    index={index}
+                                    title={section.title}
+                                    content={section.content}
+                                />
+                            ))}
+                        </Suspense>
+
                     </div>
                 </div>
             </div>

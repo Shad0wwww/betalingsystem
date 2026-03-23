@@ -11,8 +11,6 @@ export default async function Page(props: {
 }) {
 
     const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
-    
-
     const email = searchParams.email;
 
     const lang = params.lang;

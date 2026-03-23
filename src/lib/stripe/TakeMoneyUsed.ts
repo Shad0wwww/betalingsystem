@@ -4,6 +4,7 @@ import getStripe from "./Stripe";
 import { sendEmail } from "../emailer/Mail";
 import { uploadFile } from "../cloudflare/Upload";
 import { generateInvoiceEmailContent } from "../emailer/MailCreatorInvoice";
+import { log } from 'console';
 
 export async function takeMoneyUsed(
     userId: string,
@@ -37,13 +38,7 @@ export async function takeMoneyUsed(
                 reservedBalance: 0,
             },
         }),
-        prisma.auditLog.create({
-            data: {
-                userId,
-                action: ActionType.PAYMENT_MADE,
-                details: `Captured ${roundedAmountUsedWithMoms} DKK (reserved ${originalReservedAmount} DKK) for PaymentIntent ${paymentIntentId}`,
-            },
-        }),
+        log(ActionType.PAYMENT_MADE, userId, `Captured ${roundedAmountUsedWithMoms} DKK (reserved ${originalReservedAmount} DKK) for PaymentIntent ${paymentIntentId}`),
         prisma.transaction.create({
             data: {
                 userId,

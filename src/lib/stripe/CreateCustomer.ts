@@ -11,6 +11,4 @@ export async function createStripeCustomer(
         name: username,
         phone,
     });
-
-
 }

@@ -9,6 +9,7 @@ import DoesEmailExist from "@/lib/users/DoesEmailExist";
 import getStripe from "@/lib/stripe/Stripe";
 import { ActionType } from "@prisma/client";
 import { cookies } from "next/headers";
+import { log } from "console";
 
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
     const user = await getCurrentUser();
@@ -21,13 +22,9 @@ export async function updateName(name: string) {
     const { userId } = await getAuthPayload();
 
     await prisma.user.update({ where: { id: userId }, data: { name } });
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.NAME_CHANGE,
-            details: `User changed name to ${name}`,
-        },
-    });
+
+    await log(ActionType.NAME_CHANGE, userId, `User changed name to ${name}`);
+
     return { message: "Name updated successfully!" };
 }
 
@@ -60,13 +57,8 @@ export async function sendEmailChangeOtp(newEmail: string) {
         update: { token: newHashedCode, expires: new Date(Date.now() + 10 * 60 * 1000) },
     });
 
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.EMAIL_CHANGE,
-            details: `User requested email change from ${email} to ${newEmail}`,
-        },
-    });
+
+    log(ActionType.EMAIL_CHANGE, userId, `User requested email change from ${email} to ${newEmail}`);
 
     await sendEmail(email, "Du er i gang med at ændre din email adresse, godkend ved at skrive koden", generateHtmlOTP(oldCode));
     await sendEmail(newEmail, "Godkend din nye email adresse - ved at skrive koden", generateHtmlOTP(newCode));
@@ -100,18 +92,11 @@ export async function confirmEmailChange(oldCode: string, newCode: string, newEm
 
     await prisma.verificationToken.deleteMany({ where: { identifier: { in: [email, newEmail] } } });
 
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.EMAIL_CHANGE,
-            details: `User changed email from ${email} to ${newEmail}`,
-        },
-    });
+    log(ActionType.EMAIL_CHANGE, userId, `User confirmed email change from ${email} to ${newEmail}`);
 
     return { message: "Email successfully updated" };
 }
 
-// ─── Session Management ─────────────────────────────────────────────────────
 
 export interface SessionInfo {
     id: string;
@@ -174,14 +159,12 @@ export async function logoutSession(sessionId: string) {
     const cookieStore = await cookies();
     const currentSessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
-    // Verificer at session tilhører brugeren
     const session = await prisma.session.findFirst({
         where: { id: sessionId, userId },
     });
 
     if (!session) throw new Error("Session not found");
 
-    // Tjek om det er den nuværende session
     if (currentSessionToken) {
         const currentSession = await prisma.session.findUnique({
             where: { sessionToken: currentSessionToken },
@@ -210,13 +193,9 @@ export async function logoutAllOtherSessions() {
         },
     });
 
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.LOGOUT_ALL_DEVICES,
-            details: "User logged out of all other devices",
-        },
-    });
+
+
+    await log(ActionType.LOGOUT_ALL_DEVICES, userId, "User logged out of all other devices");
 
     return { success: true };
 }
@@ -226,21 +205,14 @@ export async function logoutAllOtherSessions() {
 export async function deleteAccount() {
     const { userId } = await getAuthPayload();
 
-    // Log the deletion action before deleting
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.ACCOUNT_DELETED,
-            details: "User deleted their account",
-        },
-    });
 
-    // Delete all sessions for this user (logs them out everywhere)
+    await log(ActionType.ACCOUNT_DELETED, userId, "User deleted their account");
+
+
     await prisma.session.deleteMany({
         where: { userId },
     });
 
-    // Delete all user data (cascading deletes should handle relations)
     await prisma.user.delete({
         where: { id: userId },
     });

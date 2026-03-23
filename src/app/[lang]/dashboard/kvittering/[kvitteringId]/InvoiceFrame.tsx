@@ -5,7 +5,6 @@ export default function InvoiceFrame({ html }: { html: string }) {
     const ref = useRef<HTMLIFrameElement>(null);
     const [height, setHeight] = useState(600);
 
-    // Inject a white background so the dark page theme doesn't bleed through
     const injected = html.includes("<head>")
         ? html.replace("<head>", `<head><style>html,body{background:#fff!important;}</style>`)
         : `<style>html,body{background:#fff!important;}</style>` + html;
