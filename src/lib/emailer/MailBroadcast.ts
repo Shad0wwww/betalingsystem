@@ -8,11 +8,20 @@ export function generateBroadcastEmailContent(
 	const footerText = t?.footer ?? "Du modtager denne mail, fordi du har en konto hos Ribe Sejlklub.";
 	const unsubscribeNote = t?.unsubscribeNote ?? "For at afmelde dig fra fremtidige meddelelser, kan du kontakte os på support@pins.dk.";
 
-	// Konverter newlines til <br> tags og escape HTML
+	// Konverter markdown-lignende formatering til HTML
 	const formattedBody = body
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
+		// Bold: **tekst** eller __tekst__
+		.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+		.replace(/__(.+?)__/g, '<strong>$1</strong>')
+		// Italic: *tekst* eller _tekst_
+		.replace(/\*(.+?)\*/g, '<em>$1</em>')
+		.replace(/_(.+?)_/g, '<em>$1</em>')
+		// Links: [tekst](url)
+		.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#3b82f6;text-decoration:underline;">$1</a>')
+		// Newlines
 		.replace(/\n/g, '<br/>');
 
 	return `<!DOCTYPE html>

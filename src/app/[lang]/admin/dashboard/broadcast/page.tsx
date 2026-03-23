@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Box } from "@/components/admin/Box";
+import toast from "react-hot-toast";
 import {
     Send,
     Mail,
@@ -10,6 +11,9 @@ import {
     Loader2,
     CheckCircle2,
     Users,
+    Bold,
+    Italic,
+    Link,
 } from "lucide-react";
 
 const inputClass =
@@ -53,6 +57,46 @@ export default function BroadcastPage() {
     const [error, setError] = React.useState<string | null>(null);
     const [result, setResult] = React.useState<BroadcastResult | null>(null);
     const [showConfirm, setShowConfirm] = React.useState(false);
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+    const insertFormatting = (before: string, after: string, placeholder: string) => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = body.substring(start, end);
+        const textToInsert = selectedText || placeholder;
+
+        const newText = body.substring(0, start) + before + textToInsert + after + body.substring(end);
+        setBody(newText);
+
+        // Sæt cursor position efter indsættelse
+        setTimeout(() => {
+            textarea.focus();
+            const newCursorPos = start + before.length + textToInsert.length + after.length;
+            textarea.setSelectionRange(newCursorPos, newCursorPos);
+        }, 0);
+    };
+
+    const insertLink = () => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = body.substring(start, end);
+
+        const linkText = selectedText || "linktekst";
+        const template = `[${linkText}](https://example.com)`;
+
+        const newText = body.substring(0, start) + template + body.substring(end);
+        setBody(newText);
+
+        setTimeout(() => {
+            textarea.focus();
+        }, 0);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -88,8 +132,10 @@ export default function BroadcastPage() {
             setResult(data);
             setSubject("");
             setBody("");
+            toast.success(`Broadcast sendt til ${data.success} brugere!`);
         } catch (err: any) {
             setError(err.message);
+            toast.error(err.message || "Der skete en fejl ved afsendelse");
         } finally {
             setSending(false);
         }
@@ -153,12 +199,44 @@ export default function BroadcastPage() {
                                 </Field>
 
                                 <Field label="Brødtekst" icon={FileText}>
+                                    {/* Formatting toolbar */}
+                                    <div className="flex items-center gap-1 mb-2 p-1 rounded-lg bg-zinc-800/50 border border-zinc-700/50 w-fit">
+                                        <button
+                                            type="button"
+                                            onClick={() => insertFormatting("**", "**", "fed tekst")}
+                                            disabled={sending}
+                                            className="p-1.5 rounded hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors disabled:opacity-50"
+                                            title="Fed tekst (Ctrl+B)"
+                                        >
+                                            <Bold className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => insertFormatting("*", "*", "kursiv tekst")}
+                                            disabled={sending}
+                                            className="p-1.5 rounded hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors disabled:opacity-50"
+                                            title="Kursiv tekst (Ctrl+I)"
+                                        >
+                                            <Italic className="w-4 h-4" />
+                                        </button>
+                                        <div className="w-px h-4 bg-zinc-700 mx-1" />
+                                        <button
+                                            type="button"
+                                            onClick={insertLink}
+                                            disabled={sending}
+                                            className="p-1.5 rounded hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors disabled:opacity-50"
+                                            title="Indsæt link"
+                                        >
+                                            <Link className="w-4 h-4" />
+                                        </button>
+                                    </div>
                                     <textarea
+                                        ref={textareaRef}
                                         className={textareaClass}
                                         value={body}
                                         onChange={(e) => setBody(e.target.value)}
                                         disabled={sending}
-                                        placeholder="Skriv din besked her..."
+                                        placeholder="Skriv din besked her...&#10;&#10;Formatering:&#10;**fed tekst** eller *kursiv tekst*&#10;[linktekst](https://example.com)"
                                         rows={10}
                                         maxLength={5000}
                                     />
@@ -254,6 +332,17 @@ export default function BroadcastPage() {
                                         <li>- Vilkårsændringer (ToS)</li>
                                         <li>- Kritiske systembeskeder</li>
                                         <li>- Vedligeholdelsesnotifikationer</li>
+                                    </ul>
+                                </div>
+                                <div className="h-px bg-zinc-800" />
+                                <div>
+                                    <p className="text-[11px] text-zinc-500 uppercase tracking-widest font-semibold mb-0.5">
+                                        Formatering
+                                    </p>
+                                    <ul className="text-zinc-400 text-xs space-y-1 mt-1 font-mono">
+                                        <li>**fed**</li>
+                                        <li>*kursiv*</li>
+                                        <li>[tekst](url)</li>
                                     </ul>
                                 </div>
                             </div>
