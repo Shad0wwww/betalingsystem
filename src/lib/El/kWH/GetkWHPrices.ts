@@ -148,8 +148,6 @@ export async function getElPriser(
 		underDagensGns: Math.round(((avg - currentPrice) / avg) * 100),
 	};
 
-	console.log("Fetched electricity prices:", { overblik, prisLigenu });
-
 	return {
 		overblik,
 		prisLigenu,

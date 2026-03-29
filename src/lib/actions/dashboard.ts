@@ -4,14 +4,14 @@ import { getCurrentUser } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { takeMoneyUsed } from "@/lib/stripe/TakeMoneyUsed";
 import { createStripePaymentSession } from "@/lib/stripe/CreateReservation";
-import getStripe from "@/lib/stripe/Stripe";
 import { GetUser } from "@/lib/users/GetUser";
 import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
 import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
+import { log } from "../logs/auditlogger";
+import { createStripeSession } from "../stripe/CreateSession";
 
-// Reservation amount in øre (200 kr)
-const RESERVATION_AMOUNT = 20000;
-// Fallback rate used when no spot price is available on the latest meter reading
+const RESERVATION_AMOUNT = 20000; // in øre (200 DKK) - this is a fixed amount to ensure the user has sufficient funds reserved before starting a session. The actual amount charged will be adjusted when the session ends based on consumption.
+
 const FALLBACK_RATE_PER_KWH = 3.0; // DKK per kWh
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
@@ -224,7 +224,6 @@ export async function stopSession(sessionId: number) {
     const rate       = latestReading?.spotPris ?? FALLBACK_RATE_PER_KWH;
     const amountUsed = Math.round(kwhUsed * rate * 100); // in øre
 
-    // 4. Capture the Stripe payment (still no DB changes — rolls back cleanly on failure)
     await takeMoneyUsed(userId, pendingInvoice.stripePaymentIntentId, amountUsed, pendingInvoice.amount, session.type);
 
     // 5. Payment captured — safely close the session
@@ -234,13 +233,11 @@ export async function stopSession(sessionId: number) {
             where: { id: sessionId },
             data: { isActive: false, endTime, endValue },
         }),
-        prisma.auditLog.create({
-            data: {
-                userId,
-                action: ActionType.DISCONNECTED_METER,
-                details: `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId}). Forbrug: ${kwhUsed.toFixed(3)} kWh`,
-            },
-        }),
+
+        log(ActionType.DISCONNECTED_METER, 
+            userId, 
+            `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId}). Forbrug: ${kwhUsed.toFixed(3)} kWh`)
+       
     ]);
 
     return { session: updated, kwhUsed, amountUsed };
@@ -273,23 +270,7 @@ export async function createStripeCheckout(amount: number, description: string, 
         await prisma.user.update({ where: { id: user.id }, data: { stripeCustomerId: customerId } });
     }
 
-    const session = await getStripe().checkout.sessions.create({
-        customer: customerId,
-        payment_method_types: ["card"],
-        mode: "payment",
-        payment_intent_data: { capture_method: "manual" },
-        line_items: [{
-            price_data: {
-                currency: "dkk",
-                unit_amount: amount,
-                product_data: { name: description },
-            },
-            quantity: 1,
-        }],
-        success_url: `${process.env.URL_BASE}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.URL_BASE}/api/stripe/cancel`,
-        metadata: { userId, type },
-    });
+    const session = await createStripeSession(customerId, amount * 100, description, userId, type);
 
     await prisma.invoice.create({
         data: {
@@ -302,13 +283,10 @@ export async function createStripeCheckout(amount: number, description: string, 
         },
     });
 
-    await prisma.auditLog.create({
-        data: {
-            userId,
-            action: ActionType.PAYMENT_LINK_CREATED,
-            details: `User created a payment link for ${description} with amount ${amount}`,
-        },
-    });
+
+    await log(ActionType.PAYMENT_LINK_CREATED, userId, `Bruger oprettede betalingslink for ${description} med beløb ${amount}`);
 
     return { url: session.url };
 }
+
+

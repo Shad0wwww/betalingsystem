@@ -63,7 +63,6 @@ export async function POST(
         let spotPris: number | undefined = undefined;
         try {
             const elpriser = await getElPriser();
-            console.log(`Fetched electricity prices for device ${id}:`, elpriser);
             spotPris = elpriser.prisLigenu.pris;
         } catch (err) {
             console.warn("Could not fetch electricity prices (non-critical):", err);

@@ -18,6 +18,7 @@ export default async function DashboardNavbarAdmin({ params }: Props) {
         { href: `/${params.lang}/admin/dashboard/users`, label: "Brugere" },
         { href: `/${params.lang}/admin/dashboard/meters`, label: "Målere" },
         { href: `/${params.lang}/admin/dashboard/sessions`, label: "Aktive sessioner" },
+        { href: `/${params.lang}/admin/dashboard/broadcast`, label: "Broadcast" },
         { href: `/${params.lang}/dashboard`, label: "Tilbage til dashboard" },
     ];
 
