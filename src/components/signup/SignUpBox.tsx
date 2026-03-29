@@ -34,14 +34,50 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     />
 );
 
+
+
 const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
-    const [validatePhone, setPhone] = useState<string | null>(null);
+
+    const [email, setEmail] = useState(() => {
+        const storedEmail = localStorage.getItem('signupEmail');
+        return storedEmail ? JSON.parse(storedEmail) : '';
+    });
+
+    const [name, setName] = useState(() => {
+        const storedName = localStorage.getItem('signupName');
+        return storedName ? JSON.parse(storedName) : '';
+    });
+
+    const [phone, setPhoneState] = useState(() => {
+        const storedPhone = localStorage.getItem('signupPhone');
+        return storedPhone ? JSON.parse(storedPhone) : '';
+    });
 
     useEffect(() => {
-        setIsMounted(true);
-    }, []);
+        try {
+            setIsMounted(true);
+        localStorage.setItem('signupEmail', JSON.stringify(email));
+        localStorage.setItem('signupName', JSON.stringify(name));
+        localStorage.setItem('signupPhone', JSON.stringify(phone));
+        } catch (error) {
+            console.error('Error accessing localStorage:', error);
+        }
+        
+    }, [email, name, phone]);
+
+    function handelEmailChange(value: string | undefined) {
+        setEmail(value || null);
+    }
+
+    function handelNameChange(value: string | undefined) {
+        setName(value || null);
+    }
+
+    function handelPhoneChange(value: string | undefined) {
+        setPhoneState(value || null);
+    }
 
     const errorMessage = typeof state === 'string' ? state : state?.error;
 
@@ -71,6 +107,8 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                             type="text"
                             placeholder={dict.signup.fullNamePlaceholder}
                             min={2}
+                            onChange={(e) => handelNameChange(e.target.value)}
+                            value={name}
                             required
                         />
                     </Field>
@@ -82,6 +120,8 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                             type="email"
                             placeholder={dict.signup.emailPlaceholder}
                             required
+                            onChange={(e) => handelEmailChange(e.target.value)}
+                            value={email}
                         />
                     </Field>
 
@@ -91,8 +131,8 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
                             name="phone"
                             defaultCountry="DK"
                             placeholder={dict.signup.phonePlaceholder}
-                            value={validatePhone ?? ''}
-                            onChange={(value) => setPhone(value || null)}
+                            value={phone}
+                            onChange={(value) => handelPhoneChange(value)}
                             required
                             className="flex w-full border rounded-md p-3 sm:p-2 border-white/[0.08] bg-[#08080c] text-white focus-within:ring-1 focus-within:ring-blue-500/50 transition-all"
                         />

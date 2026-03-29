@@ -28,6 +28,7 @@ export default async function SignupAction(
     }
 
     const doesEmailExist = await DoesEmailExist(emailLower);
+
     if (doesEmailExist) {
         return { error: "Email already exists" };
     }
@@ -48,6 +49,8 @@ export default async function SignupAction(
             stripeCustomerId: customer.id,
         },
     });
+
+    localStorage.clear();
 
     redirect('/login?email=' + encodeURIComponent(emailLower));
 
