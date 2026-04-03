@@ -269,6 +269,20 @@
             }
         ]
     },
+    "estimatedCost": {
+        "label": "Price Estimate",
+        "title": "Calculate your estimated electricity usage",
+        "subtitle": "Select your arrival and departure dates to get an estimate of your electricity bill during your stay.",
+        "arrivalDate": "Arrival date",
+        "departureDate": "Departure date",
+        "dailyConsumption": "Daily electricity usage (kWh)",
+        "typicalConsumption": "Typical usage: 2–5 kWh/day",
+        "currentPrice": "Current electricity price",
+        "days": "Number of days",
+        "estimatedPrice": "Estimated price",
+        "disclaimerLabel": "Note:",
+        "disclaimer": "The electricity price fluctuates continuously based on market prices. The estimate shown is based on the current electricity price and may differ from the actual price during your stay."
+    },
     "HowToPay": {
         "title": "The Payment Process",
         "subtitle": "Easy and secure – electricity payment made simple",

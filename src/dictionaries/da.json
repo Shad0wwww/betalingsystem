@@ -269,6 +269,20 @@
             }
         ]
     },
+    "estimatedCost": {
+        "label": "Prisestimering",
+        "title": "Beregn dit estimerede elforbrug",
+        "subtitle": "Vælg dine ankomst- og afsejlingsdatoer for at få et estimat på din elregning under opholdet.",
+        "arrivalDate": "Ankomstdato",
+        "departureDate": "Afsejlingsdato",
+        "dailyConsumption": "Dagligt elforbrug (kWh)",
+        "typicalConsumption": "Typisk forbrug: 2–5 kWh/dag",
+        "currentPrice": "Aktuel elpris",
+        "days": "Antal dage",
+        "estimatedPrice": "Estimeret pris",
+        "disclaimerLabel": "Bemærk:",
+        "disclaimer": "Elprisen varierer løbende baseret på markedspriserne. Det viste estimat er baseret på den nuværende elpris og kan afvige fra den faktiske pris under dit ophold."
+    },
     "HowToPay": {
         "title": "Betalingsprocessen",
         "subtitle": "Nemt og sikkert – elbetaling gjort enkelt",
