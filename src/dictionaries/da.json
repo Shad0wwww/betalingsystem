@@ -290,6 +290,21 @@
             }
         }
     },
+    "estimatedCost": {
+        "label": "Prisberegner",
+        "title": "Beregn estimeret pris",
+        "description": "Vælg dage og se den estimerede pris for dit ophold",
+        "selectDates": "Vælg dage",
+        "datesSelected": "dag(e) valgt",
+        "currentPrice": "Aktuel el-pris",
+        "loading": "Henter pris...",
+        "dailyConsumption": "Estimeret daglig forbrug (kWh)",
+        "consumptionHint": "Typisk 8-15 kWh pr. dag for campingplads",
+        "priceWarning": "Prisvariation",
+        "priceWarningText": "El-prisen varierer timely. Denne beregning er baseret på den aktuelle pris og kan afvige fra det endelige beløb.",
+        "estimatedTotal": "Estimeret samlet pris",
+        "selectDatesToCalculate": "Vælg dage for at beregne pris"
+    },
     "notFound": {
         "badge": "Siden blev ikke fundet",
         "title": "404",

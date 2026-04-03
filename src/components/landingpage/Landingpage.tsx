@@ -8,6 +8,7 @@ import HowToPay from './HowToPay';
 import { getStats } from './stats';
 
 import './landing.css';
+import EstimatedCost from './EstimatedCost';
 
 export default async function LandingPage(
     { dict }: { dict: any }
@@ -74,6 +75,10 @@ export default async function LandingPage(
             </section>
 
             <div id="more">
+                <EstimatedCost dict={dict} />
+            </div>
+
+            <div>
                 <HowToPay dict={dict} />
             </div>
 

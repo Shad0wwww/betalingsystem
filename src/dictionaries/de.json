@@ -290,6 +290,21 @@
             }
         }
     },
+    "estimatedCost": {
+        "label": "Preisrechner",
+        "title": "Geschätzten Preis berechnen",
+        "description": "Wählen Sie Tage aus und sehen Sie den geschätzten Preis für Ihren Aufenthalt",
+        "selectDates": "Tage auswählen",
+        "datesSelected": "Tag(e) ausgewählt",
+        "currentPrice": "Aktueller Strompreis",
+        "loading": "Preis wird abgerufen...",
+        "dailyConsumption": "Geschätzter Tagesverbrauch (kWh)",
+        "consumptionHint": "Normalerweise 8-15 kWh pro Tag für einen Campingplatz",
+        "priceWarning": "Preisschwankung",
+        "priceWarningText": "Der Strompreis ändert sich stündlich. Diese Berechnung basiert auf dem aktuellen Preis und kann vom Endbetrag abweichen.",
+        "estimatedTotal": "Geschätzter Gesamtpreis",
+        "selectDatesToCalculate": "Wählen Sie Tage zum Berechnen des Preises"
+    },
     "notFound": {
         "badge": "Seite nicht gefunden",
         "title": "404",

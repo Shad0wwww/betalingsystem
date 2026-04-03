@@ -290,6 +290,21 @@
             }
         }
     },
+    "estimatedCost": {
+        "label": "Price Calculator",
+        "title": "Calculate estimated price",
+        "description": "Select dates and see the estimated price for your stay",
+        "selectDates": "Select dates",
+        "datesSelected": "day(s) selected",
+        "currentPrice": "Current electricity price",
+        "loading": "Fetching price...",
+        "dailyConsumption": "Estimated daily consumption (kWh)",
+        "consumptionHint": "Typically 8-15 kWh per day for camping",
+        "priceWarning": "Price variation",
+        "priceWarningText": "Electricity price varies hourly. This calculation is based on the current price and may differ from the final amount.",
+        "estimatedTotal": "Estimated total price",
+        "selectDatesToCalculate": "Select dates to calculate price"
+    },
     "notFound": {
         "badge": "Page not found",
         "title": "404",
