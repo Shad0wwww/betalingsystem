@@ -5,6 +5,7 @@ import StatsSection from '../stats/StatsSection';
 import ScrollButton from './ScroollButton';
 import FAQ from './FAQ';
 import HowToPay from './HowToPay';
+import EstimatedCost from './EstimatedCost';
 import { getStats } from './stats';
 
 import './landing.css';
@@ -75,6 +76,10 @@ export default async function LandingPage(
 
             <div id="more">
                 <HowToPay dict={dict} />
+            </div>
+
+            <div>
+                <EstimatedCost kwhPrice={stats.elPrices.prisLigenu.pris} dict={dict} />
             </div>
 
             <div>

@@ -269,6 +269,20 @@
             }
         ]
     },
+    "estimatedCost": {
+        "label": "Preisschätzung",
+        "title": "Berechnen Sie Ihren geschätzten Stromverbrauch",
+        "subtitle": "Wählen Sie Ihre Ankunfts- und Abfahrtsdaten, um eine Schätzung Ihrer Stromrechnung während Ihres Aufenthalts zu erhalten.",
+        "arrivalDate": "Ankunftsdatum",
+        "departureDate": "Abfahrtsdatum",
+        "dailyConsumption": "Täglicher Stromverbrauch (kWh)",
+        "typicalConsumption": "Typischer Verbrauch: 2–5 kWh/Tag",
+        "currentPrice": "Aktueller Strompreis",
+        "days": "Anzahl der Tage",
+        "estimatedPrice": "Geschätzter Preis",
+        "disclaimerLabel": "Hinweis:",
+        "disclaimer": "Der Strompreis schwankt kontinuierlich basierend auf den Marktpreisen. Die angezeigte Schätzung basiert auf dem aktuellen Strompreis und kann vom tatsächlichen Preis während Ihres Aufenthalts abweichen."
+    },
     "HowToPay": {
         "title": "Der Zahlungsvorgang",
         "subtitle": "Einfach und sicher – Stromzahlung leicht gemacht",
