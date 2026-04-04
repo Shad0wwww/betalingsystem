@@ -103,10 +103,21 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
 
     return (
         <section style={{
-            background: 'var(--background)',
+            background: 'linear-gradient(180deg, rgba(59,130,246,0.06) 0%, var(--background) 24%)',
             padding: '80px 20px',
             borderTop: '1px solid var(--border-color)',
+            position: 'relative',
+            overflow: 'hidden',
         }}>
+            <div
+                aria-hidden="true"
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.10) 0%, rgba(59,130,246,0.03) 36%, transparent 70%)',
+                    pointerEvents: 'none',
+                }}
+            />
             <style>{`
                 .ec-badge {
                     display: inline-flex;
@@ -116,33 +127,33 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                     font-weight: 600;
                     letter-spacing: 0.08em;
                     text-transform: uppercase;
-                    color: var(--primary-color);
-                    background: rgba(37,99,235,0.08);
-                    border: 1px solid rgba(37,99,235,0.18);
+                    color: #93c5fd;
+                    background: rgba(59,130,246,0.12);
+                    border: 1px solid rgba(59,130,246,0.24);
                     border-radius: 999px;
                     padding: 5px 14px;
                     margin-bottom: 20px;
                 }
                 .ec-card {
-                    background: var(--box-color);
-                    border: 1px solid var(--border-color);
+                    background: linear-gradient(180deg, rgba(59,130,246,0.05), rgba(59,130,246,0.01) 36%), var(--box-color);
+                    border: 1px solid rgba(59,130,246,0.16);
                     border-radius: 12px;
                     padding: 24px;
-                    box-shadow: 0px 4px 13px rgba(0,0,0,0.25);
+                    box-shadow: 0px 8px 24px rgba(0,0,0,0.28);
                 }
                 .ec-section-label {
                     font-size: 11px;
                     font-weight: 600;
                     letter-spacing: 0.1em;
                     text-transform: uppercase;
-                    color: #3a3a3a;
+                    color: #9ca3af;
                     margin-bottom: 16px;
                 }
                 .cal-nav-btn {
-                    background: var(--box-color-lighter);
-                    border: 1px solid var(--border-color);
+                    background: rgba(59,130,246,0.08);
+                    border: 1px solid rgba(59,130,246,0.18);
                     border-radius: 8px;
-                    color: var(--sub-headline);
+                    color: #cbd5e1;
                     cursor: pointer;
                     padding: 6px;
                     display: flex;
@@ -150,8 +161,8 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                     transition: border-color 0.15s, color 0.15s;
                 }
                 .cal-nav-btn:hover {
-                    border-color: var(--primary-color);
-                    color: #fff;
+                    border-color: rgba(96,165,250,0.55);
+                    color: #e0f2fe;
                 }
                 .cal-cell {
                     aspect-ratio: 1;
@@ -176,8 +187,8 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                     font-weight: 700;
                 }
                 .cal-cell--between {
-                    background: rgba(37,99,235,0.14);
-                    color: #93c5fd;
+                    background: rgba(59,130,246,0.16);
+                    color: #bfdbfe;
                     border-radius: 0;
                 }
                 .cal-cell--today::after {
@@ -219,22 +230,22 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                 }
                 .ec-date-chip {
                     flex: 1;
-                    background: var(--box-color-lighter);
-                    border: 1px solid var(--border-color);
+                    background: rgba(59,130,246,0.07);
+                    border: 1px solid rgba(59,130,246,0.14);
                     border-radius: 8px;
                     padding: 8px 12px;
                     font-size: 13px;
-                    color: #444;
+                    color: #cbd5e1;
                     text-align: center;
                     transition: border-color 0.15s, color 0.15s;
                 }
                 .ec-date-chip--active {
-                    border-color: rgba(37,99,235,0.35);
-                    color: #93c5fd;
+                    border-color: rgba(59,130,246,0.5);
+                    color: #dbeafe;
                 }
                 .ec-divider {
                     height: 1px;
-                    background: var(--border-color);
+                    background: rgba(59,130,246,0.2);
                     margin: 10px 0;
                 }
                 .ec-row {
@@ -258,7 +269,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                 }
             `}</style>
 
-            <div style={{ maxWidth: 960, margin: '0 auto' }}>
+            <div style={{ maxWidth: 960, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
                 {/* Header */}
                 <div style={{ textAlign: 'center', marginBottom: 48 }}>
