@@ -33,6 +33,11 @@ function isBetween(date: Date, start: Date, end: Date) {
 }
 
 export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostProps) {
+    const t = dict?.estimatedCost ?? {};
+    const locale = t.locale ?? 'da-DK';
+    const daysShort = Array.isArray(t.daysShort) && t.daysShort.length === 7 ? t.daysShort : DAYS_DK;
+    const months = Array.isArray(t.months) && t.months.length === 12 ? t.months : MONTHS_DK;
+
     const kwhPrice = currentKwhPrice && currentKwhPrice > 0 ? currentKwhPrice : 3.0;
     const priceSource = currentKwhPrice && currentKwhPrice > 0 ? 'live' : 'fallback';
 
@@ -94,7 +99,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
     while (cells.length % 7 !== 0) cells.push(null);
 
     const fmt = (n: number) =>
-        n.toLocaleString('da-DK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        n.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     return (
         <section style={{
@@ -259,7 +264,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                 <div style={{ textAlign: 'center', marginBottom: 48 }}>
                     <div className="ec-badge">
                         <Zap size={11} />
-                        Beregner
+                        {t.badge ?? t.label ?? 'Beregner'}
                     </div>
                     <h2 style={{
                         fontSize: 'clamp(26px, 4vw, 38px)',
@@ -269,7 +274,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                         lineHeight: 1.1,
                         margin: '0 0 12px',
                     }}>
-                        Beregn dit estimerede elforbrug
+                        {t.heading ?? t.title ?? 'Beregn dit estimerede elforbrug'}
                     </h2>
                     <p style={{
                         fontSize: 15,
@@ -278,7 +283,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                         margin: '0 auto',
                         lineHeight: 1.6,
                     }}>
-                        Vælg dine datoer og juster forbruget for at se en estimeret pris.
+                        {t.subheading ?? t.description ?? 'Vælg dine datoer og juster forbruget for at se en estimeret pris.'}
                     </p>
                 </div>
 
@@ -292,14 +297,14 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
 
                     {/* ── Calendar ── */}
                     <div className="ec-card">
-                        <p className="ec-section-label">Vælg periode</p>
+                        <p className="ec-section-label">{t.selectPeriod ?? 'Vælg periode'}</p>
 
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
                             <button className="cal-nav-btn" onClick={prevMonth}>
                                 <ChevronLeft size={15} />
                             </button>
                             <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--headline-color)' }}>
-                                {MONTHS_DK[viewMonth]} {viewYear}
+                                {months[viewMonth]} {viewYear}
                             </span>
                             <button className="cal-nav-btn" onClick={nextMonth}>
                                 <ChevronRight size={15} />
@@ -307,7 +312,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                         </div>
 
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 4 }}>
-                            {DAYS_DK.map(d => (
+                            {daysShort.map((d: string) => (
                                 <div key={d} style={{
                                     textAlign: 'center', fontSize: 11, fontWeight: 600,
                                     letterSpacing: '0.06em', color: '#333', padding: '4px 0',
@@ -347,19 +352,21 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
                             <div className={`ec-date-chip${startDate ? ' ec-date-chip--active' : ''}`}>
                                 {startDate
-                                    ? startDate.toLocaleDateString('da-DK', { day: 'numeric', month: 'short' })
-                                    : 'Ankomst'}
+                                    ? startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' })
+                                    : (t.arrivalLabel ?? 'Ankomst')}
                             </div>
                             <span style={{ color: '#333' }}>→</span>
                             <div className={`ec-date-chip${endDate ? ' ec-date-chip--active' : ''}`}>
                                 {endDate
-                                    ? endDate.toLocaleDateString('da-DK', { day: 'numeric', month: 'short' })
-                                    : 'Afgang'}
+                                    ? endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short' })
+                                    : (t.departureLabel ?? 'Afgang')}
                             </div>
                         </div>
 
                         <p style={{ marginTop: 10, fontSize: 12, color: '#333', textAlign: 'center' }}>
-                            {selecting === 'start' ? 'Klik for at vælge ankomstdato' : 'Klik for at vælge afgangsdato'}
+                            {selecting === 'start'
+                                ? (t.pickArrivalHint ?? 'Klik for at vælge ankomstdato')
+                                : (t.pickDepartureHint ?? 'Klik for at vælge afgangsdato')}
                         </p>
                     </div>
 
@@ -368,7 +375,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
 
                         {/* kWh slider */}
                         <div className="ec-card">
-                            <p className="ec-section-label">Dagligt elforbrug</p>
+                            <p className="ec-section-label">{t.dailyConsumptionLabel ?? 'Dagligt elforbrug'}</p>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                 <Zap size={15} style={{ color: 'var(--primary-color)', flexShrink: 0 }} />
                                 <input
@@ -391,19 +398,19 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
 
                         {/* Result */}
                         <div className="ec-card">
-                            <p className="ec-section-label">Estimat</p>
+                            <p className="ec-section-label">{t.estimateLabel ?? 'Estimat'}</p>
 
                             <div className="ec-row">
-                                <span style={{ color: 'var(--sub-headline)' }}>Antal nætter</span>
+                                <span style={{ color: 'var(--sub-headline)' }}>{t.nightsLabel ?? 'Antal nætter'}</span>
                                 <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>{nights}</span>
                             </div>
                             <div className="ec-row">
-                                <span style={{ color: 'var(--sub-headline)' }}>Forbrug pr. nat</span>
-                                <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>{kwh.toFixed(1)} kWh</span>
+                                <span style={{ color: 'var(--sub-headline)' }}>{t.consumptionPerNightLabel ?? 'Forbrug pr. nat'}</span>
+                                <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>{kwh.toFixed(1)} {t.kwhUnit ?? 'kWh'}</span>
                             </div>
                             <div className="ec-row">
                                 <span style={{ color: 'var(--sub-headline)', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                    Elpris
+                                    {t.electricityPriceLabel ?? 'Elpris'}
                                     <span style={{
                                         fontSize: 10, fontWeight: 600, letterSpacing: '0.06em',
                                         textTransform: 'uppercase', padding: '2px 7px',
@@ -414,26 +421,28 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                                         border: `1px solid ${priceSource === 'live'
                                             ? 'rgba(37,99,235,0.2)' : 'rgba(234,179,8,0.2)'}`,
                                     }}>
-                                        {priceSource === 'live' ? '● Live' : '● Standard'}
+                                        {priceSource === 'live'
+                                            ? `● ${t.liveBadge ?? 'Live'}`
+                                            : `● ${t.standardBadge ?? 'Standard'}`}
                                     </span>
                                 </span>
                                 <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>
-                                    {fmt(kwhPrice)} kr/kWh
+                                    {fmt(kwhPrice)} {t.perKwhUnit ?? 'kr/kWh'}
                                 </span>
                             </div>
 
                             <div className="ec-divider" />
 
                             <div className="ec-row">
-                                <span style={{ color: 'var(--sub-headline)' }}>Ekskl. moms</span>
+                                <span style={{ color: 'var(--sub-headline)' }}>{t.exVatLabel ?? 'Ekskl. moms'}</span>
                                 <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>
-                                    {nights > 0 ? `${fmt(exVat)} kr.` : '—'}
+                                    {nights > 0 ? `${fmt(exVat)} ${t.currencySuffix ?? 'kr.'}` : '—'}
                                 </span>
                             </div>
                             <div className="ec-row">
-                                <span style={{ color: 'var(--sub-headline)' }}>Moms (25 %)</span>
+                                <span style={{ color: 'var(--sub-headline)' }}>{t.vatLabel ?? 'Moms (25 %)'}</span>
                                 <span style={{ color: 'var(--headline-color)', fontWeight: 500 }}>
-                                    {nights > 0 ? `${fmt(vatAmount)} kr.` : '—'}
+                                    {nights > 0 ? `${fmt(vatAmount)} ${t.currencySuffix ?? 'kr.'}` : '—'}
                                 </span>
                             </div>
 
@@ -445,7 +454,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                                     fontSize: 11, fontWeight: 600, letterSpacing: '0.08em',
                                     textTransform: 'uppercase', color: '#3a3a3a',
                                 }}>
-                                    Total inkl. moms
+                                    {t.totalInclVatLabel ?? 'Total inkl. moms'}
                                 </span>
                                 <div>
                                     <span style={{
@@ -457,7 +466,7 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                                     </span>
                                     {nights > 0 && (
                                         <span style={{ fontSize: 15, fontWeight: 500, color: 'var(--sub-headline)', marginLeft: 4 }}>
-                                            kr.
+                                            {t.currencySuffix ?? 'kr.'}
                                         </span>
                                     )}
                                 </div>
@@ -466,9 +475,9 @@ export default function EstimatedCost({ dict, currentKwhPrice }: EstimatedCostPr
                             <div className="ec-warning">
                                 <AlertTriangle size={13} style={{ color: '#ca8a04', flexShrink: 0, marginTop: 1 }} />
                                 <span style={{ color: '#a16207', fontSize: 12 }}>
-                                    Elprisen varierer løbende og beregningen er kun vejledende.
+                                    {t.warningText ?? 'Elprisen varierer løbende og beregningen er kun vejledende.'}
                                     {priceSource === 'fallback' &&
-                                        ' Standardpris på 3,00 kr/kWh anvendes da live-pris ikke er tilgængelig.'}
+                                        ` ${t.fallbackText ?? 'Standardpris på 3,00 kr/kWh anvendes da live-pris ikke er tilgængelig.'}`}
                                 </span>
                             </div>
                         </div>
