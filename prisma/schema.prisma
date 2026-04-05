@@ -29,6 +29,7 @@ model User {
     transactions       Transaction[]
     auditLogs          AuditLog[]
     meterSessions      MeterSession[]
+    warnings           UserWarning[]
 }
 
 model Session {
@@ -239,6 +240,19 @@ enum ActionType {
     
     // Admin handlinger
     ADMIN_ACTION
+}
+
+model UserWarning {
+    id        Int      @id @default(autoincrement())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    message   String
+    isRead    Boolean  @default(false)
+
+    createdAt DateTime @default(now())
+
+    @@index([userId])
 }
 
 enum MeterStatus {

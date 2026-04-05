@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable as BaseDataTable } from "@/components/ui/data-table"
+import { ActiveSession } from "./columns"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

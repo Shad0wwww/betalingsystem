@@ -5,9 +5,11 @@ import LatestTrans from "./LatestTrans";
 import MeterSessionBox from "./MeterSessionBox";
 import AccountSummaryBox from "./AccountSummaryBox";
 import SpendingChart from "./SpendingChart";
+import WarningsBox from "./WarningsBox";
 
 type Props = {
     dict: any;
+    warnings?: any[];
 };
 
 const Box = ({ children }: { children: React.ReactNode }) => (
@@ -16,7 +18,7 @@ const Box = ({ children }: { children: React.ReactNode }) => (
     </div>
 );
 
-export default function Overview({ dict }: Props) {
+export default function Overview({ dict, warnings = [] }: Props) {
     return (
         <main className="pb-8">
             {/* Page header */}
@@ -30,6 +32,13 @@ export default function Overview({ dict }: Props) {
                 <h1 className="text-2xl font-bold text-white">{dict?.dashboard?.oversigt?.title ?? "Oversigt"}</h1>
                 <p className="text-zinc-500 text-sm mt-1">{dict?.dashboard?.oversigt?.subtitle ?? "Dit overblik over forbrug og sessioner."}</p>
             </div>
+
+            {/* Warnings section */}
+            {warnings && warnings.some((w: any) => !w.isRead) && (
+                <div className="mx-auto max-w-screen-xl px-4 md:px-20 pb-6">
+                    <WarningsBox warnings={warnings} />
+                </div>
+            )}
 
             <GridContainer>
                 <Box>

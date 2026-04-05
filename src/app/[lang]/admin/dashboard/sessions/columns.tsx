@@ -65,7 +65,15 @@ function ElapsedTime({ startTime }: { startTime: string }) {
 
 import React from "react"
 
-function ActionsCell({ session }: { session: ActiveSession }) {
+function ActionsCell({
+    session,
+    onStopSession,
+    onWarnUser,
+}: {
+    session: ActiveSession
+    onStopSession: (session: ActiveSession) => void
+    onWarnUser: (session: ActiveSession) => void
+}) {
     const router = useRouter()
     const { lang } = useParams<{ lang: string }>()
 
@@ -80,7 +88,7 @@ function ActionsCell({ session }: { session: ActiveSession }) {
                     <MoreHorizontal className="h-4 w-4 text-zinc-400" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-44 bg-[#0c0c0e] border-zinc-800 text-zinc-200 shadow-2xl">
+            <DropdownMenuContent align="end" className="w-48 bg-[#0c0c0e] border-zinc-800 text-zinc-200 shadow-2xl">
                 <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">
                     Handlinger
                 </DropdownMenuLabel>
@@ -99,12 +107,27 @@ function ActionsCell({ session }: { session: ActiveSession }) {
                     <Copy className="h-3.5 w-3.5 text-zinc-500" />
                     <span>Kopiér session-ID</span>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-zinc-800" />
+                <DropdownMenuItem
+                    className="cursor-pointer gap-2 focus:bg-yellow-600/20 focus:text-yellow-400 transition-colors text-yellow-400"
+                    onClick={() => onWarnUser(session)}
+                >
+                    <span>⚠️</span>
+                    <span>Send advarsel</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="cursor-pointer gap-2 focus:bg-red-600/20 focus:text-red-400 transition-colors text-red-400"
+                    onClick={() => onStopSession(session)}
+                >
+                    <span>⏹️</span>
+                    <span>Stop session</span>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
 }
 
-export const columns: ColumnDef<ActiveSession>[] = [
+export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUser: (session: ActiveSession) => void) => ColumnDef<ActiveSession>[] = (onStopSession, onWarnUser) => [
     {
         accessorKey: "id",
         header: "Session",
@@ -182,6 +205,6 @@ export const columns: ColumnDef<ActiveSession>[] = [
     {
         id: "actions",
         header: () => <span className="sr-only">Handlinger</span>,
-        cell: ({ row }) => <ActionsCell session={row.original} />,
+        cell: ({ row }) => <ActionsCell session={row.original} onStopSession={onStopSession} onWarnUser={onWarnUser} />,
     },
 ]

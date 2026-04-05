@@ -4,8 +4,10 @@ import React from "react";
 import { get } from "@/components/admin/actions";
 import { Box } from "@/components/admin/Box";
 import { Zap, Droplets, Activity } from "lucide-react";
-import { columns } from "./columns";
+import { columns, type ActiveSession } from "./columns";
 import { DataTable } from "./data-table";
+import StopSessionModal from "@/components/modals/StopSessionModal";
+import WarningUserModal from "@/components/modals/WarningUserModal";
 
 interface SessionStats {
     total: number;
@@ -68,6 +70,14 @@ export default function AdminSessionsPage() {
     const [stats, setStats] = React.useState<SessionStats | null>(null);
     const [loading, setLoading] = React.useState(true);
     const [refreshKey, setRefreshKey] = React.useState(0);
+    const [stopSessionData, setStopSessionData] = React.useState<ActiveSession | null>(null);
+    const [stopSessionOpen, setStopSessionOpen] = React.useState(false);
+    const [warnUserData, setWarnUserData] = React.useState<{
+        userId: string;
+        userName: string;
+        userEmail: string;
+    } | null>(null);
+    const [warnUserOpen, setWarnUserOpen] = React.useState(false);
 
     const fetchStats = React.useCallback(() => {
         setLoading(true);
@@ -90,6 +100,31 @@ export default function AdminSessionsPage() {
         }, 30_000);
         return () => clearInterval(id);
     }, [fetchStats]);
+
+    const handleStopSession = (session: ActiveSession) => {
+        setStopSessionData(session);
+        setStopSessionOpen(true);
+    };
+
+    const handleWarnUser = (session: ActiveSession) => {
+        setWarnUserData({
+            userId: session.userId,
+            userName: session.userName,
+            userEmail: session.userEmail,
+        });
+        setWarnUserOpen(true);
+    };
+
+    const handleStopSessionSuccess = () => {
+        setStopSessionOpen(false);
+        setStopSessionData(null);
+        setRefreshKey((k) => k + 1);
+    };
+
+    const handleWarnUserSuccess = () => {
+        setWarnUserOpen(false);
+        setWarnUserData(null);
+    };
 
     return (
         <div className="min-h-screen pb-12">
@@ -131,9 +166,23 @@ export default function AdminSessionsPage() {
                             </span>
                         </div>
                     </div>
-                    <DataTable columns={columns} refreshKey={refreshKey} />
+                    <DataTable columns={columns(handleStopSession, handleWarnUser)} refreshKey={refreshKey} />
                 </Box>
             </div>
+
+            {/* Modals */}
+            <StopSessionModal
+                session={stopSessionData}
+                open={stopSessionOpen}
+                onOpenChange={setStopSessionOpen}
+                onSuccess={handleStopSessionSuccess}
+            />
+            <WarningUserModal
+                user={warnUserData}
+                open={warnUserOpen}
+                onOpenChange={setWarnUserOpen}
+                onSuccess={handleWarnUserSuccess}
+            />
         </div>
     );
 }
