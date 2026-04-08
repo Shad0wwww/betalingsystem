@@ -183,7 +183,7 @@
         },
         "section3": {
             "title": "§3 Betaling og reservation",
-            "content": "Vi benytter en reservationsmodel via Stripe. Ved start af ydelsen reserveres et fastsat beløb på dit betalingskort. Når forbruget afsluttes, trækkes kun det faktiske beløb for den leverede strøm, og den resterende del af reservationen frigives. Afhængigt af din bank kan der gå nogle hverdage, før reservationen er synliggjort som ophævet i din bankoversigt."
+            "content": "Vi benytter en reservationsmodel via Stripe. Ved start af ydelsen reserveres et fastsat beløb på dit betalingskort. Når forbruget afsluttes, trækkes det faktiske beløb for den leverede strøm, dog mindst 2,50 kr pr. session på grund af betalingsudbyderens minimumsgrænse. Den resterende del af reservationen frigives. Afhængigt af din bank kan der gå nogle hverdage, før reservationen er synliggjort som ophævet i din bankoversigt."
         },
         "section4": {
             "title": "§4 Ansvarsfraskrivelse",

@@ -183,7 +183,7 @@
         },
         "section3": {
             "title": "§3 Payment and Reservation",
-            "content": "We use a reservation model via Stripe. When the service starts, a fixed amount is reserved on your payment card. When consumption ends, only the actual amount for the delivered electricity is charged, and the remaining part of the reservation is released. Depending on your bank, it may take a few business days before the reservation is shown as canceled in your bank statement."
+            "content": "We use a reservation model via Stripe. When the service starts, a fixed amount is reserved on your payment card. When consumption ends, the actual amount for delivered electricity is charged, with a minimum charge of DKK 2.50 per session due to payment provider limits. The remaining part of the reservation is released. Depending on your bank, it may take a few business days before the reservation is shown as canceled in your bank statement."
         },
         "section4": {
             "title": "§4 Disclaimer",

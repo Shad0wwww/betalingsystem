@@ -183,7 +183,7 @@
         },
         "section3": {
             "title": "§3 Zahlung und Reservierung",
-            "content": "Wir nutzen ein Reservierungsmodell über Stripe. Zu Beginn der Leistung wird ein festgelegter Betrag auf Ihrer Zahlungskarte reserviert. Nach Beendigung des Verbrauchs wird nur der tatsächliche Betrag für den gelieferten Strom abgebucht und der restliche Teil der Reservierung freigegeben. Abhängig von Ihrer Bank kann es einige Werktage dauern, bis die Reservierung in Ihrem Kontoauszug als aufgehoben angezeigt wird."
+            "content": "Wir nutzen ein Reservierungsmodell über Stripe. Zu Beginn der Leistung wird ein festgelegter Betrag auf Ihrer Zahlungskarte reserviert. Nach Beendigung des Verbrauchs wird der tatsächliche Betrag für den gelieferten Strom abgebucht, jedoch mindestens 2,50 DKK pro Sitzung aufgrund von Mindestgrenzen des Zahlungsanbieters. Der restliche Teil der Reservierung wird freigegeben. Abhängig von Ihrer Bank kann es einige Werktage dauern, bis die Reservierung in Ihrem Kontoauszug als aufgehoben angezeigt wird."
         },
         "section4": {
             "title": "§4 Haftungsausschluss",
