@@ -48,9 +48,8 @@ export default function LatestTrans({ dict }: Props) {
                         return (
                             <div key={t.id} className="flex items-center justify-between py-3">
                                 <div className="flex items-center gap-3">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                                        positive ? "bg-green-500/10" : "bg-red-500/10"
-                                    }`}>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${positive ? "bg-green-500/10" : "bg-red-500/10"
+                                        }`}>
                                         {positive
                                             ? <ArrowDownLeft className="w-4 h-4 text-green-400" />
                                             : <ArrowUpRight className="w-4 h-4 text-red-400" />}
@@ -67,14 +66,13 @@ export default function LatestTrans({ dict }: Props) {
                                         </p>
                                     </div>
                                 </div>
-                                <span className={`text-sm font-semibold tabular-nums ${
-                                    positive ? "text-green-400" : "text-red-400"
-                                }`}>
-                                    {positive ? "+" : ""}{Number(t.amount / 100).toLocaleString("da-DK", {
-                                      style: "currency",
-                                      currency: "DKK",
-                                      minimumFractionDigits: 2,
-                                  })}
+                                <span className={`text-sm font-semibold tabular-nums ${positive ? "text-green-400" : "text-red-400"
+                                    }`}>
+                                    {positive ? "+" : ""}{Number(t.amount).toLocaleString("da-DK", {
+                                        style: "currency",
+                                        currency: "DKK",
+                                        minimumFractionDigits: 2,
+                                    })}
                                 </span>
                             </div>
                         );
