@@ -237,7 +237,6 @@ export async function stopSession(sessionId: number): Promise<StopSessionResult>
 
         await takeMoneyUsed(userId, pendingInvoice.stripePaymentIntentId, amountUsed, pendingInvoice.amount, session.type);
 
-<<<<<<< HEAD
         // 4. Payment captured — safely close the session
         const endTime = new Date();
         await Promise.all([
@@ -258,23 +257,6 @@ export async function stopSession(sessionId: number): Promise<StopSessionResult>
         console.error("stopSession failed:", error);
         return { ok: false, error: "Der skete en fejl ved stop af sessionen" };
     }
-=======
-    // 5. Payment captured — safely close the session
-    const endTime = new Date();
-    await Promise.all([
-        prisma.meterSession.update({
-            where: { id: sessionId },
-            data: { isActive: false, endTime, endValue },
-        }),
-
-        log(ActionType.DISCONNECTED_METER, 
-            userId, 
-            `Bruger afsluttede session på måler ${session.meterId} (Båd: ${session.boatId}). Forbrug: ${kwhUsed.toFixed(3)} kWh`)
-       
-    ]);
-
-    return { success: true, kwhUsed, amountUsed };
->>>>>>> b614d80bc92ecc4bbe255e4e905ce1df90de8883
 }
 
 // ─── Boats ────────────────────────────────────────────────────────────────────
