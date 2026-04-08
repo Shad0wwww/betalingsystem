@@ -6,9 +6,15 @@ import { Suspense } from "react";
 import LoadingScreen from "@/components/utils/LoadingScreen";
 import { getCurrentUser } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
-import type { UserWarning } from "@prisma/client";
 
 type PageParams = Promise<{ lang: string }>;
+
+type DashboardWarning = {
+    id: number;
+    message: string;
+    isRead: boolean;
+    createdAt: Date;
+};
 
 export default async function Page(
     { params }: { params: PageParams }
@@ -20,11 +26,17 @@ export default async function Page(
     if (!dict) notFound();
 
     // Fetch warnings for current user
-    let warnings: UserWarning[] = [];
+    let warnings: DashboardWarning[] = [];
     try {
         const user = await getCurrentUser();
         if (user) {
-            warnings = await prisma.userWarning.findMany({
+            const warningClient = prisma as unknown as {
+                userWarning: {
+                    findMany: (args: unknown) => Promise<DashboardWarning[]>;
+                };
+            };
+
+            warnings = await warningClient.userWarning.findMany({
                 where: {
                     userId: user.userId,
                 },

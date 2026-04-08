@@ -46,8 +46,10 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         getActiveSession()
             .then((data) => {
                 setSession(data.session ?? null);
-                if (data.session) {
-                    setCurrentKwh(null);
+                setCurrentKwh(null);
+                setSpotPris(null);
+                if (!data.session) {
+                    setElapsed("");
                 }
             })
             .catch(() => setSession(null))
@@ -124,7 +126,8 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
     }
 
     const { label, Icon, color } = typeConfig[session.meter.type];
-    const kwhUsed = currentKwh !== null ? Math.max(0, currentKwh - session.startValue) : null;
+    const startKwh = session.startValue;
+    const kwhUsed = currentKwh !== null ? Math.max(0, currentKwh - startKwh) : null;
     const rate = spotPris ?? FALLBACK_RATE_PER_KWH;
     const estimatedCost = kwhUsed !== null ? kwhUsed * rate : null;
 
@@ -174,7 +177,7 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
                         <Zap className="w-4 h-4 shrink-0 text-zinc-600" />
                         <span className="text-zinc-400">Start kWh</span>
                         <span className="ml-auto text-white font-mono tabular-nums">
-                            {session.startValue.toFixed(3)} kWh
+                            {startKwh.toFixed(3)} kWh
                         </span>
                     </div>
 
