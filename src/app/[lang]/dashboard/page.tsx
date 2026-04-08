@@ -19,7 +19,7 @@ export default async function Page(
     if (!dict) notFound();
 
     // Fetch warnings for current user
-    let warnings = [];
+    let warnings: any[] | undefined = [];
     try {
         const user = await getCurrentUser();
         if (user) {

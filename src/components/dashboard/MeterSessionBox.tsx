@@ -5,7 +5,6 @@ import BrugerRegisterMeterModal from "../modals/BrugerRegisterMeterModal";
 import { UtilityType } from "@prisma/client";
 import { Zap, Droplets, MapPin, Anchor } from "lucide-react";
 import { getActiveSession, stopSession, getLatestMeterReading } from "@/lib/actions/dashboard";
-import {getElPriser} from "@/lib/El/kWH/GetkWHPrices";
 
 interface ActiveSession {
     id: number;
@@ -93,7 +92,11 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         setIsStopping(true);
         setError(null);
         try {
-            await stopSession(session.id);
+            const result = await stopSession(session.id);
+            if (!result.ok) {
+                setError(result.error);
+                return;
+            }
             setSession(null);
         } catch (err: any) {
             setError(err.message);
