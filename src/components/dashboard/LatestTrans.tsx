@@ -70,7 +70,11 @@ export default function LatestTrans({ dict }: Props) {
                                 <span className={`text-sm font-semibold tabular-nums ${
                                     positive ? "text-green-400" : "text-red-400"
                                 }`}>
-                                    {positive ? "+" : ""}{(t.amount/100).toLocaleString("da-DK", { style: "currency", currency: "DKK" })}
+                                    {positive ? "+" : ""}{Number(t.amount / 100).toLocaleString("da-DK", {
+                                      style: "currency",
+                                      currency: "DKK",
+                                      minimumFractionDigits: 2,
+                                  })}
                                 </span>
                             </div>
                         );

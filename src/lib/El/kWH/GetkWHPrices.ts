@@ -81,6 +81,21 @@ function getTodayDK() {
 	return `${obj.year}-${obj.month}-${obj.day}`;
 }
 
+function resolveActiveDate(records: EnerginetRecord[], today: string, priceArea: PriceArea): string | null {
+	const areaRecords = records.filter((r) => r.PriceArea === priceArea);
+	if (areaRecords.length === 0) return null;
+
+	// Prefer today's prices when available, otherwise use newest available local date.
+	const hasToday = areaRecords.some((r) => r.TimeDK.startsWith(today));
+	if (hasToday) return today;
+
+	const latest = areaRecords
+		.map((r) => r.TimeDK.slice(0, 10))
+		.sort((a, b) => b.localeCompare(a))[0];
+
+	return latest ?? null;
+}
+
 export async function getElPriser(
 	priceArea: PriceArea = "DK1"
 ): Promise<ElPriserResult> {
@@ -95,15 +110,20 @@ export async function getElPriser(
 
 	const res = await fetchWithRetry(url);
 	const body = (await res.json()) as EnerginetResponse;
+	const activeDate = resolveActiveDate(body.records ?? [], today, priceArea);
 
-	// Filter to today + requested area, then sort ascending by HourDK.
+	if (!activeDate) {
+		throw new Error(`No prices returned for ${priceArea}`);
+	}
+
+	// Filter to active date + requested area, then sort ascending by HourDK.
 	const records = (body.records ?? [])
 		.filter((r) => r.PriceArea === priceArea)
-		.filter((r) => r.TimeDK.startsWith(today))
+		.filter((r) => r.TimeDK.startsWith(activeDate))
 		.sort((a, b) => a.TimeDK.localeCompare(b.TimeDK));
 
 	if (records.length === 0) {
-		throw new Error("No prices returned for today");
+		throw new Error(`No prices returned for ${activeDate}`);
 	}
 
 	const prices = records.map((r) => r.DayAheadPriceDKK / 1000);
@@ -116,7 +136,7 @@ export async function getElPriser(
 	const minIndex = prices.indexOf(min);
 
 	const overblik: ElOverblik = {
-		date: today,
+		date: activeDate,
 		hoejestePris: Number(max.toFixed(4)),
 		hoejesteTid: formatHourSlot(records[maxIndex].TimeDK),
 		lavestesPris: Number(min.toFixed(4)),
@@ -142,7 +162,7 @@ export async function getElPriser(
 	const currentPrice = current.DayAheadPriceDKK / 1000;
 
 	const prisLigenu: ElPrisLigenu = {
-		date: today,
+		date: activeDate,
 		pris: Number(currentPrice.toFixed(4)) + 0.1, // Add tiny amount to avoid zero price (for free sessions)
 		tid: formatHourSlot(current.TimeDK),
 		underDagensGns: Math.round(((avg - currentPrice) / avg) * 100),
@@ -235,18 +255,22 @@ export async function getLiveElectricityPrice(
 			}
 
 			const body = (await res.json()) as DayAheadResponse;
+			const activeDate = resolveActiveDate((body.records ?? []) as EnerginetRecord[], todayDK, priceArea);
 
-			// --- 3. Filter in code: today's records for the requested area ---
+			if (!activeDate) {
+				throw new Error(`No DayAheadPrices records found for ${priceArea}.`);
+			}
+
+			// --- 3. Filter in code: active-date records for the requested area ---
 			// Sort descending so todayRecords[0] is the most recent record (fallback).
 			const todayRecords = (body.records ?? [])
 				.filter((r) => r.PriceArea === priceArea)
-				.filter((r) => r.TimeDK.startsWith(todayDK))
+				.filter((r) => r.TimeDK.startsWith(activeDate))
 				.sort((a, b) => b.TimeDK.localeCompare(a.TimeDK));
 
 			if (todayRecords.length === 0) {
 				throw new Error(
-					`No DayAheadPrices records found for ${todayDK} (${priceArea}). ` +
-					"Prices may not yet be published for today."
+					`No DayAheadPrices records found for ${activeDate} (${priceArea}).`
 				);
 			}
 
@@ -263,7 +287,7 @@ export async function getLiveElectricityPrice(
 			const price = Number((current.DayAheadPriceDKK / 1000).toFixed(4));
 			const timeSlot = formatHourSlot(current.TimeDK);
 
-			return { price, timeSlot, date: todayDK };
+			return { price, timeSlot, date: activeDate };
 		} catch (err) {
 			lastError = err;
 			// Only retry on 5xx / network errors; 4xx and data errors are final.
