@@ -228,7 +228,7 @@ export async function stopSession(sessionId: number) {
 
     // 5. Payment captured — safely close the session
     const endTime = new Date();
-    const [updated] = await Promise.all([
+    await Promise.all([
         prisma.meterSession.update({
             where: { id: sessionId },
             data: { isActive: false, endTime, endValue },
@@ -240,7 +240,7 @@ export async function stopSession(sessionId: number) {
        
     ]);
 
-    return { session: updated, kwhUsed, amountUsed };
+    return { success: true, kwhUsed, amountUsed };
 }
 
 // ─── Boats ────────────────────────────────────────────────────────────────────

@@ -96,9 +96,9 @@ export default function MeterSessionBox({ dict }: { dict?: any }) {
         setError(null);
         try {
             await stopSession(session.id);
-            setSession(null);
+            fetchSession();
         } catch (err: any) {
-            setError(err.message);
+            setError(err?.message || "Kunne ikke afbryde forbindelsen. Prøv igen.");
         } finally {
             setIsStopping(false);
         }
