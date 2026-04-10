@@ -1,24 +1,32 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+
+const locales = ["da", "en", "de"];
+const baseUrl = "https://pins.dk";
+
+const pages = [
+    { path: "", changeFrequency: "yearly" as const, priority: 1 },
+    { path: "/dashboard", changeFrequency: "monthly" as const, priority: 0.8 },
+    {
+        path: "/terms-of-service",
+        changeFrequency: "yearly" as const,
+        priority: 0.5,
+    },
+    {
+        path: "/privacy-policy",
+        changeFrequency: "yearly" as const,
+        priority: 0.5,
+    },
+    { path: "/login", changeFrequency: "yearly" as const, priority: 0.6 },
+    { path: "/signup", changeFrequency: "yearly" as const, priority: 0.7 },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    return [
-        {
-            url: 'https://pins.dk',
+    return locales.flatMap((locale) =>
+        pages.map(({ path, changeFrequency, priority }) => ({
+            url: `${baseUrl}/${locale}${path}`,
             lastModified: new Date(),
-            changeFrequency: 'yearly' as const,
-            priority: 1,
-        },
-        {
-            url: 'https://pins.dk/dashboard',
-            lastModified: new Date(),
-            changeFrequency: 'monthly' as const,
-            priority: 0.8,
-        },
-        {
-            url: 'https://pins.dk/terms-of-service',
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: 0.9,
-        },
-    ]
+            changeFrequency,
+            priority,
+        })),
+    );
 }
