@@ -27,17 +27,11 @@ export async function POST(req: NextRequest) {
     const data = (await req.json()) as UpdateMeterRequest;
     if (!data || !data.devices || typeof data.devices !== "object") {
         console.error("Invalid request body:", data);
-        return NextResponse.json(
-            { error: "Invalid request body" },
-            { status: 400 },
-        );
+        return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
     if (Object.keys(data.devices).length === 0) {
         console.warn("No devices provided in the request body.");
-        return NextResponse.json(
-            { message: "No devices to update" },
-            { status: 200 },
-        );
+        return NextResponse.json({ message: "No devices to update" }, { status: 200 });
     }
 
     // Fetch electricity price once before the loop
@@ -57,7 +51,7 @@ export async function POST(req: NextRequest) {
     const meterMap = new Map(meters.map((m) => [m.deviceId, m]));
 
     for (const [id, device] of Object.entries(data.devices)) {
-        if (!device.V || !device.kWH || !device.Type || !device.timestamp) {
+        if (device.V == null || device.kWH == null || !device.Type || !device.timestamp) {
             console.error(`Missing fields for device ${id}:`, device);
             continue;
         }
@@ -72,9 +66,7 @@ export async function POST(req: NextRequest) {
 
         const inDatabase = meterMap.get(id);
         if (!inDatabase) {
-            console.warn(
-                `Device with ID ${id} not found in database. Skipping update.`,
-            );
+            console.warn(`Device with ID ${id} not found in database. Skipping update.`);
             continue;
         }
 
@@ -99,7 +91,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (existingReading) {
-            
+            // Update existing reading
             await prisma.meterReading.update({
                 where: { id: existingReading.id },
                 data: {
@@ -110,7 +102,7 @@ export async function POST(req: NextRequest) {
                 },
             });
         } else {
-            
+            // Create new reading
             await prisma.meter.update({
                 where: { deviceId: id },
                 data: {
@@ -129,8 +121,5 @@ export async function POST(req: NextRequest) {
         }
     }
 
-    return NextResponse.json(
-        { message: "Meter updated successfully" },
-        { status: 200 },
-    );
+    return NextResponse.json({ message: "Meter updated successfully" }, { status: 200 });
 }
