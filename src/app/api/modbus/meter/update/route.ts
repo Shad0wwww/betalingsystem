@@ -38,10 +38,27 @@ export async function POST(
         return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
 
+    if (!data.devices || Object.keys(data.devices).length === 0) {
+        console.warn("No devices provided in the request body.");
+        return NextResponse.json({ message: "No devices to update" }, { status: 200 });
+    }
+
+
+
     for (const [id, device] of Object.entries(data.devices)) {
 
         if (!device.V || !device.kWH || !device.Type || !device.timestamp) {
             console.error(`Missing fields for device ${id}:`, device);
+            continue;
+        }
+
+        if (!device.Type || !Object.values(UtilityType).includes(device.Type)) {
+            console.error(`Invalid utility type for device ${id}:`, device.Type);
+            continue;
+        }
+
+        if (isNaN(device.V) || isNaN(device.kWH)) {
+            console.error(`Invalid numeric values for device ${id}:`, device);
             continue;
         }
 
