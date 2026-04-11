@@ -69,7 +69,7 @@ export default function LatestTrans({ dict }: Props) {
                                 </div>
                                 <span className={`text-sm font-semibold tabular-nums ${isIncome ? "text-green-400" : "text-red-400"
                                     }`}>
-                                    {isIncome ? "+" : "-"}{toDKK(t.amount)}
+                                    {isIncome ? "+" : "-"}{toDKK(t.amount, false)}
                                 </span>
                             </div>
                         );
