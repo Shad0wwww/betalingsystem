@@ -96,7 +96,7 @@ export default function AdminPage() {
                         label="Total omsætning"
                         value={
                             data?.totalRevenue != null
-                                ? `${toDKK(data.totalRevenue)}`
+                                ? `${toDKK(data.totalRevenue, false)}`
                                 : undefined
                         }
                         icon={TrendingUp}
