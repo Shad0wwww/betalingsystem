@@ -10,8 +10,8 @@ export default async function NotFound() {
 
     // Extract language from pathname (e.g., /da/something -> da)
     const langMatch = pathname.match(/\/([a-z]{2})\//);
-    const lang = langMatch ? langMatch[1] : "da";
-
+    const lang = langMatch ? langMatch[1] : "da-DK";
+    
     let dict;
     try {
         dict = await getDictionary(lang);

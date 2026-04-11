@@ -103,20 +103,25 @@ export async function POST(req: NextRequest) {
             });
         } else {
             // Create new reading
-            await prisma.meter.update({
-                where: { deviceId: id },
-                data: {
-                    status: MeterStatus.ONLINE,
-                    readings: {
-                        create: {
-                            type: device.Type,
-                            value: device.kWH,
-                            volttage: device.V,
-                            spotPris: spotPris,
-                            date: parsedDate,
-                        },
+            // Only set status to ONLINE if it's not already INUSE (preserve active sessions)
+            const updateData: { readings: any; status?: MeterStatus } = {
+                readings: {
+                    create: {
+                        type: device.Type,
+                        value: device.kWH,
+                        volttage: device.V,
+                        spotPris: spotPris,
+                        date: parsedDate,
                     },
                 },
+            };
+            if (inDatabase.status !== MeterStatus.INUSE) {
+                updateData.status = MeterStatus.ONLINE;
+            }
+
+            await prisma.meter.update({
+                where: { deviceId: id },
+                data: updateData,
             });
         }
     }

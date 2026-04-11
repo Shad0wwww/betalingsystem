@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { getLatestTransactions } from "@/lib/actions/dashboard";
+import toDKK from "@/lib/utils/toDKK";
 
 type Props = { dict: any };
 
@@ -44,13 +45,13 @@ export default function LatestTrans({ dict }: Props) {
             ) : (
                 <div className="divide-y divide-[#292828]">
                     {transactions.map((t) => {
-                        const positive = t.amount >= 0;
+                        const isIncome = t.type === "REFUND";
                         return (
                             <div key={t.id} className="flex items-center justify-between py-3">
                                 <div className="flex items-center gap-3">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${positive ? "bg-green-500/10" : "bg-red-500/10"
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${isIncome ? "bg-green-500/10" : "bg-red-500/10"
                                         }`}>
-                                        {positive
+                                        {isIncome
                                             ? <ArrowDownLeft className="w-4 h-4 text-green-400" />
                                             : <ArrowUpRight className="w-4 h-4 text-red-400" />}
                                     </div>
@@ -66,13 +67,9 @@ export default function LatestTrans({ dict }: Props) {
                                         </p>
                                     </div>
                                 </div>
-                                <span className={`text-sm font-semibold tabular-nums ${positive ? "text-green-400" : "text-red-400"
+                                <span className={`text-sm font-semibold tabular-nums ${isIncome ? "text-green-400" : "text-red-400"
                                     }`}>
-                                    {positive ? "+" : ""}{Number(t.amount).toLocaleString("da-DK", {
-                                        style: "currency",
-                                        currency: "DKK",
-                                        minimumFractionDigits: 2,
-                                    })}
+                                    {isIncome ? "+" : "-"}{toDKK(t.amount)}
                                 </span>
                             </div>
                         );

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getAllTransactions } from "@/lib/actions/dashboard";
+import toDKK from "@/lib/utils/toDKK";
 
 type MonthData = {
     key: string;   // YYYY-MM
@@ -92,10 +93,7 @@ export default function SpendingChart() {
                                 <div className="h-6 w-24 bg-[#1a1a1a] animate-pulse rounded mt-1" />
                             ) : (
                                 <p className="text-xl font-bold text-white mt-1 tabular-nums">
-                                    {totalAllTime.toLocaleString("da-DK", {
-                                        style: "currency",
-                                        currency: "DKK",
-                                    })}
+                                    {toDKK(totalAllTime, false)}
                                 </p>
                             )}
                         </div>

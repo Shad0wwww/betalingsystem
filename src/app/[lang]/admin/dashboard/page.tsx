@@ -6,6 +6,7 @@ import { Box } from "@/components/admin/Box";
 import { Users, CreditCard, TrendingUp } from "lucide-react";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
+import toDKK from "@/lib/utils/toDKK";
 
 
 interface Response {
@@ -95,7 +96,7 @@ export default function AdminPage() {
                         label="Total omsætning"
                         value={
                             data?.totalRevenue != null
-                                ? `${(data.totalRevenue).toLocaleString("da-DK", { style: "currency", currency: "DKK", minimumFractionDigits: 0 })}`
+                                ? `${toDKK(data.totalRevenue)}`
                                 : undefined
                         }
                         icon={TrendingUp}
