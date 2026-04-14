@@ -6,14 +6,16 @@ import toast, { Toaster } from "react-hot-toast";
 import { SettingsCard } from "@/components/dashboard/SettingsCard";
 import { SkeletonCard } from "@/components/utils/SkeletonCard";
 import RegisterShipModal from "../modals/RegisterShipModal";
+import EditShipNameModal from "../modals/EditShipNameModal";
 import ChangeEmail from "../modals/ChangeEmailModal";
 import ActiveSessionsCard from "./ActiveSessionsCard";
 import { getMe, getMyBoats } from "@/lib/actions/dashboard";
 import { updateName, sendEmailChangeOtp, deleteAccount } from "@/lib/actions/settings";
+import { deleteBoat } from "@/lib/actions/boat-actions";
 
 // --- Types ---
 interface Ship {
-    id?: string;
+    id: number;
     name: string;
     model: string;
 }
@@ -103,6 +105,32 @@ export default function SettingsClient({ dict }: { dict: any }) {
         setDeleteConfirmText("");
     };
 
+    const handleShipNameUpdated = (updatedShip: { id: number; name: string }) => {
+        setShips((prev) =>
+            prev.map((ship) =>
+                ship.id === updatedShip.id ? { ...ship, name: updatedShip.name } : ship,
+            ),
+        );
+        toast.success(dict?.dashboard?.settings?.shipNameUpdatedToast ?? "Bådens navn er opdateret.");
+    };
+
+    const handleDeleteShip = async (shipId: number) => {
+        const confirmed = window.confirm(
+            dict?.dashboard?.settings?.deleteShipConfirm ?? "Er du sikker på, at du vil slette denne båd?",
+        );
+
+        if (!confirmed) return;
+
+        try {
+            await deleteBoat(shipId);
+
+            setShips((prev) => prev.filter((ship) => ship.id !== shipId));
+            toast.success(dict?.dashboard?.settings?.shipDeletedToast ?? "Båden er slettet.");
+        } catch (err: any) {
+            toast.error(err.message || (dict?.dashboard?.settings?.genericError ?? "Der skete en fejl. Prøv igen."));
+        }
+    };
+
     const handleDeleteAccountConfirm = async () => {
         const expectedText = dict.dashboard.settings.deleteAccount === "Slet konto" 
             ? "SLET MIN KONTO" 
@@ -163,7 +191,22 @@ export default function SettingsClient({ dict }: { dict: any }) {
                 <SettingsCard
                     title={dict.dashboard.settings.registerBoat}
                     description={dict.dashboard.settings.registerBoatDescription}
-                    dialog={ships.length < 2 ? <RegisterShipModal onSuccess={(newShip) => setShips([...ships, newShip])} /> : null}
+                    dialog={
+                        ships.length < 2
+                            ? (
+                                <RegisterShipModal
+                                    onSuccess={(newShip) => {
+                                        const normalizedShip: Ship = {
+                                            id: typeof newShip.id === "number" ? newShip.id : Date.now(),
+                                            name: newShip.name,
+                                            model: newShip.model,
+                                        };
+                                        setShips((prev) => [...prev, normalizedShip]);
+                                    }}
+                                />
+                            )
+                            : null
+                    }
                     footerText={ships.length >= 2 ? dict.dashboard.settings.shipLimitReached : ""}
                 >
                     {ships.length > 0 ? (
@@ -173,6 +216,7 @@ export default function SettingsClient({ dict }: { dict: any }) {
                                     <tr>
                                         <th className="px-4 py-3 font-medium">{dict.dashboard.settings.shipName}</th>
                                         <th className="px-4 py-3 font-medium">{dict.dashboard.settings.shipModel}</th>
+                                        <th className="px-4 py-3 font-medium">{dict?.dashboard?.settings?.actions ?? "Handlinger"}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/[0.05]">
@@ -180,6 +224,23 @@ export default function SettingsClient({ dict }: { dict: any }) {
                                         <tr key={ship.id ?? index}>
                                             <td className="px-4 py-3 font-medium text-white">{ship.name}</td>
                                             <td className="px-4 py-3 text-white/45">{ship.model}</td>
+                                            <td className="px-4 py-3">
+                                                <div className="flex items-center gap-2">
+                                                    <EditShipNameModal
+                                                        boatId={ship.id}
+                                                        currentName={ship.name}
+                                                        dict={dict}
+                                                        onSuccess={handleShipNameUpdated}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDeleteShip(ship.id)}
+                                                        className="rounded-md border border-red-500/35 bg-red-500/10 px-2.5 py-1 text-xs font-medium text-red-300 transition hover:bg-red-500/20 hover:text-red-100"
+                                                    >
+                                                        {dict?.dashboard?.settings?.deleteShipButton ?? "Slet"}
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>

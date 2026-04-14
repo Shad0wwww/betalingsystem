@@ -3,14 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import "@/components/modals/styles.css";
-import { createBoat } from "@/lib/actions/boat-actions";
-
-// 1. Definer en type for det skib, vi sender tilbage
-export interface ShipData {
-    id?: number;
-    name: string;
-    model: string;
-}
+import { updateBoatName } from "@/lib/actions/boat-actions";
 
 const Field = ({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) => (
     <div className="mb-4">
@@ -26,43 +19,47 @@ const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input {...props} className="modal-input" />
 );
 
-export default function RegisterShipModal({
-    onSuccess
+export default function EditShipNameModal({
+    boatId,
+    currentName,
+    dict,
+    onSuccess,
 }: {
-    onSuccess: (newShip: ShipData) => void;
+    boatId: number;
+    currentName: string;
+    dict?: any;
+    onSuccess: (updatedBoat: { id: number; name: string }) => void;
 }) {
-    const [name, setName] = useState("");
-    const [model, setModel] = useState("");
-
+    const [name, setName] = useState(currentName);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (!open) {
-            setName("");
-            setModel("");
+            setName(currentName);
             setError(null);
             setIsLoading(false);
         }
-    }, [open]);
+    }, [open, currentName]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-        if (!name.trim() || !model.trim()) {
-            setError("Venligst udfyld alle felter.");
+
+        const trimmedName = name.trim();
+        if (!trimmedName) {
+            setError(dict?.dashboard?.settings?.shipNameRequiredError ?? "Venligst udfyld bådens navn.");
             return;
         }
 
         setIsLoading(true);
-
         try {
-            const newShip = await createBoat(name.trim(), model.trim());
-            onSuccess(newShip);
+            const updatedBoat = await updateBoatName(boatId, trimmedName);
+            onSuccess(updatedBoat);
             setOpen(false);
         } catch (err: any) {
-            setError(err.message || "Der skete en fejl. Prøv igen senere.");
+            setError(err.message || (dict?.dashboard?.settings?.genericError ?? "Der skete en fejl. Prøv igen."));
         } finally {
             setIsLoading(false);
         }
@@ -70,8 +67,8 @@ export default function RegisterShipModal({
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
-            <Dialog.Trigger className="px-4 py-1.5 rounded-md text-sm font-semibold transition-all bg-[#2563eb] hover:bg-[#1d4ed8] text-white border border-blue-600/40 shadow-md shadow-blue-900/30">
-                REGISTRÉR SKIB
+            <Dialog.Trigger className="rounded-md border border-blue-500/35 bg-blue-500/10 px-2.5 py-1 text-xs font-medium text-blue-200 transition hover:bg-blue-500/20 hover:text-white">
+                {dict?.dashboard?.settings?.editShipNameButton ?? "Rediger navn"}
             </Dialog.Trigger>
 
             <Dialog.Portal>
@@ -79,40 +76,29 @@ export default function RegisterShipModal({
                 <Dialog.Content className="DialogContent">
                     <div className="mb-6">
                         <Dialog.Title className="text-white font-semibold text-xl mb-1">
-                            Opret nyt skib
+                            {dict?.dashboard?.settings?.editShipNameTitle ?? "Rediger bådens navn"}
                         </Dialog.Title>
-                        <p className="text-zinc-500 text-sm">Registrér dit skib for at kunne tilslutte målere.</p>
+                        <p className="text-zinc-500 text-sm">
+                            {dict?.dashboard?.settings?.editShipNameDescription ?? "Opdatér navnet på din båd."}
+                        </p>
                     </div>
 
                     <form onSubmit={handleSubmit}>
-                        <Field label="Skibets navn">
+                        <Field label={dict?.dashboard?.settings?.shipName ?? "Navn"} error={error ?? undefined}>
                             <Input
                                 type="text"
-                                placeholder="Indtast skibets navn"
+                                placeholder={dict?.dashboard?.settings?.shipNamePlaceholder ?? "Indtast bådens navn"}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                disabled={isLoading} // God praksis at deaktivere inputs under load
-                            />
-                        </Field>
-
-                        <Field label="Skibets model">
-                            <Input
-                                type="text"
-                                placeholder="F.eks. Bavaria 37"
-                                value={model}
-                                onChange={(e) => setModel(e.target.value)}
                                 disabled={isLoading}
+                                maxLength={50}
                             />
                         </Field>
-
-                        {error && (
-                            <div className="p-3 mb-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                                <p className="text-red-400 text-sm">{error}</p>
-                            </div>
-                        )}
 
                         <button type="submit" disabled={isLoading} className="modal-submit-btn">
-                            {isLoading ? "Opretter..." : "Opret skib"}
+                            {isLoading
+                                ? (dict?.dashboard?.settings?.savingShipName ?? "Gemmer...")
+                                : (dict?.dashboard?.settings?.saveShipName ?? "Gem navn")}
                         </button>
                     </form>
 
