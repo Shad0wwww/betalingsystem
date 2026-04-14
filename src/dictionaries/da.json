@@ -65,6 +65,10 @@
             "næsteSide": "Næste side",
             "gåTilSidsteSide": "Gå til sidste side"
         },
+        "meterModal": {
+            "noBoatsText": "Du har ingen registrerede både endnu.",
+            "goToSettingsRegisterBoat": "Gå til Indstillinger og registrér båd"
+        },
         "settings": {
             "fullname": "Skift dit fulde navn",
             "fullnameDescription": "Opdatér dit fulde navn, som vises på din profil og i dine transaktioner.",

@@ -2,6 +2,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import "@/components/modals/styles.css";
 import { UtilityType } from "@prisma/client";
 import { getAvailableMeters, getMyBoats, createMeterSession } from "@/lib/actions/dashboard";
@@ -45,6 +47,7 @@ export default function BrugerRegisterMeterModal({
     onSuccess?: () => void;
     dict?: any;
 }) {
+    const params = useParams<{ lang?: string }>();
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
@@ -104,6 +107,9 @@ export default function BrugerRegisterMeterModal({
     };
 
     const selectedMeterData = meters.find((m) => m.id === Number(selectedMeter));
+    const settingsHref = `/${params?.lang ?? "da"}/dashboard/settings`;
+    const noBoatsText = dict?.dashboard?.meterModal?.noBoatsText ?? "Du har ingen registrerede både endnu.";
+    const goToSettingsText = dict?.dashboard?.meterModal?.goToSettingsRegisterBoat ?? "Gå til Indstillinger og registrér båd";
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -152,7 +158,16 @@ export default function BrugerRegisterMeterModal({
 
                             <Field label="Din båd">
                                 {boats.length === 0 ? (
-                                    <p className="text-zinc-500 text-sm py-2">Du har ingen registrerede både. Registrér en båd under Indstillinger.</p>
+                                    <div className="py-2 space-y-3">
+                                        <p className="text-zinc-500 text-sm">{noBoatsText}</p>
+                                        <Link
+                                            href={settingsHref}
+                                            onClick={() => setOpen(false)}
+                                            className="inline-flex items-center justify-center rounded-md border border-blue-500/40 bg-blue-500/10 px-3 py-2 text-sm font-medium text-blue-200 transition hover:bg-blue-500/20 hover:text-white"
+                                        >
+                                            {goToSettingsText}
+                                        </Link>
+                                    </div>
                                 ) : (
                                     <Select
                                         value={selectedBoat}

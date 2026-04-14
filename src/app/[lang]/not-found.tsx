@@ -8,7 +8,6 @@ export default async function NotFound() {
     const headersList = await headers();
     const pathname = headersList.get("x-pathname") || headersList.get("referer") || "";
 
-    // Extract language from pathname (e.g., /da/something -> da)
     const langMatch = pathname.match(/\/([a-z]{2})\//);
     const lang = langMatch ? langMatch[1] : "da-DK";
     

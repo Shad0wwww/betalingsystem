@@ -65,6 +65,10 @@
             "næsteSide": "Next page",
             "gåTilSidsteSide": "Go to last page"
         },
+        "meterModal": {
+            "noBoatsText": "You have no registered boats yet.",
+            "goToSettingsRegisterBoat": "Go to Settings and register a boat"
+        },
         "settings": {
             "fullname": "Change your full name",
             "fullnameDescription": "Update your full name as it appears on your profile and in your transactions.",

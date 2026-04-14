@@ -65,6 +65,10 @@
             "næsteSide": "Nächste Seite",
             "gåTilSidsteSide": "Zur letzten Seite"
         },
+        "meterModal": {
+            "noBoatsText": "Sie haben noch keine registrierten Boote.",
+            "goToSettingsRegisterBoat": "Zu den Einstellungen gehen und ein Boot registrieren"
+        },
         "settings": {
             "fullname": "Vollständigen Namen ändern",
             "fullnameDescription": "Aktualisieren Sie Ihren vollständigen Namen, wie er in Ihrem Profil und in Ihren Transaktionen angezeigt wird.",
