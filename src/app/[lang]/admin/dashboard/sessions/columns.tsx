@@ -65,6 +65,35 @@ function ElapsedTime({ startTime }: { startTime: string }) {
 
 import React from "react"
 
+function SessionIdCell({ sessionId }: { sessionId: number }) {
+    const router = useRouter()
+    const { lang } = useParams<{ lang: string }>()
+
+    return (
+        <button
+            onClick={() => router.push(`/${lang}/admin/dashboard/sessions/${sessionId}`)}
+            className="font-mono text-sm text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+        >
+            #{sessionId}
+        </button>
+    )
+}
+
+function BoatNameCell({ session }: { session: ActiveSession }) {
+    const router = useRouter()
+    const { lang } = useParams<{ lang: string }>()
+
+    return (
+        <button
+            onClick={() => router.push(`/${lang}/admin/dashboard/sessions/${session.id}`)}
+            className="text-left hover:opacity-80 transition-opacity"
+        >
+            <p className="text-white font-medium text-sm hover:text-blue-400">{session.boatName}</p>
+            <p className="text-zinc-500 text-xs">{session.boatModel}</p>
+        </button>
+    )
+}
+
 function ActionsCell({
     session,
     onStopSession,
@@ -131,9 +160,7 @@ export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUs
     {
         accessorKey: "id",
         header: "Session",
-        cell: ({ row }) => (
-            <span className="font-mono text-sm text-zinc-400">#{row.getValue("id")}</span>
-        ),
+        cell: ({ row }) => <SessionIdCell sessionId={row.getValue("id") as number} />,
     },
     {
         accessorKey: "boatName",
@@ -147,12 +174,7 @@ export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUs
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => (
-            <div>
-                <p className="text-white font-medium text-sm">{row.getValue("boatName")}</p>
-                <p className="text-zinc-500 text-xs">{row.original.boatModel}</p>
-            </div>
-        ),
+        cell: ({ row }) => <BoatNameCell session={row.original} />,
     },
     {
         accessorKey: "userName",
