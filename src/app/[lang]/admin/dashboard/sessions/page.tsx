@@ -115,6 +115,11 @@ export default function AdminSessionsPage() {
         setWarnUserOpen(true);
     };
 
+    const handleViewDetails = (session: ActiveSession) => {
+        // TODO: Implement view details functionality
+        console.log("View details for session:", session);
+    };
+
     const handleStopSessionSuccess = () => {
         setStopSessionOpen(false);
         setStopSessionData(null);
@@ -166,7 +171,7 @@ export default function AdminSessionsPage() {
                             </span>
                         </div>
                     </div>
-                    <DataTable columns={columns(handleStopSession, handleWarnUser)} refreshKey={refreshKey} />
+                    <DataTable columns={columns(handleStopSession, handleWarnUser, handleViewDetails)} refreshKey={refreshKey} />
                 </Box>
             </div>
 
