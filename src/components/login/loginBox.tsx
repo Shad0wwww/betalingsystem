@@ -9,6 +9,9 @@ import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Anchor } from "lucide-react";
 
+const OTP_RESEND_COOLDOWN_SECONDS = 60;
+const OTP_COOLDOWN_STORAGE_KEY = "otpCooldownUntil";
+
 const FormContainer = (
     { children }: { children: React.ReactNode }
 ) => (
@@ -42,6 +45,8 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [emailInput, setEmailInput] = useState(email || '');
     const [isOtpSent, setIsOtpSent] = useState(false);
+    const [otpCooldownUntil, setOtpCooldownUntil] = useState(0);
+    const [otpCooldownLeft, setOtpCooldownLeft] = useState(0);
     const router = useRouter();
 
     if (!dict) return notFound();
@@ -50,17 +55,51 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
 
     useEffect(() => setIsMounted(true), []);
 
+    useEffect(() => {
+        const stored = Number(window.localStorage.getItem(OTP_COOLDOWN_STORAGE_KEY) || 0);
+        if (stored > Date.now()) {
+            setOtpCooldownUntil(stored);
+        }
+    }, []);
+
+    useEffect(() => {
+        const updateCooldown = () => {
+            const remaining = Math.max(0, Math.ceil((otpCooldownUntil - Date.now()) / 1000));
+            setOtpCooldownLeft(remaining);
+            if (remaining <= 0 && otpCooldownUntil > 0) {
+                setOtpCooldownUntil(0);
+                window.localStorage.removeItem(OTP_COOLDOWN_STORAGE_KEY);
+            }
+        };
+
+        updateCooldown();
+        const id = window.setInterval(updateCooldown, 1000);
+        return () => window.clearInterval(id);
+    }, [otpCooldownUntil]);
+
+    const startOtpCooldown = () => {
+        const until = Date.now() + OTP_RESEND_COOLDOWN_SECONDS * 1000;
+        setOtpCooldownUntil(until);
+        window.localStorage.setItem(OTP_COOLDOWN_STORAGE_KEY, String(until));
+    };
+
     // Trin 1: Email Action
     const [error1, formAction1, isPending1] = useActionState(
         async (prevState: any, formData: FormData) => {
+            if (otpCooldownUntil > Date.now()) {
+                const remaining = Math.max(1, Math.ceil((otpCooldownUntil - Date.now()) / 1000));
+                return `Vent ${remaining} sekunder før du kan anmode om en ny kode.`;
+            }
+
             const result = await LoginAction(prevState, formData);
             if (result?.success) {
                 setEmailInput(formData.get("email") as string);
                 setIsOtpSent(true);
+                startOtpCooldown();
             }
             return result?.error || null;
         },
-        null,
+        null
     );
 
     // Trin 2: OTP Action
@@ -162,11 +201,21 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
 
                             <button
                                 type="submit"
-                                disabled={isPending1}
+                                disabled={isPending1 || otpCooldownLeft > 0}
                                 className="w-full py-3 font-medium bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors disabled:opacity-50"
                             >
-                                {isPending1 ? dict.login.sendOtpButtonLoading : dict.login.sendOtpButton}
+                                {isPending1
+                                    ? dict.login.sendOtpButtonLoading
+                                    : otpCooldownLeft > 0
+                                        ? `Vent ${otpCooldownLeft}s`
+                                        : dict.login.sendOtpButton}
                             </button>
+
+                            {otpCooldownLeft > 0 && (
+                                <p className="text-zinc-500 text-xs text-center mt-2">
+                                    Du kan anmode om en ny engangskode om {otpCooldownLeft} sekunder.
+                                </p>
+                            )}
                         </form>
 
                         <div className="text-center mt-6">

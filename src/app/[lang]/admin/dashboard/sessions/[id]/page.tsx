@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Box } from "@/components/admin/Box";
 import { Zap, Droplets, MapPin, Anchor, ArrowLeft } from "lucide-react";
@@ -53,18 +53,34 @@ export default function SessionDetailPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [elapsed, setElapsed] = useState("");
+    const isFetchingRef = useRef(false);
 
-    const fetchSession = useCallback(async () => {
-        if (!sessionId) return;
-        setLoading(true);
-        setError(null);
+    const fetchSession = useCallback(async ({ silent = false }: { silent?: boolean } = {}) => {
+        if (!sessionId) {
+            if (!silent) {
+                setError("Ugyldigt session-ID");
+                setLoading(false);
+            }
+            return;
+        }
+
+        if (isFetchingRef.current) return;
+        isFetchingRef.current = true;
+
+        if (!silent) {
+            setLoading(true);
+            setError(null);
+        }
 
         try {
             const response = await fetch(`/api/admin/sessions/${sessionId}`, {
                 credentials: "include",
+                cache: "no-store",
             });
 
             if (!response.ok) {
+                if (silent) return;
+
                 if (response.status === 404) {
                     setError("Session ikke fundet");
                 } else if (response.status === 403) {
@@ -79,10 +95,15 @@ export default function SessionDetailPage() {
             const data = await response.json();
             setSession(data.session);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Uventet fejl");
-            setSession(null);
+            if (!silent) {
+                setError(err instanceof Error ? err.message : "Uventet fejl");
+                setSession(null);
+            }
         } finally {
-            setLoading(false);
+            isFetchingRef.current = false;
+            if (!silent) {
+                setLoading(false);
+            }
         }
     }, [sessionId]);
 
@@ -95,7 +116,7 @@ export default function SessionDetailPage() {
         if (!session || !session.isActive) return;
 
         const interval = setInterval(() => {
-            fetchSession();
+            fetchSession({ silent: true });
         }, 30_000);
 
         return () => clearInterval(interval);
