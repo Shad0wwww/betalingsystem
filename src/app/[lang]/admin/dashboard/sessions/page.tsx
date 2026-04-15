@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useParams, useRouter } from "next/navigation";
 import { get } from "@/components/admin/actions";
 import { Box } from "@/components/admin/Box";
 import { Zap, Droplets, Activity } from "lucide-react";
@@ -67,6 +68,8 @@ function StatBox({
 }
 
 export default function AdminSessionsPage() {
+    const router = useRouter();
+    const { lang } = useParams<{ lang: string }>();
     const [stats, setStats] = React.useState<SessionStats | null>(null);
     const [loading, setLoading] = React.useState(true);
     const [refreshKey, setRefreshKey] = React.useState(0);
@@ -116,8 +119,7 @@ export default function AdminSessionsPage() {
     };
 
     const handleViewDetails = (session: ActiveSession) => {
-        // TODO: Implement view details functionality
-        console.log("View details for session:", session);
+        router.push(`/${lang}/admin/dashboard/sessions/${session.id}`);
     };
 
     const handleStopSessionSuccess = () => {
