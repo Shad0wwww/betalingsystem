@@ -98,10 +98,12 @@ function ActionsCell({
     session,
     onStopSession,
     onWarnUser,
+    onViewDetails,
 }: {
     session: ActiveSession
     onStopSession: (session: ActiveSession) => void
     onWarnUser: (session: ActiveSession) => void
+    onViewDetails: (session: ActiveSession) => void
 }) {
     const router = useRouter()
     const { lang } = useParams<{ lang: string }>()
@@ -151,12 +153,21 @@ function ActionsCell({
                     <span>⏹️</span>
                     <span>Stop session</span>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-zinc-800" />
+                <DropdownMenuItem
+                    className="cursor-pointer gap-2 focus:bg-zinc-800 focus:text-white transition-colors"
+                    onClick={() => onViewDetails(session)}
+                >
+                    <span>🔍</span>
+                    <span>Se detaljer</span>
+                </DropdownMenuItem>
+
             </DropdownMenuContent>
         </DropdownMenu>
     )
 }
 
-export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUser: (session: ActiveSession) => void) => ColumnDef<ActiveSession>[] = (onStopSession, onWarnUser) => [
+export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUser: (session: ActiveSession) => void, onViewDetails: (session: ActiveSession) => void) => ColumnDef<ActiveSession>[] = (onStopSession, onWarnUser, onViewDetails) => [
     {
         accessorKey: "id",
         header: "Session",
@@ -227,6 +238,6 @@ export const columns: (onStopSession: (session: ActiveSession) => void, onWarnUs
     {
         id: "actions",
         header: () => <span className="sr-only">Handlinger</span>,
-        cell: ({ row }) => <ActionsCell session={row.original} onStopSession={onStopSession} onWarnUser={onWarnUser} />,
+        cell: ({ row }) => <ActionsCell session={row.original} onStopSession={onStopSession} onWarnUser={onWarnUser} onViewDetails={onViewDetails}       />,
     },
 ]
