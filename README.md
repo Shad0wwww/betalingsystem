@@ -122,6 +122,9 @@ src/
 
 ---
 
+## NEXT RELEAESE
+[ ] Tjek om der bliver taget strøm, selvom måleren ikke er tilsluttet. Hvis der blvier taget strøm, så skal der sende en advarsel til admin på f.eks. mail, hvor de får det som en advarsel, med lokation, måler. 
+
 ## Licens
 
 Privat projekt - Ribe Sejlklub
