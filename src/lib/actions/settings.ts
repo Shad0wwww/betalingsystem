@@ -1,6 +1,6 @@
 "use server";
 
-import { getCurrentUser, getUserSessions, deleteAllUserSessions, SESSION_COOKIE_NAME } from "@/lib/session/Session";
+import { getCurrentUser, getUserSessions, SESSION_COOKIE_NAME } from "@/lib/session/Session";
 import prisma from "@/lib/prisma";
 import { sendEmail } from "@/lib/emailer/Mail";
 import { generateHtmlOTP } from "@/lib/emailer/MailCreator";
@@ -10,6 +10,7 @@ import getStripe from "@/lib/stripe/Stripe";
 import { ActionType } from "@prisma/client";
 import { cookies } from "next/headers";
 import { log } from "console";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
 
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
     const user = await getCurrentUser();
@@ -137,6 +138,10 @@ export async function getMySessions(): Promise<SessionInfo[]> {
     const sessions = await getUserSessions(userId);
 
     // Hent også current session token for at markere den
+
+    'use cache';
+    cacheLife("minutes");
+
     const currentSession = currentSessionToken
         ? await prisma.session.findUnique({
               where: { sessionToken: currentSessionToken },
