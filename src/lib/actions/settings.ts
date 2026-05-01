@@ -10,7 +10,7 @@ import getStripe from "@/lib/stripe/Stripe";
 import { ActionType } from "@prisma/client";
 import { cookies } from "next/headers";
 import { log } from "console";
-import { cacheLife } from "next/dist/server/use-cache/cache-life";
+
 
 async function getAuthPayload(): Promise<{ userId: string; email: string }> {
     const user = await getCurrentUser();
@@ -130,7 +130,7 @@ function parseUserAgent(ua: string | null): string {
 }
 
 export async function getMySessions(): Promise<SessionInfo[]> {
-    'use cache';
+ 
     const { userId } = await getAuthPayload();
 
     const cookieStore = await cookies();
@@ -140,7 +140,7 @@ export async function getMySessions(): Promise<SessionInfo[]> {
 
     // Hent også current session token for at markere den
 
-    cacheLife("minutes");
+
 
     const currentSession = currentSessionToken
         ? await prisma.session.findUnique({

@@ -9,7 +9,6 @@ import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
 import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
 import { log } from "../logs/auditlogger";
 import { createStripeSession } from "../stripe/CreateSession";
-import { cacheLife } from "next/cache";
 
 const RESERVATION_AMOUNT = 20000; // in øre (200 DKK) - this is a fixed amount to ensure the user has sufficient funds reserved before starting a session. The actual amount charged will be adjusted when the session ends based on consumption.
 
@@ -41,10 +40,10 @@ export async function getMe() {
 
 /** Returns the 2 latest non-reservation transactions for the sidebar. */
 export async function getLatestTransactions() {
-    'use cache';
+    
     const { userId } = await getAuthPayload();
 
-    cacheLife("seconds"); 
+    
 
     return prisma.transaction.findMany({
         where: {
@@ -58,12 +57,12 @@ export async function getLatestTransactions() {
 
 /** Returns paginated invoice history. Amounts are converted from øre to kr. */
 export async function getAllTransactions(page = 1, limit = 20) {
-    'use cache';
+    
     const { userId } = await getAuthPayload();
     const offset = (page - 1) * limit;
 
-   
-    cacheLife("seconds");
+
+
 
     const [totalResult, rows] = await Promise.all([
         prisma.$queryRaw<[{ count: bigint }]>`
@@ -99,10 +98,10 @@ export async function getAllTransactions(page = 1, limit = 20) {
 // ─── Meter readings ───────────────────────────────────────────────────────────
 
 export async function getLatestMeterReading(meterId: number) {
-    'use cache';
+    
     await getAuthPayload();
 
-    cacheLife("seconds");
+
 
     const reading = await prisma.meterReading.findFirst({
         where: { meterId },
@@ -116,10 +115,9 @@ export async function getLatestMeterReading(meterId: number) {
 // ─── Meter sessions ───────────────────────────────────────────────────────────
 
 export async function getActiveSession() {
-    'use cache';
+
     const { userId } = await getAuthPayload();
 
-    cacheLife("seconds");
 
     const session = await prisma.meterSession.findFirst({
         where: { userId, isActive: true },
@@ -134,10 +132,10 @@ export async function getActiveSession() {
 }
 
 export async function getAvailableMeters() {
-    'use cache';
+    
     await getAuthPayload();
 
-    cacheLife("seconds");
+   
 
     const meters = await prisma.meter.findMany({
         where: { status: MeterStatus.ONLINE },
@@ -279,11 +277,8 @@ export async function stopSession(sessionId: number): Promise<StopSessionResult>
 // ─── Boats ────────────────────────────────────────────────────────────────────
 
 export async function getMyBoats() {
-    'use cache';
     const { userId } = await getAuthPayload();
 
-    
-    cacheLife("seconds");
 
     return prisma.boat.findMany({
         where: { userId },
