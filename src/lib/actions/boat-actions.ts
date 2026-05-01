@@ -43,6 +43,7 @@ export async function createBoat(name: string, model: string) {
     const trimmedModel = model.trim();
 
     if (!trimmedName || !trimmedModel) throw new Error("Name and model are required");
+    
     if (trimmedName.length > 50 || trimmedModel.length > 50) {
         throw new Error("Name and model must be less than 50 characters");
     }

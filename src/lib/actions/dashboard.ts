@@ -9,6 +9,7 @@ import { createStripeCustomer } from "@/lib/stripe/CreateCustomer";
 import { ActionType, InvoiceStatus, MeterStatus, TransactionType, UtilityType } from "@prisma/client";
 import { log } from "../logs/auditlogger";
 import { createStripeSession } from "../stripe/CreateSession";
+import { cache } from "react";
 
 const RESERVATION_AMOUNT = 20000; // in øre (200 DKK) - this is a fixed amount to ensure the user has sufficient funds reserved before starting a session. The actual amount charged will be adjusted when the session ends based on consumption.
 
@@ -57,12 +58,12 @@ export async function getLatestTransactions() {
 
 /** Returns paginated invoice history. Amounts are converted from øre to kr. */
 export async function getAllTransactions(page = 1, limit = 20) {
-    
     const { userId } = await getAuthPayload();
+    return getAllTransactionsCached(userId, page, limit);
+}
+
+const getAllTransactionsCached = cache(async (userId: string, page = 1, limit = 20) => {
     const offset = (page - 1) * limit;
-
-
-
 
     const [totalResult, rows] = await Promise.all([
         prisma.$queryRaw<[{ count: bigint }]>`
@@ -93,7 +94,7 @@ export async function getAllTransactions(page = 1, limit = 20) {
     );
 
     return { data, total, page, limit };
-}
+});
 
 // ─── Meter readings ───────────────────────────────────────────────────────────
 
