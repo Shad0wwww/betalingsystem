@@ -41,9 +41,9 @@ export async function getMe() {
 
 /** Returns the 2 latest non-reservation transactions for the sidebar. */
 export async function getLatestTransactions() {
+    'use cache';
     const { userId } = await getAuthPayload();
 
-    'use cache';
     cacheLife("seconds"); 
 
     return prisma.transaction.findMany({
@@ -58,10 +58,11 @@ export async function getLatestTransactions() {
 
 /** Returns paginated invoice history. Amounts are converted from øre to kr. */
 export async function getAllTransactions(page = 1, limit = 20) {
+    'use cache';
     const { userId } = await getAuthPayload();
     const offset = (page - 1) * limit;
 
-    'use cache';
+   
     cacheLife("seconds");
 
     const [totalResult, rows] = await Promise.all([
@@ -115,9 +116,9 @@ export async function getLatestMeterReading(meterId: number) {
 // ─── Meter sessions ───────────────────────────────────────────────────────────
 
 export async function getActiveSession() {
+    'use cache';
     const { userId } = await getAuthPayload();
 
-    'use cache';
     cacheLife("seconds");
 
     const session = await prisma.meterSession.findFirst({
@@ -133,9 +134,9 @@ export async function getActiveSession() {
 }
 
 export async function getAvailableMeters() {
+    'use cache';
     await getAuthPayload();
 
-    'use cache';
     cacheLife("seconds");
 
     const meters = await prisma.meter.findMany({
@@ -278,9 +279,10 @@ export async function stopSession(sessionId: number): Promise<StopSessionResult>
 // ─── Boats ────────────────────────────────────────────────────────────────────
 
 export async function getMyBoats() {
+    'use cache';
     const { userId } = await getAuthPayload();
 
-    'use cache';
+    
     cacheLife("seconds");
 
     return prisma.boat.findMany({

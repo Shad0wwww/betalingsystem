@@ -130,6 +130,7 @@ function parseUserAgent(ua: string | null): string {
 }
 
 export async function getMySessions(): Promise<SessionInfo[]> {
+    'use cache';
     const { userId } = await getAuthPayload();
 
     const cookieStore = await cookies();
@@ -139,7 +140,6 @@ export async function getMySessions(): Promise<SessionInfo[]> {
 
     // Hent også current session token for at markere den
 
-    'use cache';
     cacheLife("minutes");
 
     const currentSession = currentSessionToken
