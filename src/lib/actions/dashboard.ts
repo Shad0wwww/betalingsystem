@@ -99,9 +99,9 @@ export async function getAllTransactions(page = 1, limit = 20) {
 // ─── Meter readings ───────────────────────────────────────────────────────────
 
 export async function getLatestMeterReading(meterId: number) {
+    'use cache';
     await getAuthPayload();
 
-    'use cache';
     cacheLife("seconds");
 
     const reading = await prisma.meterReading.findFirst({
