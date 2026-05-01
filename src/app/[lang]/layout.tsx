@@ -10,6 +10,10 @@ import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { CookiesProvider } from "next-client-cookies/server";
 
+export function generateStaticParams() {
+	return [{ lang: "da" }, { lang: "en" }, { lang: "de" }];
+}
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
