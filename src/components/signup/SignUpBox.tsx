@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useActionState } from 'react';
 import SignupAction from '@/components/auth/SignupAction';
-import { Turnstile } from '@marsidev/react-turnstile';
+import { Turnstile } from 'react-turnstile';
 import { Anchor } from 'lucide-react';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
@@ -165,8 +165,8 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
 
                     <div className="mb-4 flex justify-center">
                         <Turnstile
-                            siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY ?? ''}
-                            options={{ theme: 'dark' }}
+                            sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY ?? ''}
+                            theme="dark"
                         />
                     </div>
 

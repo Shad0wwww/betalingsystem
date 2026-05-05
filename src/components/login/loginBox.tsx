@@ -6,7 +6,7 @@ import { useActionState } from "react";
 import { notFound, useRouter } from "next/navigation";
 import LoginAction from "@/components/auth/LoginAction";
 import VerifyOtpAction from "@/components/auth/VerifyOtpAction";
-import { Turnstile } from "@marsidev/react-turnstile";
+import { Turnstile } from "react-turnstile";
 import { Anchor } from "lucide-react";
 
 const OTP_RESEND_COOLDOWN_SECONDS = 60;
@@ -192,8 +192,8 @@ const LoginBox: React.FC<{ dict: any, email?: string }> = ({ dict, email }) => {
                             </div>
                             <div className="mb-4 flex justify-center max-w-full overflow-hidden">
                                 <Turnstile
-                                    siteKey={env ?? ''}
-                                    options={{ theme: 'dark' }}
+                                    sitekey={env ?? ''}
+                                    theme="dark"
                                 />
                             </div> 
 
