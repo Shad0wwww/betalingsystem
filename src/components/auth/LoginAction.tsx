@@ -7,6 +7,20 @@ import DoesEmailExist from "../../lib/users/DoesEmailExist";
 import { validateEmail } from "../../lib/utils/Email";
 import { generateCode, hashOTPCode } from "@/lib/utils/OTP";
 import { ActionType } from "@prisma/client";
+import { headers } from "next/headers";
+import { enforceRateLimit } from "@/lib/utils/rateLimit";
+
+const LOGIN_IP_LIMIT = {
+    limit: 10,
+    windowMs: 15 * 60 * 1000,
+    blockMs: 30 * 60 * 1000,
+};
+
+const LOGIN_EMAIL_LIMIT = {
+    limit: 5,
+    windowMs: 15 * 60 * 1000,
+    blockMs: 60 * 60 * 1000,
+};
 
 
 export default async function LoginAction(
@@ -14,12 +28,21 @@ export default async function LoginAction(
     data: FormData
 ) {
 
+    const headersList = await headers();
+    const ipAddress = headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        headersList.get("x-real-ip") ||
+        "unknown";
+
+    await enforceRateLimit(`login:ip:${ipAddress}`, LOGIN_IP_LIMIT);
+
     const email = data.get('email') as string;
     const emailLower = email.toLowerCase();
 
     if (!(await validateEmail(emailLower))) {
         return { error: "Invalid email" };
     }
+
+    await enforceRateLimit(`login:email:${emailLower}`, LOGIN_EMAIL_LIMIT);
 
     const doesEmailExist = await DoesEmailExist(emailLower);
 
