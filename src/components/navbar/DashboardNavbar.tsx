@@ -4,14 +4,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import logo from "../../../public/Logo.svg";
+import { getMySessions, logoutSession } from "@/lib/actions/settings";
 const DashboardNavbar: React.FC = () => {
     const handleLogout = async () => {
-   
-        await fetch("/api/user/logud").then((res) => {
-            redirect("/login");
-        });
-    
-
+        try {   
+            const sessions = await getMySessions();
+            const currentSession = sessions.find((session) => session.isCurrentSession);
+            if (currentSession) {
+                await logoutSession(currentSession.id);
+                redirect("/login");
+            } else {
+                console.error("Current session not found");
+            }
+        } catch (error) {
+            console.error("Error logging out:", error);
+        }
         
     };
     

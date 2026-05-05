@@ -50,8 +50,6 @@ export default async function SignupAction(
         },
     });
 
-    localStorage.clear();
-
     redirect('/login?email=' + encodeURIComponent(emailLower));
 
 }

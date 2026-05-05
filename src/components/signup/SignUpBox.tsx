@@ -40,43 +40,46 @@ const SignUpBox: React.FC<{ dict: any }> = ({ dict }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [state, formAction, isPending] = useActionState(SignupAction, undefined);
 
-    const [email, setEmail] = useState(() => {
-        const storedEmail = localStorage.getItem('signupEmail');
-        return storedEmail ? JSON.parse(storedEmail) : '';
-    });
-
-    const [name, setName] = useState(() => {
-        const storedName = localStorage.getItem('signupName');
-        return storedName ? JSON.parse(storedName) : '';
-    });
-
-    const [phone, setPhoneState] = useState(() => {
-        const storedPhone = localStorage.getItem('signupPhone');
-        return storedPhone ? JSON.parse(storedPhone) : '';
-    });
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhoneState] = useState('');
 
     useEffect(() => {
+        setIsMounted(true);
+
         try {
-            setIsMounted(true);
-        localStorage.setItem('signupEmail', JSON.stringify(email));
-        localStorage.setItem('signupName', JSON.stringify(name));
-        localStorage.setItem('signupPhone', JSON.stringify(phone));
+            const storedEmail = window.localStorage.getItem('signupEmail');
+            const storedName = window.localStorage.getItem('signupName');
+            const storedPhone = window.localStorage.getItem('signupPhone');
+
+            if (storedEmail) setEmail(JSON.parse(storedEmail));
+            if (storedName) setName(JSON.parse(storedName));
+            if (storedPhone) setPhoneState(JSON.parse(storedPhone));
         } catch (error) {
             console.error('Error accessing localStorage:', error);
         }
-        
+    }, []);
+
+    useEffect(() => {
+        try {
+            window.localStorage.setItem('signupEmail', JSON.stringify(email));
+            window.localStorage.setItem('signupName', JSON.stringify(name));
+            window.localStorage.setItem('signupPhone', JSON.stringify(phone));
+        } catch (error) {
+            console.error('Error accessing localStorage:', error);
+        }
     }, [email, name, phone]);
 
     function handelEmailChange(value: string | undefined) {
-        setEmail(value || null);
+        setEmail(value || '');
     }
 
     function handelNameChange(value: string | undefined) {
-        setName(value || null);
+        setName(value || '');
     }
 
     function handelPhoneChange(value: string | undefined) {
-        setPhoneState(value || null);
+        setPhoneState(value || '');
     }
 
     const errorMessage = typeof state === 'string' ? state : state?.error;
