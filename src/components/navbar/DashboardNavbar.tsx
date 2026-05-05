@@ -2,20 +2,16 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import logo from "../../../public/Logo.svg";
-import { getMySessions, logoutSession } from "@/lib/actions/settings";
+import { logoutCurrentSession } from "@/lib/actions/settings";
 const DashboardNavbar: React.FC = () => {
+    const router = useRouter();
+
     const handleLogout = async () => {
         try {   
-            const sessions = await getMySessions();
-            const currentSession = sessions.find((session) => session.isCurrentSession);
-            if (currentSession) {
-                await logoutSession(currentSession.id);
-                redirect("/login");
-            } else {
-                console.error("Current session not found");
-            }
+            await logoutCurrentSession();
+            router.push("/login");
         } catch (error) {
             console.error("Error logging out:", error);
         }

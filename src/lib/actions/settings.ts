@@ -184,6 +184,28 @@ export async function logoutSession(sessionId: string) {
     return { success: true };
 }
 
+export async function logoutCurrentSession() {
+    const { userId } = await getAuthPayload();
+
+    const cookieStore = await cookies();
+    const currentSessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+
+    if (!currentSessionToken) {
+        throw new Error("No active session");
+    }
+
+    await prisma.session.deleteMany({
+        where: {
+            userId,
+            sessionToken: currentSessionToken,
+        },
+    });
+
+    cookieStore.delete(SESSION_COOKIE_NAME);
+
+    return { success: true };
+}
+
 export async function logoutAllOtherSessions() {
     const { userId } = await getAuthPayload();
 
